@@ -17,7 +17,7 @@ import select_TDs as TD
 
 if __name__ == '__main__':
     analysis_only = False
-    compute_TDs = False
+    compute_TDs = True
 
     # define project path
     project_path = Path(__file__).parents[1]
@@ -30,7 +30,7 @@ if __name__ == '__main__':
     es.import_data(config)
     
     if compute_TDs:
-        data_dir = '/home/pjacques/Desktop/PhD/EnergyScope_repos/EnergyScope_TK/energyscope/preprocessing/STEP_1_TD_selection'
+        data_dir = '/home/pjacques/Desktop/PhD/EnergyScope_GEMMES_coupling/EnergyScope_TK/energyscope/preprocessing/STEP_1_TD_selection'
         TD.build_TD_of_days(config, data_dir)
 
     ##TODO Student work: Write the updates in data HERE
