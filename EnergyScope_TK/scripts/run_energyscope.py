@@ -17,7 +17,7 @@ import select_TDs as TD
 
 if __name__ == '__main__':
     analysis_only = False
-    compute_TDs = True
+    compute_TDs = False
 
     # define project path
     project_path = Path(__file__).parents[1]

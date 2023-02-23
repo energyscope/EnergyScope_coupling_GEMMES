@@ -1,7 +1,7 @@
 {
     "i_rate" : 0.015,
     "re_share_primary" : 0,
-    "solar_area" : 250,
+    "solar_area" : 2085,
 	"power_density_pv" : 0.2367,
     "power_density_solar_thermal" : 0.2857,
 	"share_mobility_public_min" : 0.39,
@@ -14,7 +14,7 @@
     "share_freight_boat_max" : 0,
     "share_heat_dhn_min" : 0.02,
     "share_heat_dhn_max" : 0.37,
-    "share_ned" : {"HVC":0.779, "METHANOL":0.029, "AMMONIA":0.192},
+    "share_ned" : {"HVC":1.0, "METHANOL":0.0, "AMMONIA":0.0},
     "evs" : {"CAR": ["CAR_PHEV", "CAR_BEV"],"EVs_BATT": ["PHEV_BATT", "BEV_BATT"], "vehicule_capacity": [5.04E+01, 5.04E+01],"batt_per_car": [10.0, 50.0]},
     "state_of_charge_ev" :	{
 			"PHEV_BATT" : [0.0,0.0,0.0,0.0,0.0,0.0,0.6,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],
