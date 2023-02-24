@@ -1,6 +1,6 @@
 Category;Subcategory;parameter name;HOUSEHOLDS;SERVICES;INDUSTRY;TRANSPORTATION ;Units 
-Electricity;baseload;ELECTRICITY;44461.1;58607.8;97006.1;2020.96;[GWh] 
-Electricity;variable;LIGHTING;22025.1;29033.1;48054.7;1001.14;[GWh] 
+Electricity;baseload;ELECTRICITY;29616.7;39040.2;64618.3;1346.21;[GWh] 
+Electricity;variable;LIGHTING;14671.5;19339.7;32010.5;666.886;[GWh] 
 Heat;high temperature;HEAT_HIGH_T;0.0;5255.0;124043.0;0.0;[GWh] 
 Heat;space heating;HEAT_LOW_T_SH;226273.0;67873.0;26000.0;0.0;[GWh] 
 Heat;hot water;HEAT_LOW_T_HW;37861.0;10588.0;0.0;0.0;[GWh] 
