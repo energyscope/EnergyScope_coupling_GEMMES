@@ -48,7 +48,7 @@ Heat;Heat low temperature decentralised;Advanced cogeneration (Fuel cell) gas (d
 Heat;Heat low temperature decentralised;Bioler gas (decentralised); DEC_BOILER_GAS ;190.24;5.708399663;21.09;17;1;0;1;4.63;50;
 Heat;Heat low temperature decentralised;Boiler wood (decentralised); DEC_BOILER_WOOD ;554.93;19.41754846;21.09;17;1;0;1;0;1.00E+15;
 Heat;Heat low temperature decentralised;Boiler oil (decentralised); DEC_BOILER_OIL ;170.86;10.24815058;21.09;17;1;0;1;0;10;
-Heat;Heat low temperature decentralised;Solar thermal (decentralised); DEC_SOLAR ;757.56;8.405281393;221.22;20;1;0;1;1.1;1.00E+15;
+Heat;Heat low temperature decentralised;Solar thermal (decentralised); DEC_SOLAR ;757.56;8.405281393;221.22;20;1;0;1;1.1;1.1;
 Heat;Heat low temperature decentralised;Direct electrical heaters (decentralised); DEC_DIRECT_ELEC ;43.61;0.190627801;1.47;15;1;0;1;0;1.00E+01;
 CCold;Cold low temperature;Industrial electric cooling;IND_ELEC_COLD;664.97;5.37;174.79;20;0.95;0;1;0;1.00E+15;
 Cold;Cold high temperature space cooling;Electrical refrigeration cycle;DEC_ELEC_COLD;528.88;22.05;164.89;18;1;0;1;0;1.00E+15;
