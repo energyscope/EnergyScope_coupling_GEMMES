@@ -209,14 +209,14 @@ if sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]} (En
 
 
 ## Gasoline
-if sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]} (F_t ["GASOLINE", h, td]  ) > 10 then {
+if sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]} (F_t ["GASOLINE", h, td]  ) > 10 then
     printf "%s,%s,%.2f,%s,%s,%s\n", "Imp. Gasoline" , "Gasoline", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]}
                             (layers_in_out["GASOLINE","GASOLINE"] * F_t ["GASOLINE", h, td]  ) / 1000 , "Gasoline",
+    "#808080", "TWh" >> (PathName & "/sankey/input2sankey.csv");   
+if sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]} (F_t ["CAR_GASOLINE", h, td]  ) > 10 then
+    printf "%s,%s,%.2f,%s,%s,%s\n", "Gasoline" , "Mob priv", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]}
+                            (-layers_in_out["CAR_GASOLINE","GASOLINE"] * F_t ["CAR_GASOLINE", h, td] - layers_in_out["CAR_HEV","GASOLINE"] * F_t ["CAR_HEV", h, td] - layers_in_out["CAR_PHEV","GASOLINE"] * F_t ["CAR_PHEV", h, td]  ) / 1000 , "Gasoline",
     "#808080", "TWh" >> (PathName & "/sankey/input2sankey.csv");
-    printf "%s,%s,%.2f,%s,%s,%s\n", "Gasoline", "Mob priv", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]}
-                            (layers_in_out["CAR_GASOLINE","GASOLINE"] * F_t ["CAR_GASOLINE", h, td]  + layers_in_out["CAR_HEV","GASOLINE"] * F_t ["CAR_HEV", h, td]   + layers_in_out["CAR_PHEV","GASOLINE"] * F_t ["CAR_PHEV", h, td]  ) / 1000 , "Gasoline",
-    "#808080", "TWh" >> (PathName & "/sankey/input2sankey.csv");
-    }
 if sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]} (F_t ["BIOETHANOL", h, td]  ) > 10 then
     printf "%s,%s,%.2f,%s,%s,%s\n", "Imp. Bio-ethanol" , "Gasoline", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]}
                             (layers_in_out["BIOETHANOL","GASOLINE"] * F_t ["BIOETHANOL", h, td]  ) / 1000 , "Gasoline",
@@ -249,8 +249,7 @@ if sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]} ((F
 ## Gas (natural & synthetic)
 if sum {t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]} (F_t ["GAS", h, td] * t_op [h, td]) > 10 then
     printf "%s,%s,%.2f,%s,%s,%s\n", "Imp. Gas" , "Gas", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in
-        TYPICAL_DAY_OF_PERIOD[t]}(F_t ["GAS", h, td] * t_op [h, td]) / 1000 , "Gas", "#FFD700", "TWh" >>
-        (PathName & "/sankey/input2sankey.csv");
+        TYPICAL_DAY_OF_PERIOD[t]}(F_t ["GAS", h, td] * t_op [h, td] - Storage_in["GAS_STORAGE", "GAS", h, td]) / 1000 , "Gas", "#FFD700", "TWh" >> (PathName & "/sankey/input2sankey.csv");
 
 if sum {t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]} (F_t ["GAS_RE", h, td] * t_op [h, td]) > 10 then
     printf "%s,%s,%.2f,%s,%s,%s\n", "Imp. Gas RE" , "Gas", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in
@@ -259,7 +258,7 @@ if sum {t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]} (F
         # SNG use:
  # Storage?
 if F ["GAS_STORAGE"] > 0.001 then {
-        printf "%s,%s,%.2f,%s,%s,%s\n", "Gas Prod" , "Gas sto.", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in
+        printf "%s,%s,%.2f,%s,%s,%s\n", "Imp. Gas" , "Gas sto.", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in
         TYPICAL_DAY_OF_PERIOD[t]}(Storage_in["GAS_STORAGE", "GAS", h, td]  ) / 1000 ,
         "GAS", "#FFD700", "TWh" >> (PathName & "/sankey/input2sankey.csv");
         printf "%s,%s,%.2f,%s,%s,%s\n", "Gas sto." , "Gas", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in
