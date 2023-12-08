@@ -1,7 +1,396 @@
+.gitignore
+.readthedocs.yaml
 LICENSE
 NOTICE
 README.md
+VERSION
+environment.yml
 setup.py
+Data/misc_doc.json
+Data/CO 2021/Demand.csv
+Data/CO 2021/END_USES_CATEGORIES.csv
+Data/CO 2021/Layers_in_out.csv
+Data/CO 2021/Resources.csv
+Data/CO 2021/Storage_characteristics.csv
+Data/CO 2021/Storage_eff_in.csv
+Data/CO 2021/Storage_eff_out.csv
+Data/CO 2021/Technologies.csv
+Data/CO 2021/Time_series.csv
+Data/CO 2021/misc.json
+Data/CO 2021/Old/Demand ORIGINAL.csv
+Data/CO 2035/.~lock.Demand.csv#
+Data/CO 2035/Demand.csv
+Data/CO 2035/END_USES_CATEGORIES.csv
+Data/CO 2035/Layers_in_out.csv
+Data/CO 2035/Resources.csv
+Data/CO 2035/Storage_characteristics.csv
+Data/CO 2035/Storage_eff_in.csv
+Data/CO 2035/Storage_eff_out.csv
+Data/CO 2035/Technologies.csv
+Data/CO 2035/Time_series.csv
+Data/CO 2035/misc.json
+Data/CO 2035/Old/Demand.csv
+Data/CO 2035/Old/END_USES_CATEGORIES.csv
+Data/CO 2035/Old/Layers_in_out.csv
+Data/CO 2035/Old/Resources.csv
+Data/CO 2035/Old/Storage_characteristics.csv
+Data/CO 2035/Old/Storage_eff_in.csv
+Data/CO 2035/Old/Storage_eff_out.csv
+Data/CO 2035/Old/Technologies.csv
+Data/CO 2035/Old/Time_series.csv
+Data/CO 2035/Old/misc.json
+Data/TK 2019/Demand.csv
+Data/TK 2019/END_USES_CATEGORIES.csv
+Data/TK 2019/Layers_in_out.csv
+Data/TK 2019/Resources.csv
+Data/TK 2019/Storage_characteristics.csv
+Data/TK 2019/Storage_eff_in.csv
+Data/TK 2019/Storage_eff_out.csv
+Data/TK 2019/Technologies.csv
+Data/TK 2019/Time_series.csv
+Data/TK 2019/misc.json
+Data/TK 2035/Demand.csv
+Data/TK 2035/END_USES_CATEGORIES.csv
+Data/TK 2035/Layers_in_out.csv
+Data/TK 2035/Resources.csv
+Data/TK 2035/Storage_characteristics.csv
+Data/TK 2035/Storage_eff_in.csv
+Data/TK 2035/Storage_eff_out.csv
+Data/TK 2035/Technologies.csv
+Data/TK 2035/Time_series.csv
+Data/TK 2035/misc.json
+Docs/Erratum_STEP_1.pdf
+Docs/Makefile
+Docs/conf.py
+Docs/index.rst
+Docs/make.bat
+Docs/refs.bib
+Docs/requirements.txt
+Docs/images/case_study_energy_system.png
+Docs/images/estd_different_time_scales.png
+Docs/images/estd_graphical_abstract.png
+Docs/images/sankey_select_file.png
+Docs/images/belgian_data/PtG_and_CO2_layers.png
+Docs/images/belgian_data/TS_solar_th.png
+Docs/images/belgian_data/TTC_entsoe.png
+Docs/images/belgian_data/app_bestd_car_cost_transition.png
+Docs/images/belgian_data/belgium_HDD_2015.png
+Docs/images/belgian_data/c_p_t_renewables.png
+Docs/images/belgian_data/ned_pathways.png
+Docs/images/belgian_data/path_be_i_rate_and_discount_rate.png
+Docs/images/belgian_data/ts_elec_Belgium.png
+Docs/images/belgian_data/ts_mob.png
+Docs/images/belgian_data/ts_sh_Belgium.png
+Docs/images/model_formulation/EndUseDemand.png
+Docs/images/model_formulation/Layer_Elec.png
+Docs/images/model_formulation/ch_estd_code_screenshot.png
+Docs/images/model_formulation/ch_estd_repo_structure.png
+Docs/images/model_formulation/chp_estd_conceptual_framework.png
+Docs/images/model_formulation/chp_estd_lp_conceptual.png
+Docs/images/model_formulation/chp_estd_overview.png
+Docs/images/model_formulation/eqs_color.png
+Docs/images/model_formulation/gabrielli.png
+Docs/images/model_formulation/meth_process_structure.png
+Docs/images/model_formulation/ses_sets_v2.png
+Docs/images/model_formulation/table_2_4_list_of_params.png
+Docs/images/model_formulation/ts_and_Fsolv2.png
+Docs/images/model_formulation/v2gAndBatteries.png
+Docs/sections/.gitignore
+Docs/sections/Bibliography.rst
+Docs/sections/Getting started.rst
+Docs/sections/How to contribute.rst
+Docs/sections/Input Data.rst
+Docs/sections/Model formulation.rst
+Docs/sections/Overview.rst
+Docs/sections/Releases.rst
+case_studies/CO 2021/ESTD_12TD.dat
+case_studies/CO 2021/ESTD_data.dat
+case_studies/CO 2021/ESTD_main.run
+case_studies/CO 2021/es_model.mod
+case_studies/CO 2021/output/assets.txt
+case_studies/CO 2021/output/cost_breakdown.txt
+case_studies/CO 2021/output/gwp_breakdown.txt
+case_studies/CO 2021/output/log.txt
+case_studies/CO 2021/output/losses.txt
+case_studies/CO 2021/output/resources_breakdown.txt
+case_studies/CO 2021/output/sto_year.txt
+case_studies/CO 2021/output/year_balance.txt
+case_studies/CO 2021/output/hourly_data/energy_stored.txt
+case_studies/CO 2021/output/hourly_data/layer_AMMONIA.txt
+case_studies/CO 2021/output/hourly_data/layer_CO2_ATM.txt
+case_studies/CO 2021/output/hourly_data/layer_CO2_CAPTURED.txt
+case_studies/CO 2021/output/hourly_data/layer_CO2_INDUSTRY.txt
+case_studies/CO 2021/output/hourly_data/layer_COAL.txt
+case_studies/CO 2021/output/hourly_data/layer_DIESEL.txt
+case_studies/CO 2021/output/hourly_data/layer_ELECTRICITY.txt
+case_studies/CO 2021/output/hourly_data/layer_GAS.txt
+case_studies/CO 2021/output/hourly_data/layer_GASOLINE.txt
+case_studies/CO 2021/output/hourly_data/layer_H2.txt
+case_studies/CO 2021/output/hourly_data/layer_HEAT_HIGH_T.txt
+case_studies/CO 2021/output/hourly_data/layer_HEAT_LOW_T_DECEN.txt
+case_studies/CO 2021/output/hourly_data/layer_HEAT_LOW_T_DHN.txt
+case_studies/CO 2021/output/hourly_data/layer_HVC.txt
+case_studies/CO 2021/output/hourly_data/layer_LFO.txt
+case_studies/CO 2021/output/hourly_data/layer_METHANOL.txt
+case_studies/CO 2021/output/hourly_data/layer_MOB_FREIGHT_BOAT.txt
+case_studies/CO 2021/output/hourly_data/layer_MOB_FREIGHT_RAIL.txt
+case_studies/CO 2021/output/hourly_data/layer_MOB_FREIGHT_ROAD.txt
+case_studies/CO 2021/output/hourly_data/layer_MOB_PRIVATE.txt
+case_studies/CO 2021/output/hourly_data/layer_MOB_PUBLIC.txt
+case_studies/CO 2021/output/hourly_data/layer_PROCESS_COOLING.txt
+case_studies/CO 2021/output/hourly_data/layer_PT_HEAT.txt
+case_studies/CO 2021/output/hourly_data/layer_RES_GEO.txt
+case_studies/CO 2021/output/hourly_data/layer_RES_HYDRO.txt
+case_studies/CO 2021/output/hourly_data/layer_RES_SOLAR.txt
+case_studies/CO 2021/output/hourly_data/layer_RES_WIND.txt
+case_studies/CO 2021/output/hourly_data/layer_SPACE_COOLING.txt
+case_studies/CO 2021/output/hourly_data/layer_ST_HEAT.txt
+case_studies/CO 2021/output/hourly_data/layer_URANIUM.txt
+case_studies/CO 2021/output/hourly_data/layer_WASTE.txt
+case_studies/CO 2021/output/hourly_data/layer_WET_BIOMASS.txt
+case_studies/CO 2021/output/hourly_data/layer_WOOD.txt
+case_studies/CO 2021/output/sankey/input2sankey.csv
+case_studies/CO 2021/output/sankey/python_generated_sankey.html
+case_studies/CO 2035 - CO2 constraint minus 60%/ESTD_12TD.dat
+case_studies/CO 2035 - CO2 constraint minus 60%/ESTD_data.dat
+case_studies/CO 2035 - CO2 constraint minus 60%/ESTD_main.run
+case_studies/CO 2035 - CO2 constraint minus 60%/es_model.mod
+case_studies/CO 2035 - CO2 constraint minus 60%/output/assets.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/cost_breakdown.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/gwp_breakdown.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/log.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/losses.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/resources_breakdown.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/sto_year.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/year_balance.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/energy_stored.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_AMMONIA.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_CO2_ATM.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_CO2_CAPTURED.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_CO2_INDUSTRY.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_COAL.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_DIESEL.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_ELECTRICITY.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_GAS.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_GASOLINE.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_H2.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_HEAT_HIGH_T.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_HEAT_LOW_T_DECEN.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_HEAT_LOW_T_DHN.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_HVC.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_LFO.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_METHANOL.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_MOB_FREIGHT_BOAT.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_MOB_FREIGHT_RAIL.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_MOB_FREIGHT_ROAD.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_MOB_PRIVATE.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_MOB_PUBLIC.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_PROCESS_COOLING.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_PT_HEAT.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_RES_GEO.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_RES_HYDRO.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_RES_SOLAR.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_RES_WIND.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_SPACE_COOLING.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_ST_HEAT.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_URANIUM.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_WASTE.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_WET_BIOMASS.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_WOOD.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/sankey/input2sankey.csv
+case_studies/CO 2035 - CO2 constraint minus 60%/output/sankey/python_generated_sankey.html
+case_studies/CO 2035 - net zero/ESTD_12TD.dat
+case_studies/CO 2035 - net zero/ESTD_data.dat
+case_studies/CO 2035 - net zero/ESTD_main.run
+case_studies/CO 2035 - net zero/es_model.mod
+case_studies/CO 2035 - net zero/output/assets.txt
+case_studies/CO 2035 - net zero/output/cost_breakdown.txt
+case_studies/CO 2035 - net zero/output/gwp_breakdown.txt
+case_studies/CO 2035 - net zero/output/log.txt
+case_studies/CO 2035 - net zero/output/losses.txt
+case_studies/CO 2035 - net zero/output/resources_breakdown.txt
+case_studies/CO 2035 - net zero/output/sto_year.txt
+case_studies/CO 2035 - net zero/output/year_balance.txt
+case_studies/CO 2035 - net zero/output/hourly_data/energy_stored.txt
+case_studies/CO 2035 - net zero/output/hourly_data/layer_AMMONIA.txt
+case_studies/CO 2035 - net zero/output/hourly_data/layer_CO2_ATM.txt
+case_studies/CO 2035 - net zero/output/hourly_data/layer_CO2_CAPTURED.txt
+case_studies/CO 2035 - net zero/output/hourly_data/layer_CO2_INDUSTRY.txt
+case_studies/CO 2035 - net zero/output/hourly_data/layer_COAL.txt
+case_studies/CO 2035 - net zero/output/hourly_data/layer_DIESEL.txt
+case_studies/CO 2035 - net zero/output/hourly_data/layer_ELECTRICITY.txt
+case_studies/CO 2035 - net zero/output/hourly_data/layer_GAS.txt
+case_studies/CO 2035 - net zero/output/hourly_data/layer_GASOLINE.txt
+case_studies/CO 2035 - net zero/output/hourly_data/layer_H2.txt
+case_studies/CO 2035 - net zero/output/hourly_data/layer_HEAT_HIGH_T.txt
+case_studies/CO 2035 - net zero/output/hourly_data/layer_HEAT_LOW_T_DECEN.txt
+case_studies/CO 2035 - net zero/output/hourly_data/layer_HEAT_LOW_T_DHN.txt
+case_studies/CO 2035 - net zero/output/hourly_data/layer_HVC.txt
+case_studies/CO 2035 - net zero/output/hourly_data/layer_LFO.txt
+case_studies/CO 2035 - net zero/output/hourly_data/layer_METHANOL.txt
+case_studies/CO 2035 - net zero/output/hourly_data/layer_MOB_FREIGHT_BOAT.txt
+case_studies/CO 2035 - net zero/output/hourly_data/layer_MOB_FREIGHT_RAIL.txt
+case_studies/CO 2035 - net zero/output/hourly_data/layer_MOB_FREIGHT_ROAD.txt
+case_studies/CO 2035 - net zero/output/hourly_data/layer_MOB_PRIVATE.txt
+case_studies/CO 2035 - net zero/output/hourly_data/layer_MOB_PUBLIC.txt
+case_studies/CO 2035 - net zero/output/hourly_data/layer_PROCESS_COOLING.txt
+case_studies/CO 2035 - net zero/output/hourly_data/layer_PT_HEAT.txt
+case_studies/CO 2035 - net zero/output/hourly_data/layer_RES_GEO.txt
+case_studies/CO 2035 - net zero/output/hourly_data/layer_RES_HYDRO.txt
+case_studies/CO 2035 - net zero/output/hourly_data/layer_RES_SOLAR.txt
+case_studies/CO 2035 - net zero/output/hourly_data/layer_RES_WIND.txt
+case_studies/CO 2035 - net zero/output/hourly_data/layer_SPACE_COOLING.txt
+case_studies/CO 2035 - net zero/output/hourly_data/layer_ST_HEAT.txt
+case_studies/CO 2035 - net zero/output/hourly_data/layer_URANIUM.txt
+case_studies/CO 2035 - net zero/output/hourly_data/layer_WASTE.txt
+case_studies/CO 2035 - net zero/output/hourly_data/layer_WET_BIOMASS.txt
+case_studies/CO 2035 - net zero/output/hourly_data/layer_WOOD.txt
+case_studies/CO 2035 - net zero/output/sankey/input2sankey.csv
+case_studies/CO 2035 - net zero/output/sankey/python_generated_sankey.html
+case_studies/CO 2035 - no CO2 constraint/ESTD_12TD.dat
+case_studies/CO 2035 - no CO2 constraint/ESTD_data.dat
+case_studies/CO 2035 - no CO2 constraint/ESTD_main.run
+case_studies/CO 2035 - no CO2 constraint/es_model.mod
+case_studies/CO 2035 - no CO2 constraint/output/assets.txt
+case_studies/CO 2035 - no CO2 constraint/output/cost_breakdown.txt
+case_studies/CO 2035 - no CO2 constraint/output/gwp_breakdown.txt
+case_studies/CO 2035 - no CO2 constraint/output/log.txt
+case_studies/CO 2035 - no CO2 constraint/output/losses.txt
+case_studies/CO 2035 - no CO2 constraint/output/resources_breakdown.txt
+case_studies/CO 2035 - no CO2 constraint/output/sto_year.txt
+case_studies/CO 2035 - no CO2 constraint/output/year_balance.txt
+case_studies/CO 2035 - no CO2 constraint/output/hourly_data/energy_stored.txt
+case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_AMMONIA.txt
+case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_CO2_ATM.txt
+case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_CO2_CAPTURED.txt
+case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_CO2_INDUSTRY.txt
+case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_COAL.txt
+case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_DIESEL.txt
+case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_ELECTRICITY.txt
+case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_GAS.txt
+case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_GASOLINE.txt
+case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_H2.txt
+case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_HEAT_HIGH_T.txt
+case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_HEAT_LOW_T_DECEN.txt
+case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_HEAT_LOW_T_DHN.txt
+case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_HVC.txt
+case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_LFO.txt
+case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_METHANOL.txt
+case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_MOB_FREIGHT_BOAT.txt
+case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_MOB_FREIGHT_RAIL.txt
+case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_MOB_FREIGHT_ROAD.txt
+case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_MOB_PRIVATE.txt
+case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_MOB_PUBLIC.txt
+case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_PROCESS_COOLING.txt
+case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_PT_HEAT.txt
+case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_RES_GEO.txt
+case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_RES_HYDRO.txt
+case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_RES_SOLAR.txt
+case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_RES_WIND.txt
+case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_SPACE_COOLING.txt
+case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_ST_HEAT.txt
+case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_URANIUM.txt
+case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_WASTE.txt
+case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_WET_BIOMASS.txt
+case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_WOOD.txt
+case_studies/CO 2035 - no CO2 constraint/output/sankey/input2sankey.csv
+case_studies/CO 2035 - no CO2 constraint/output/sankey/python_generated_sankey.html
+case_studies/TK 2019/ESTD_12TD.dat
+case_studies/TK 2019/ESTD_data.dat
+case_studies/TK 2019/ESTD_main.run
+case_studies/TK 2019/es_model.mod
+case_studies/TK 2019/output/assets.txt
+case_studies/TK 2019/output/cost_breakdown.txt
+case_studies/TK 2019/output/gwp_breakdown.txt
+case_studies/TK 2019/output/log.txt
+case_studies/TK 2019/output/losses.txt
+case_studies/TK 2019/output/resources_breakdown.txt
+case_studies/TK 2019/output/sto_year.txt
+case_studies/TK 2019/output/year_balance.txt
+case_studies/TK 2019/output/hourly_data/energy_stored.txt
+case_studies/TK 2019/output/hourly_data/layer_AMMONIA.txt
+case_studies/TK 2019/output/hourly_data/layer_CO2_ATM.txt
+case_studies/TK 2019/output/hourly_data/layer_CO2_CAPTURED.txt
+case_studies/TK 2019/output/hourly_data/layer_CO2_INDUSTRY.txt
+case_studies/TK 2019/output/hourly_data/layer_COAL.txt
+case_studies/TK 2019/output/hourly_data/layer_DIESEL.txt
+case_studies/TK 2019/output/hourly_data/layer_ELECTRICITY.txt
+case_studies/TK 2019/output/hourly_data/layer_GAS.txt
+case_studies/TK 2019/output/hourly_data/layer_GASOLINE.txt
+case_studies/TK 2019/output/hourly_data/layer_H2.txt
+case_studies/TK 2019/output/hourly_data/layer_HEAT_HIGH_T.txt
+case_studies/TK 2019/output/hourly_data/layer_HEAT_LOW_T_DECEN.txt
+case_studies/TK 2019/output/hourly_data/layer_HEAT_LOW_T_DHN.txt
+case_studies/TK 2019/output/hourly_data/layer_HVC.txt
+case_studies/TK 2019/output/hourly_data/layer_LFO.txt
+case_studies/TK 2019/output/hourly_data/layer_METHANOL.txt
+case_studies/TK 2019/output/hourly_data/layer_MOB_FREIGHT_BOAT.txt
+case_studies/TK 2019/output/hourly_data/layer_MOB_FREIGHT_RAIL.txt
+case_studies/TK 2019/output/hourly_data/layer_MOB_FREIGHT_ROAD.txt
+case_studies/TK 2019/output/hourly_data/layer_MOB_PRIVATE.txt
+case_studies/TK 2019/output/hourly_data/layer_MOB_PUBLIC.txt
+case_studies/TK 2019/output/hourly_data/layer_PROCESS_COOLING.txt
+case_studies/TK 2019/output/hourly_data/layer_PT_HEAT.txt
+case_studies/TK 2019/output/hourly_data/layer_RES_GEO.txt
+case_studies/TK 2019/output/hourly_data/layer_RES_HYDRO.txt
+case_studies/TK 2019/output/hourly_data/layer_RES_SOLAR.txt
+case_studies/TK 2019/output/hourly_data/layer_RES_WIND.txt
+case_studies/TK 2019/output/hourly_data/layer_SPACE_COOLING.txt
+case_studies/TK 2019/output/hourly_data/layer_ST_HEAT.txt
+case_studies/TK 2019/output/hourly_data/layer_URANIUM.txt
+case_studies/TK 2019/output/hourly_data/layer_WASTE.txt
+case_studies/TK 2019/output/hourly_data/layer_WET_BIOMASS.txt
+case_studies/TK 2019/output/hourly_data/layer_WOOD.txt
+case_studies/TK 2019/output/sankey/input2sankey.csv
+case_studies/TK 2019/output/sankey/python_generated_sankey.html
+case_studies/TK 2035/ESTD_12TD.dat
+case_studies/TK 2035/ESTD_data.dat
+case_studies/TK 2035/ESTD_main.run
+case_studies/TK 2035/es_model.mod
+case_studies/TK 2035/output/assets.txt
+case_studies/TK 2035/output/cost_breakdown.txt
+case_studies/TK 2035/output/gwp_breakdown.txt
+case_studies/TK 2035/output/log.txt
+case_studies/TK 2035/output/losses.txt
+case_studies/TK 2035/output/resources_breakdown.txt
+case_studies/TK 2035/output/sto_year.txt
+case_studies/TK 2035/output/year_balance.txt
+case_studies/TK 2035/output/hourly_data/energy_stored.txt
+case_studies/TK 2035/output/hourly_data/layer_AMMONIA.txt
+case_studies/TK 2035/output/hourly_data/layer_CO2_ATM.txt
+case_studies/TK 2035/output/hourly_data/layer_CO2_CAPTURED.txt
+case_studies/TK 2035/output/hourly_data/layer_CO2_INDUSTRY.txt
+case_studies/TK 2035/output/hourly_data/layer_COAL.txt
+case_studies/TK 2035/output/hourly_data/layer_DIESEL.txt
+case_studies/TK 2035/output/hourly_data/layer_ELECTRICITY.txt
+case_studies/TK 2035/output/hourly_data/layer_GAS.txt
+case_studies/TK 2035/output/hourly_data/layer_GASOLINE.txt
+case_studies/TK 2035/output/hourly_data/layer_H2.txt
+case_studies/TK 2035/output/hourly_data/layer_HEAT_HIGH_T.txt
+case_studies/TK 2035/output/hourly_data/layer_HEAT_LOW_T_DECEN.txt
+case_studies/TK 2035/output/hourly_data/layer_HEAT_LOW_T_DHN.txt
+case_studies/TK 2035/output/hourly_data/layer_HVC.txt
+case_studies/TK 2035/output/hourly_data/layer_LFO.txt
+case_studies/TK 2035/output/hourly_data/layer_METHANOL.txt
+case_studies/TK 2035/output/hourly_data/layer_MOB_FREIGHT_BOAT.txt
+case_studies/TK 2035/output/hourly_data/layer_MOB_FREIGHT_RAIL.txt
+case_studies/TK 2035/output/hourly_data/layer_MOB_FREIGHT_ROAD.txt
+case_studies/TK 2035/output/hourly_data/layer_MOB_PRIVATE.txt
+case_studies/TK 2035/output/hourly_data/layer_MOB_PUBLIC.txt
+case_studies/TK 2035/output/hourly_data/layer_PROCESS_COOLING.txt
+case_studies/TK 2035/output/hourly_data/layer_PT_HEAT.txt
+case_studies/TK 2035/output/hourly_data/layer_RES_GEO.txt
+case_studies/TK 2035/output/hourly_data/layer_RES_HYDRO.txt
+case_studies/TK 2035/output/hourly_data/layer_RES_SOLAR.txt
+case_studies/TK 2035/output/hourly_data/layer_RES_WIND.txt
+case_studies/TK 2035/output/hourly_data/layer_SPACE_COOLING.txt
+case_studies/TK 2035/output/hourly_data/layer_ST_HEAT.txt
+case_studies/TK 2035/output/hourly_data/layer_URANIUM.txt
+case_studies/TK 2035/output/hourly_data/layer_WASTE.txt
+case_studies/TK 2035/output/hourly_data/layer_WET_BIOMASS.txt
+case_studies/TK 2035/output/hourly_data/layer_WOOD.txt
+case_studies/TK 2035/output/sankey/input2sankey.csv
+case_studies/TK 2035/output/sankey/python_generated_sankey.html
 energyscope/__init__.py
 energyscope/common.py
 energyscope.egg-info/PKG-INFO
@@ -9,3 +398,77 @@ energyscope.egg-info/SOURCES.txt
 energyscope.egg-info/dependency_links.txt
 energyscope.egg-info/requires.txt
 energyscope.egg-info/top_level.txt
+energyscope/__pycache__/__init__.cpython-310.pyc
+energyscope/__pycache__/__init__.cpython-311.pyc
+energyscope/__pycache__/__init__.cpython-38.pyc
+energyscope/__pycache__/common.cpython-310.pyc
+energyscope/__pycache__/common.cpython-311.pyc
+energyscope/__pycache__/common.cpython-38.pyc
+energyscope/energy_model/2023-10-31_09-46-05.199593.energyscope.log
+energyscope/energy_model/es_model.mod
+energyscope/energy_model/es_run.py
+energyscope/energy_model/__pycache__/es_run.cpython-310.pyc
+energyscope/energy_model/__pycache__/es_run.cpython-311.pyc
+energyscope/energy_model/__pycache__/es_run.cpython-38.pyc
+energyscope/energy_model/run/print_hourly_data.run
+energyscope/energy_model/run/print_sankey.run
+energyscope/energy_model/run/print_year_summary.run
+energyscope/postprocessing/cost.py
+energyscope/postprocessing/plots.py
+energyscope/postprocessing/postprocessing.py
+energyscope/postprocessing/__pycache__/cost.cpython-310.pyc
+energyscope/postprocessing/__pycache__/cost.cpython-311.pyc
+energyscope/postprocessing/__pycache__/cost.cpython-38.pyc
+energyscope/postprocessing/__pycache__/plots.cpython-310.pyc
+energyscope/postprocessing/__pycache__/plots.cpython-311.pyc
+energyscope/postprocessing/__pycache__/plots.cpython-38.pyc
+energyscope/postprocessing/__pycache__/postprocessing.cpython-310.pyc
+energyscope/postprocessing/__pycache__/postprocessing.cpython-311.pyc
+energyscope/postprocessing/__pycache__/postprocessing.cpython-38.pyc
+energyscope/postprocessing/draw_sankey/ESSankey.py
+energyscope/postprocessing/draw_sankey/ESTD_sankey.html
+energyscope/postprocessing/draw_sankey/__init__.py
+energyscope/postprocessing/draw_sankey/d3.min.js
+energyscope/postprocessing/draw_sankey/sankey.js
+energyscope/postprocessing/draw_sankey/__pycache__/ESSankey.cpython-310.pyc
+energyscope/postprocessing/draw_sankey/__pycache__/ESSankey.cpython-311.pyc
+energyscope/postprocessing/draw_sankey/__pycache__/ESSankey.cpython-38.pyc
+energyscope/postprocessing/draw_sankey/__pycache__/__init__.cpython-310.pyc
+energyscope/postprocessing/draw_sankey/__pycache__/__init__.cpython-311.pyc
+energyscope/postprocessing/draw_sankey/__pycache__/__init__.cpython-38.pyc
+energyscope/preprocessing/es_pre/2023-04-25_12-25-52.241270.energyscope.log
+energyscope/preprocessing/es_pre/es_read_data.py
+energyscope/preprocessing/es_pre/es_write_energy_model_data.py
+energyscope/preprocessing/es_pre/__pycache__/es_read_data.cpython-310.pyc
+energyscope/preprocessing/es_pre/__pycache__/es_read_data.cpython-311.pyc
+energyscope/preprocessing/es_pre/__pycache__/es_read_data.cpython-38.pyc
+energyscope/preprocessing/es_pre/__pycache__/es_write_energy_model_data.cpython-310.pyc
+energyscope/preprocessing/es_pre/__pycache__/es_write_energy_model_data.cpython-311.pyc
+energyscope/preprocessing/es_pre/__pycache__/es_write_energy_model_data.cpython-38.pyc
+energyscope/preprocessing/es_pre/headers/header_12td.txt
+energyscope/preprocessing/es_pre/headers/header_data.txt
+energyscope/preprocessing/es_pre/headers/run_header.txt
+energyscope/preprocessing/es_pre/headers/run_save.txt
+energyscope/preprocessing/es_pre/headers/run_solve.txt
+energyscope/preprocessing/td_selection/data.dat
+energyscope/preprocessing/td_selection/header.txt
+energyscope/preprocessing/td_selection/log.txt
+energyscope/preprocessing/td_selection/printing_outputs.run
+energyscope/preprocessing/td_selection/td_main.mod
+energyscope/preprocessing/td_selection/td_main.run
+energyscope/preprocessing/td_selection/td_of_days.out
+energyscope/preprocessing/td_selection/td_selection.py
+energyscope/preprocessing/td_selection/__pycache__/td_selection.cpython-310.pyc
+energyscope/preprocessing/td_selection/__pycache__/td_selection.cpython-311.pyc
+energyscope/preprocessing/td_selection/__pycache__/td_selection.cpython-38.pyc
+energyscope/preprocessing/utils/print_dat.py
+energyscope/preprocessing/utils/print_run.py
+energyscope/preprocessing/utils/__pycache__/print_dat.cpython-310.pyc
+energyscope/preprocessing/utils/__pycache__/print_dat.cpython-311.pyc
+energyscope/preprocessing/utils/__pycache__/print_dat.cpython-38.pyc
+energyscope/preprocessing/utils/__pycache__/print_run.cpython-310.pyc
+energyscope/preprocessing/utils/__pycache__/print_run.cpython-311.pyc
+energyscope/preprocessing/utils/__pycache__/print_run.cpython-38.pyc
+scripts/2023-11-24_16-31-56.994732.energyscope.log
+scripts/config_ref.yaml
+scripts/run_energyscope.py

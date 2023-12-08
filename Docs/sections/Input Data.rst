@@ -1,31 +1,17 @@
 
 .. _app:bestd_data:
 
-Input Data
-++++++++++
-
-**Belgian energy system data in 2035**
-
+Input Data - Colombian Energy System in 2021
+++++++++++++++++++++++++++++++++++++++++++++
 ..
-   .. caution ::
-      This section is still under construction.
-      It is built from Limpens PhD thesis (2021) available at http://dx.doi.org/10.13140/RG.2.2.25755.18724 
-
-
 .. role:: raw-latex(raw)
    :format: latex
 ..
 
+This appendix reports the input data for the application of the
+LP modeling framework to the case study of Colombia for the year 2021. The aim is to replicate the historical Colombian energy system for that specific year. It also allows to verify that EnergyScope is indeed capable of modelling accurately the Colombian energy system.
 
-
-Overview This appendix reports the input data for the application of the
-LP modeling framework to the case study of Belgium between 2015 and
-2050. Data are detailed for the year 2035 and 2015, the latter used for
-model verification. Trends to extrapolated these data for the other
-years are given. This appendix is an improved version previously
-presented in :cite:`Limpens2019,Limpens_belgian_2020`
-
-The data can be grouped into three parts: resources (Section `Resources <#app:sec:BESTD_resources>`__), demand (Section
+The data can be grouped into three parts: resources (Section `Resources <#app:sec:ESTD_CO-2021_resources>`__), demand (Section
 `Demand <#sec:app1_end_uses>`__) and technologies (Section
 `Technologies <#app:BESTD_data_technologies>`__.. For resources, the work of the JRC
 :cite:`simoes2013jrc`, Biomass atlas
@@ -120,15 +106,7 @@ for the cost of resources.
       ======== =========
 
 
-.. The current appendix is built in three parts. At first, data are given
-   for the year 2035 for resources (Section
-   `Resources <#app:sec:BESTD_resources>`__), demand (Section
-   `Demand <#sec:app1_end_uses>`__) and technologies (Section
-   `Technologies <#app:BESTD_data_technologies>`__. Then, the year 2015 is discussed
-   as real data have been collected for this case. And finally, the
-   extension of the data from year 2035 to other years are detailed.
-
-.. _app:sec:BESTD_resources:
+.. _app:sec:ESTD_CO-2021_resources:
 
 Resources
 =========
