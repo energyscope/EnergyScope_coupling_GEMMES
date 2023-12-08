@@ -1,0 +1,48 @@
+source,target,realValue,layerID,layerColor,layerUnit
+Oil,NSC,40.77,Naphtha,#8B008B,TWh
+Elec,NSC,0.48,Electricity,#00BFFF,TWh
+Heat HT,NSC,0.39,Heat HT,#DC143C,TWh
+NSC,HVC,22.42,HVC,#00FFFF,TWh
+HVC,Non-energy demand,22.42,HVC,#00FFFF,TWh
+Fossil gasoline,Gasoline,69.43,Gasoline,#808080,TWh
+Gasoline,Mob priv,34.24,Gasoline,#808080,TWh
+Bio-ethanol,Gasoline,7.17,Gasoline,#808080,TWh
+Gasoline,Freight,20.26,Gasoline,#808080,TWh
+Gasoline,Mob public,22.10,Gasoline,#808080,TWh
+Fossil diesel,Diesel,70.95,Diesel,#D3D3D3,TWh
+Bio-diesel,Diesel,2.54,Diesel,#D3D3D3,TWh
+Diesel,Mob public,53.21,Diesel,#D3D3D3,TWh
+Diesel,Freight,20.28,Diesel,#D3D3D3,TWh
+Nat. gas,Gas,79.48,Gas,#FFD700,TWh
+Nat. gas,Gas sto.,0.32,GAS,#FFD700,TWh
+Gas sto.,Gas,0.32,GAS,#FFD700,TWh
+Gas,Mob priv,6.04,GAS,#FFD700,TWh
+Gas,Elec,36.96,GAS,#FFD700,TWh
+Gas,CHP,6.50,GAS,#FFD700,TWh
+Gas,Boilers,30.30,GAS,#FFD700,TWh
+Hydro River,Elec,19.26,Hydro River,#0000FF,TWh
+Hydro Dams,Elec,41.46,Hydro Dam,#0000FF,TWh
+Coal,Elec,13.01,Coal,#A0522D,TWh
+Coal,Boilers,27.98,Coal,#A0522D,TWh
+PV,Elec,0.35,PV,#FFFF00,TWh
+Wood,CHP,3.60,Wood,#CD853F,TWh
+Wood,Boilers,30.73,Wood,#CD853F,TWh
+Elec,Freight,1.58,Electricity,#00BFFF,TWh
+Elec,Exp & Loss,3.98,Electricity,#00BFFF,TWh
+Elec,Elec demand,67.12,Electricity,#00BFFF,TWh
+Elec,Storage,9.32,Electricity,#00BFFF,TWh
+Storage,Elec demand,8.90,Electricity,#00BFFF,TWh
+Elec,refrig. cycles,2.03,Electricity,#00BFFF,TWh
+Elec,refrig. cycles,0.14,Electricity,#00BFFF,TWh
+CHP,Elec,3.48,Electricity,#00BFFF,TWh
+CHP,DHN,1.91,Heat LT,#FA8072,TWh
+CHP,Heat HT,2.96,Heat HT,#DC143C,TWh
+refrig. cycles,Space cooling,5.08,SPACE_COOLING,#FA8072,TWh
+refrig. cycles,Process cooling,0.28,PROCESS_COOLING,#FA8072,TWh
+Boilers,Dec. sto,24.46,Heat LT,#FA8072,TWh
+Boilers,Heat LT Dec,27.30,Heat LT,#FA8072,TWh
+Dec. sto,Heat LT Dec,22.48,Heat LT,#FA8072,TWh
+Boilers,Heat HT,23.90,Heat HT,#DC143C,TWh
+DHN,Heat LT DHN,1.81,Heat LT,#FA8072,TWh
+DHN,Loss DHN,0.10,Heat LT,#FA8072,TWh
+Heat HT,Ind Heat Demand,26.47,Heat HT,#DC143C,TWh
