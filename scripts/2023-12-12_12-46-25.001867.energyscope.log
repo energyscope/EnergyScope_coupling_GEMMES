@@ -1,0 +1,7 @@
+23/12/12 12:46:25 [INFO    ] (_init_num_threads): NumExpr defaulting to 8 threads.
+23/12/12 12:46:25 [INFO    ] (import_data): Importing data files from /home/pjacques/Desktop/PhD/EnergyScope/Data/CO 2035
+23/12/12 12:46:25 [INFO    ] (print_data): Printing ESTD_data.dat
+23/12/12 12:46:25 [INFO    ] (print_data): Printing ESTD_12TD.dat
+23/12/12 12:46:25 [INFO    ] (run_es): Running EnergyScope
+23/12/12 12:47:31 [INFO    ] (run_es): End of run
+23/12/12 12:47:35 [INFO    ] (read_outputs): Reading outputs from: /home/pjacques/Desktop/PhD/EnergyScope/case_studies/CO 2035 - CO2 constraint minus 60%/output

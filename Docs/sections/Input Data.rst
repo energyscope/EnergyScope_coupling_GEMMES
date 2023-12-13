@@ -13,7 +13,9 @@ LP modeling framework to the case study of Colombia for the year 2021. The aim i
 
 The data can be grouped into three parts: resources (Section `Resources <#app:sec:ESTD_CO-2021_resources>`__), demand (Section
 `Demand <#sec:app1_end_uses>`__) and technologies (Section
-`Technologies <#app:BESTD_data_technologies>`__.. For resources, the work of the JRC
+`Technologies <#app:BESTD_data_technologies>`__).
+
+For resources, the work of the JRC
 :cite:`simoes2013jrc`, Biomass atlas
 :cite:`elbersen2012atlas` and
 :cite:t:`H2coalition2020shipping` have been used to
@@ -112,7 +114,7 @@ Resources
 =========
 
 Resources can be regrouped in two categories: endogenous and exogenous.
-In the case of Belgium, endogenous resources are exclusively renewables.
+In the case of Colombia, endogenous resources are exclusively renewables.
 They account for solar, biomass, wind and hydro. The only endogenous
 resource which is non renewable is waste. In addition, energy can be
 imported from abroad (exogenous). These resources are characterised by
@@ -137,23 +139,47 @@ and used through a carbon capture technology (latter presented).
 Local renewable resources
 -------------------------
 
-The majors renewable potentials are: solar, biomass and wind.
-Additionnaly, Belgium has hydro and perhaps affordable geothermal. Wind,
-solar, hydro and geothermal are limited by the number of technologies
-deployable, while biomass is limited by the amount of resources
-available.
+The majors renewable potentials are: solar, hydro, biomass and wind.
+Additionnaly, Colombia has a limited geothermal potential. In EnergyScope, the limit for solar, hydro, geothermal and wind is expressed as a constraint on the capacity installable. The limit for biomass, on the other hand, is expressed as a constraint on the resources available. 
 
 Wind, solar, hydro and geothermal
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The energy transition relies on renewable energies, which makes their
-deployment potential a critical parameter. In 2015, 6% of the primary
-energy consumed in Belgium was renewable, mainly biomass, solar and
-wind. In the following, we summarise the potential for the different
-resources: in terms of available potential for biomass and waste (:numref:`Table %s <tab:renewableResourcesPotentialIn2035>`);
-or in terms of capacity for solar, wind, geothermal and hydro (:numref:`Table %s <tab:renewableTechPotentialIn2035>`).
-These data are put into perspective with the real data for 2015.
+The energy transition heavily relies on renewable energies, which makes their
+deployment potential a critical parameter. In 2021, 28% of the total final 
+energy consumed in Colombia was renewable, mainly biomass and hydro :cite:`IEA_2023`. In the following, we summarise the potential for the different
+resources: in terms of available potential for biomass and waste (:numref:`Table %s <tab:renewableTechPotentialIn2035>`);
+or in terms of capacity for solar, wind, geothermal and hydro (:numref:`Table %s <tab:renewableResourcesPotentialIn2035>`).
+These data are put into perspective with the real data for 2021.
 
+.. container::
+
+   .. csv-table:: Renewable resources consumed in 2021 and their potential.
+      :header: **Resources** , **2015** , **max. potential** , **Units**
+      :widths: 15 15 15 15
+      :name: tab:renewableTechPotentialIn2035
+
+		bioethanol , 7 [ffa]_ , 100 [ffb]_ , [TWh]
+		biodiesel , 3 [ffa]_ , 100 [ffb]_ , [TWh]
+		SNG , 0 , 0 , [TWh]
+		H2 , 0 , 0 , [TWh]
+		woody [gg]_ , 34 , 75 , [TWh]
+		wet , 0 [hh]_ , 50 , [TWh]
+		waste (non-RE), 0 , 10 , [TWh]
+   
+   .. [ffa]
+      Data obtained from :cite:`IEA_2023`.
+   
+   .. [ffb]
+      Reliable data for the local potential of bio-fuels could not be obtained. Thus, a reasonable order of magnitude of 100 TWh was chosen for both biodiesel and bioethanol. Using the energy content of biodiesel and bioethanol from :cite:`noauthor_conversion_nodate` and a yield of 4 t/ha, we compute that fully utilizing this biomass potential would amount to covering 5% of Colombia's surface with crops for biofuel production. In 2021, 40% of Colombia's surface was dedicated to agriculture.
+
+   .. [gg]
+      Endogenous potential. See following section.
+
+   .. [hh]
+      Colombia production of bioethanol, biomethanol, biogas and biodiesel
+      is accounted for as wet biomass.
+      
 .. container::
 
    .. csv-table:: Comparison of installed capacity of renewable energies (RE) based technologies in 2015 and their potentials in the model. Abbreviations: centralised (cen.), decentralised (dec.), maximum (max.).
@@ -172,9 +198,12 @@ These data are put into perspective with the real data for 2015.
 
 
    .. [aa]
+
       Data from :cite:`Limpens_belgian_2020` consistent with Eurostat :cite:`EurostatEnergyBalanceSheets2015`.
 
+
    .. [bb]
+
       Due to land availability, the solar potentials
       are limited to around 1% of total Belgian lands
       (250km\ \ :math:`^2`). This is equivalent to :math:`\approx`\ \ 60 GW
@@ -190,41 +219,13 @@ These data are put into perspective with the real data for 2015.
       360 GWh :cite:`EuropeanCommission2016` with an installed
       capacity of around 110 MW :cite:`Devogelaer2013`. No
       important development is
+
       foreseen :cite:`Devogelaer2013,EliaSystemOperator2017`.
 
    .. [ee]
       A prototype (Balmatt project) started in 2019 and should produce
       4-5 MW :cite:`VITO_Website`.
-
-.. container::
-
-   .. csv-table:: Renewable resources in 2015 and their potential.
-      :header: **Resources** , **2015** , **max. potential** , **Units**
-      :widths: 15 15 15 15
-      :name: tab:renewableTechPotentialIn2035
-
-		bioethanol , 0.48 [ff]_ , 0 , [TWh]
-		biodiesel , 2.89 , 0 , [TWh]
-		SNG , 0 , 0 , [TWh]
-		H2 , 0 , 0 , [TWh]
-		woody [gg]_ , 13.9 , 23.4 , [TWh]
-		wet , 11.6 [hh]_ , 38.9 , [TWh]
-		waste (non-RE), 7.87 , 17.8 , [TWh]
       
-   .. [ff]
-      Bioethanol also accounts for other bio-fuels
-      except biodiesel. In 2015, 0.21 TWh of bioethanol have been imported,
-      the rest of the biofuels have been produced locally from crops
-      :raw-latex:`\cite{EurostatEnergyBalanceSheets2015}`. In the model,
-      the crops available to produce sustainable biomass are accounted for,
-      and can produce wet or woody biomass.
-
-   .. [gg]
-      Endogenous potential. See following section.
-
-   .. [hh]
-      Belgium production of bioethanol, biomethanol, biogas and biodiesel
-      is accounted for as wet biomass.
 
 Wind, solar and biomass are foreseen to be the main resources. The land
 availability for PV is highly speculative, we propose a simple approach
@@ -234,14 +235,14 @@ roof [9]_ :cite:`Devogelaer2013` and that the efficiency in
 2035 will be 23% :cite:`DanishEnergyAgency2019` with an
 average daily total irradiation - similar to historical values - of
 2820 Wh/m\ :math:`^2` in
-Belgium :cite:`IRM_Atlas_Irradiation`. The upper limit
+Colombia :cite:`IRM_Atlas_Irradiation`. The upper limit
 becomes 59.2 GW of installed capacity [10]_. This limit is in line with
 a study performed by the Belgian TSO which proposes arbitrarily
 40 GW :cite:`EliaSystemOperator2017`. The hydro potential is
 very limited and almost fully exploited. Even if geothermal heat is used
 for heating through DHN since 1986 at Saint
 Ghislain :cite:`Delmer1997`, research about the geothermal
-potential in Belgium are at their early stages. In 2015, a new project
+potential in Colombia are at their early stages. In 2015, a new project
 started (the Balmatt project). Nowadays, the installation produces
 1.5 MW of electricity (in 2019). The project is expected to scale up to
 5 MW of electricity :cite:`VITO_Website`. However, there is
@@ -260,7 +261,7 @@ various sources. As an example, the study from
 onshore and offshore, respectively. As another example,
 :cite:t:`Dupont2017` estimates the wind potential based on
 its energy return on invested energy, in other words, its profitability.
-This study concluded that Belgium has a potential between 7 660 and
+This study concluded that Colombia has a potential between 7 660 and
 24 500 MW for onshore and between 613 and 774 MW for offshore [11]_. At
 the time of writing, the wind energy is in the spotlight with collapsing
 investment costs and a rising potential. Indeed, Europe has one of the
@@ -521,7 +522,7 @@ Since, a specific study for the Belgian case has been conducted by a consortium 
    and bio-fuels production are neglected.
    
 .. [37]
-   Belgium is phasing out coal. Coal is still used in industrial processes.
+   Colombia is phasing out coal. Coal is still used in industrial processes.
    In 2015, 33.3 TWh of coal were used. Thus, the amount available should be lower than this value.
 
 
@@ -531,7 +532,7 @@ Energy demand and political framework
 =====================================
 
 The EUD for heating, electricity and mobility in 2035 is calculated from
-the forecast done by the EUC in 2035 for Belgium (see Appendix 2 in
+the forecast done by the EUC in 2035 for Colombia (see Appendix 2 in
 :cite:`EuropeanCommission2016`). However, in
 :cite:`EuropeanCommission2016`, the FEC is given for heating
 and electricity. The difference between FEC and EUD is detailed in
@@ -668,7 +669,7 @@ By normalising the HDH, we find :math:`%_{sh}`, which is represented in
 Mobility
 --------
 
-The annual passenger transport demand in Belgium for 2035 is expected
+The annual passenger transport demand in Colombia for 2035 is expected
 to be 194 billions :cite:`EuropeanCommission2016`.
 Passenger transport demand is divided between public and private
 transport. The lower (:math:`%_{public,min}`) and upper bounds
@@ -679,7 +680,7 @@ passenger mobility demand is shared over the day according to
 day of the year. This latter is represented in Figure
 :numref:`Figure %s <fig:TS_mobPass>` (data from Figure 12 of
 :cite:`USTransportation`).
-The annual freight transport demand in Belgium for 2035 is expected to
+The annual freight transport demand in Colombia for 2035 is expected to
 be 98e09 tons kilometers :cite:`EuropeanCommission2016`.
 The freight can be supplied by trucks, trains or boats. The lower
 (:math:`%_{fr,rail,min}`) and upper bounds (:math:`%_{fr,rail,max}`) for the use of
@@ -880,7 +881,7 @@ Renewables
    efficiency in 2035 will be 23%
    :cite:`DanishEnergyAgency2019` with an average
    irradiation - similar to historical values - of 2820
-   Wh/m\ \ :math:`^2` in Belgium,
+   Wh/m\ \ :math:`^2` in Colombia,
    :cite:`IRM_Atlas_Irradiation`. The upper limit becomes
    59.2 GW of installed capacity.
 
@@ -1770,7 +1771,7 @@ summarised in :numref:`Table %s <tbl:mob_specific_costs_calculation>`.
 
 
 
-In Belgium, the car occupancy rate is less than 1.3 passengers per car:
+In Colombia, the car occupancy rate is less than 1.3 passengers per car:
 1.3 in 2015 and estimated at 1.26 in
 :cite:`BureaufederalduPlan2012`. The annual distance of a
 car depends on its type of motorization: from 9 500 km/year for a city
@@ -1916,7 +1917,7 @@ the forecast energy efficiencies for the different vehicles. For public
 vehicles in 2035, the energy efficiencies are calculated with a linear
 interpolation between the 2010 and 2050 values presented in Table 6 in
 Codina Gironès et al :cite:`codina_girones_strategic_2015`.
-For private vehicles, Estimation for energy consumption for Belgium cars
+For private vehicles, Estimation for energy consumption for Colombia cars
 in 2030 are used :cite:`BureaufederalduPlan2012`.
 
 
@@ -2177,7 +2178,7 @@ kWh/tkm for diesel and gas boats, respectively.
 Non-energy demand
 -----------------
 
-Non-energy demand plays a major role in the primary energy consumption in Belgium (20% in 2015, :cite:`EurostatEnergyBalanceSheets2015`). 
+Non-energy demand plays a major role in the primary energy consumption in Colombia (20% in 2015, :cite:`EurostatEnergyBalanceSheets2015`). 
 :cite:t:`rixhon2021comprehensive` investigates the importance of non-energy demand worlwide and its projection based on the IEA reports (:cite:`iea2018petrochemicals`). 
 Three main feedstocks have been chosen : ammonia, methanol and high-value chemicals (HVCs). This latter encompass different molecules, mainly hydrocarbons chains. 
 :numref:`Figure %s <fig:ned_prod_pathways>` illustrates the different conversion pathway to produce the different non-energy demand feedstocks.
@@ -2781,7 +2782,7 @@ technical performances of each technology.
    **c\ op** [€\ \ :sub:`2015`/tCO\ \ :sub:`2`/y]
 
 
-The PHS in Belgium can be resumed to the Coo-Trois-Ponts hydroelectric
+The PHS in Colombia can be resumed to the Coo-Trois-Ponts hydroelectric
 power station. The characteristics of the station in 2015 are the
 following: installed capacity turbine (1164MW), pumping (1035MW),
 overall efficiency of 75%, all reservoirs capacity (5000 MWh). We assume
@@ -2933,7 +2934,7 @@ Electricity grid
 No data were found for the Belgian grid. Hence, by assuming that the
 grid cost is proportional to the population, the Belgian grid cost can
 be estimated based on the known Swiss grid cost. In 2015, the population
-of Belgium and Switzerland were 11.25 and 8.24 millions, respectively
+of Colombia and Switzerland were 11.25 and 8.24 millions, respectively
 (Eurostat). The replacement cost of the Swiss electricity grid is 58.6
 billions CHF\ :sub:`2015`
 :cite:`association_des_entreprises_electriques_suisses_aes_scenarios_2012`
@@ -2958,7 +2959,7 @@ As a consequence, the estimated cost of the Belgian grid is
 :math:`58.6/1.0679\cdot 11.25/8.24=74.9` b€\ :sub:`2015`. And the extra
 cost is :math:`393/1.0679\approx 367.8` M€\ :sub:`2015`/GW.
 
-Belgium is strongly interconnected to neighbouring countries. Based on
+Colombia is strongly interconnected to neighbouring countries. Based on
 an internal report of the TSO
 :cite:`ELIA_2016_avancementInterconnexion`, the TTC is
 estimated to be 6500 GW in 2020, which is in line with another study
@@ -2968,11 +2969,11 @@ on his website is much lower, around 3100 MW: 950 MW from Netherlands,
 1800 MW from France and 350 MW from England (in 2020). This NTC is
 defined as ‘*The net transfer capacity (NTC) is the forecast transfer
 capacity agreed by Elia and its neighbouring transmission system
-operators (TSOs) for imports and exports across Belgium’s borders. [...]
+operators (TSOs) for imports and exports across Colombia’s borders. [...]
 EU Regulation 543/2013 refers to net transmission capacity as
 ‘forecasted capacity’.*’ [369]_. As explained in an internal report of
 the TSO :cite:`ELIA_ntcCalculation_2019`, the TTC is an
-upper bound of the NTC. In the literature, studies analysing the Belgium
+upper bound of the NTC. In the literature, studies analysing the Colombia
 energy system accounts for the TTC, thus this capacity was implemented
 in this work: 6500 MW in 2020. The ENTSOE published his Ten Year Network
 Development Plan for different periods up to 2040. They estimates, if
@@ -2985,41 +2986,41 @@ more or less proportionally to the existing capacities.
 
 
 .. figure:: /images/belgian_data/TTC_entsoe.png
-   :alt: Expected capacities between Belgium and neighbouring countries. Data from :cite:`ENTSO-E2019`.
+   :alt: Expected capacities between Colombia and neighbouring countries. Data from :cite:`ENTSO-E2019`.
    :name: fig:be_ttc
    :width: 14cm
 
-   Expected capacities between Belgium and neighbouring countries. Data
+   Expected capacities between Colombia and neighbouring countries. Data
    from :cite:`ENTSO-E2019`.
 
 
 Losses (:math:`\%_{\emph{net\textsubscript{loss}}}`) in the electricity
 grid are fixed to 4.7%. This is the ratio between the losses in the grid
-and the total annual electricity production in Belgium in
+and the total annual electricity production in Colombia in
 2016 :cite:`Eurostat2017`.
 
 
-In a study about “\ *electricity scenarios for Belgium towards
+In a study about “\ *electricity scenarios for Colombia towards
 2050*\ ´´, the TSO estimates the overall import capacity up to 9.88 GW
 :cite:`EliaSystemOperator2017`. The interconnections are
 built as follow: 3.4 GW from Netherlands, 4.3 GW from France, 1.0 GW
 from Germany, 1.0 GW from Great Britain and 0.18 GW from
 Luxembourg [370]_. However, a maximum simultaneous import capacity is
 fixed to 6.5 GW and justified as follow “\ *Additionally, the total
-maximum simultaneous import level for Belgium is capped at 6500 MW. For
+maximum simultaneous import level for Colombia is capped at 6500 MW. For
 a relatively small country with big and roughly adequate neighbours, the
 simulations show that a variable import volume up to the maximum of 6500
 MW can happen, thanks to the non-simultaneousness of peaks between the
 countries. But during certain hours, there is not enough generation
 capacity abroad due to simultaneous needs in two or more countries which
-will result in a lower import potential for Belgium. This effect is
+will result in a lower import potential for Colombia. This effect is
 taken into account in the model*\ ´´
 :cite:`EliaSystemOperator2017`. The same ratio of
 simultaneous import and NTC (66%) is used for the other years.
 
 Losses (:math:`%_{net_{loss}}`) in the electricity
 grid are fixed to 4.7%. This is the ratio between the losses in the grid
-and the total annual electricity production in Belgium in
+and the total annual electricity production in Colombia in
 2016 :cite:`Eurostat2017`.
 
 
@@ -3036,7 +3037,7 @@ full load of 1535 hours per year (see table 4.25 in
 :cite:`s._thalmann_analyse_2013`). The lifetime of the DHN
 is expected to be 60 years. DHN losses are assumed to be 5%.
 
-As no relevant data were found for Belgium, the DHN infrastructure cost
+As no relevant data were found for Colombia, the DHN infrastructure cost
 of Switzerland was used. As a consequence, the investment cost
 (:math:`c_{inv}`) is 825 €\ :sub:`2015`/kW\ :sub:`th`. Based on the heat
 roadmap study :cite:`Paardekooper2018`, heat provided by DHN
@@ -3060,10 +3061,10 @@ fixed. The American Council for an Energy-Efficient Economy summarises
 study about the levelised cost of energy savings
 :cite:`ACEEE2015`. They conclude that this cost is below
 0.04 USD\ :sub:`2014`/kWh saved and around 0.024 USD\ :sub:`2014`/kWh,
-hence 0.018€\ :sub:`2015`/kWh. In 2015, Belgium FEC was 415 TWh
+hence 0.018€\ :sub:`2015`/kWh. In 2015, Colombia FEC was 415 TWh
 :cite:`EurostatEnergyBalanceSheets2015` and the energy
 efficiency around 15% compare to 1990. The European target is around 35%
-in 2035, hence the energy efficiency cost for Belgium between 2015 and
+in 2035, hence the energy efficiency cost for Colombia between 2015 and
 2035 is 3.32b€\ :sub:`2015`. This result is in line with another study
 for Switzerland where the energy efficiency cost is 1.8b€\ :sub:`2015`
 for the same period and similar objectives
@@ -3090,8 +3091,8 @@ Switzerland).
 
 .. [9]
    250 km\ \ :math:`^2` represents almost a hundredth
-   of Belgium’s land area, which is 28635 km\ \ :math:`^2`. The total
-   area, accounting for water areas, of Belgium is
+   of Colombia’s land area, which is 28635 km\ \ :math:`^2`. The total
+   area, accounting for water areas, of Colombia is
    30528 km\ \ :math:`^2`. From
    https://fr.wikipedia.org/wiki/G%C3%A9ographie_de_la_Belgique, visited
    the 10/08/2020.
