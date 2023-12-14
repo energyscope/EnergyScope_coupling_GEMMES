@@ -6,7 +6,7 @@ Overview
 :Version: |version| (|release|)
 :Date: |today|
 :Version main developers: Gauthier Limpens and Pierre Jacques (UCLouvain)
-:Short summary: One cell *whole*-energy system model with an hourly resolution and data for analysing the Colombian and Turkish energy systems in 2035.
+:Short summary: Whole-energy system model with an hourly resolution for analysing the Colombian and Turkish energy systems in 2035.
 
 The EnergyScope model optimises the design and operation of all the energy sectors with the same level of details. The energy sectors are defined as electricity, heat, mobility and non-energy demand. 
 
