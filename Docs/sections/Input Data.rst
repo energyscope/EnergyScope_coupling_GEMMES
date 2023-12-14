@@ -1,7 +1,7 @@
 
 .. _app:bestd_data:
 
-Input Data - Colombian Energy System in 2021
+Input Data - Colombian Energy System
 ++++++++++++++++++++++++++++++++++++++++++++
 ..
 .. role:: raw-latex(raw)
@@ -139,51 +139,22 @@ and used through a carbon capture technology (latter presented).
 Local renewable resources
 -------------------------
 
-The majors renewable potentials are: solar, hydro, biomass and wind.
-Additionnaly, Colombia has a limited geothermal potential. In EnergyScope, the limit for solar, hydro, geothermal and wind is expressed as a constraint on the capacity installable. The limit for biomass, on the other hand, is expressed as a constraint on the resources available. 
-
-Wind, solar, hydro and geothermal
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 The energy transition heavily relies on renewable energies, which makes their
 deployment potential a critical parameter. In 2021, 28% of the total final 
-energy consumed in Colombia was renewable, mainly biomass and hydro :cite:`IEA_2023`. In the following, we summarise the potential for the different
-resources: in terms of available potential for biomass and waste (:numref:`Table %s <tab:renewableTechPotentialIn2035>`);
-or in terms of capacity for solar, wind, geothermal and hydro (:numref:`Table %s <tab:renewableResourcesPotentialIn2035>`).
-These data are put into perspective with the real data for 2021.
+energy consumed in Colombia was renewable, mainly biomass and hydro :cite:`IEA_2023`.
 
-.. container::
+The majors renewable potentials are: solar, hydro, biomass and wind.
+Additionnaly, Colombia has a limited geothermal potential. In EnergyScope, the limit for solar, wind, hydro and geothermal is expressed as a constraint on the capacity installable. The limit for biomass and waste, on the other hand, is expressed as a constraint on the resources available.
 
-   .. csv-table:: Renewable resources consumed in 2021 and their potential.
-      :header: **Resources** , **2015** , **max. potential** , **Units**
-      :widths: 15 15 15 15
-      :name: tab:renewableTechPotentialIn2035
+Solar, wind, hydro and geothermal
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-		bioethanol , 7 [ffa]_ , 100 [ffb]_ , [TWh]
-		biodiesel , 3 [ffa]_ , 100 [ffb]_ , [TWh]
-		SNG , 0 , 0 , [TWh]
-		H2 , 0 , 0 , [TWh]
-		woody [gg]_ , 34 , 75 , [TWh]
-		wet , 0 [hh]_ , 50 , [TWh]
-		waste (non-RE), 0 , 10 , [TWh]
-   
-   .. [ffa]
-      Data obtained from :cite:`IEA_2023`.
-   
-   .. [ffb]
-      Reliable data for the local potential of bio-fuels could not be obtained. Thus, a reasonable order of magnitude of 100 TWh was chosen for both biodiesel and bioethanol. Using the energy content of biodiesel and bioethanol from :cite:`noauthor_conversion_nodate` and a yield of 4 t/ha, we compute that fully utilizing this biomass potential would amount to covering 5% of Colombia's surface with crops for biofuel production. In 2021, 40% of Colombia's surface was dedicated to agriculture.
-
-   .. [gg]
-      Endogenous potential. See following section.
-
-   .. [hh]
-      Colombia production of bioethanol, biomethanol, biogas and biodiesel
-      is accounted for as wet biomass.
+:numref:`Table %s <tab:renewableTechPotentialIn2035>` gives the Colombian potential for solar, wind, hydro and geothermal. These data are put into perspective with the values used for the calibration to the year 2021.
       
 .. container::
 
-   .. csv-table:: Comparison of installed capacity of renewable energies (RE) based technologies in 2015 and their potentials in the model. Abbreviations: centralised (cen.), decentralised (dec.), maximum (max.).
-      :header: **Technology**, **2015**\  [aa]_ , **max. potential** , **Units**
+   .. csv-table:: Comparison of installed capacity of renewable energies (RE) based technologies in 2021 and their potentials in the model. Abbreviations: centralised (cen.), decentralised (dec.), maximum (max.).
+      :header: **Technology**, **2021**\  [aa]_ , **max. potential** , **Units**
       :widths: 15 15 15 15
       :name: tab:renewableResourcesPotentialIn2035
    
@@ -215,7 +186,7 @@ These data are put into perspective with the real data for 2021.
       estimated 9 GW for onshore and 8 GW for offshore.
 
    .. [dd]
-      In 2015, the production was
+      In 2021, the production was
       360 GWh :cite:`EuropeanCommission2016` with an installed
       capacity of around 110 MW :cite:`Devogelaer2013`. No
       important development is
@@ -278,61 +249,54 @@ contributor of the energy mix with a maximum of :math:`\approx`\ 10%.
 
 
 
-Biomass and non-RE waste
-~~~~~~~~~~~~~~~~~~~~~~~~
+Biomass and non-renewable waste
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-In the literature, waste and biomass are often merged, as it is the case
-in the European commission report
-:cite:`EuropeanCommission2016`. In this thesis, a
-distinction is made between *biomass* and *waste*. Waste accounts for
+In the literature, waste and biomass are often merged. In this work however, a
+distinction is made between *biomass* and *non-renewable waste*. Non-renewable waste accounts for
 all the fossil waste, such as plastics, whereas biomass is organic and
 assumed renewable. Biomass is split into two categories: one that can be
 digested by bacteria (*wet biomass*), such as apple peel; and one that
 cannot (*woody biomass*), such as wood. Hence, the organic waste
 generated by the municipalities is accounted for in *woody or wet
-biomass* and not as fossil waste.
+biomass* and not as *non-renewable waste*. *Non-renewable waste* accounts for common sludges, municipal solid waste (MSW) landfill, MSW
+not landfill (composting, recycling) and paper cardboard.
 
-In the literature, biomass potential highly varies based on the
-assumptions made, such as the area available to produce biomass, or the
-definition of sustainable biomass.
-In an European study, :cite:t:`elbersen2012atlas` drew the
-biomass atlas of EU countries for different scenarios in terms of prices
-and potentials. According to a conservative approach, the sustainable
-scenario estimations are selected. In their work, biomass is declined in
-a larger variety of form. To adapt these data to our work, these
-varieties are aggregated into three types: woody biomass, wet biomass
-and non-RE waste. Waste accounts for common sludges, MSW landfill, MSW
-not landfill (composting, recycling) and paper cardboard. The overall
-potential is estimated to 17.8 TWh/y with an approximate price of
-10.0 €/MWh. The price is estimated as a weighted sum between the
-different variety and their specific price (given in the document). Wet
-biomass accounts for all the digestible biomass, which are verge gras,
-perennials (grassy), prunings, total manure, grass cuttings abandoned
-grassland, animal waste and forrage maize (biogas). The overall
-potential is estimated to 38.9 TWh/y with an approximate price of
-2.5 €/MWh. Woody biomass accounts for all the non-digestible biomass,
-which are roundwood (including additional harvestable roundwood), black
-liquor, landscape care wood, other industrial wood residues, perennials
-(woody), post consumer wood, saw-dust, sawmill by-products (excluding
-sawdust) and primary forestry residues. The overall potential is
-estimated to 23.4 TWh/y with an approximate price of 14.3 €/MWh.
+:numref:`Table %s <tab:renewableResourcesPotentialIn2035>` gives the Colombian potential for biomass and non-renewable waste, together with their values used for the calibration to the year 2021.
 
-Oleaginous (0.395 TWh/y) and sugary (0 TWh/y) potentials are two order
-of magnitude below the previous categories and thus neglected.
+.. container::
 
-However, these costs do not account for treatment and transportation.
-Based on a local expert (from Coopeos), a MWh of wood ready to use for
-small wood boilers is negotiated around 28 €/MWh today, twice much than
-estimated prices. This order of magnitude is in line with the Joint
-Research Center price estimation in 2030
-:cite:`simoes2013jrc`. Thus, the price proposed in
-:cite:`elbersen2012atlas` are doubled. It results in prices
-for woody biomass, wet biomass and waste of 28.5, 5.0 and 20.0  €/MWh in
-2015, respectively. The price for biomass is expected to increase by
-27.7% up to 2050 :cite:`simoes2013jrc`. By adapting these
-value to 2035, the prices are for 32.8 €/MWh woody biomass, 5.8 €/MWh
-for wet biomass and for 23.1 €/MWh for waste.
+   .. csv-table:: Biomass and waste resources consumed in 2021 and their potential.
+      :header: **Resources** , **2021** , **Max. potential** , **Units**
+      :widths: 15 15 15 15
+      :name: tab:renewableTechPotentialIn2035
+
+		bioethanol , 7.2 [7a]_ , 100 [7b]_ , [TWh]
+		biodiesel , 2.5 [7a]_ , 100 [7b]_ , [TWh]
+		woody biomass , 34.3 [7c]_ , 75.0 [7d]_ , [TWh]
+		wet biomass , 0 , 49.8 [7e]_ , [TWh]
+		non-renewable waste, 0 , 10.3 [7f]_ , [TWh]
+   
+   .. [7a]
+      Data obtained from :cite:`IEA_2023` and slightly adapted for calibration purpose.
+   
+   .. [7b]
+      Reliable data for the local potential of bio-fuels could not be obtained. Thus, a reasonable order of magnitude of 100 TWh was chosen for both biodiesel and bioethanol. Using the energy content of biodiesel and bioethanol from :cite:`noauthor_conversion_nodate` and a yield of 4 t/ha, we compute that fully utilizing this biomass potential would amount to covering 5% of Colombia's surface with crops for biofuel production. In 2021, 40% of Colombia's surface was dedicated to agriculture.
+
+   .. [7c]
+      Endogenous computation, based on input data from Section XXX. This value matches grossly the primary solid biomass data for year 2019 given in :cite:`IEA_world_energy_balances`.
+      
+   .. [7d]
+      According to :cite:`RE_potential_2023`, :cite:`UPME_2009` gives a biomass gross energy potential for Colombia of 124.9 TWh and :cite:`TECSOL_2018` gives a biogas potential of 14.9 TWh. In Energyscope, biogas is produced based on *wet biomass*, with a conversino factor in 2021 of 3.35. By using this conversion factor, we can transform the biogas potential into a wet biomass potential of 49.8 TWh. Finally, subtracting the wet biomass potential from the biomass gross energy potential gives the potential for woody biomass.
+   
+
+   .. [7e]
+      Bloub
+
+   .. [7f]
+      Belgium production of bioethanol, biomethanol, biogas and biodiesel
+      is accounted for as wet biomass -> hum hum
 
 Imported resources
 ------------------
