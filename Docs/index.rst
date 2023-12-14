@@ -5,7 +5,7 @@
 
 The EnergyScope model
 =====================
-The EnergyScope project is an open-source whole-energy system for regional energy system. The model optimises the design and hourly operation over a year for a target year.
+EnergyScope is an open-source whole-energy model for national or regional energy systems. The model optimises the design and hourly operation of the energy system over a target year.
 
 
 .. .. figure:: /images/estd_graphical_abstract.png
@@ -14,7 +14,7 @@ The EnergyScope project is an open-source whole-energy system for regional energ
    :width: 16cm
 
 EnergyScope is developed by EPFL (Switzerland) and UCLouvain (Belgium).
-This documentation introduces the *core* model EnergyScope with  performances details in the :doc:`/sections/Overview` section.
+This documentation introduces the *core* EnergyScope model. Its main performances are detailed in the :doc:`/sections/Overview` section.
 It has been applied to various countries and extended to face most of its limitations.
 For more information on versions, applications, and acknowledgments, see the :doc:`/sections/Releases` section.
 

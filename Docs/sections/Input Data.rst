@@ -8,8 +8,7 @@ Input Data - Colombian Energy System
    :format: latex
 ..
 
-This appendix reports the input data for the application of the
-LP modeling framework to the case study of Colombia for the year 2021. The aim is to replicate the historical Colombian energy system for that specific year. It also allows to verify that EnergyScope is indeed capable of modelling accurately the Colombian energy system.
+This section details the input data utilized in applying the LP modeling framework to the Colombia case study. The primary objective is provide data to reproduce the historical Colombian energy system for the year 2021, serving as a validation of EnergyScope's accuracy in modeling this intricate system. Additionally, we provide data for modeling a prospective Colombian energy system for the year 2035.
 
 The data can be grouped into three parts: resources (Section `Resources <#app:sec:ESTD_CO-2021_resources>`__), demand (Section
 `Demand <#sec:app1_end_uses>`__) and technologies (Section
@@ -149,56 +148,42 @@ Additionnaly, Colombia has a limited geothermal potential. In EnergyScope, the l
 Solar, wind, hydro and geothermal
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-:numref:`Table %s <tab:renewableTechPotentialIn2035>` gives the Colombian potential for solar, wind, hydro and geothermal. These data are put into perspective with the values used for the calibration to the year 2021.
+:numref:`Table %s <tab:renewableTechPotentialIn2035>` gives the Colombian potential for solar, wind, hydro and geothermal energy. These data are put into perspective with the values used for the calibration to the year 2021.
       
 .. container::
 
-   .. csv-table:: Comparison of installed capacity of renewable energies (RE) based technologies in 2021 and their potentials in the model. Abbreviations: centralised (cen.), decentralised (dec.), maximum (max.).
-      :header: **Technology**, **2021**\  [aa]_ , **max. potential** , **Units**
+   .. csv-table:: Comparison of installed capacity of technologies for renewable electricity production in 2021 with their maximum potentials. Abbreviations: maximum (max.), photovoltaic panel (PV), Concentrated Solar Power (CSP).
+      :header: **Technology**, **2021**\  [6a]_ , **max. potential** , **Units**
       :widths: 15 15 15 15
       :name: tab:renewableResourcesPotentialIn2035
    
-      photovoltaic , 3.85 , :math:`\approx`\ 60 [bb]_ , [GW]
-      onshore wind , 1.18 , 10 [cc]_ , [GW]
-      offshore wind , 0.69 , 3.5 , [GW]
-      hydro river , 0.11 [dd]_ , 0.120 , [GW]
-      geothermal , 0 , :math:`\approx`\ 0 [ee]_ , [GW]
-      geothermal , :math:`\approx`\ 0 , :math:`\approx`\ 0 , [GW]
-      cen. solar th. , 0 , :math:`\approx` 70 , [GW]
-      dec. solar th. , 0 , :math:`\approx` 70 , [GW]
+      hydro dam , 8.14 [6b]_ , 0.120 , [GW]
+      hydro river , 3.78 [6b]_ , 0.120 , [GW]
+      rooftop PV , 0.12 , :math:`\approx`\ 60 [bb]_ , [GW]
+      utility scale PV , 0 , :math:`\approx`\ 60 [bb]_ , [GW]
+      onshore wind , 0.02 , 10 [cc]_ , [GW]
+      offshore wind , 0 , 3.5 , [GW]
+      geothermal , 0 ,  0 [ee]_ , [GW]
+      CSP parabolic trough , 0 , :math:`\approx` 70 , [GW]
+      CSP solar tower , 0 , :math:`\approx` 70 , [GW]
 
 
-   .. [aa]
+   .. [6a]
+      Data from :cite:`IEA_2023`.
 
-      Data from :cite:`Limpens_belgian_2020` consistent with Eurostat :cite:`EurostatEnergyBalanceSheets2015`.
-
-
-   .. [bb]
-
-      Due to land availability, the solar potentials
-      are limited to around 1% of total Belgian lands
-      (250km\ \ :math:`^2`). This is equivalent to :math:`\approx`\ \ 60 GW
-      of PV or :math:`\approx`\ \ 70 GW of solar thermal.
+   .. [6b]
+      :cite:`IEA_2023` gives an installed hydropower capacity of 11.91 GW in 2021. We split it between hydro dam and hydro river according to percentages received from Departamento Nacional de Planeación (DNP), the Colombian National Planning Department.
 
    .. [cc]
       From :cite:`limpens2018electricity`.
       In line with :cite:`EliaSystemOperator2017` which
       estimated 9 GW for onshore and 8 GW for offshore.
 
-   .. [dd]
-      In 2021, the production was
-      360 GWh :cite:`EuropeanCommission2016` with an installed
-      capacity of around 110 MW :cite:`Devogelaer2013`. No
-      important development is
-
-      foreseen :cite:`Devogelaer2013,EliaSystemOperator2017`.
-
    .. [ee]
       A prototype (Balmatt project) started in 2019 and should produce
       4-5 MW :cite:`VITO_Website`.
-      
 
-Wind, solar and biomass are foreseen to be the main resources. The land
+The land
 availability for PV is highly speculative, we propose a simple approach
 to estimate an order of magnitude of this limit. Assuming that it exists
 today 250 km\ :math:`^2` of available well oriented
@@ -275,8 +260,8 @@ not landfill (composting, recycling) and paper cardboard.
 		bioethanol , 7.2 [7a]_ , 100 [7b]_ , [TWh]
 		biodiesel , 2.5 [7a]_ , 100 [7b]_ , [TWh]
 		woody biomass , 34.3 [7c]_ , 75.0 [7d]_ , [TWh]
-		wet biomass , 0 , 49.8 [7e]_ , [TWh]
-		non-renewable waste, 0 , 10.3 [7f]_ , [TWh]
+		wet biomass , 0 , 49.8 [7d]_ , [TWh]
+		non-renewable waste, 0 , 10.3 [7e]_ , [TWh]
    
    .. [7a]
       Data obtained from :cite:`IEA_2023` and slightly adapted for calibration purpose.
@@ -288,15 +273,11 @@ not landfill (composting, recycling) and paper cardboard.
       Endogenous computation, based on input data from Section XXX. This value matches grossly the primary solid biomass data for year 2019 given in :cite:`IEA_world_energy_balances`.
       
    .. [7d]
-      According to :cite:`RE_potential_2023`, :cite:`UPME_2009` gives a biomass gross energy potential for Colombia of 124.9 TWh and :cite:`TECSOL_2018` gives a biogas potential of 14.9 TWh. In Energyscope, biogas is produced based on *wet biomass*, with a conversino factor in 2021 of 3.35. By using this conversion factor, we can transform the biogas potential into a wet biomass potential of 49.8 TWh. Finally, subtracting the wet biomass potential from the biomass gross energy potential gives the potential for woody biomass.
+      According to :cite:`RE_potential_2023`, :cite:`UPME_2009` gives a gross energy potential from waste biomass in Colombia of 124.9 TWh and :cite:`TECSOL_2018` gives a biogas potential of 14.9 TWh. In Energyscope, biogas is produced based on *wet biomass*, with a conversion factor  of 3.35 in 2021. By using this conversion factor, we can transform the biogas potential into a wet biomass potential of 49.8 TWh. Finally, subtracting the wet biomass potential from the gross energy potential from waste biomass gives the potential for woody biomass.
    
 
-   .. [7e]
-      Bloub
+   .. [7e] Data obtained from Departamento Nacional de Planeación (DNP), the Colombian National Planning Department
 
-   .. [7f]
-      Belgium production of bioethanol, biomethanol, biogas and biodiesel
-      is accounted for as wet biomass -> hum hum
 
 Imported resources
 ------------------

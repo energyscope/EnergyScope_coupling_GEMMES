@@ -39,7 +39,7 @@ system (especially for short-term dynamics) and computational time.
 These two steps can be computed independently. Usually, the first step
 is computed once for an energy system with given weather data whereas
 the second step is computed several times (once for each different
-scenario). The following :numref:`Figure %s <fig:ProcessStructure>`  illustrates the overall structure of the code.
+scenario). :numref:`Figure %s <fig:ProcessStructure>`  illustrates the overall structure of the code.
 
 .. figure:: /images/model_formulation/meth_process_structure.png
    :alt: Overview of the EnergyScope TD framework in two-steps.
@@ -74,7 +74,7 @@ Clustering methods
 
 In a previous work :cite:`Limpens2019`, it has been estimated 
 that 12 typical days were appropriate for this model. 
-Moreover, a comparison between different clustering algorithm shown that the method of 
+Moreover, a comparison between different clustering algorithms showed that the method of 
 :cite:`Dominguez-Munoz2011` had the best performances.
 
 .. caution :: 
