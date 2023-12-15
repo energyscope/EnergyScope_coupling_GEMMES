@@ -3,7 +3,7 @@ Overview
 .. _label_sec_overview:
 
 
-:Version: |version| (|release|)
+:Version: |version| ESTD |release|
 :Date: |today|
 :Version main developers: Gauthier Limpens and Pierre Jacques (UCLouvain)
 :Short summary: Whole-energy system model with an hourly resolution for analysing the Colombian and Turkish energy systems in 2035.

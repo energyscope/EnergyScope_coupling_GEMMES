@@ -1,7 +1,7 @@
 
-.. _app:bestd_data:
+.. _app:estd_co_data:
 
-Input Data - Colombian Energy System
+Input Data - Colombia
 ++++++++++++++++++++++++++++++++++++++++++++
 ..
 .. role:: raw-latex(raw)
