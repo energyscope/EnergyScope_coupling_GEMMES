@@ -409,7 +409,7 @@ subject to max_dhn_heat_demand {h in HOURS, td in TYPICAL_DAYS}:
 subject to peak_lowT_dhn:
 	sum {j in TECHNOLOGIES_OF_END_USES_TYPE ["HEAT_LOW_T_DHN"], i in STORAGE_OF_END_USES_TYPES["HEAT_LOW_T_DHN"]} (F [j] + F[i]/storage_discharge_time[i]) >= peak_sh_factor * Max_Heat_Demand;
 
-# [Eq. TODO] Peak in space cooling
+# [Eq. 2.32-bis] Peak in space cooling
 subject to peak_space_cooling {j in TECHNOLOGIES_OF_END_USES_TYPE["SPACE_COOLING"], h in HOURS, td in TYPICAL_DAYS}:
 	F [j] >= peak_sc_factor * F_t [j, h, td] ;
 
@@ -467,26 +467,31 @@ subject to impose_hydro_dams_inflow {h in HOURS, td in TYPICAL_DAYS}:
 subject to limit_hydro_dams_output {h in HOURS, td in TYPICAL_DAYS}:
 	Storage_out ["DAM_STORAGE", "ELECTRICITY", h, td] <= F ["HYDRO_DAM"];
 
-# [Eq. TODO] Limit surface area for solar
+# [Eq. 43]	
+# Limit on solar multiple of csp plants (by definition, sm = (F_coll*eta_pb)/F_pb
+subject to sm_limit_solar_tower:
+	layers_in_out ["ST_POWER_BLOCK", "ST_HEAT"] * F["ST_COLLECTOR"] <= sm_max * F["ST_POWER_BLOCK"];
+
+# [Eq. 44]
+subject to sm_limit_parabolic_trough:
+	layers_in_out ["PT_POWER_BLOCK", "ST_HEAT"] * F["PT_COLLECTOR"] <= sm_max * F["PT_POWER_BLOCK"];
+
+# [Eq. 45] Limit surface area for rooftop solar
 subject to solar_area_rooftop_limited:
 	(F["PV_ROOFTOP"])/power_density_pv +(F["DEC_SOLAR"]+F["DHN_SOLAR"])/power_density_solar_thermal <= solar_area_rooftop;
 
+# [Eq. 46] Limit surface area for land solar
 subject to solar_area_ground_limited:
 	(F["PV_UTILITY"])/power_density_pv
 		- (layers_in_out ["PT_POWER_BLOCK", "PT_HEAT"]*F["PT_COLLECTOR"]+layers_in_out ["ST_POWER_BLOCK", "ST_HEAT"]*F["ST_COLLECTOR"])/power_density_pv
 <= solar_area_ground;
 
+# [Eq. 47] Limit high-irradiation land surface area for CSP plants
 subject to solar_area_ground_high_irr_limited:
 	-(layers_in_out ["PT_POWER_BLOCK", "PT_HEAT"]*F["PT_COLLECTOR"]
 		+layers_in_out ["ST_POWER_BLOCK", "ST_HEAT"]*F["ST_COLLECTOR"])/power_density_pv
 <= solar_area_ground_high_irr;
 
-# Limit on solar multiple of csp plants (by definition, sm = (F_coll*eta_pb)/F_pb
-subject to sm_limit_solar_tower:
-	layers_in_out ["ST_POWER_BLOCK", "ST_HEAT"] * F["ST_COLLECTOR"] <= sm_max * F["ST_POWER_BLOCK"];
-
-subject to sm_limit_parabolic_trough:
-	layers_in_out ["PT_POWER_BLOCK", "ST_HEAT"] * F["PT_COLLECTOR"] <= sm_max * F["PT_POWER_BLOCK"];
 
 ##########################
 ### OBJECTIVE FUNCTION ###

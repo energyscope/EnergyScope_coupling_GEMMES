@@ -672,8 +672,17 @@ the independent and dependent variables, respectively.
       | :math:`\textbf{Sto}_ | [GWh]                | Energy stored over   |
       | {\textbf{level}}(    |                      | the year             |
       | sto,t)`              |                      |                      |
-      +----------------------+----------------------+----------------------+
-
+      +----------------------+----------------------+----------------------+ 
+      | :math:`\textbf{      | [GWh]                | Constant value of    |
+      | ImportConstant}(     |                      | import over the year |
+      | RES~IMPORT~CONSTANT)`|                      |                      |
+      +----------------------+----------------------+----------------------+ 
+      | :math:`\textbf{      | [GWh]                | Constant value of    |
+      | Export}_{\textbf{    |                      | export of each       |
+      | constant}}           |                      | e-fuel over the year |
+      | (EXPORT~E~FUEL)`     |                      |                      |
+      +----------------------+----------------------+----------------------+  
+       
 .. [e]
    [Mpkm] (millions of passenger-km) for passenger mobility EUD,
    [Mtkm] (millions of ton-km) for freight EUD
@@ -684,7 +693,7 @@ Energy model formulation
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 In the following, sub-sections, the overall LP formulation is proposed through :numref:`Figure %s <fig:EndUseDemand>` and equations
- :eq:`eq:obj_func` - :eq:`eq:solarAreaLimited`.
+ :eq:`eq:obj_func` - :eq:`eq:solarAreaLandLimited`.
 The first constraints presented relate to the computation of the EUDs.
 Then, the cost, the global warming potential (GWP) and the objective
 functions are introduced. The sub-sections coming after are more specific, 
@@ -831,13 +840,12 @@ System design and operation
     f_{\text{min}} (j) \leq \textbf{F}(j) \leq f_{\text{max}} (j) ~~~~~~ \forall j \in \text{TECH}
     :label: eq:fmin_fmax
 
-The installed capacity of a technology (**F**) is constrained between
-upper and lower bounds (*f\ max* and *f\ min*),
-Eq. :eq:`eq:fmin_fmax`. This formulation allows
+Eq. :eq:`eq:fmin_fmax` imposes that the installed capacity of a technology (**F**) is constrained by
+upper and lower bounds (:math:`f_{max}` and :math:`f_{min}`). This formulation allows for
 accounting for old technologies still existing in the target year (lower
 bound), but also for the maximum deployment potential of a technology.
-For example, for offshore wind turbines, (:math:`f_{min}`) represents
-the existing installed capacity (which will still be available in the
+For example, regarding offshore wind turbines, (:math:`f_{min}`) represents
+the existing installed capacity (which will still be available in the near
 future), while (:math:`f_{max}`) represents the maximum potential.
 
 .. math::
@@ -854,23 +862,20 @@ future), while (:math:`f_{max}`) represents the maximum potential.
     \sum_{t \in T| \{h,td\} \in T\_H\_TD(t)} \textbf{F}_\textbf{t}(i,h,td) t_{op}(h,td)  \leq \text{avail} (i) ~~~~~~ \forall i \in \text{RES}
     :label: eq:res_avail
 
-
-
 The operation of resources and technologies in each period is determined
 by the decision variable :math:`\textbf{F}_{\textbf{t}}`. The capacity factor of technologies
 is conceptually divided into two components: a capacity factor for each
-period (:math:`c_{p,t}`)) depending on resource availability (e.g. renewables)
-and a yearly capacity factor (*c\ p*) accounting for technology downtime
+period (:math:`c_{p,t}`) depending on resource availability (e.g. renewables)
+and a yearly capacity factor (:math:`c_{p}`) accounting for technology downtime
 and maintenance. For a given technology, the definition of only one of
 these two is needed, the other one being fixed to the default value of
 1. For example, intermittent renewables are constrained by an hourly
 load factor (:math:`c_{p,t}\in[0;1]`) while CCGTs are constrained by
-an annual load factor (:math:`c_{p}`), in that case 96% in 2035).
+an annual load factor (:math:`c_{p}`) (with a value in that case of 96% in 2035).
 Eqs. :eq:`eq:cp_t` and :eq:`eq:c_p` link the
 installed size of a technology to its actual use in each period (:math:`\textbf{F}_{\textbf{t}}`)
 via the two capacity factors. The total use of resources is limited by
-the yearly availability (:math:`avail`),
-Eq. :eq:`eq:res_avail`.
+the yearly availability (:math:`avail`) in Eq. :eq:`eq:res_avail`.
 
 .. math::
     \sum_{i \in \text{RES}~\cup \text{TECH} \setminus \text{STO}} f(i,l) \textbf{F}_\textbf{t}(i,h,td) + \sum_{j \in \text{STO}} \bigg(\textbf{Sto}_\textbf{out}(j,l,h,td) - \textbf{Sto}_\textbf{in}(j,l,h,td)\bigg)  
@@ -880,11 +885,11 @@ Eq. :eq:`eq:res_avail`.
      
     \forall l \in L, \forall h \in H, \forall td \in TD
   
-The matrix :math:`f` defines for all technologies and resources outputs to
-(positive) and inputs (negative) layers.
+The matrix :math:`f` defines, for all technologies and resources,
+their output layers (positive) and input layers (negative).
 Eq. :eq:`eq:layer_balance` expresses the balance
 for each layer: all outputs from resources and technologies (including
-storage) are used to satisfy the EUD or as inputs to other resources and
+storage) are used to satisfy the EUDs or as inputs to other resources and
 technologies.
 
 Storage
@@ -909,12 +914,11 @@ Storage
     \textbf{Sto}_\textbf{level} (j,t) \leq \textbf{F} (j) ~~~~~~ \forall j \in \text{STO} \setminus \text{STO DAILY},\forall t \in \text{T}  
     :label: eq:Sto_level_bound
 
-
-The storage level (:math:`\textbf{Sto}_{\textbf{level}}`) at a time step (:math:`t`) is equal
-to the storage level at :math:`t-1` (accounting for the losses in
+In Eq. :eq:`eq:sto_level`, the storage level 
+(:math:`\textbf{Sto}_{\textbf{level}}`) at time step :math:`t` is defined as
+the storage level at :math:`t-1` (accounting for the losses in
 :math:`t-1`), plus the inputs to the storage, minus the output from the
-storage (accounting for input/output efficiencies),
-Eq. :eq:`eq:sto_level`:. The storage systems which can
+storage (accounting for input/output efficiencies). The storage systems which can
 only be used for short-term (daily) applications are included in the
 daily storage set (STO DAILY). For these units,
 Eq. :eq:`eq:Sto_level_bound_DAILY`: imposes
@@ -923,7 +927,7 @@ Adding this constraint drastically reduces the computational time. For
 the other storage technologies, which can also be used for seasonal
 storage, the capacity is bounded by
 Eq. :eq:`eq:Sto_level_bound`. For these units,
-the storage behaviour is thus optimized over 8760h.
+the storage behaviour is thus optimized over 8760 hours.
 
 .. math::
     \textbf{Sto}_\textbf{in}(j,l,h,td)\cdot \Big(\lceil  \eta_{sto,in}(j,l)\rceil -1 \Big) = 0  ~~~~~~ \forall j \in \text{STO},\forall l \in \text{L}, \forall h \in \text{H}, \forall td \in \text{TD}
@@ -988,7 +992,7 @@ Networks
     :label: eq:DHNCost
 
 Eq. :eq:`eq:loss` calculates network losses as a share
-(:math:`%_{net_{loss}}`) of the total energy transferred through the network. As
+(:math:`\%_{\text{net}_{loss}}`) of the total energy transferred through the network. As
 an example, losses in the electricity grid are estimated to be 4.5\% of
 the energy transferred in 2015 [8]_.
 Eqs. :eq:`eq:mult_grid` - :eq:`eq:DHNCost`
@@ -1042,32 +1046,29 @@ verifies that the freight technologies supply the overall freight demand
 Decentralised heat production
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-
 .. math::
-    \textbf{F} (Dec_{Solar}) = \sum_{j \in \text{TECH OF EUT} (\text{HeatLowTDec}) \setminus \{ 'Dec_{Solar}' \}} \textbf{F}_\textbf{sol} (j)  
+    \textbf{F} (Dec_{Solar}) = \sum_{j \in \text{TECH OF EUT} (\text{HeatLowTDec}) \setminus \{ Dec_{Solar} \}} \textbf{F}_\textbf{sol} (j)  
     :label: eq:de_strategy_dec_total_ST
 
 .. math::
-    \textbf{F}_{\textbf{t}_\textbf{sol}} (j,h,td) \leq  \textbf{F}_\textbf{sol} (j)  c_{p,t}('Dec_{Solar}',h,td)
+    \textbf{F}_{\textbf{t}_\textbf{sol}} (j,h,td) \leq  \textbf{F}_\textbf{sol} (j)  c_{p,t}(Dec_{Solar},h,td)
     :label: eq:op_strategy_dec_total_ST
 
-    \forall j \in \text{TECH OF EUT} (\text{HeatLowTDec}) \setminus \{ 'Dec_{Solar}' \}, \forall h\in H, \forall td \in TD
-
-
-\endgroup  
+    \forall j \in \text{TECH OF EUT} (\text{HeatLowTDec}) \setminus \{ Dec_{Solar} \}, \forall h\in H, \forall td \in TD
+ 
 Thermal solar is implemented as a decentralized technology. It is always
 installed together with another decentralized technology, which serves
 as backup to compensate for the intermittency of solar thermal. Thus, we
 define the total installed capacity of solar thermal
-**F**\ ('':math:`Dec_{solar}`'') as the sum of **F\ sol**\ (:math:`j`),
+**F**\ (:math:`Dec_{solar}`) as the sum of :math:`\textbf{F}_{\textbf{sol}}(j)`,
 Eq. :eq:`eq:de_strategy_dec_total_ST`,
 where :math:`\textbf{F}_{\textbf{sol}}(j)` is the solar thermal
 capacity associated to the backup technology :math:`j`.
 Eq. :eq:`eq:op_strategy_dec_total_ST`
 links the installed size of each solar thermal capacity
 :math:`\textbf{F}_{\textbf{sol}}(j)` to its actual production
-::math:`\textbf{F}_{\textbf{t}_\textbf{sol}}(j,h,td))` via the
-solar capacity factor (:math:`c_{p,t}('Dec_{solar}')`).
+::math:`\textbf{F}_{\textbf{t}_\textbf{sol}}(j,h,td)` via the
+solar capacity factor (:math:`c_{p,t}(Dec_{solar})`).
 
 .. math::
     \textbf{F}_\textbf{t} (j,h,td) + \textbf{F}_{\textbf{t}_\textbf{sol}} (j,h,td)  
@@ -1077,7 +1078,7 @@ solar capacity factor (:math:`c_{p,t}('Dec_{solar}')`).
 
     = \textbf{%}_\textbf{HeatDec}(\text{j}) \textbf{EndUses}(HeatLowT,h,td) 
 
-    \forall j \in \text{TECH OF EUT} (\text{HeatLowTDec}) \setminus \{ 'Dec_{Solar}' \}, 
+    \forall j \in \text{TECH OF EUT} (\text{HeatLowTDec}) \setminus \{ Dec_{Solar} \}, 
 
     i \in \text{TS OF DEC TECH}(j)  , \forall h\in H, \forall td \in TD
 
@@ -1093,12 +1094,12 @@ solar capacity factor (:math:`c_{p,t}('Dec_{solar}')`).
    Eq. :eq:`eq:heat_decen_share` applied to the
    electrical HPs becomes the equality between the two following terms:
    left term is the heat produced by: the eHPs
-   (:math:`\textbf{F}_{\textbf{t}}('eHPs',h,td)`), the solar panel
+   (:math:`\textbf{F}_{\textbf{t}}(eHPs,h,td)`), the solar panel
    associated to the eHPs
-   (:math:`\textbf{F}_{\textbf{t}_\textbf{sol}}('eHPs',h,td)`) and
+   (:math:`\textbf{F}_{\textbf{t}_\textbf{sol}}(eHPs,h,td)`) and
    the storage associated to the eHPs; right term is the product between
    the share of decentralised heat supplied by eHPs
-   (:math:`\textbf{%}_{\textbf{HeatDec}}('eHPs')`) and heat low temperature decentralised
+   (:math:`\textbf{%}_{\textbf{HeatDec}}(eHPs)`) and heat low temperature decentralised
    demand (:math:`\textbf{EndUses}(HeatLowT,h,td)`).
 
 A thermal storage :math:`i` is defined for each decentralised heating
@@ -1220,7 +1221,7 @@ Peak demand
     \%_{Peak_{sh}}\max_{h\in H,td\in TD}\left\{\textbf{F}_\textbf{t}(j,h,td)\right\}
     :label: eq:dec_peak
 
-    \forall j \in \text{TECH OF  EUT} (HeatLowTDEC)   \setminus \{ 'Dec_{Solar}'\}
+    \forall j \in \text{TECH OF  EUT} (HeatLowTDEC)   \setminus \{ Dec_{Solar}\}
 
 .. math::
     \sum_{\hspace{3cm}j \in \text{TECH OF EUT} (HeatLowTDHN), i \in \text{STO OF EUT}(HeatLowTDHN)}
@@ -1231,7 +1232,15 @@ Peak demand
     
     \geq
     \%_{Peak_{sh}} \max_{h\in H,td\in TD}  \big\{ \textbf{EndUses}(HeatLowTDHN,h,td) \big\}
-  
+    
+.. math::
+    \textbf{F} (j) 
+    \geq
+    \%_{Peak_{sc}}\max_{h\in H,td\in TD}\left\{\textbf{F}_\textbf{t}(j,h,td)\right\}
+    :label: eq:sc_peak
+
+    \forall j \in \text{TECH OF  EUT} (SpaceCooling)
+     
 Finally,
 Eqs. :eq:`eq:dec_peak` - :eq:`eq:dhn_peak`
 constrain the installed capacity of low temperature heat supply. Based
@@ -1244,6 +1253,9 @@ centralised heating system to have a supply capacity (production plus
 storage) higher than the peak demand. These equations force the
 installed capacity to meet the peak heating demand, i.e. which
 represents, somehow, the network adequacy  [11]_.
+Similarly to :eq:`eq:dec_peak`, :eq:`eq:sc_peak` imposes that
+the installed capacity for space cooling technologies covers the real
+peak cooling demand over the year.
 
 .. _sssec_lp_adaptation_case_study:
 
@@ -1252,7 +1264,7 @@ Adaptations for the case study
 
 Additional constraints are required to implement scenarios. Scenarios
 require six additional constraints
-(Eqs. :eq:`eq:LimitGWP` - :eq:`eq:solarAreaLimited`)
+(Eqs. :eq:`eq:LimitGWP` - :eq:`eq:solarAreaLandLimited`)
 to impose a limit on the GWP emissions, the minimum share of RE primary
 energy, the relative shares of technologies, such as gasoline cars in
 the private mobility, the cost of energy efficiency measures, the
@@ -1323,83 +1335,116 @@ mathematically implies to define the capacity of efficiency measures
 deployed to :math:`1/ (1+i_{rate})` rather than 1. The investment is
 already expressed in €\ :sub:`2015`.
 
+.. _sssec_lp_imports_exports_renewables:
+
+Additional contraints on imports, exports and renewables
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 .. math::
-    \textbf{F}_{\textbf{t}}(Electricity,h,td) \leq  elec_{import,max} ~~~~~~ \forall h \in H, \forall td \in TD
+    \textbf{F}_{\textbf{t}}(Electricity,h,td) \leq  elec_{import,max} + \textbf{F}(HVAC~Line) ~~~~~~ \forall h \in H, \forall td \in TD
     :label: eq:elecImpLimited
-
+    
 .. math::
-    \textbf{F}_{\textbf{t}}(i,h,td) \cdot t_{op} (h,td) =  \textbf{Import}_{\textbf{constant}}(i) ~~~~~~ \forall i \in \text{RES_IMPORT_CONSTANT}, h \in H, \forall td \in TD
-    :label: eq:import_resources_constant
+    \textbf{F}_{\textbf{t}}(Elec~Export,h,td) \leq  elec_{export,max} + \textbf{F}(HVAC~Line) ~~~~~~ \forall h \in H, \forall td \in TD
+    :label: eq:elecExpLimited
+    
+.. math::
+       \textbf{F}_{\textbf{t}}(i,h,td) \cdot t_{op} (h,td) =  \textbf{Import}_{\textbf{constant}}(i) ~~~~~~ \forall i \in \text{RES~IMPORT~CONSTANT}, h \in H, \forall td \in TD
+       :label: eq:import_resources_constant
+    
+.. math::
+    \textbf{F}_{\textbf{t}}(i,h,td) \cdot t_{op} (h,td) =  \textbf{Export}_{\textbf{constant}}(i) ~~~~~~ \forall i \in \text{EXPORT~E~FUEL}, h \in H, \forall td \in TD
+    :label: eq:export_efuels_constant
 
-
-
-Eq. :eq:`eq:elecImpLimited` limits the power grid
-import capacity from neighbouring countries based on a net transfer
-capacity (:math:`elec_{import,max}`). Eq. :eq:`eq:import_resources_constant` imposes that some resources are imported at a constant power. 
-For example, gas and hydrogen are supposed imported at a constant flow during the year. 
-In addition to offering a more realistic representation, this implementation makes it possible to visualise the level of storage within the region (i.e. gas, petrol ...).
-
+Eqs. :eq:`eq:elecImpLimited` and :eq:`eq:elecExpLimited` limit the power grid
+import and export capacity from/to neighbouring countries, based on the 2021 import/export capacity plus the construction of new High-Voltage transfer capacity (HVAC Line). Eq. :eq:`eq:import_resources_constant` imposes that some resources are imported at a constant power. For example, gas and hydrogen are supposed to be imported at a constant flow during the year. In addition to offering a more realistic representation, this implementation makes it possible to visualise the level of storage within the region. Eq. :eq:`eq:export_efuels_constant` imposes the same constraint as :eq:`eq:import_resources_constant`, but for the *export* of e-fuels.
+   
 .. caution::
-    Adding too many ressource to Eq. :eq:`eq:import_resources_constant` increase drastically the computational time. 
-    In this implementation, only resources expensive to store have been accounted: hydrogen and gas. 
+    Adding too many ressource to Eq. :eq:`eq:import_resources_constant` increases drastically the computational time. 
+    In this implementation, only resources expensive to store have been accounted for i.e. hydrogen and gas. 
     Other resources, such as diesel or ammonia, can be stored at a cheap price with small losses.
-    By limiting to two types of resources (hydrogen and gas), the computation time is below a minute.
-    By adding all resources, the computation time is above 6 minutes.
-
+    By limiting EXPORT-E-FUEL to two types of resources (hydrogen and gas), the computation time is below a minute.
+    When adding all imported resources to EXPORT-E-FUEL, the computational time becomes above 6 minutes.
 
 .. math::
-    \textbf{F}(PV)/power\_density_{pv} 
-    :label: eq:solarAreaLimited
+    \frac{\textbf{F}(Dam~Storage) - f_{min}(Dam~Storage)}{f_{max}(Dam~Storage) - f_{min}(Dam~Storage)} \leq \frac{\textbf{F}(Hydro~Dam) - f_{min}(Hydro~Dam)}{f_{max}(Hydro~Dam) - f_{min}(Hydro~Dam)}
+    :label: eq:link_dam_storage_to_hydro_dam
+    
+.. math::
+    \textbf{Sto}_\textbf{in}(Dam~Storage,Electricity,h,td) = \textbf{F}_{\textbf{t}}(Hydro~Dam,h,td)
+    :label: eq:dam_storage_in
 
-    + \big( \textbf{F}(Dec_{Solar}) + \textbf{F}(DHN_{Solar}) \big)/power\_density_{solar~thermal}  \leq solar_{area}
+.. math::
+    \textbf{Sto}_\textbf{out}(Dam~Storage,Electricity,h,td) \leq \textbf{F}(Hydro~Dam,h,td)
+    :label: eq:dam_storage_out
 
-In this model version, the upper limit for solar based technologies is
-calculated based on the available land area (*solar\ area*) and power
-densities of both PV (:math:`power\_density_{pv}`) and solar thermal
-(:math:`power\_density_{solar~thermal}`),
-Eq. :eq:`eq:solarAreaLimited`. The equivalence
-between an install capacity (in watt peaks Wp) and the land use (in
-:math:`km^2`) is calculated based on the power peak density
-(in [Wp/m\ :math:`^2`]). In other words, it represents the peak power of a
-one square meter of solar panel. We evaluate that PV and solar thermal
-have a power peak density of :math:`power\_density_{pv}` =0.2367 and
-:math:`power\_density_{solar~thermal}` =0.2857 [GW/km\ :math:`^2`] [12]_. Thus,
-the land use of PV is the installed power (:math:`\textbf{F}(PV)` in [GW])
-divided by the power peak density (in [GW/km\ :math:`^2`]). This area is
-a lower bound of the real installation used. Indeed, here, the
-calculated area correspond to the installed PV. However, in utility
-plants, panels are oriented perpendicular to the sunlight. As a
-consequence, a space is required to avoid shadow between rows of panels.
-In the literature, the *ground cover ratio* is defined as the total
-spatial requirements of large scale solar PV relative to the area of the
-solar panels. This ratio is estimated around five
-:cite:`dupont2020global`, which means that for each square
-meter of PV panel installed, four additional square meters are needed.
+In EnergyScope, there are two technologies related to hydro-electric dams: *Hydro Dam* and *Dam Storage*. The former relates to the electricity production function of hydro-electric dams, while the second relates to their storage function. These two functions are defined as separate technologies in EnergyScope, but of course they relate to the same physical asset. The constraints defined in eqs :eq:`eq:link_dam_storage_to_hydro_dam` - :eq:`eq:dam_storage_out` hence bind these two technologies to each other. First, eq. :eq:`eq:link_dam_storage_to_hydro_dam` imposes that the installed capacity of both technnologies must remain proportional to each other, in the proportions defined by their respective input parameters :math:`f_{min}` and :math:`f_{max}`. (Note that to improve readability, eq. :eq:`eq:link_dam_storage_to_hydro_dam` has been written in a non-linear fashion in this documentation. The equation is linear in the actual model's code). Second, eq. :eq:`eq:dam_storage_in` imposes that all electricity produced by *Hydro Dam* is immediately absorbed by *Dam Storage*. This electricity is then released by *Dam Storage*, under the constraint that the maximum electricity production of *Dam Storage* is the same one as for *Hydro Dam*.
+
+.. math::
+    \textbf{F}(ST~Collector) \cdot f(ST~Power~Block, ST~Heat) \leq sm_{max} \cdot \textbf{F}(ST~Power~Block)
+    :label: eq:limit_solar_mulitple_ST
+
+.. math::
+    \textbf{F}(PT~Collector) \cdot f(PT~Power~Block, ST~Heat) \leq sm_{max} \cdot \textbf{F}(PT~Power~Block)
+    :label: eq:limit_solar_mulitple_PT
+    
+TO DO: EXPLAIN eqs. :eq:`eq:limit_solar_mulitple_ST` - :eq:`eq:limit_solar_mulitple_PT`
+
+.. math::
+    \frac{\textbf{F}(PV~Rooftop)}{power\_density_{pv}} + \frac{\textbf{F}(Dec_{Solar}) + \textbf{F}(DHN_{Solar})}{power\_density_{solar~thermal}}  \leq solar_{area,rooftop}
+    :label: eq:solarAreaRooftopLimited
+
+.. math::
+    \frac{\textbf{F}(PV~Utility)}{power\_density_{pv}} - \frac{\textbf{F}(ST~Collector) \cdot f(ST~Power~Block, ST~Heat)}{power\_density_{csp}}\\
+    - \frac{\textbf{F}(PT~Collector) \cdot f(PT~Power~Block, PT~Heat)}{power\_density_{csp}}  \leq solar_{area,ground}
+    :label: eq:solarAreaLandLimited
+    
+.. math::
+    - \frac{\textbf{F}(ST~Collector) \cdot f(ST~Power~Block, ST~Heat)}{power\_density_{csp}}\\
+    - \frac{\textbf{F}(PT~Collector) \cdot f(PT~Power~Block, PT~Heat)}{power\_density_{csp}}  \leq solar_{area,ground,high~irr}
+    :label: eq:solarAreaGroundHighIrrLimited
+
+In this version of EnergyScope, the upper limit for the deployment of solar technologies is
+calculated based on the available areas (:math:`solar_{area}`) and power
+densities (:math:`power\_density`) of solar technologies. The conversion factor
+between an installed capacity (in watt peak (Wp)) and the surface used (in
+:math:`km^2`) is calculated based on the peak power density (in [Wp/m\ :math:`^2`]).
+Put simply, the peak power density represents the peak power of one square meter of
+solar panel. Thus, the land use of a solar technology is its installed capacity
+(:math:`\textbf{F}(\cdot)`, in [GW]) divided by its power peak density  (in [GW/km\ :math:`^2`]).
+Eq. :eq:`eq:solarAreaRooftopLimited` imposes a constraint on the available rooftop area for solar energy.
+Eq. :eq:`eq:solarAreaLandLimited`, does the same for ground area. Finally, eq. :eq:`eq:solarAreaGroundHighIrrLimited`
+proceeds similarly for ground area with high irradiation, suitable for the installation of CSP plants
+(i.e. with a Direct Normal Irradiation (DNI) superior to 1800 [kWh/m\ :math:`^2`/year]).
+Note that in eqs. :eq:`eq:solarAreaLandLimited` and :eq:`eq:solarAreaGroundHighIrrLimited`, the terms associated
+to CSP are counted as positive (the minus signs are present to compensate for the negative signs of :math:`f(\cdot)`).
 
 .. _ssec_estd_implementation:
 
 Implementation
 --------------
 
-The formulation of the MILP and LP problems has been implemented using
-an algebraic modeling language. The latter allows the representation of
+The implementation into code of the MILP and LP problems has been carried out using
+an algebraic modelling language. Such modelling language allows for the representation of
 large LP and MILP problems. Its syntax is similar to AMPL, which is -
-according to the NEOS-statistics [13]_ - the most popular format for
-representing mathematical programming problems. The formulation enable
-the use of different solvers as open sources ones, such as GLPK, or
-commercial ones, such as CPLEX or Gurobi. In the code, each of the
-equations defined above is found as it is with the corresponding
-numbering. SETS, Variables and parameters have the same names (unless
-explicitly stated in the definition of the term). :numref:`Figure %s <fig:ch2_LP_formulation_implementation_colored>` illustrates -
-for the balance constraint :eq:`eq:layer_balance` - the mathematical
+according to the NEOS-statistics [12]_ - the most popular format for
+representing mathematical programming problems. The chosen formulation enables
+the use of different solvers, be it open source ones (e.g. GLPK) or
+commercial ones (e.g. CPLEX, Gurobi). Each of the equations defined in
+this documentation is found in identical form in the code,
+together with the corresponding numbering. SETS, Variables and parameters 
+have the same names (unless explicitly stated in the definition of the term).
+:numref:`Figure %s <fig:ch2_LP_formulation_implementation_colored>`
+illustrates, for the balance constraint :eq:`eq:layer_balance`, the mathematical
 formulation presented in this work and its implementation in the code.
-Colors highlight the same elements. In the implementation, each
-constraint has a comment (starting with #) and has a name (colored in
+Colors highlight corresponding elements. In the code, each
+constraint has a comment (starting with #) and a name (colored in
 black), in this case *layer_balance*. In addition, most of the SETS,
-Variables and parameters are more explicitly named, as a first example
-the set layers is named *L* in the paper and *LAYERS* in the
-implementation; or as another example, the input efficiency who is named
-*f* in the paper and *layers_in_out* in the implementation.
+Variables and parameters are more explicitly named in the code. For example,
+the set "layers" is named *L* in the documentation and *LAYERS* in the
+code; similarly, the input efficiency is named
+*f* in the documentation and *layers_in_out* in the code.
+
 
 .. figure:: /images/model_formulation/eqs_color.png
    :alt: Comparison of equation formulation and code. This is the equation
@@ -1408,9 +1453,8 @@ implementation; or as another example, the input efficiency who is named
    :alt: Comparison of equation formulation and code.
    :name: fig:ch2_LP_formulation_implementation_colored
 
-   Comparison of equation formulation (upper equation) and code
-   implementation (lower figure). Example based on Eq.
-   :eq:`eq:layer_balance`.
+   Comparison of equations' formulation in this documentation (upper) and in the code
+   (lower). Example based on Eq. :eq:`eq:layer_balance`.
 
 The entire implementation is available on the directory
 :cite:`ESTD_v2_1_repo` and its architecture is illustrated
@@ -1520,7 +1564,8 @@ documentation to support the modeler in her/his first steps.
    and storage needed to be slightly increased compared to the results
    of the design model alone.
 
-.. [12]
+.. 
+   [12a]
    The calculation is based on the annual capacity factor, the
    conversion efficiency and the average yearly irradiation. For
    example, for PV, the efficiency in 2035 is estimated at
@@ -1533,9 +1578,9 @@ documentation to support the modeler in her/his first steps.
    :math:`2820/24\cdot0.23/0.114\approx236.7`\ \ [:math:`MW_p`/km\ \ :math:`^2`]=\ \ :math:`0.2367`
    [:math:`GW_p`/km\ \ :math:`^2`].
 
-.. [13]
+.. [12]
    NEOS Server is an Internet-based client-server application that
-   provides free access to a library of optimization solvers, statistics
+   provides free access to a library of optimization solvers. Statistics
    are available at: https://neos-server.org/neos/report.html, consulted
    the 27/01/2021.
 
