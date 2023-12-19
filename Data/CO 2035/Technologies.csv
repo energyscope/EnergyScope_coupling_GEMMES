@@ -14,7 +14,7 @@ Electricity;Electricity;Combined cycle gas turbine;CCGT;825.96;19.73031183;253;2
 Electricity;Electricity;Amonia combined cycle gas turbine;CCGT_AMMONIA ;825.96;19.55202588;260;25;0.59;0;1;0;1.00E+15;
 Electricity;Electricity;Ultra-supercritical coal power plant;COAL_US;2598.77;29.70315573;476;35;0.862792;0;1;0;0.00E+00;
 Electricity;Electricity;Intagrated gasification combined cycle with coal;COAL_IGCC;3351.65;48.94653057;479;35;0.850864;0;1;0;1.00E+15;
-Electricity;Electricity;Photovoltaic rooftop;PV_ROOFTOP;737.8867;9.726688396;3046;25;1;0;1;0.3;9.85E+01;
+Electricity;Electricity;Photovoltaic rooftop;PV_ROOFTOP;737.8867;9.726688396;3046;25;1;0;1;0.3;9.84E+01;
 Electricity;Electricity;Photovoltaic utility scale;PV_UTILITY;335.403;8.432990925;2981;25;1;0;1;0;7.08E+02;
 Electricity;Electricity;Parabolic trough power block;PT_POWER_BLOCK;1044.57;62.65;0;25;1;0;1;0;1.00E+15;
 Electricity;Electricity;Solar tower power block;ST_POWER_BLOCK;50;5;0;25;1;0;1;0;1.00E+15;

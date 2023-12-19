@@ -10,130 +10,28 @@ Input Data - Colombia
 
 This section details the input data utilized in applying the LP modeling framework to the Colombia case study. The primary objective is provide data to reproduce the historical Colombian energy system for the year 2021, serving as a validation of EnergyScope's accuracy in modeling this intricate system. Additionally, we provide data for modeling a prospective Colombian energy system for the year 2035.
 
-The data can be grouped into three parts: resources (Section `Resources <#app:sec:ESTD_CO-2021_resources>`__), demand (Section
+The data can be grouped into three parts: resources (Section `Resources <#app:sec:ESTD_CO_resources>`__), demand (Section
 `Demand <#sec:app1_end_uses>`__) and technologies (Section
-`Technologies <#app:BESTD_data_technologies>`__).
+`Technologies <#app:ESTD_CO_data_technologies>`__).
 
-For resources, the work of the JRC
-:cite:`simoes2013jrc`, Biomass atlas
-:cite:`elbersen2012atlas` and
-:cite:t:`H2coalition2020shipping` have been used to
-complement and confirm or correct the prices already reported in previous works
-:cite:`Moret2017PhDThesis,Limpens2019,limpens2020impact`.
-For energy demand, the annual demand is calculated from the work of the
-European Commission’s projections up to 2050
-:cite:`EuropeanCommission2016`. As a complement, the time
-series are all calculated on the basis of the year 2015. For
-technologies, they are characterised by the following characteristics:
-energy balances, cost (investment and maintenance), and environmental
-impact (global warming potential (GWP)). For weather dependent technologies (wind, solar, etc.), real
-production for the year 2015 was collected from the TSO.
+Regarding resources, ...
 
-For GWP and GHG emissions, LCA data are taken from the Ecoinvent
+Regarding GWP and GHG emissions, LCA data are taken from the Ecoinvent
 database v3.2 [1]_ :cite:`weidema_ecoinvent_2013` using the
 “allocation at the point of substitution” method. GWP is assessed with
-the “GWP100a - IPCC2013” indicator. For technologies, the GWP impact
+the “GWP100a - IPCC2013” indicator. For technologies, the GWP
 accounts for the technology construction; for resources, it accounts for
 extraction, transportation and combustion. In addition, data for fuel
 combustion are taken from :cite:t:`Quaschning2015`.
 
-For the cost, the reported data are the nominal values for Belgium in
-the year 2035 All costs are expressed in *real*\  [2]_ Euros for the
-year 2015 (€\ :sub:`2015`). If not specified, € refers to
-€\ :sub:`2015`. All cost data used in the model originally expressed in
-other currencies or referring to another year are converted to
-€\ :sub:`2015` to offer a coherent comparison. Most of the data come
-from a previous work :cite:`Moret2017PhDThesis,Limpens2019`,
-and were expressed in CHF\ :sub:`2015` (Based on the average annual
-exchange rate value from ECB https://www.ecb.europa.eu, the annual rate
-was 1€\ :sub:`2015` = 1.0679CHF\ :sub:`2015`). The method used for the
-year conversion is illustrated by Eq. :eq:`eqn:currency_conv`.
-
-.. math::
-    c_{inv} [\text{€}_{2015}] = c_{inv} [C_y] \cdot  \frac{\text{USD}_y}{C_y}  \cdot \frac{\text{CEPCI}_{2015} \ [\text{USD}_{2015}]}{\text{CEPCI}_y \ [\text{USD}_y]} \cdot \frac{\text{€}_{2015}}{\text{USD}_{2015}} 
-    :label: eqn:currency_conv
-
-Where :math:`C` and :math:`y` are the currency and the year in which the
-original cost data are expressed, respectively, USD is the symbol of
-American Dollars and the CEPCI
-:cite:`chemical_engineering_chemical_2016` is an index
-taking into account the evolution of the equipment cost (values reported
-in :numref:`Table %s <tbl:cepci>`). As an example, if the cost data are
-originally in EUR\ :sub:`2010`, they are first converted to
-USD\ :sub:`2010`, then brought to USD\ :sub:`2015` taking into account
-the evolution of the equipment cost (by using the CEPCI), and finally
-converted to €\ :sub:`2015`. The intermediate conversion to USD is
-motivated by the fact that the CEPCI is expressed in *nominal* USD.
-Although this conversion method is originally defined for
-technology-related costs, in this paper as a simplification it used also
-for the cost of resources.
+Regarding the costs, ... *real*\  [2]_ Euros for the
+year 2015 (€\ :sub:`2015`) ...
 
 
-.. container::
-
-   .. table:: CEPCI values :cite:`chemical_engineering_chemical_2016`
-      :name: tbl:cepci
-
-      ======== =========
-      **Year** **CEPCI**
-      ======== =========
-      1982     285.8
-      1990     357.6
-      1991     362.3
-      1992     367.0
-      1993     371.7
-      1994     376.4
-      1995     381.1
-      1996     381.7
-      1997     386.5
-      1998     389.5
-      1999     390.6
-      2000     394.1
-      2001     394.3
-      2002     395.6
-      2003     402.0
-      2004     444.2
-      2005     468.2
-      2006     499.6
-      2007     525.4
-      2008     575.4
-      2009     521.9
-      2010     550.8
-      2011     585.7
-      2012     584.6
-      2013     567.3
-      2014     576.1
-      2015     556.3
-      ======== =========
-
-
-.. _app:sec:ESTD_CO-2021_resources:
+.. _app:sec:ESTD_CO_resources:
 
 Resources
 =========
-
-Resources can be regrouped in two categories: endogenous and exogenous.
-In the case of Colombia, endogenous resources are exclusively renewables.
-They account for solar, biomass, wind and hydro. The only endogenous
-resource which is non renewable is waste. In addition, energy can be
-imported from abroad (exogenous). These resources are characterised by
-an import price and a maximum potential. Exogenous resources account for
-the import of hydrocarbons, electricity or other fuels.
-
-The availability of all resources, except for biomass, and non-RE waste,
-is set to a value high enough to allow unlimited use in the model. 
-:numref:`Table %s <tbl:prices_resources>` details the prices of
-resources (:math:`c_{op}`), the GHG emissions (:math:`gwp_{op}`) associated to their
-production, transportation and combustion; and endogenous availability
-of resources. Export of electricity are possible, but they are
-associated to a zero selling price. Two kinds of emissions are proposed:
-one accounting for the impact associated to production, transport and
-combustion (based on GWP100a -
-IPCC2013 :cite:`Moret2017PhDThesis`); the other accounting
-only for combustion (based on :cite:t:`Quaschning2015`).
-Total emissions are used to assess energy system emissions. Combustion
-only is used to calculate the direct CO2 emissions that can be captured
-and used through a carbon capture technology (latter presented).
 
 Local renewable resources
 -------------------------
@@ -142,7 +40,7 @@ The energy transition heavily relies on renewable energies, which makes their
 deployment potential a critical parameter. In 2021, 28% of the total final 
 energy consumed in Colombia was renewable, mainly biomass and hydro :cite:`IEA_2023`.
 
-The majors renewable potentials are: solar, hydro, biomass and wind.
+The major renewable potentials are: solar, hydro, biomass and wind.
 Additionnaly, Colombia has a limited geothermal potential. In EnergyScope, the limit for solar, wind, hydro and geothermal is expressed as a constraint on the capacity installable. The limit for biomass and waste, on the other hand, is expressed as a constraint on the resources available.
 
 Solar, wind, hydro and geothermal
@@ -157,15 +55,15 @@ Solar, wind, hydro and geothermal
       :widths: 15 15 15 15
       :name: tab:renewableResourcesPotentialIn2035
    
-      hydro dam , 8.14 [6b]_ , 0.120 , [GW]
-      hydro river , 3.78 [6b]_ , 0.120 , [GW]
-      rooftop PV , 0.12 , :math:`\approx`\ 60 [bb]_ , [GW]
-      utility scale PV , 0 , :math:`\approx`\ 60 [bb]_ , [GW]
-      onshore wind , 0.02 , 10 [cc]_ , [GW]
-      offshore wind , 0 , 3.5 , [GW]
-      geothermal , 0 ,  0 [ee]_ , [GW]
-      CSP parabolic trough , 0 , :math:`\approx` 70 , [GW]
-      CSP solar tower , 0 , :math:`\approx` 70 , [GW]
+      hydro dam , 8.14 [6b]_ , 51.2 [6c]_ , [GW]
+      hydro river , 3.78 [6b]_ , 27.8 [6c]_ , [GW]
+      rooftop PV , 0.12 , :math:`\approx`\ 100 [6d]_ , [GW]
+      utility scale PV , 0 , :math:`\approx`\ 700 [6d]_ , [GW]
+      onshore wind , 0.02 , 7.3 [6e]_ , [GW]
+      offshore wind , 0 , 48.8 [6f]_ , [GW]
+      geothermal , 0 ,  1.2 [6g]_ , [GW]
+      CSP parabolic trough , 0 , 13 [6d]_, [GW]
+      CSP solar tower , 0 , 13 [6d]_, [GW]
 
 
    .. [6a]
@@ -173,15 +71,23 @@ Solar, wind, hydro and geothermal
 
    .. [6b]
       :cite:`IEA_2023` gives an installed hydropower capacity of 11.91 GW in 2021. We split it between hydro dam and hydro river according to percentages received from Departamento Nacional de Planeación (DNP), the Colombian National Planning Department.
+      
+   .. [6c]
+      Data from :cite:`plazas_nino_2023`.
+      
+   .. [6d]
+      The real constraint on solar potential is not a constraint on installable capacity, but a constraint on available area, as described below.
 
-   .. [cc]
-      From :cite:`limpens2018electricity`.
-      In line with :cite:`EliaSystemOperator2017` which
-      estimated 9 GW for onshore and 8 GW for offshore.
+   .. [6e]
+      This potential corresponds to the 2050 target for onshore wind energy of the country's long-term development strategy (E2050 Colombia), as given in :cite:`IEA_2023`. This potential is in the same order of magnitude as the one indicated in :cite:`RE_potential_2023`.
 
-   .. [ee]
-      A prototype (Balmatt project) started in 2019 and should produce
-      4-5 MW :cite:`VITO_Website`.
+   .. [6f]
+      Sum of the potentials for fixed offshore wind and floating offshore wind indicated in :cite:`RE_potential_2023`. This potential is in the same order of magnitude as the one we recomputed using the database and methodology from :cite:`dupont_2018`.
+      
+   .. [6g]
+      Data from :cite:`plazas_nino_2023`. This potential is in line with the one indicated in :cite:`RE_potential_2023`.
+
+
 
 The land
 availability for PV is highly speculative, we propose a simple approach
@@ -208,31 +114,6 @@ study performed by the VITO evaluates the potential in Flanders to
 potential :cite:`Devogelaer2013`. However, because of a lack
 of reliable sources about geothermal potential, we consider the
 potential as null in the reference scenario.
-
-The wind potential is estimated to 10 GW onshore and 3.5 GW offshore
-:cite:`limpens2018electricity`. At the time of collecting
-the data (2011-2020), several potentials can be collected through
-various sources. As an example, the study from
-:cite:t:`Devogelaer2013` proposes to use 9 GW and 8 GW for
-onshore and offshore, respectively. As another example,
-:cite:t:`Dupont2017` estimates the wind potential based on
-its energy return on invested energy, in other words, its profitability.
-This study concluded that Colombia has a potential between 7 660 and
-24 500 MW for onshore and between 613 and 774 MW for offshore [11]_. At
-the time of writing, the wind energy is in the spotlight with collapsing
-investment costs and a rising potential. Indeed, Europe has one of the
-best potential worldwide and has a leading wind power industry. As an
-illustration of recent improvements the following argument motivates the
-increase of the Belgian wind potential: taller and taller wind turbines
-enable the use of faster and more constant wind. As a consequence, the
-offshore potential might be underestimated. On the other hand, the
-onshore potential might be overestimated as developers see their project
-often blocked by citizens. In a nutshell, the wind potential allowed is
-relevant, but perhaps slightly underestimated. As motivated in the
-results, due to its limited potential, wind will remain a small
-contributor of the energy mix with a maximum of :math:`\approx`\ 10%.
-
-
 
 Biomass and non-renewable waste
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -695,7 +576,7 @@ investor :math:`i_{rate}` is fixed to 1.5%, which is similar to the floating
 loan rate over a million euros (other than bank overdraft) and greater
 than the central bank interest rate.
 
-.. _app:BESTD_data_technologies:
+.. _app:ESTD_CO_data_technologies:
 
 Technologies
 ============
@@ -1930,7 +1811,6 @@ battery as presented in :numref:`Table %s <tab:StoDataAdvanced>`.
 The state of charge of the electric vehicles (:math:`soc_{ev}`) is constrained to 60% minimum at 7 am every days.
 
 
-
 Freight mobility
 ~~~~~~~~~~~~~~~~
 
@@ -2528,9 +2408,6 @@ Finally, a last technology can produce methane from hydrogen and sequestrated CO
    blend of diesel and gasoline (18% of gasoline and 39.4% of diesel).
 
 
-
-
-
 Carbon capture and storage
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -3016,9 +2893,6 @@ for the same period and similar objectives
 :cite:`_perspectives_2013` (see
 :cite:`Moret2017PhDThesis` for more details about
 Switzerland).
-
-
-
 
 
 
