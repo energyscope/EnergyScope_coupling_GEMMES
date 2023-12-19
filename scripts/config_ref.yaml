@@ -1,12 +1,12 @@
 # Case study definition
 # name of the case study. The problem formulation and ouptuts will be printed into the following relative path from main directory : case_studies/config['case_study']
-'case_study': 'CO 2035 - CO2 constraint minus 60%'
+'case_study': 'CO 2035 - no CO2 constraint'
 # number of typical days to consider
 'nbr_td': 12
 # Dictionnary with the dataframes containing all the data in the form : {'Demand': eud, 'Resources': resources, 'Technologies': technologies, 'End_uses_categories': end_uses_categories, 'Layers_in_out': layers_in_out, 'Storage_characteristics': storage_characteristics, 'Storage_eff_in': storage_eff_in, 'Storage_eff_out': storage_eff_out, 'Time_series': time_series, 'Misc': misc}
 'all_data': {}
 # Limit on emissions [ktCO2-eq./year]
-'GWP_limit': 47743
+'GWP_limit': 100000
 
 # Relative path from main directory to energyscope subdirectories and files
 'data_dir': 'Data/CO 2035'  # Folders containing the csv data files

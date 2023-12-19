@@ -499,6 +499,10 @@ the independent and dependent variables, respectively.
       | (v2g,h)`             |                      | charge for electric  |
       |                      |                      | vehicles             |
       +----------------------+----------------------+----------------------+
+      | :math:`\%_{max,      | [GWh]                | Maximum share of     |
+      | motorcycle}`         |                      | motorcycles in       |
+      |                      |                      | private mobility     |
+      +----------------------+----------------------+----------------------+
       | :math:`c_            | [M€\                 | Cost to reinforce    |
       | {grid,extra}`        | :math:`_{2015}`/GW]  | the grid per GW of   |
       |                      |                      | installed            |
@@ -1284,7 +1288,7 @@ solar technologies.
     re_{share} \sum_{j \in \text{RES} ,t \in T| \{h,td\} \in T\_H\_TD(t)} \textbf{F}_\textbf{t}(j,h,td) \cdot  t_{op} (h,td)
     
 
-To force the Belgian energy system to decrease its emissions, two lever
+To force the energy system to decrease its emissions, two lever
 can constraint the annual emissions:
 Eq. :eq:`eq:LimitGWP` imposes a maximum yearly
 emissions threshold on the GWP (:math:`gwp_{limit}`); and
@@ -1303,8 +1307,7 @@ energy share.
     
     \forall eut \in EUT, \forall j \in \text{TECH OF EUT} (eut) 
 
-
-To represent the Belgian energy system in 2015,
+To represent the national energy system under study,
 Eq. :eq:`eq:fmin_max_perc` imposes the relative
 share of a technology in its sector.
 Eq. :eq:`eq:fmin_max_perc` is complementary to
@@ -1316,6 +1319,14 @@ percentage of the total heat demand) is more intuitive and close to the
 energy planning practice than limiting its installed size. :math:`f_{min,\%}`
 and :math:`f_{max,\%}` are fixed to 0 and 1, respectively, unless otherwise
 indicated.
+
+.. math::
+    \sum_{t \in T|\{h,td\} \in T\_H\_TD(t)} \big(\textbf{F}_\textbf{t}(Motorcycle,h,td)
+    + \textbf{F}_\textbf{t}(Motorcycle~Electric,h,td)\big) \cdot t_{op}(h,td) \\
+    \leq \%_{max,motorcycle}~\sum_{j \in \text{TECH OF EUT} (Mob~Private), t \in T|\{h,td\} \in T\_H\_TD(t)} \textbf{F}_\textbf{t}(j,h,td)\cdot t_{op}(h,td)
+    :label: eq:f_max_perc_motorcycle
+
+Similarly to eq. :eq:`eq:fmin_max_perc`, eq. :eq:`eq:f_max_perc_motorcycle` imposes the maximum share of private passenger mobility that can be supplied by motorcycles.
 
 .. math::
     \textbf{F}(Efficiency) =  \frac{1}{1+i_{rate}} 
@@ -1349,11 +1360,11 @@ Additional contraints on imports, exports and renewables
     :label: eq:elecExpLimited
     
 .. math::
-       \textbf{F}_{\textbf{t}}(i,h,td) \cdot t_{op} (h,td) =  \textbf{Import}_{\textbf{constant}}(i) ~~~~~~ \forall i \in \text{RES~IMPORT~CONSTANT}, h \in H, \forall td \in TD
+       \textbf{F}_{\textbf{t}}(i,h,td) \cdot t_{op} (h,td) =  \textbf{Import}_{\textbf{constant}}(i) ~~~~~~ \forall i \in \text{RES~IMPORT~CONSTANT}, h \in H, td \in TD
        :label: eq:import_resources_constant
     
 .. math::
-    \textbf{F}_{\textbf{t}}(i,h,td) \cdot t_{op} (h,td) =  \textbf{Export}_{\textbf{constant}}(i) ~~~~~~ \forall i \in \text{EXPORT~E~FUEL}, h \in H, \forall td \in TD
+    \textbf{F}_{\textbf{t}}(i,h,td) \cdot t_{op} (h,td) =  \textbf{Export}_{\textbf{constant}}(i) ~~~~~~ \forall i \in \text{EXPORT~E~FUEL}, h \in H, td \in TD
     :label: eq:export_efuels_constant
 
 Eqs. :eq:`eq:elecImpLimited` and :eq:`eq:elecExpLimited` limit the power grid
@@ -1371,21 +1382,21 @@ import and export capacity from/to neighbouring countries, based on the 2021 imp
     :label: eq:link_dam_storage_to_hydro_dam
     
 .. math::
-    \textbf{Sto}_\textbf{in}(Dam~Storage,Electricity,h,td) = \textbf{F}_{\textbf{t}}(Hydro~Dam,h,td)
+    \textbf{Sto}_\textbf{in}(Dam~Storage,Electricity,h,td) = \textbf{F}_{\textbf{t}}(Hydro~Dam,h,td) ~~~~~~ \forall h \in H, \forall td \in TD
     :label: eq:dam_storage_in
 
 .. math::
-    \textbf{Sto}_\textbf{out}(Dam~Storage,Electricity,h,td) \leq \textbf{F}(Hydro~Dam,h,td)
+    \textbf{Sto}_\textbf{out}(Dam~Storage,Electricity,h,td) \leq \textbf{F}(Hydro~Dam,h,td) ~~~~~~ \forall h \in H, \forall td \in TD
     :label: eq:dam_storage_out
 
 In EnergyScope, there are two technologies related to hydro-electric dams: *Hydro Dam* and *Dam Storage*. The former relates to the electricity production function of hydro-electric dams, while the second relates to their storage function. These two functions are defined as separate technologies in EnergyScope, but of course they relate to the same physical asset. The constraints defined in eqs :eq:`eq:link_dam_storage_to_hydro_dam` - :eq:`eq:dam_storage_out` hence bind these two technologies to each other. First, eq. :eq:`eq:link_dam_storage_to_hydro_dam` imposes that the installed capacity of both technnologies must remain proportional to each other, in the proportions defined by their respective input parameters :math:`f_{min}` and :math:`f_{max}`. (Note that to improve readability, eq. :eq:`eq:link_dam_storage_to_hydro_dam` has been written in a non-linear fashion in this documentation. The equation is linear in the actual model's code). Second, eq. :eq:`eq:dam_storage_in` imposes that all electricity produced by *Hydro Dam* is immediately absorbed by *Dam Storage*. This electricity is then released by *Dam Storage*, under the constraint that the maximum electricity production of *Dam Storage* is the same one as for *Hydro Dam*.
 
 .. math::
-    \textbf{F}(ST~Collector) \cdot f(ST~Power~Block, ST~Heat) \leq sm_{max} \cdot \textbf{F}(ST~Power~Block)
+    -\frac{\textbf{F}(ST~Collector)}{f(ST~Power~Block, ST~Heat)} \leq sm_{max} \cdot \textbf{F}(ST~Power~Block)
     :label: eq:limit_solar_mulitple_ST
 
 .. math::
-    \textbf{F}(PT~Collector) \cdot f(PT~Power~Block, ST~Heat) \leq sm_{max} \cdot \textbf{F}(PT~Power~Block)
+    -\frac{\textbf{F}(PT~Collector)}{f(PT~Power~Block, PT~Heat)} \leq sm_{max} \cdot \textbf{F}(PT~Power~Block)
     :label: eq:limit_solar_mulitple_PT
     
 TO DO: EXPLAIN eqs. :eq:`eq:limit_solar_mulitple_ST` - :eq:`eq:limit_solar_mulitple_PT`

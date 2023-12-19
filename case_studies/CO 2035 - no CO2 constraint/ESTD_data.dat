@@ -102,7 +102,7 @@
  ##  PARAMETERS  presented  in  Table  2.	 
  param  i_rate  :=  0.064;  #  part  [2.7.4] 
  param  re_share_primary  :=  0;  #  Minimum  RE  share  in  primary  consumption 
- param  gwp_limit  :=  400000;  #  gwp_limit  [ktCO2-eq./year]:  maximum  GWP  emissions 
+ param  gwp_limit  :=  100000;  #  gwp_limit  [ktCO2-eq./year]:  maximum  GWP  emissions 
  param  solar_area_rooftop  :=  529; 
  param  solar_area_ground  :=  3809; 
  param  solar_area_ground_high_irr  :=  70; 
@@ -315,7 +315,7 @@ CCGT	825.96	19.73031183	253.0	25.0	0.955769231	0.0	1.0	0.0	Infinity
 CCGT_AMMONIA	825.96	19.55202588	260.0	25.0	0.59	0.0	1.0	0.0	Infinity
 COAL_US	2598.77	29.70315573	476.0	35.0	0.862792	0.0	1.0	0.0	0.0
 COAL_IGCC	3351.65	48.94653057	479.0	35.0	0.850864	0.0	1.0	0.0	Infinity
-PV_ROOFTOP	737.8867	9.726688396	3046.0	25.0	1.0	0.0	1.0	0.3	98.5
+PV_ROOFTOP	737.8867	9.726688396	3046.0	25.0	1.0	0.0	1.0	0.3	98.4
 PV_UTILITY	335.403	8.432990925	2981.0	25.0	1.0	0.0	1.0	0.0	708.0
 PT_POWER_BLOCK	1044.57	62.65	0.0	25.0	1.0	0.0	1.0	0.0	Infinity
 ST_POWER_BLOCK	50.0	5.0	0.0	25.0	1.0	0.0	1.0	0.0	Infinity
