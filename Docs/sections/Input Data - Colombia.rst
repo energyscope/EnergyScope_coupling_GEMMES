@@ -51,73 +51,80 @@ Solar, wind, hydro and geothermal
 .. container::
 
    .. csv-table:: Comparison of installed capacity of technologies for renewable electricity production in 2021 with their maximum potentials. Abbreviations: maximum (max.), photovoltaic panel (PV), Concentrated Solar Power (CSP).
-      :header: **Technology**, **2021**\  [6a]_ , **max. potential** , **Units**
+      :header: **Technology**, **2021**\  [5a]_ , **max. potential** , **Units**
       :widths: 15 15 15 15
-      :name: tab:renewableResourcesPotentialIn2035
+      :name: tab:renewableTechPotentialIn2035
    
-      hydro dam , 8.14 [6b]_ , 51.2 [6c]_ , [GW]
-      hydro river , 3.78 [6b]_ , 27.8 [6c]_ , [GW]
-      rooftop PV , 0.12 , :math:`\approx`\ 100 [6d]_ , [GW]
-      utility scale PV , 0 , :math:`\approx`\ 700 [6d]_ , [GW]
-      onshore wind , 0.02 , 7.3 [6e]_ , [GW]
-      offshore wind , 0 , 48.8 [6f]_ , [GW]
-      geothermal , 0 ,  1.2 [6g]_ , [GW]
-      CSP parabolic trough , 0 , 13 [6d]_, [GW]
-      CSP solar tower , 0 , 13 [6d]_, [GW]
+      hydro dam , 8.14 [5b]_ , 51.2 [5c]_ , [GW]
+      hydro river , 3.78 [5b]_ , 27.8 [5c]_ , [GW]
+      rooftop PV , 0.12 , :math:`\approx`\ 100 [5d]_ , [GW]
+      utility scale PV , 0 , :math:`\approx`\ 700 [5d]_ , [GW]
+      onshore wind , 0.02 , 7.3 [5e]_ , [GW]
+      offshore wind , 0 , 48.8 [5f]_ , [GW]
+      geothermal , 0 ,  1.2 [5g]_ , [GW]
+      CSP parabolic trough , 0 , 13 [5d]_, [GW]
+      CSP solar tower , 0 , 13 [5d]_, [GW]
 
-
-   .. [6a]
+   .. [5a]
       Data from :cite:`IEA_2023`.
 
-   .. [6b]
+   .. [5b]
       :cite:`IEA_2023` gives an installed hydropower capacity of 11.91 GW in 2021. We split it between hydro dam and hydro river according to percentages received from Departamento Nacional de Planeación (DNP), the Colombian National Planning Department.
       
-   .. [6c]
+   .. [5c]
       Data from :cite:`plazas_nino_2023`.
       
-   .. [6d]
+   .. [5d]
       The real constraint on solar potential is not a constraint on installable capacity, but a constraint on available area, as described below.
 
-   .. [6e]
+   .. [5e]
       This potential corresponds to the 2050 target for onshore wind energy of the country's long-term development strategy (E2050 Colombia), as given in :cite:`IEA_2023`. This potential is in the same order of magnitude as the one indicated in :cite:`RE_potential_2023`.
 
-   .. [6f]
-      Sum of the potentials for fixed offshore wind and floating offshore wind indicated in :cite:`RE_potential_2023`. This potential is in the same order of magnitude as the one we recomputed using the database and methodology from :cite:`dupont_2018`.
+   .. [5f]
+      Sum of the potentials for fixed offshore wind and floating offshore wind indicated in :cite:`RE_potential_2023`. This potential is in the same order of magnitude as the one we computed using the methodology and open-source database from :cite:`dupont_2018`, available at https://github.com/EliseDup/WorldEROI.
       
-   .. [6g]
+   .. [5g]
       Data from :cite:`plazas_nino_2023`. This potential is in line with the one indicated in :cite:`RE_potential_2023`.
 
+As described by eqs. :eq:`eq:solarAreaRooftopLimited` - :eq:`eq:solarAreaGroundHighIrrLimited`, the potential of solar technologies is constrained by the available areas for their deployment. The values for these available areas, as well as the other parameters present in eqs. :eq:`eq:solarAreaRooftopLimited` - :eq:`eq:solarAreaGroundHighIrrLimited`, are given in :numref:`Table %s <tab:solarArea>`. The values of maximum installed capacities indicated in :numref:`Table %s <tab:renewableTechPotentialIn2035>` are a simplified translation of these equations into [GW] constraints.
 
+.. container::
 
-The land
-availability for PV is highly speculative, we propose a simple approach
-to estimate an order of magnitude of this limit. Assuming that it exists
-today 250 km\ :math:`^2` of available well oriented
-roof [9]_ :cite:`Devogelaer2013` and that the efficiency in
-2035 will be 23% :cite:`DanishEnergyAgency2019` with an
-average daily total irradiation - similar to historical values - of
-2820 Wh/m\ :math:`^2` in
-Colombia :cite:`IRM_Atlas_Irradiation`. The upper limit
-becomes 59.2 GW of installed capacity [10]_. This limit is in line with
-a study performed by the Belgian TSO which proposes arbitrarily
-40 GW :cite:`EliaSystemOperator2017`. The hydro potential is
-very limited and almost fully exploited. Even if geothermal heat is used
-for heating through DHN since 1986 at Saint
-Ghislain :cite:`Delmer1997`, research about the geothermal
-potential in Colombia are at their early stages. In 2015, a new project
-started (the Balmatt project). Nowadays, the installation produces
-1.5 MW of electricity (in 2019). The project is expected to scale up to
-5 MW of electricity :cite:`VITO_Website`. However, there is
-no large facility yet and the potential is not accurately estimated. A
-study performed by the VITO evaluates the potential in Flanders to
-3.1 GWe and they extend it to 4 GWe for the whole Belgian
-potential :cite:`Devogelaer2013`. However, because of a lack
-of reliable sources about geothermal potential, we consider the
-potential as null in the reference scenario.
+   .. csv-table:: Values of the parameters which constrain the solar potential of Colombia. Abbreviations: solar multiple (sm), high irradiation (high irr.), photovoltaic panel (PV), Concentrated Solar Power (CSP).
+      :header: "Parameter", "Value", "Units"
+      :widths: 15 15 15
+      :name: tab:solarArea
+
+      ":math:`solar_{area,rooftop}`", "530 [6a]_ ", ":math:`[km^2]`"
+      ":math:`solar_{area,ground}`", "3800 [6a]_ ", ":math:`[km^2]`"
+      ":math:`solar_{area,ground,high~irr}` [6a]_ ", "70", ":math:`[km^2]`"
+      ":math:`power\_density_{pv}` [6b]_ ", "0.186", "[GW/:math:`km^2]`"
+      ":math:`power\_density_{csp}`", "0.186", "[GW/:math:`km^2]`"
+      ":math:`power\_density_{solar~thermal}`", "0.7", "[GW/:math:`km^2]`"
+      ":math:`sm_{max}`", "4", ":math:`[-]`"
+      
+   .. [6a]
+      Computed based on the open-source database from :cite:`dupont_2020`, available at https://github.com/EliseDup/WorldEROI.
+      
+   .. [6b]
+      Data from :cite:`dupont_2020` (mono-silicon PV).
+      
+Note that the ground areas given in :numref:`Table %s <tab:renewableTechPotentialIn2035>`
+are not the total areas occupied by the solar power plants, but only the area occupied 
+by the solar panels themselves. Indeed, in utility plants, panels are oriented perpendicular 
+to the sunlight. As a consequence, a space is required to avoid shadow between rows of panels.
+In the literature, the *ground cover ratio* is defined as the total
+spatial requirements of large scale solar PV relative to the area of the
+solar panels. This ratio is estimated around five
+:cite:`dupont_2020`, which means that for each square
+meter of PV panel installed, four additional square meters are needed.
+When taking into account this *ground cover ratio*, we can compute that
+the value given for :math:`solar_{area,ground}` corresponds to covering
+1.7% of Colombia's land surface with solar panels (excluding for rooftop area
+used by rooftop PV).
 
 Biomass and non-renewable waste
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 
 In the literature, waste and biomass are often merged. In this work however, a
 distinction is made between *biomass* and *non-renewable waste*. Non-renewable waste accounts for
@@ -136,28 +143,28 @@ not landfill (composting, recycling) and paper cardboard.
    .. csv-table:: Biomass and waste resources consumed in 2021 and their potential.
       :header: **Resources** , **2021** , **Max. potential** , **Units**
       :widths: 15 15 15 15
-      :name: tab:renewableTechPotentialIn2035
+      :name: tab:renewableResourcesPotentialIn2035
 
-		bioethanol , 7.2 [7a]_ , 100 [7b]_ , [TWh]
-		biodiesel , 2.5 [7a]_ , 100 [7b]_ , [TWh]
-		woody biomass , 34.3 [7c]_ , 75.0 [7d]_ , [TWh]
-		wet biomass , 0 , 49.8 [7d]_ , [TWh]
-		non-renewable waste, 0 , 10.3 [7e]_ , [TWh]
+		bioethanol , 7.2 [8a]_ , 100 [8b]_ , [TWh]
+		biodiesel , 2.5 [8a]_ , 100 [8b]_ , [TWh]
+		woody biomass , 34.3 [8c]_ , 75.0 [8d]_ , [TWh]
+		wet biomass , 0 , 49.8 [8d]_ , [TWh]
+		non-renewable waste, 0 , 10.3 [8e]_ , [TWh]
    
-   .. [7a]
+   .. [8a]
       Data obtained from :cite:`IEA_2023` and slightly adapted for calibration purpose.
    
-   .. [7b]
+   .. [8b]
       Reliable data for the local potential of bio-fuels could not be obtained. Thus, a reasonable order of magnitude of 100 TWh was chosen for both biodiesel and bioethanol. Using the energy content of biodiesel and bioethanol from :cite:`noauthor_conversion_nodate` and a yield of 4 t/ha, we compute that fully utilizing this biomass potential would amount to covering 5% of Colombia's surface with crops for biofuel production. In 2021, 40% of Colombia's surface was dedicated to agriculture.
 
-   .. [7c]
+   .. [8c]
       Endogenous computation, based on input data from Section XXX. This value matches grossly the primary solid biomass data for year 2019 given in :cite:`IEA_world_energy_balances`.
       
-   .. [7d]
+   .. [8d]
       According to :cite:`RE_potential_2023`, :cite:`UPME_2009` gives a gross energy potential from waste biomass in Colombia of 124.9 TWh and :cite:`TECSOL_2018` gives a biogas potential of 14.9 TWh. In Energyscope, biogas is produced based on *wet biomass*, with a conversion factor  of 3.35 in 2021. By using this conversion factor, we can transform the biogas potential into a wet biomass potential of 49.8 TWh. Finally, subtracting the wet biomass potential from the gross energy potential from waste biomass gives the potential for woody biomass.
-   
 
-   .. [7e] Data obtained from Departamento Nacional de Planeación (DNP), the Colombian National Planning Department
+   .. [8e] 
+      Data obtained from Departamento Nacional de Planeación (DNP), the Colombian National Planning Department
 
 
 Imported resources
@@ -2906,27 +2913,6 @@ Switzerland).
    *Real* values are expressed at the net of inflation. They differ from
    *nominal* values, which are the actual prices in a given year,
    accounting for inflation.
-
-
-.. [9]
-   250 km\ \ :math:`^2` represents almost a hundredth
-   of Colombia’s land area, which is 28635 km\ \ :math:`^2`. The total
-   area, accounting for water areas, of Colombia is
-   30528 km\ \ :math:`^2`. From
-   https://fr.wikipedia.org/wiki/G%C3%A9ographie_de_la_Belgique, visited
-   the 10/08/2020.
-
-.. [10]
-   A similar calculation was done for solar thermal with an efficiency
-   of 28%.
-
-.. [11]
-   In the study, potential are given in PetaJoules of electricity per
-   year (58-185 PJ for onshore and 8-10 PJ for offshore) for EROI of 5
-   and 12 (see Table 13 of :raw-latex:`\cite{Dupont2017}`). To convert
-   energy into power capacity, capacity factors of 24% and 41% for
-   onshore and offshore, were assumed respectively.
-
 
 .. [37b]
    From

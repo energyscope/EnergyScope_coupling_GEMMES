@@ -1072,7 +1072,7 @@ Eq. :eq:`eq:op_strategy_dec_total_ST`
 links the installed size of each solar thermal capacity
 :math:`\textbf{F}_{\textbf{sol}}(j)` to its actual production
 ::math:`\textbf{F}_{\textbf{t}_\textbf{sol}}(j,h,td)` via the
-solar capacity factor (:math:`c_{p,t}(Dec_{solar})`).
+solar capacity factor (:math:`c_{solar_{area,rooftop}p,t}(Dec_{solar})`).
 
 .. math::
     \textbf{F}_\textbf{t} (j,h,td) + \textbf{F}_{\textbf{t}_\textbf{sol}} (j,h,td)  
