@@ -19,7 +19,7 @@ if __name__ == '__main__':
     config = es.load_config(config_fn='config_ref.yaml', project_path=project_path)
     config['Working_directory'] = os.getcwd() # keeping current working directory into config
     
-   # Reading the data of the csv
+    # Reading the data of the csv
     es.import_data(config)
 
     if compute_TDs:
