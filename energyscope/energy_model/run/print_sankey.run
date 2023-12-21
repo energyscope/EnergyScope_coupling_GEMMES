@@ -88,8 +88,8 @@ if sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]}(F_t
 
     # BIOMASS_TO_METHANOL
 if sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]}(F_t ["BIOMASS_TO_METHANOL", h, td]  ) > 10 then {
-    printf "%s,%s,%.2f,%s,%s,%s\n", "Wood" , "Gasifi. to Methanol", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in
-        TYPICAL_DAY_OF_PERIOD[t]}(-layers_in_out["BIOMASS_TO_METHANOL","WOOD"] * F_t ["BIOMASS_TO_METHANOL", h, td]  ) / 1000 , "Wood", "#CD853F", "TWh" >>
+    printf "%s,%s,%.2f,%s,%s,%s\n", "Woody biomass" , "Gasifi. to Methanol", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in
+        TYPICAL_DAY_OF_PERIOD[t]}(-layers_in_out["BIOMASS_TO_METHANOL","WOOD"] * F_t ["BIOMASS_TO_METHANOL", h, td]  ) / 1000 , "Woody biomass", "#CD853F", "TWh" >>
         (PathName & "/sankey/input2sankey.csv");
     printf "%s,%s,%.2f,%s,%s,%s\n", "Gasifi. to Methanol" , "Elec", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in
         TYPICAL_DAY_OF_PERIOD[t]}(layers_in_out["BIOMASS_TO_METHANOL","ELECTRICITY"] * F_t ["BIOMASS_TO_METHANOL", h, td]  ) / 1000 , "Electricity", "#00BFFF", "TWh" >>
@@ -172,8 +172,8 @@ if sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]}(F_t
 
     # BIOMASS_TO_HVC
 if sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]}(F_t ["BIOMASS_TO_HVC", h, td]  ) > 10 then {
-    printf "%s,%s,%.2f,%s,%s,%s\n", "Wood" , "Gasifi. to HVC", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in
-        TYPICAL_DAY_OF_PERIOD[t]}(-layers_in_out["BIOMASS_TO_HVC","WOOD"] * F_t ["BIOMASS_TO_HVC", h, td]  ) / 1000 , "Wood", "#CD853F", "TWh" >>
+    printf "%s,%s,%.2f,%s,%s,%s\n", "Woody biomass" , "Gasifi. to HVC", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in
+        TYPICAL_DAY_OF_PERIOD[t]}(-layers_in_out["BIOMASS_TO_HVC","WOOD"] * F_t ["BIOMASS_TO_HVC", h, td]  ) / 1000 , "Woody biomass", "#CD853F", "TWh" >>
         (PathName & "/sankey/input2sankey.csv");
     printf "%s,%s,%.2f,%s,%s,%s\n", "Elec" , "Gasifi. to HVC", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in
         TYPICAL_DAY_OF_PERIOD[t]}(-layers_in_out["BIOMASS_TO_HVC","ELECTRICITY"] * F_t ["BIOMASS_TO_HVC", h, td]  ) / 1000 , "Electricity", "#00BFFF", "TWh" >>
@@ -426,38 +426,43 @@ h, td] + F_t ["DEC_BOILER_OIL", h, td])  ) > 10 then
 
 # Wood
 if sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]}(F_t ["H2_BIOMASS", h, td]  ) > 10 then
-    printf "%s,%s,%.2f,%s,%s,%s\n", "Wood" , "H2 prod", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in
-        TYPICAL_DAY_OF_PERIOD[t]}(-layers_in_out["H2_BIOMASS","WOOD"] * F_t ["H2_BIOMASS", h, td]  ) / 1000 , "Wood", "#CD853F",
+    printf "%s,%s,%.2f,%s,%s,%s\n", "Woody biomass" , "H2 prod", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in
+        TYPICAL_DAY_OF_PERIOD[t]}(-layers_in_out["H2_BIOMASS","WOOD"] * F_t ["H2_BIOMASS", h, td]  ) / 1000 , "Woody biomass", "#CD853F",
         "TWh" > (PathName & "/sankey/input2sankey.csv");
 
 if sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]}((F_t ["IND_COGEN_WOOD", h, td] + F_t ["DHN_COGEN_WOOD",
 h, td])  ) > 10 then
-    printf "%s,%s,%.2f,%s,%s,%s\n", "Wood" , "CHP", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in
+    printf "%s,%s,%.2f,%s,%s,%s\n", "Woody biomass" , "CHP", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in
         TYPICAL_DAY_OF_PERIOD[t]}(-layers_in_out["IND_COGEN_WOOD","WOOD"] * F_t ["IND_COGEN_WOOD", h, td]   -
-        layers_in_out["DHN_COGEN_WOOD","WOOD"] * F_t ["DHN_COGEN_WOOD", h, td]  ) / 1000 , "Wood", "#CD853F", "TWh" >>
+        layers_in_out["DHN_COGEN_WOOD","WOOD"] * F_t ["DHN_COGEN_WOOD", h, td]  ) / 1000 , "Woody biomass", "#CD853F", "TWh" >>
         (PathName & "/sankey/input2sankey.csv");
 if sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]}((F_t ["IND_BOILER_WOOD", h, td] + F_t
 ["DHN_BOILER_WOOD", h, td] + F_t ["DEC_BOILER_WOOD", h, td])  ) > 10 then
-    printf "%s,%s,%.2f,%s,%s,%s\n", "Wood" , "Boilers", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in
+    printf "%s,%s,%.2f,%s,%s,%s\n", "Woody biomass" , "Boilers", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in
         TYPICAL_DAY_OF_PERIOD[t]}(-layers_in_out["IND_BOILER_WOOD","WOOD"] * F_t ["IND_BOILER_WOOD", h, td]   -
         layers_in_out["DHN_BOILER_WOOD","WOOD"] * F_t ["DHN_BOILER_WOOD", h, td]   - layers_in_out["DEC_BOILER_WOOD","WOOD"] *
-        F_t ["DEC_BOILER_WOOD", h, td]  ) / 1000 , "Wood", "#CD853F", "TWh" >> (PathName & "/sankey/input2sankey.csv");
+        F_t ["DEC_BOILER_WOOD", h, td]  ) / 1000 , "Woody biomass", "#CD853F", "TWh" >> (PathName & "/sankey/input2sankey.csv");
 if sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]}((F_t ["GASIFICATION_SNG", h, td] )  ) > 10 then {
-    printf "%s,%s,%.2f,%s,%s,%s\n", "Wood" , "Gasifi.", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]}(-layers_in_out["GASIFICATION_SNG","WOOD"]           * F_t ["GASIFICATION_SNG", h, td] ) / 1000 , "Wood", "#CD853F", "TWh" >(PathName & "/sankey/input2sankey.csv");
+    printf "%s,%s,%.2f,%s,%s,%s\n", "Woody biomass" , "Gasifi.", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]}(-layers_in_out["GASIFICATION_SNG","WOOD"]           * F_t ["GASIFICATION_SNG", h, td] ) / 1000 , "Woody biomass", "#CD853F", "TWh" >(PathName & "/sankey/input2sankey.csv");
     printf "%s,%s,%.2f,%s,%s,%s\n", "Gasifi." , "Gas" , sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]}( layers_in_out["GASIFICATION_SNG","GAS"]        * F_t ["GASIFICATION_SNG", h, td] ) / 1000 , "GAS", "#FFD700", "TWh" >> (PathName & "/sankey/input2sankey.csv");
     printf "%s,%s,%.2f,%s,%s,%s\n", "Gasifi." , "DHN" , sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]}( layers_in_out["GASIFICATION_SNG","HEAT_LOW_T_DHN"] * F_t ["GASIFICATION_SNG", h, td] ) / 1000 , "Heat LT", "#FA8072", "TWh" >> (PathName & "/sankey/input2sankey.csv");
     printf "%s,%s,%.2f,%s,%s,%s\n", "Gasifi." , "Elec", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]}( layers_in_out["GASIFICATION_SNG","ELECTRICITY"]    * F_t ["GASIFICATION_SNG", h, td] ) / 1000 , "Electricity", "#00BFFF", "TWh" >> (PathName & "/sankey/input2sankey.csv");
 }
 
+if sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]}(F_t ["BIOMASS_TO_POWER", h, td]  ) > 10 then
+    printf "%s,%s,%.2f,%s,%s,%s\n", "Woody biomass" , "Elec", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in
+        TYPICAL_DAY_OF_PERIOD[t]}(-layers_in_out["BIOMASS_TO_POWER","WOOD"] * F_t ["BIOMASS_TO_POWER", h, td]  ) / 1000 , "WOOD", "#CD853F", "TWh" >>
+        (PathName & "/sankey/input2sankey.csv");
+
 # WET Biomass
 if sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]}(F_t ["DHN_COGEN_WET_BIOMASS", h, td] + F_t ["DHN_COGEN_BIO_HYDROLYSIS", h, td]) > 10 then
     printf "%s,%s,%.2f,%s,%s,%s\n", "Wet biomass" , "CHP", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in
         TYPICAL_DAY_OF_PERIOD[t]}(-layers_in_out["DHN_COGEN_WET_BIOMASS","WET_BIOMASS"] * F_t ["DHN_COGEN_WET_BIOMASS", h, td] -layers_in_out["DHN_COGEN_BIO_HYDROLYSIS","WET_BIOMASS"] * F_t ["DHN_COGEN_BIO_HYDROLYSIS", h, td] ) / 1000
-        , "Wood", "#CD853F", "TWh" >> (PathName & "/sankey/input2sankey.csv");
+        , "Woody biomass", "#CD853F", "TWh" >> (PathName & "/sankey/input2sankey.csv");
 if sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]}(F_t ["BIOMETHANATION", h, td] + F_t ["BIO_HYDROLYSIS", h, td] ) > 10 then {
     printf "%s,%s,%.2f,%s,%s,%s\n", "Wet biomass" , "Biomethanation", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in
         TYPICAL_DAY_OF_PERIOD[t]}(- layers_in_out["BIOMETHANATION","WET_BIOMASS"] * F_t ["BIOMETHANATION", h, td] - layers_in_out["BIO_HYDROLYSIS","WET_BIOMASS"] * F_t ["BIO_HYDROLYSIS", h, td] ) / 1000
-        , "Wood", "#CD853F", "TWh" >> (PathName & "/sankey/input2sankey.csv");
+        , "Woody biomass", "#CD853F", "TWh" >> (PathName & "/sankey/input2sankey.csv");
     printf "%s,%s,%.2f,%s,%s,%s\n", "Biomethanation" , "Gas", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in
         TYPICAL_DAY_OF_PERIOD[t]}(  layers_in_out["BIOMETHANATION","GAS"]          * F_t ["BIOMETHANATION", h, td] + layers_in_out["BIO_HYDROLYSIS","GAS"]          * F_t ["BIO_HYDROLYSIS", h, td] ) / 1000 ,
         "GAS", "#FFD700", "TWh" >> (PathName & "/sankey/input2sankey.csv");
@@ -691,8 +696,8 @@ if sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]} ( F
 
 # Biofuels
 if sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]}((F_t ["PYROLYSIS_TO_LFO", h, td])  ) > 10 then {
-    printf "%s,%s,%.2f,%s,%s,%s\n", "Wood" , "Pyrolysis", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in
-        TYPICAL_DAY_OF_PERIOD[t]}( - layers_in_out["PYROLYSIS_TO_LFO","WOOD"] * F_t ["PYROLYSIS_TO_LFO", h, td]  ) / 1000 , "Wood", "#CD853F", "TWh" >>
+    printf "%s,%s,%.2f,%s,%s,%s\n", "Woody biomass" , "Pyrolysis", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in
+        TYPICAL_DAY_OF_PERIOD[t]}( - layers_in_out["PYROLYSIS_TO_LFO","WOOD"] * F_t ["PYROLYSIS_TO_LFO", h, td]  ) / 1000 , "Woody biomass", "#CD853F", "TWh" >>
         (PathName & "/sankey/input2sankey.csv");
     printf "%s,%s,%.2f,%s,%s,%s\n", "Pyrolysis" , "Elec", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in
         TYPICAL_DAY_OF_PERIOD[t]}(layers_in_out["PYROLYSIS_TO_LFO","ELECTRICITY"] * F_t ["PYROLYSIS_TO_LFO", h, td]  ) / 1000 , "Electricity", "#00BFFF", "TWh" >>
@@ -702,8 +707,8 @@ if sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]}((F_
         (PathName & "/sankey/input2sankey.csv");
 }
 if sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]}((F_t ["PYROLYSIS_TO_FUELS", h, td])  ) > 10 then {
-    printf "%s,%s,%.2f,%s,%s,%s\n", "Wood" , "Pyrolysis", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in
-        TYPICAL_DAY_OF_PERIOD[t]}( - layers_in_out["PYROLYSIS_TO_FUELS","WOOD"] * F_t ["PYROLYSIS_TO_FUELS", h, td]  ) / 1000 , "Wood", "#CD853F", "TWh" >>
+    printf "%s,%s,%.2f,%s,%s,%s\n", "Woody biomass" , "Pyrolysis", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in
+        TYPICAL_DAY_OF_PERIOD[t]}( - layers_in_out["PYROLYSIS_TO_FUELS","WOOD"] * F_t ["PYROLYSIS_TO_FUELS", h, td]  ) / 1000 , "Woody biomass", "#CD853F", "TWh" >>
         (PathName & "/sankey/input2sankey.csv");
     printf "%s,%s,%.2f,%s,%s,%s\n", "Pyrolysis" , "Elec", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in
         TYPICAL_DAY_OF_PERIOD[t]}(layers_in_out["PYROLYSIS_TO_FUELS","ELECTRICITY"] * F_t ["PYROLYSIS_TO_FUELS", h, td]  ) / 1000 , "Electricity", "#00BFFF", "TWh" >>

@@ -1,50 +1,50 @@
 
-Presolve eliminates 913221 constraints and 589952 variables.
+Presolve eliminates 913806 constraints and 590248 variables.
 "option presolve 10;" used, but "option presolve 5;" would suffice.
 Adjusted problem:
-335742 variables, all linear
-615479 constraints, all linear; 1927109 nonzeros
-	406967 equality constraints
-	208512 inequality constraints
+335738 variables, all linear
+615189 constraints, all linear; 1927388 nonzeros
+	406675 equality constraints
+	208514 inequality constraints
 1 linear objective; 1 nonzero.
 
 presolve results:
-	variables omitted:	589952
-	constraints omitted:	913221
-	ranges relaxed:		43544
-	bounds improved:	588279
+	variables omitted:	590248
+	constraints omitted:	913806
+	ranges relaxed:		43542
+	bounds improved:	588287
 	constraint_drop_tol breakpoints: 0, 0, Infinity
 	nba cycles:		4
-	bound row scans:	393623
-	row-scan updates:	49634
+	bound row scans:	393031
+	row-scan updates:	49631
 Gurobi 10.0.3:   pre:dual = -1
   alg:method = 2
   bar:crossover = 0
   pre:passes = 3
   bar:convtol = 1e-06
   pre:solve = -1
-Gurobi 10.0.3: optimal solution; objective 114058.3785
+Gurobi 10.0.3: optimal solution; objective 123482.4915
 0 simplex iterations
-69 barrier iterations
+90 barrier iterations
  
 ------------ WARNINGS ------------
 WARNING:  "Solution Check"
      [ sol:chk:feastol=1e-06, :feastolrel=1e-06, :inttol=1e-05,
        :round='', :prec='' ]
 Algebraic expression violations:
-  - 56 original expression(s) of type ':linrange',
-        up to 4E-05 (abs)
+  - 72 original expression(s) of type ':linrange',
+        up to 2E-04 (abs)
  
  
 solve_result = solved
 
 solve_result_num = 0
 
-_solve_elapsed_time = 53.7286
+_solve_elapsed_time = 63.9999
 
-TotalCost 114058.3785259742
+TotalCost 123482.4915092779
 Carbon_cost 0
-GWP_op 92844.45304328205
+GWP_op 35966.59527811969
 carbon_price 0
 --------------SAVING COSTS -----------
 --------------SAVING RESOURCES -----------

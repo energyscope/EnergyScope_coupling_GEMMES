@@ -1,40 +1,40 @@
 
-Presolve eliminates 1087352 constraints and 686244 variables.
+Presolve eliminates 1088527 constraints and 687419 variables.
 "option presolve 10;" used, but "option presolve 11;" might work better.
 Adjusted problem:
-239452 variables, all linear
-441348 constraints, all linear; 1370658 nonzeros
-	321014 equality constraints
-	120334 inequality constraints
+238567 variables, all linear
+440466 constraints, all linear; 1366571 nonzeros
+	320708 equality constraints
+	119758 inequality constraints
 1 linear objective; 1 nonzero.
 
-Setting $presolve_fixeps >= 4.05e-07 could change presolve results.
+Setting $presolve_fixeps >= 4.83e-07 could change presolve results.
 
 presolve results:
-	variables omitted:	686244
-	constraints omitted:	1087352
-	ranges relaxed:		11558
-	bounds improved:	686730
-	constraint_drop_tol breakpoints: 0, 0, 4.173043478375543
+	variables omitted:	687131
+	constraints omitted:	1088527
+	ranges relaxed:		11567
+	bounds improved:	687621
+	constraint_drop_tol breakpoints: 0, 0, 4.17304347837554
 	nba cycles:		9
-	bound row scans:	273027
-	row-scan updates:	35356
+	bound row scans:	273251
+	row-scan updates:	34316
 Gurobi 10.0.3:   pre:dual = -1
   alg:method = 2
   bar:crossover = 0
   pre:passes = 3
   bar:convtol = 1e-06
   pre:solve = -1
-Gurobi 10.0.3: optimal solution; objective 65006.84
+Gurobi 10.0.3: optimal solution; objective 65085.74588
 0 simplex iterations
-65 barrier iterations
+51 barrier iterations
  
 ------------ WARNINGS ------------
 WARNING:  "Solution Check"
      [ sol:chk:feastol=1e-06, :feastolrel=1e-06, :inttol=1e-05,
        :round='', :prec='' ]
 Algebraic expression violations:
-  - 70 original expression(s) of type ':linrange',
+  - 147 original expression(s) of type ':linrange',
         up to 4E-05 (abs)
  
  
@@ -42,13 +42,11 @@ solve_result = solved
 
 solve_result_num = 0
 
-_solve_elapsed_time = 24.5347
+_solve_elapsed_time = 17.7167
 
-NetTotalCost 65006.84000372587
-TotalCost 65006.84000372587
-Export_revenues 0
+TotalCost 65085.74587520462
 Carbon_cost 0
-GWP_op 119266.6263744546
+GWP_op 118147.4284963814
 carbon_price 0
 --------------SAVING COSTS -----------
 --------------SAVING RESOURCES -----------
