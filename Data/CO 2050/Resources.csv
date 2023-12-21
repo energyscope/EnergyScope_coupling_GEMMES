@@ -4,8 +4,8 @@ Category;Subcategory;parameter name;avail;gwp_op;c_op;CO2_op;Comment
 Non-renewable;Other non-renewable;ELECTRICITY;1.00E+15;0.25;0.1049;0;
 Non-renewable;Fossil fuel;GASOLINE;1.00E+15;0.43;0.0940;0.25;
 Non-renewable;Fossil fuel;DIESEL;1.00E+15;0.4;0.0911;0.27;
-Renewable;Biofuel;BIOETHANOL;150000;0;0.1286;0.25;
-Renewable;Biofuel;BIODIESEL;150000;0;0.1286;0.27;
+Renewable;Biofuel;BIOETHANOL;100000;0;0.1286;0.25;
+Renewable;Biofuel;BIODIESEL;100000;0;0.1286;0.27;
 Non-renewable;Fossil fuel;LFO;1.00E+15;0.37;0.0687;0.28;
 Non-renewable;Fossil fuel;GAS;1.00E+15;0.33;0.0533;0.2;
 Renewable;Biofuel;GAS_RE;0;0;0.1043;0.2;

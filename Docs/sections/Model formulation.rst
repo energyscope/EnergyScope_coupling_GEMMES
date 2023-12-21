@@ -1401,6 +1401,8 @@ In EnergyScope, there are two technologies related to hydro-electric dams: *Hydr
     
 TO DO: EXPLAIN eqs. :eq:`eq:limit_solar_mulitple_ST` - :eq:`eq:limit_solar_mulitple_PT`
 
+oemof thermal csp model : https://oemof-thermal.readthedocs.io/en/latest/concentrating_solar_power.html
+
 .. math::
     \frac{\textbf{F}(PV~Rooftop)}{power\_density_{pv}} + \frac{\textbf{F}(Dec_{Solar}) + \textbf{F}(DHN_{Solar})}{power\_density_{solar~thermal}}  \leq solar_{area,rooftop}
     :label: eq:solarAreaRooftopLimited

@@ -97,11 +97,11 @@ As described by eqs. :eq:`eq:solarAreaRooftopLimited` - :eq:`eq:solarAreaGroundH
 
       ":math:`solar_{area,rooftop}`", "530 [6a]_ ", ":math:`[km^2]`"
       ":math:`solar_{area,ground}`", "3800 [6a]_ ", ":math:`[km^2]`"
-      ":math:`solar_{area,ground,high~irr}` [6a]_ ", "70", ":math:`[km^2]`"
-      ":math:`power\_density_{pv}` [6b]_ ", "0.186", "[GW/:math:`km^2]`"
-      ":math:`power\_density_{csp}`", "0.186", "[GW/:math:`km^2]`"
-      ":math:`power\_density_{solar~thermal}`", "0.7", "[GW/:math:`km^2]`"
-      ":math:`sm_{max}`", "4", ":math:`[-]`"
+      ":math:`solar_{area,ground,high~irr}`", "70 [6a]_ ", ":math:`[km^2]`"
+      ":math:`power\_density_{pv}`", "0.186 [6b]_ ", "[GW/:math:`km^2]`"
+      ":math:`power\_density_{csp}`", "0.186 [6c]_ ", "[GW/:math:`km^2]`"
+      ":math:`power\_density_{solar~thermal}`", "0.7 [6c]_ ", "[GW/:math:`km^2]`"
+      ":math:`sm_{max}`", "4 [6c]_ ", ":math:`[-]`"
       
    .. [6a]
       Computed based on the open-source database from :cite:`dupont_2020`, available at https://github.com/EliseDup/WorldEROI.
@@ -109,18 +109,21 @@ As described by eqs. :eq:`eq:solarAreaRooftopLimited` - :eq:`eq:solarAreaGroundH
    .. [6b]
       Data from :cite:`dupont_2020` (mono-silicon PV).
       
+   .. [6c]
+      ASK PAOLO
+      
 Note that the ground areas given in :numref:`Table %s <tab:renewableTechPotentialIn2035>`
-are not the total areas occupied by the solar power plants, but only the area occupied 
-by the solar panels themselves. Indeed, in utility plants, panels are oriented perpendicular 
+are not the total areas occupied by the solar power plants, but only the areas occupied 
+by the solar panels themselves. In utility plants, panels are oriented perpendicular 
 to the sunlight. As a consequence, a space is required to avoid shadow between rows of panels.
 In the literature, the *ground cover ratio* is defined as the total
 spatial requirements of large scale solar PV relative to the area of the
-solar panels. This ratio is estimated around five
+solar panels. This ratio is estimated to have a value around five
 :cite:`dupont_2020`, which means that for each square
 meter of PV panel installed, four additional square meters are needed.
-When taking into account this *ground cover ratio*, we can compute that
+After taking into account this *ground cover ratio*, we can compute that
 the value given for :math:`solar_{area,ground}` corresponds to covering
-1.7% of Colombia's land surface with solar panels (excluding for rooftop area
+1.7% of Colombia's land surface with solar power plants (not taking into account the rooftop area
 used by rooftop PV).
 
 Biomass and non-renewable waste
@@ -145,443 +148,227 @@ not landfill (composting, recycling) and paper cardboard.
       :widths: 15 15 15 15
       :name: tab:renewableResourcesPotentialIn2035
 
-		bioethanol , 7.2 [8a]_ , 100 [8b]_ , [TWh]
-		biodiesel , 2.5 [8a]_ , 100 [8b]_ , [TWh]
-		woody biomass , 34.3 [8c]_ , 75.0 [8d]_ , [TWh]
-		wet biomass , 0 , 49.8 [8d]_ , [TWh]
-		non-renewable waste, 0 , 10.3 [8e]_ , [TWh]
+		bioethanol , 7.2 [7a]_ , 100 [7b]_ , [TWh]
+		biodiesel , 2.5 [7a]_ , 100 [7b]_ , [TWh]
+		woody biomass , 34.3 [7c]_ , 75.0 [7d]_ , [TWh]
+		wet biomass , 0 , 49.8 [7d]_ , [TWh]
+		non-renewable waste, 0 , 10.3 [7e]_ , [TWh]
    
-   .. [8a]
+   .. [7a]
       Data obtained from :cite:`IEA_2023` and slightly adapted for calibration purpose.
    
-   .. [8b]
+   .. [7b]
       Reliable data for the local potential of bio-fuels could not be obtained. Thus, a reasonable order of magnitude of 100 TWh was chosen for both biodiesel and bioethanol. Using the energy content of biodiesel and bioethanol from :cite:`noauthor_conversion_nodate` and a yield of 4 t/ha, we compute that fully utilizing this biomass potential would amount to covering 5% of Colombia's surface with crops for biofuel production. In 2021, 40% of Colombia's surface was dedicated to agriculture.
 
-   .. [8c]
+   .. [7c]
       Endogenous computation, based on input data from Section XXX. This value matches grossly the primary solid biomass data for year 2019 given in :cite:`IEA_world_energy_balances`.
       
-   .. [8d]
+   .. [7d]
       According to :cite:`RE_potential_2023`, :cite:`UPME_2009` gives a gross energy potential from waste biomass in Colombia of 124.9 TWh and :cite:`TECSOL_2018` gives a biogas potential of 14.9 TWh. In Energyscope, biogas is produced based on *wet biomass*, with a conversion factor  of 3.35 in 2021. By using this conversion factor, we can transform the biogas potential into a wet biomass potential of 49.8 TWh. Finally, subtracting the wet biomass potential from the gross energy potential from waste biomass gives the potential for woody biomass.
 
-   .. [8e] 
+   .. [7e] 
       Data obtained from Departamento Nacional de Planeación (DNP), the Colombian National Planning Department
-
-
-Imported resources
-------------------
-
-
-Dominating fossil fuels are implemented in the model and detailed in
-Section
-`[ssec:case_study_imported_res] <#ssec:case_study_imported_res>`__. They
-can be regrouped in hydrocabons (gasoline, diesel, LFO and NG), coal and
-uranium. Data is summarised in :numref:`Table %s <tbl:prices_resources>` and are compared to
-other sources, such as estimations from the JRC of prices for oil, gas
-and coal :cite:`simoes2013jrc`. They base their work on a
-communication of the European Commission
-:cite:`eu2011roadmap`.
-
-
-There are a long list of candidate to become renewable fuels. Historically, biomass has been converted into bio-fuels. 
-Two types of these fuels are accounted: bio-diesel and bio-ethanol. They can substitute diesel and gasoline, respectively. 
-More recently, a new type of renewable fuel is proposed and can be labeled electro-fuels. Indeed, these fuels are produced from electricity. 
-We consider that the energy content of these fuels is renewable (i.e. from renewable electricity). 
-Four type of fuels were considered: hydrogen, ammonia, methanol and methane. 
-To avoid ambiguity between renewable fuels and their fossil equivalent, it is specified if the imported resources is renewable or fossil. 
-
-
-.. caution::
-   to be updated + explain where data comes from.
-
-The only difference being 
-Thus, we have gas and gas_re, or h2 and h2_re. Gas refers to what is usually called 'natural gas', while gas_re refers to methane from biogas, methanation of renewable hydrogen,...
-Since, a specific study for the Belgian case has been conducted by a consortium of industries, :cite:t:`H2coalition2020shipping`, which estimate new prices for the imports.
-:numref:`Table %s <tbl:prices_resources>` summarises all the input data for the resources.
-
+      
+Prices and GHG emissions of biomass resources given in :numref:`Table %s <tab:prices_resources_biomass>` ... source ...
 
 .. container::
 
-   .. table:: Price, GHG emissions and availability of resources, in 2035. Abbreviations: Liquid Fuel Oil (LFO), Natural Gas (NG) and Synthetic Natural Gas (SNG).
-      :name: tbl:prices_resources
+   .. csv-table:: Price and GHG emissions of biomass and waste resources.
+      :header: **Resources** , **c**:sub:`op` , **gwp**:sub:`op` [8a]_ , **CO**:sub:`2direct` [8b]_
+      :widths: 15 15 15 15
+      :name: tab:prices_resources_biomass
+		
+		 , [€\ :sub:`2015`/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`]
+		bioethanol , 111.3 , 0 , 250
+		biodiesel , 120.1 , 0 , 270
+		woody biomass , 32.8 , 10 , 390
+		wet biomass , 5.8 , 10 , 390
+		non-renewable waste, 8.1 , 190 , 260 [8c]_
 
-      +-------------+-------------+-------------+-------------+-------------+
-      | **Res\      | :math:`c_   | :math:`gwp_ | :math:`{CO}_| *avail*     |
-      | ources**    | {op}`       | {op}`       | {2direct}`  |             |
-      |             |             |             | [26]_       |             |
-      +-------------+-------------+-------------+-------------+-------------+
-      |             | [€\ :sub:`2\| [kgCO\      | [kgCO\      | [GWh]       |
-      |             | 015`/MWh\   | :sub:`2-eq.`| :sub:`2-eq.`|             |
-      |             | :sub:`fuel`]| /MWh\       | /MWh\       |             |
-      |             |             | :sub:`fuel`]| :sub:`fuel`]|             |
-      +-------------+-------------+-------------+-------------+-------------+
-      | Electricity | 84.3 [27]_  | 206.4 [28]_ | 0           | 27.5        |
-      | Import      |             |             |             |             |
-      +-------------+-------------+-------------+-------------+-------------+
-      | Gasoline    | 82.4 [29]_  | 345 [28]_   | 250         | infinity    |
-      |             |             |             |             |             |
-      +-------------+-------------+-------------+-------------+-------------+
-      | Diesel      | 79.7 [30]_  | 315 [28]_   | 270         | infinity    |
-      |             |             |             |             |             |
-      +-------------+-------------+-------------+-------------+-------------+
-      | LFO         | 60.1 [31]_  | 311.5 [28]_ | 260         | infinity    |
-      |             |             |             |             |             |
-      +-------------+-------------+-------------+-------------+-------------+
-      | Fossil      | 44.3 [32]_  | 267 [28]_   | 200         | infinity    |
-      | Gas         |             |             |             |             |
-      +-------------+-------------+-------------+-------------+-------------+
-      | Woody       | 32.8        | 11.8 [28]_  | 390         | 23.4        |
-      | biomass     |             |             |             |             |
-      +-------------+-------------+-------------+-------------+-------------+
-      | Wet-biomass | 5.8         | 11.8 [28]_  | 390         | 38.9        |
-      +-------------+-------------+-------------+-------------+-------------+
-      | non-RE      | 23.1        | 150  [28]_  | 260 [33]_   | 17.8        |
-      | waste       |             |             |             |             |
-      +-------------+-------------+-------------+-------------+-------------+
-      | Coal        | 17.6        | 401         | 360         | 33.3 [37]_  |
-      |             |             | :cite:`\    |             |             |
-      |             |             | we\         |             |             |
-      |             |             | idema_ecoin\|             |             |
-      |             |             | vent_2013`  |             |             |
-      +-------------+-------------+-------------+-------------+-------------+
-      | Uranium     | 3.9 [34]_   | 3.9         | 0           | infinity    |
-      |             |             | :cite:`\    |             |             |
-      |             |             | we\         |             |             |
-      |             |             | idema_ecoin\|             |             |
-      |             |             | vent_2013`  |             |             |
-      +-------------+-------------+-------------+-------------+-------------+
-      | Bio-diesel  | 120.0       | 0 [36]_     | 270         | infinity    |
-      |             |             |             |             |             |
-      +-------------+-------------+-------------+-------------+-------------+
-      | B\          | 111.3 [35]_ | 0 [36]_     | 250         | infinity    |
-      | io-gasoline |             |             |             |             |
-      +-------------+-------------+-------------+-------------+-------------+
-      | Renew. gas  | 118.3       | 0 [36]_     | 200         | infinity    |
-      |             |             |             |             |             |
-      +-------------+-------------+-------------+-------------+-------------+
-      | Fossil  H2  | 87.5        | 364         | 0           | infinity    |
-      | [25]_       |             |             |             |             |
-      +-------------+-------------+-------------+-------------+-------------+
-      | Renew. H2   | 119.4       | 0 [36]_     | 0           | infinity    |
-      |             |             |             |             |             |
-      +-------------+-------------+-------------+-------------+-------------+
-      | Fossil      | 76          | 285         | 0           | infinity    |
-      | Ammonia     |             |             |             |             |
-      | [25]_       |             |             |             |             |
-      +-------------+-------------+-------------+-------------+-------------+
-      | Renew.      | 81.8        | 0 [36]_     | 0           | infinity    |
-      | Ammonia     |             |             |             |             |
-      +-------------+-------------+-------------+-------------+-------------+
-      | Fossil      | 82.0        | 350         | 246         | infinity    |
-      | Methanol    |             |             |             |             |
-      | [25]_       |             |             |             |             |
-      +-------------+-------------+-------------+-------------+-------------+
-      | Renew.      | 111.3       | 0 [36]_     | 246         | infinity    |
-      | Methanol    |             |             |             |             |
-      +-------------+-------------+-------------+-------------+-------------+
-
-
-.. [25]
-   Own calculation for fossil hydrogen, ammonia and methanol. 
-   Price and emissions are calculated based on fossil gas and based on conversion efficiencies.
-
-.. [26]
-   Direct emissions related to
-   combustion:cite:`Quaschning2015`.
-
-.. [27]
-   Based on average market price in the year 2010 (50
-   EUR\ \ :sub:`2010`/MWh, from
-   :cite:`epex_spot_swissix_????`). Projected from 2010 to
-   2035 using a multiplication factor of 1.36
-   :cite:`prognos_ag_energieperspektiven_2012`. For security
-   of supply reason, the availability is limited to 30% of yearly
-   electricity EUD (See Section
-   `[ssec:be_policies] <#ssec:be_policies>`__).
-
-.. [28]
-   GWP100a-IPCC2013 metric: impact associated to
-   production, transport and combustion, see
-   :cite:`Moret2017PhDThesis`
-
-.. [29]
-   Based on 1.49 CHF\ \ :sub:`2015`/L (average price in 2015 for
-   gasoline 95 in Switzerland)
-   :cite:`swiss_federal_office_of_statistics_sfos_ipc_2016`.
-   Taxes (0.86 CHF\ \ :sub:`2015`/L,
-   :cite:`beuret_evolution_2016`) are removed and the
-   difference is projected from 2015 to 2035 using a multiplication
-   factor of 1.24 :cite:`european_commission_energy_2011`.
-   In line with :cite:`simoes2013jrc`.
-
-.. [30]
-   Based on 1.55 CHF\ \ :sub:`2015`/L (average price in 2015)
-   :cite:`swiss_federal_office_of_statistics_sfos_ipc_2016`.
-   Taxes (0.87 CHF\ \ :sub:`2015`/L,
-   :cite:`beuret_evolution_2016`) are removed and the
-   difference is projected from 2015 to 2035 using a multiplication
-   factor of 1.24 :cite:`european_commission_energy_2011`.
-   In line with :cite:`simoes2013jrc`.
-
-.. [31]
-   Based on 0.705 CHF\ \ :sub:`2015`/L (average price in 2015 for
-   consumptions above 20000 L/y)
-   :cite:`swiss_federal_office_of_statistics_sfos_indice_2016-1`.
-   Taxes (0.22 CHF\ \ :sub:`2015`/L,
-   :cite:`beuret_evolution_2016`) are removed and the
-   difference is projected from 2015 to 2035 using a multiplication
-   factor of 1.24 :cite:`european_commission_energy_2011`.
-   In line with :cite:`simoes2013jrc`.
-
-.. [32]
-   Based on the EUC estimated cost of resources in
-   2030, see Table 5 from :cite:`simoes2013jrc`.
-
-.. [33]
-   Assuming that the energy content can be assimilated to plastics and
-   extended to LFO.
-
-.. [34]
-   Average of the data points for 2035 in
-   :cite:`f._ess_kosten_2011`, accounting for the efficiency
-   of nuclear power plants (:numref:`Table %s <tbl:nonrenew_elec>`).
-
-.. [35]
-   Data extrapolated from
-   :cite:`brynolf2018electrofuels`
-
-
-.. [36]
-   Emissions related to electro-fuels
-   and bio-fuels production are neglected.
+.. [8a]
+   GWP100a-IPCC2013 metric: impact associated to extraction, transportation and combustion
    
-.. [37]
-   Colombia is phasing out coal. Coal is still used in industrial processes.
-   In 2015, 33.3 TWh of coal were used. Thus, the amount available should be lower than this value.
+.. [8b]
+   Direct emissions related to combustion :cite:`Quaschning2015`. These data are not used in the LP problem, but help us to check that the calibration of EnergyScope to the 2021 Colombian energy system of is correct.
 
+.. [8c]
+   Assuming that the energy content can be assimilated to plastics.
+
+
+Domestically produced fossil fuels
+----------------------------------
+
+No constraint regarding the availability of domestically produced fossil fuels, since the cost-optimization already does the trick ?
+
+Prices and GHG emissions given in :numref:`Table %s <tab:prices_resources_fossil>` ... source ...
+
+.. container::
+
+   .. csv-table:: Price and GHG emissions of domestically produced fossil fuels, in 2035. Abbreviations: Liquid Fuel Oil (LFO).
+      :header: **Resources** , **c**:sub:`op` , **gwp**:sub:`op` [9a]_ , **CO**:sub:`2direct` [9b]_
+      :widths: 15 15 15 15
+      :name: tab:prices_resources_fossil
+		
+		 , [€\ :sub:`2015`/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`]
+		coal , 17.7 , 470 , 360
+		natural gas , 44.3 , 330 , 200
+		gasoline , 82.4 , 430 , 250
+		diesel , 79.7 , 400 , 270
+		LFO , 60.2 , 370 , 280
+
+.. [9a]
+   GWP100a-IPCC2013 metric: impact associated to extraction, transportation and combustion
+   
+.. [9b]
+   Direct emissions related to combustion :cite:`Quaschning2015`. These data are not used in the LP problem, but help us to check that the calibration of EnergyScope to the 2021 Colombian energy system of is correct.
+
+Electricity imports and exports
+-------------------------------
+
+The availability of the cross-border electricity imports and exports, when defined as "resources", is considered as infinite. Indeed, the real constraint comes from the grid infrastructure for imports and exports, as expressed by eqs. :eq:`eq:elecImpLimited` and :eq:`eq:elecExpLimited`. The values of parameters for these equations are given in :numref:`Table %s <tab:elecImpExpParams>`.
+
+.. container::
+
+   .. csv-table:: Values of the parameters which constrain cross-border electricity imports and exports.
+      :header: "Parameter", "Value", "Units"
+      :widths: 15 15 15
+      :name: tab:elecImpExpParams
+
+      ":math:`elec_{import,max}`", "0.395 [10a]_ ", "[GW]"
+      ":math:`elec_{export,max}`", "0.535 [10b]_ ", "[GW]"
+      ":math:`f_{max}(HVAC)`", "1.5 [10c]_ ", "[GW]"
+      
+   .. [10a]
+      Import capacities from Ecuador indicated in :cite:`IEA_2023`.
+      
+   .. [10b]
+      Export capacities to Ecuador indicated in :cite:`IEA_2023`.
+      
+   .. [10c]
+      Value inspired from the interconnexion projects described in :cite:`IEA_2023`.
+
+
+Prices and GHG emissions given in :numref:`Table %s <tab:prices_elec_import_export>` ... source ...
+
+.. container::
+
+   .. csv-table:: Price and GHG emissions associated to electricity imports and exports, in 2035. Abbreviations: Electricity (elec.).
+      :header: **Resources** , **c**:sub:`op` , **gwp**:sub:`op` [11a]_ , **CO**:sub:`2direct`
+      :widths: 15 15 15 15
+      :name: tab:prices_elec_import_export
+		
+		 , [€\ :sub:`2015`/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`]
+		elec imports , 84.3 , 250 , 0
+		elec exports , 75.9 [11b]_ , 0 , 0
+
+.. [11a]
+   GWP100a-IPCC2013 metric: impact associated to extraction, transportation and combustion
+   
+.. [11b]
+   The price of electricity exports is assumed to be equal to 90% of the price of electricity imports, to account for cross-border tariffs.
+   
+
+Export of e-fuels
+-----------------
+
+The Belgian Hydrogen Import Coalition computed a projection of the import prices of e-fuels from international markets for the year 2035 :cite:`H2coalition2020shipping`. They indicate that 80% of this selling price would correspond to production cost, while the rest would correspond
+to shipping and energy conversion costs and losses. Thus, the revenue of an e-fuel exporter like Colombia would be equal to 80% of the
+computed import price. The corresponding values are indicated in :numref:`Table %s <tab:prices_resources_efuels>`.
+
+.. container::
+
+   .. csv-table:: Price and GHG emissions associated to electricity imports and exports, in 2035. Abbreviations: Electricity (elec.).
+      :header: **Resources** , **c**:sub:`op` **(import)** , **c**:sub:`op` **(export)**
+      :widths: 15 15 15
+      :name: tab:prices_resources_efuels
+		
+		 , [€\ :sub:`2015`/MWh :sub:`fuel`] [12a]_ , [€\ :sub:`2015`/MWh :sub:`fuel`] [12b]_
+		green hydrogen , 119.2 , 95.4
+		e-methane , 118.3 , 94.7
+		e-ammonia , 81.8 , 65.5
+		e-methanol , 111.3 , 89.1
+
+.. [12a]
+   Taken as equal to the import price of e-fuels from international market, computed by :cite:`H2coalition2020shipping`.
+   
+.. [12b]
+   Estimated as 80% of the import price.
+   
 
 .. _sec:app1_end_uses:
 
 Energy demand and political framework
 =====================================
 
-The EUD for heating, electricity and mobility in 2035 is calculated from
-the forecast done by the EUC in 2035 for Colombia (see Appendix 2 in
-:cite:`EuropeanCommission2016`). However, in
-:cite:`EuropeanCommission2016`, the FEC is given for heating
-and electricity. The difference between FEC and EUD is detailed in
-Section
-`[ssec:conceptual_modelling_framework] <#ssec:conceptual_modelling_framework>`__
-and can be summarised as follows: the FEC is the amount of input energy
-needed to satisfy the EUD in energy services. Except for HP, the FEC is
-greater than EUD. We applied a conservative approach by assuming that
-the EUD equal to the FEC for electricity and heating demand.
+Values for calibrating the 2021 EUDs in EnergyScope are given in :numref:`Table %s <tab:eud_2021>`. Details and assumptions about these EUDs are given in the following sub-sections.
+
+.. container::
+
+   .. csv-table:: EUD in 2021. Abbreviations: end-use type (EUT)
+      :header: **EUT** , **Households** , **Services** , **Industry**, **Transportation** , "Units"
+      :widths: 30 20 20 20 15 10
+      :name: tab:eud_2021
+		
+		electricity - baseload , 7815.0,9973.8,35585.3,0,[GWh]
+		electricity - variable , 4018.2,7431.2,11193.5,0,[GWh]
+		space heating , 13640.0 ,4033.4,21853.4 ,0,[GWh]
+		hot water , 1136.7 ,0,10926.7 ,0,[GWh]
+		process heating , 0,0,26473.9 ,0,[GWh]
+		space cooling , 2556.0 ,2528.0 ,0,0,[GWh]
+		process cooling , 0,0,277.8 ,0,[GWh]
+		passenger mobility , 0,0,0,347881.0 ,[Mpkm]
+		freight , 0,0,0,97783.0 ,[Mtkm]
+		non-energy demand , 0,0,22423.0 ,0,[GWh] 
+   
+The aim is to compute the evolution through time of these EUDs with GEMMES, which will then feed them to EnergyScope. However, as a first approximation,
+the 2035 EUDs can simply be computed by multiplying the values of :numref:`Table %s <tab:eud_2021>` by 1.4. To obtain the 2050 EUDs,
+the values can instead be multiplied by 1.7. These multiplication factors are obtained from a projection for energy demand which was
+given to us by Departamento Nacional de Planeación (DNP), the Colombian National Planning Department.
 
 .. _ssec:app1_electricity_end_uses:
 
 Electricity
 -----------
 
-The values in table `1.3 <#tbl:elec_demand>`__ list the electricity
-demand that is not related to heating for the three sectors in 2035. The
-overall electricity EUD is given in
-:cite:`EuropeanCommission2016`. However, only the FEC is
-given by sectors. In order to compute the share of electricity by
-sector, we assume that the electricity to heat ratio for the residential
-and services remain constant between 2015 and 2035. This ratio can be
-calculated from :cite:t:`EuropeanCommission-Eurostat.2018`,
-these ratio of electricity consumed are 24.9% and 58.2% for residential
-and services, respectively. As a consequence, the industrial electricity
-demand is equal to the difference between the overall electricity demand
-and the two other sectors.
+The aggregated electricity consumed in Colombia in 2021 was 84.4 [TWh] :cite:`IEA_2023`. The electricity used for supplying cooling, mobility and non-energy demand is subtracted from it to give an electricity EUD of 76.0 [TWh]. We split it between baseload and variable load, as well as between households, services and industry, by using shares retrieved from the National energy plan 2022.
 
-A part of the electricity is assumed to be a fixed demand, such as
-fridges in households and services, or industrial processes. The other
-part is varying, such as the lighting demand. The ratio between varying
-electricity and fixed demand are calculated in order to fit the real curve 
-in 2015 (data provided by ENTSO-E
-https://www.entsoe.eu/). It results in a share of 32.5% of varying electricity demand  
-and 67.5% of baseload electricity demand.
-demand of electricity is shared over the year according to *%\ elec*,
-which is represented in  :numref:`Figure %s <fig:TS_elec>`. We use the real
-2015 Belgian electricity demand (data provided by ENTSO-E
-https://www.entsoe.eu/). *%\ elec* time series is the normalised value
-of the difference between the real time series and its minimum value.
-
-.. container::
-
-   .. table:: Yearly electricity demand not related to heating by sector, in 2035.
-      :name: tbl:elec_demand
-
-      ========== =========== ============
-      \          **Varying** **Constant**
-      \          [TWh]       [TWh]
-      Households 7.7         14.3
-      Industry   11.1        33.7
-      Services   11.0        14.1
-      ========== =========== ============
-
-.. figure:: /images/belgian_data/ts_elec_Belgium.png
-   :alt: Normalised electricity time series over the year.
-   :name: fig:TS_elec
-
-   Normalised electricity time series over the year.
-
+The yearly profile used for variable load is still the one from Turkey.
 
 .. _ssec:app1_heating_end_uses:
 
 Heating
 -------
 
-We applied the same methodology as in previous paragraph to compute the
-residential, service heat yearly demand. The industrial heat processes
-demand is assumed to be the overall industrial energy demand where
-electricity and non energy use have been removed. Yearly EUD per sector
-is reported in table `1.4 <#tbl:heat_demand>`__.
+Heating EUDs and their decomposition into households, services and industry were retrieved from :cite:`plazas_nino_2023`, then adapted through the calibration process to match the CO2 emissions of Colombia in 2021.
 
-A part of the heat is assumed to be a fixed demand, such as hot water in
-households and services, or industrial processes. The other part
-represents the space heating demand and is varying. Similarly to the
-electricity, the ratio between varying electricity and fixed demand are
-the one of Switzerland, presented in
-:cite:`Limpens2019,Moret2017PhDThesis` which are based on
-:cite:`prognos_ag_energieperspektiven_2012`. The varying
-demand of heat is shared over the year according to :math:`%_{sh}`. This time
-series is based on our own calculation. The methodology is the
-following: based on the temperature time series of Uccle 2015 (data from
-IRM :cite:`Reyniers2012`); the HDH are calculated; and then
-the time series. The HDH is a similar approach than the more commonly
-used HDD. According to Wikipedia, HDD is defined as follows: “*HDD is a
-measurement designed to quantify the demand for energy needed to heat a
-building. HDD is derived from measurements of outside air temperature.
-The heating requirements for a given building at a specific location are
-considered to be directly proportional to the number of HDD at that
-location. [...] Heating degree days are defined relative to a base
-temperature*”. According to the European Environment Agency [37b]_, the
-base temperature is 15.5\ :math:`^o`\ C, we took 16\ :math:`^o`\ C. HDH
-are computed as the difference between ambient temperature and the
-reference temperature at each hour of the year. If the ambient
-temperature is above the reference temperature, no heating is needed.
-:numref:`Figure %s <fig:HDD_BE_2015>` compares the result of our methodology
-with real value collected by Eurostat [38]_. The annual HDD was 2633,
-where we find 2507.
+Yearly profile is computed following the method described in :cite:`borasio2022deep`. [EXPLAIN METHOD]
 
-By normalising the HDH, we find :math:`%_{sh}`, which is represented in 
 
-.. figure:: /images/belgian_data/belgium_HDD_2015.png
-   :alt: Comparison of HDD between Eurostat and our own calculation.
-   :name: fig:HDD_BE_2015
+.. _ssec:app1_cooling_end_uses:
 
-   Comparison of HDD between Eurostat and our own calculation.
+Cooling
+-------
 
-.. figure:: /images/belgian_data/ts_sh_Belgium.png
-   :alt: Normalised space heating time series over the year.
-   :name: fig:TS_heat
+Space cooling: data from :cite:`plazas_nino_2023`.
 
-   Normalised space heating time series over the year.
-
-.. container::
-
-   .. table:: Yearly heat end use demand per sector, in 2035.
-      :name: tbl:heat_demand
-
-      ========== ================= ============= ========================
-      \          **Space heating** **Hot water** **Process heat**\  [39]_
-      \          [TWh]             [TWh]         [TWh]
-      Households 70.2              18.0          0
-      Industry   13.1              3.4           50.4
-      Services   34.8              7.8           0
-      ========== ================= ============= ========================
-
-   .. [39]
-      We define process heat as the high temperature heat required in the
-      industrial processes. This heat cannot be supplied by technologies
-      such as heat pumps or thermal solar.
+Process cooling: data obtained from Departamento Nacional de Planeación (DNP), the Colombian National Planning Department.
 
 .. _ssec:app1_demand_mobility:
 
 Mobility
 --------
 
-The annual passenger transport demand in Colombia for 2035 is expected
-to be 194 billions :cite:`EuropeanCommission2016`.
-Passenger transport demand is divided between public and private
-transport. The lower (:math:`%_{public,min}`) and upper bounds
-(:math:`%_{public,max}`) for the use of public transport are 19.9% [40]_ and
-50% of the annual passenger transport demand, respectively. The
-passenger mobility demand is shared over the day according to
-:math:`%_{pass}`. We assume a constant passenger mobility demand for every
-day of the year. This latter is represented in Figure
-:numref:`Figure %s <fig:TS_mobPass>` (data from Figure 12 of
-:cite:`USTransportation`).
-The annual freight transport demand in Colombia for 2035 is expected to
-be 98e09 tons kilometers :cite:`EuropeanCommission2016`.
-The freight can be supplied by trucks, trains or boats. The lower
-(:math:`%_{fr,rail,min}`) and upper bounds (:math:`%_{fr,rail,max}`) for the use of
-freight trains are 10.9% and 25% of the annual freight transport
-demand, respectively. The lower (:math:`%_{fr,boat,min}`) and upper bounds
-(:math:`%_{fr,boat,max}`) for the use of freight inland boats are 15.6% and
-30% of the annual freight transport demand, respectively. The lower
-(:math:`%_{fr,trucks,min}`) and upper bounds (:math:`%_{fr,trucks,max}`) for the use
-of freight trucks are 0% and 100% of the annual freight transport
-demand, respectively. The bounds and technologies information are
-latter summarised in Table
-`1.15 <#tbl:freight_vehicles_efficiency>`__.
+Mobility and freight EUDs retrieved from :cite:`plazas_nino_2023`, then adapted through the calibration process to match the CO2 emissions of Colombia in 2021.
 
-.. figure:: /images/belgian_data/ts_mob.png
-   :alt: Normalised passenger mobility time series over a day. We assume a similar passenger mobility demand over the days of the year.  
-   :name: fig:TS_mobPass
-   :width: 6cm
-   :height: 4cm
+Non-energy
+----------
 
-   Normalised passenger mobility time series over a day. We assume a
-   similar passenger mobility demand over the days of the year.
+Non-energy EUD value in 2021 is taken from :cite:`IEA_2023`.
 
 .. _app:discount_and_interest_rates:
 
 Discount rate and interest rate
 -------------------------------
-
-To compute their profitability, companies apply a discount rate to the
-investment they make. A discount rate is used for both cost of finance
-and for risk perception and opportunity cost. The cost of finance is to
-be compared with concepts like ‘hurdle rate’ or ‘rate of return’ usually
-calculated in accordance to an annual return on investment. Each
-individual investment physically occurring in year k, results in a
-stream of payments towards the amortization of this investment spread
-over several years in the future. The higher the cost of finance (or
-hurdle rate), the higher the annual payments spread over the lifetime of
-an investment and thus the higher the total cost. The hurdle rate
-affects only the investment costs so the impact is bigger for capital
-intensive technologies. We consider differentiated hurdle discount rates
-for different groups of energy supply and demand technologies,
-representing the different risk perception of industry versus
-individuals.
-
-According with :cite:t:`Meinke-Hubeny2017` who based their
-work on the JRC EU TIMES model :cite:`simoes2013jrc` in line
-with the PRIMES model :cite:`EuropeanCommission2016`, the
-discount rate is around 7.5 up to 12% depending on the technologies.
-Discount rate cannot be directly converted into interest rate as the
-first is fixed by the market and the second is fixed by the central
-banks. As the evidence presented in Figure
-:numref:`Figure %s <fig:path_be_irate_discountrate>` indicates, while these two
-interest rates tend to move together, they also may follow different
-paths from time to time.
-
-
-.. figure:: /images/belgian_data/path_be_i_rate_and_discount_rate.png
-   :alt: Comparison of Belgian interest rate and discount rate. The following rate was chosen to represent the discount rate: floating loans rate over a 1M€ (other than bank overdraft) and up to 1 year initial rate fixation.
-   :name: fig:path_be_irate_discountrate
-
-   Comparison of Belgian interest rate and discount rate. The following
-   rate was chosen to represent the discount rate: floating loans rate
-   over a 1M€ (other than bank overdraft) and up to 1 year initial rate
-   fixation.
-
-For the different studies, the real discount rate for the public
-investor :math:`i_{rate}` is fixed to 1.5%, which is similar to the floating
-loan rate over a million euros (other than bank overdraft) and greater
-than the central bank interest rate.
 
 .. _app:ESTD_CO_data_technologies:
 
@@ -615,8 +402,8 @@ Renewables
       |             | /kW         | /kW         | /kW         |             |             |             |          |
       |             | :sub:`e`]   | :sub:`e`/y] | :sub:`e`]   |             |             |             |          |
       +-------------+-------------+-------------+-------------+-------------+-------------+-------------+----------+
-      |    Solar    |    870      |    18.8     |    2081     |    25 [57]_ |    11.9     |    0        |    59.2  |
-      |    PV       |    [57]_    |    [57]_    |    :cite:`\ |    :cite:`\ |    [58]_    |             |    [59]_ |
+      |    Solar    |    870      |    18.8     |    2081     |    25       |    11.9     |    0        |    59.2  |
+      |    PV       |    [57]_    |             |    :cite:`\ |    :cite:`\ |             |             |          |
       |             |             |             |    weidema_\|    eur\     |             |             |          |
       |             |             |             |    ecoinven\|    opean\   |             |             |          |
       |             |             |             |    t_2013`  |    _phot\   |             |             |          |
@@ -630,8 +417,8 @@ Renewables
       |             |             |             |             |    gic_2\   |             |             |          |
       |             |             |             |             |    011`     |             |             |          |
       +-------------+-------------+-------------+-------------+-------------+-------------+-------------+----------+
-      |    On.      |    1040     |    12.1     |    622.9    |    30 [60]_ |    24.3     |    0        |    10    |
-      |    Wind     |    [60]_    |    [60]_    |    :cite:`\ |    :cite:`\ |    [58]_    |             |    [61]_ |
+      |    On.      |    1040     |    12.1     |    622.9    |    30       |    24.3     |    0        |    10    |
+      |    Wind     |             |             |    :cite:`\ |    :cite:`\ |             |             |          |
       |    Turbine  |             |             |    weidema_\|    a\       |             |             |          |
       |             |             |             |    ecoinven\|    ssoci\   |             |             |          |
       |             |             |             |    t_2013`  |    ation\   |             |             |          |
@@ -647,8 +434,8 @@ Renewables
       |             |             |             |             |    gie_2\   |             |             |          |
       |             |             |             |             |    013`     |             |             |          |
       +-------------+-------------+-------------+-------------+-------------+-------------+-------------+----------+
-      |    Off.     |    4975     |    34.6     |    622.9    |    30 [60]_ |    41.2     |    0        |    6     |
-      |    Wind     |    [60]_    |    [60]_    |    :cite:`\ |    :cite:`\ |    [58]_    |             |    [61]_ |
+      |    Off.     |    4975     |    34.6     |    622.9    |    30       |    41.2     |    0        |    6     |
+      |    Wind     |             |             |    :cite:`\ |    :cite:`\ |             |             |          |
       |    Turbine  |             |             |    weidema_\|    a\       |             |             |          |
       |             |             |             |    ecoinven\|    ssoci\   |             |             |          |
       |             |             |             |    t_2013`  |    ation\   |             |             |          |
@@ -681,7 +468,7 @@ Renewables
       |             |    014`     |    014`     |             |    014`     |             |             |          |
       +-------------+-------------+-------------+-------------+-------------+-------------+-------------+----------+
       | Geothermal  |    7488     |    142      |    24.9     |    30       |    86       |    0        |    0     |
-      | [63]_       |    [63]_    |    [63]_    |    :cite:`\ |             |    :cite:`\ |             |    [64]_ |
+      |             |             |             |    :cite:`\ |             |    :cite:`\ |             |          |
       |             |             |             |    weid\    |             |    assoc\   |             |          |
       |             |             |             |    ema_e\   |             |    iatio\   |             |          |
       |             |             |             |    coinv\   |             |    n_des\   |             |          |
@@ -699,50 +486,7 @@ Renewables
       +-------------+-------------+-------------+-------------+-------------+-------------+-------------+----------+
 
 .. [57]
-   Investment cost based on
-   :cite:`DanishEnergyAgency2019`. OM cost scaled
-   proportionally based on IEA data.
-
-.. [58]
-   Based on the real data of 2015 (data
-   provided by ELIA, the Belgian TSO, which monitored 2952MW of PV,
-   onshore and offshore in 2015 (Source: \url{https://www.elia.be/}, consulted the 06/12/2019.})).
-
-.. [59]
-   Assuming that 250 km\ \ :math:`^2` of available roof well oriented
-   exist today :cite:`Devogelaer2013` and that the
-   efficiency in 2035 will be 23%
-   :cite:`DanishEnergyAgency2019` with an average
-   irradiation - similar to historical values - of 2820
-   Wh/m\ \ :math:`^2` in Colombia,
-   :cite:`IRM_Atlas_Irradiation`. The upper limit becomes
-   59.2 GW of installed capacity.
-
-.. [60]
-   Onshore and offshore wind turbines in 2030
-   :cite:`DanishEnergyAgency2019`. 
-   For Offshore, a correction factor of
-   2.58 is applied to have an LCOE of 79€/MWh in 2020, in line with
-   recently published offer:
-   https://www.enerdata.net/publications/daily-energy-news/belgium-agrees-79mwh-lcoe-three-offshore-wind-parks.html,
-   visited on the 12-06-2020.
-
-.. [61]
-   From previous study
-   :cite:`limpens2018electricity` 
-   with a correction on Offshore wind. The government announced a plan to build 6 GW of offshore wind, see `Belgian offshore plateform <https://www.belgianoffshoreplatform.be/fr/>`_.
-   
-
-.. [64]
-   A prototype (Balmatt project) started in 2019 and produces 4-5
-   MW :cite:`VITO_Website`. However, the potential is not
-   accurately known.
-
-
-.. [63]
-   ORC cycle at 6 km depth for electricity
-   production. Based on Table 17 of :cite:`Carlsson2014`. We
-   took the reference case in 2030.
+   Bloub
 
 
 
@@ -751,23 +495,11 @@ are listed in :numref:`Table %s <tbl:renew_elec>`, including
 the yearly capacity factor (:math:`c_p`). As described in the Section
 `[ssec:lp_formulation] <#ssec:lp_formulation>`__, for seasonal
 renewables the capacity factor :math:`c_{p,t}` is defined for each
-time period. These capacity factors are represented in Figure
-:numref:`Figure %s <fig:TS_Renewables>`. For these technologies,
+time period. For these technologies,
 :math:`c_p` is the average of :math:`c_{p,t}`. For all the other
 electricity supply technologies (renewable and non-renewable),
-:math:`c_{p,t}` is equal to the default value of 1. As the power
-delivered by the hydro river is almost negligible, we take the time
-series of hydro river from Switzerland
-:cite:`Limpens2019`.
+:math:`c_{p,t}` is equal to the default value of 1.
  
-
-.. figure:: /images/belgian_data/c_p_t_renewables.png
-   :alt: Capacity factor for the different renewable energy sources over the year.
-   :name: fig:TS_Renewables
-
-   Capacity factor for the different renewable energy sources over the year.
-
-
 
 .. _ssec:app1_non-renewable:
 
@@ -2918,16 +2650,6 @@ Switzerland).
    From
    https://www.eea.europa.eu/data-and-maps/indicators/heating-degree-days-2,
    consulted the 06-12-2019
-
-.. [38]
-   Source: https://ec.europa.eu/eurostat, consulted the 06/12/2019.
-
-
-.. [40]
-   it corresponds to the share of 2015 (From Tables
-   2.2.3 and 2.3.3 of :cite:`Eurostat2017`), in line with
-   data from the SPF :cite:`SPF-Mobility2017`.
-
 
 .. [257]
    from https://en.wikipedia.org/wiki/Nissan_Leaf, consulted on
