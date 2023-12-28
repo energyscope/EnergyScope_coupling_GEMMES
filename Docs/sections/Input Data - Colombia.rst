@@ -447,10 +447,10 @@ Hidroituango power plant (1.2 GW according to :cite:`IEA_2023`), which was compl
    .. csv-table:: Renewable electricity production technologies in 2035. Abbreviations: concentrated solar power 
       with parabolic trough (CSP PT), concentrated solar power with solar tower (CSP ST).
       :header: **Technology**, **c**:sub:`inv`, **c**:sub:`maint`, **gwp**:sub:`constr` [14a]_ , **lifetime**, **c**:sub:`p`
-      :widths: 20 18 24 22 15 15
+      :widths: 19 18 24 23 15 15
       :name: tab:elec_prod_re
 		 
-		  , [€ :sub:`2015`/kW :sub:`e`], [€ :sub:`2015`/kW :sub:`e`/year], [kgCO :sub:`2`-eq./kW :sub:`e`, [year], [%]
+		  , [€ :sub:`2015`/kW :sub:`e`], [€ :sub:`2015`/kW :sub:`e`/year], [kgCO :sub:`2`-eq./kW :sub:`e`], [year], [%]
 		 Hydro dam, 4201 [14b]_, 21.0 [14b]_, 1693, 40 [14b]_, 50 [14c]_
 		 Hydro river, 5045 [14b]_, 50.4 [14b]_, 1263, 40 [14b]_, 50 [14c]_
 		 Rooftop PV, 738 [14d]_, 9.7 [14d]_, 2081, 40 [14d]_, 19 [14e]_
@@ -525,25 +525,51 @@ For hydro dam and hydro river, ...
 Non-renewable
 ~~~~~~~~~~~~~
 
-:numref:`Table %s <tab:elec_prod_nre>` gives the data for the non-renewable electricity generation technologies
-modelled in EnergyScope Colombia, together with their sources. The :math:`f_{min}` values for renewable electricity
-technologies in 2035 are equal to their installed capacity in 2021, already given in 
-:numref:`Table %s <tab:renewableTechPotentialIn2035>`. The values for :math:`f_{max}` ...
+:numref:`Table %s <tab:elec_prod_nre>` gives the data for the fossil electricity generation technologies
+modelled in EnergyScope Colombia, together with their sources. The minimum installed capacity (:math:`f_{min}`)
+is zero, while the maximum installed capacity (:math:`f_{max}`) is set to a value high enough for each 
+technology to potentially cover the entire demand.
 
 .. container::
 
-   .. csv-table:: Non-renewable electricity production technologies in 2035.
-      :header: **Technology**, **c**:sub:`inv`, **c**:sub:`maint`, **gwp**:sub:`constr` [14a]_ , **lifetime**, **c**:sub:`p`
-      :widths: 20 18 24 22 15 15
+   .. csv-table:: Non-renewable electricity production technologies in 2035. Abbreviations: combined cycle gas turbine (CCGT).
+      :header: **Technology**, **c**:sub:`inv`, **c**:sub:`maint`, **gwp**:sub:`constr` [15a]_ , **lifetime** [15b]_, **c**:sub:`p`, **efficiency**
+      :widths: 11 17 24 23 12 8 13
       :name: tab:elec_prod_nre
 		 
-		  , [€ :sub:`2015`/kW :sub:`e`], [€ :sub:`2015`/kW :sub:`e`/year], [kgCO :sub:`2`-eq./kW :sub:`e`, [year], [%]
-		 CCGT, 4201 , 21.0 , 1693, 40, 50
-		 CCGT ammonia, 
-		 Coal central,
+		  , [€ :sub:`2015`/kW :sub:`e`], [€ :sub:`2015`/kW :sub:`e`/year], [kgCO :sub:`2`-eq./kW :sub:`e`], [year], [%], [%]
+		 CCGT, 772 [15c]_, 19.7 [15c]_, 184, 25, 85, 63 [15d]_
+		 CCGT ammonia [15e]_, 772, 19.6, 184, 25, 50
+		 Coal central, 3246 [15f]_, 49.0 [15f]_, 332, 35, 86 [15b]_, 54 [15g]_
 		 
+.. [15a]
+   Data from :cite:`weidema_ecoinvent_2013`
+   
+.. [15b]
+   Data from :cite:`bauer_new_2008`	
+   
+.. [15c]
+   Data from :cite:`iea_-_international_energy_agency_iea_2014-1`   
+   
+.. [15d]
+   Data from :cite:`bauer_new_2008`, 0.4-0.5 GW CCGT in 2035 (realistic optimistic scenario)	 
 
-
+.. [15e]
+   Use of Ammonia in CCGT is at its early stage. Mitsubishi is developping 
+   a 40 MW turbine and promises similar efficiency as gas CCGT :cite:`nose2021development`. 
+   However, the high emissions of NOx requires a removal equipment which will reduce the 
+   power plant efficiency. As gas and ammonia CCGT will be similar, we expect a similar cost and lifetime. 
+   The only exception is the efficiency, which is assumed at 50% instead of 63% for a gas CCGT :cite:`ikaheimo2018power`.
+   
+.. [15f]
+   1.2 GW\ \ :math:`_{\text{e}}` IGCC power plant
+   :cite:`u.s._eia_-_energy_information_administration_updated_2013`.
+   *c*:sub:`maint` is fixed cost (48.1 €\ \ :sub:`2015`/kW\ \ :sub:`e`/y) +
+   variable cost (0.82 €\ \ :sub:`2015`/kW\ \ :sub:`e`/y assuming 7500
+   h/y).   
+   
+.. [15g]
+   Data from :cite:`bauer_new_2008`, IGCC in 2025 (realistic optimistic scenario)	 
 
 Heating and cogeneration
 ------------------------

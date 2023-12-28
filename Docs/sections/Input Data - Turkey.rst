@@ -280,10 +280,7 @@ Non-renewable
 ~~~~~~~~~~~~~
 
 Data for the considered fossil electricity production technologies are
-listed in :numref:`Table %s <tbl:nonrenew_elec>`. The
-maximum installed capacity (:math:`f_{max}`) is set to a value high enough
-(100 000 TW\ :sub:`e`) for each technology to potentially cover the
-entire demand.
+listed in :numref:`Table %s <tbl:nonrenew_elec>`. 
 
 
 .. container::
@@ -333,7 +330,7 @@ entire demand.
       +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
       | CCGT\       | 772         | 20          | 183.8       | 25          | 85.0        | 50          | 0           |
       | :sub:`AMMO\ |             |             | :cite:`\    |             |             |             |             |
-      | NIA` [89]_  |             |             | weid\       |             |             |             |             |
+      | NIA`        |             |             | weid\       |             |             |             |             |
       |             |             |             | ema_e\      |             |             |             |             |
       |             |             |             | coinv\      |             |             |             |             |
       |             |             |             | ent_2\      |             |             |             |             |
@@ -399,12 +396,7 @@ entire demand.
    IGCC in 2025 (realistic optimistic scenario)
    :cite:`bauer_new_2008`.
 
-.. [89]
-   Use of Ammonia in CCGT is at its early stage. Mitsubishi is developping 
-   a 40 MW turbine and promises similar efficiency as gas CCGT :cite:`nose2021development`. 
-   However, the high emissions of NOx requires a removal equipment which will reduce the 
-   power plant efficiency. As gas and ammonia CCGT will be similar, we expect a similar cost and lifetime. 
-   The only exception is the efficiency, which is assumed at 50% instead of 63% for a gas CCGT :cite:`ikaheimo2018power`.
+
 
 Heating and cogeneration
 ------------------------
