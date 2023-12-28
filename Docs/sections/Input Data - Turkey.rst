@@ -30,33 +30,13 @@ Biomass and non-renewable waste
 Imported resources
 ------------------
 
-Dominating fossil fuels are implemented in the model and detailed in
-Section
-`[ssec:case_study_imported_res] <#ssec:case_study_imported_res>`__. They
-can be regrouped in hydrocabons (gasoline, diesel, LFO and NG), coal and
+Imported fossil fuels are implemented in the model. They
+can be regrouped into hydrocabons (gasoline, diesel, LFO and NG), coal and
 uranium. Data is summarised in :numref:`Table %s <tbl:prices_resources_TK>` and are compared to
 other sources, such as estimations from the JRC of prices for oil, gas
 and coal :cite:`simoes2013jrc`. They base their work on a
 communication of the European Commission
 :cite:`eu2011roadmap`.
-
-
-There are a long list of candidate to become renewable fuels. Historically, biomass has been converted into bio-fuels. 
-Two types of these fuels are accounted: bio-diesel and bio-ethanol. They can substitute diesel and gasoline, respectively. 
-More recently, a new type of renewable fuel is proposed and can be labeled electro-fuels. Indeed, these fuels are produced from electricity. 
-We consider that the energy content of these fuels is renewable (i.e. from renewable electricity). 
-Four type of fuels were considered: hydrogen, ammonia, methanol and methane. 
-To avoid ambiguity between renewable fuels and their fossil equivalent, it is specified if the imported resources is renewable or fossil. 
-
-
-.. caution::
-   to be updated + explain where data comes from.
-
-The only difference being 
-Thus, we have gas and gas_re, or h2 and h2_re. Gas refers to what is usually called 'natural gas', while gas_re refers to methane from biogas, methanation of renewable hydrogen,...
-Since, a specific study for the Belgian case has been conducted by a consortium of industries, :cite:t:`H2coalition2020shipping`, which estimate new prices for the imports.
-:numref:`Table %s <tbl:prices_resources_TK>` summarises all the input data for the resources.
-
 
 .. container::
 
@@ -208,7 +188,6 @@ Since, a specific study for the Belgian case has been conducted by a consortium 
    Data extrapolated from
    :cite:`brynolf2018electrofuels`
 
-
 .. [36]
    Emissions related to electro-fuels
    and bio-fuels production are neglected.
@@ -222,48 +201,20 @@ Since, a specific study for the Belgian case has been conducted by a consortium 
 Energy demand and political framework
 =====================================
 
-The EUD for heating, electricity and mobility in 2035 is calculated from
-the forecast done by the EUC in 2035 for Colombia (see Appendix 2 in
-:cite:`EuropeanCommission2016`). However, in
-:cite:`EuropeanCommission2016`, the FEC is given for heating
-and electricity. The difference between FEC and EUD is detailed in
-Section
-`[ssec:conceptual_modelling_framework] <#ssec:conceptual_modelling_framework>`__
-and can be summarised as follows: the FEC is the amount of input energy
-needed to satisfy the EUD in energy services. Except for HP, the FEC is
-greater than EUD. We applied a conservative approach by assuming that
-the EUD equal to the FEC for electricity and heating demand.
-
 .. _ssec:app1_electricity_end_uses_TK:
 
 Electricity
 -----------
 
-The values in table `1.3 <#tbl:elec_demand>`__ list the electricity
-demand that is not related to heating for the three sectors in 2035. The
-overall electricity EUD is given in
-:cite:`EuropeanCommission2016`. However, only the FEC is
-given by sectors. In order to compute the share of electricity by
-sector, we assume that the electricity to heat ratio for the residential
-and services remain constant between 2015 and 2035. This ratio can be
-calculated from :cite:t:`EuropeanCommission-Eurostat.2018`,
-these ratio of electricity consumed are 24.9% and 58.2% for residential
-and services, respectively. As a consequence, the industrial electricity
-demand is equal to the difference between the overall electricity demand
-and the two other sectors.
-
-A part of the electricity is assumed to be a fixed demand, such as
-fridges in households and services, or industrial processes. The other
-part is varying, such as the lighting demand. The ratio between varying
+The ratio between varying
 electricity and fixed demand are calculated in order to fit the real curve 
 in 2015 (data provided by ENTSO-E
 https://www.entsoe.eu/). It results in a share of 32.5% of varying electricity demand  
 and 67.5% of baseload electricity demand.
-demand of electricity is shared over the year according to *%\ elec*,
-which is represented in  :numref:`Figure %s <fig:TS_elec>`. We use the real
+
+For *%\ elec* ... we use the real
 2015 Belgian electricity demand (data provided by ENTSO-E
-https://www.entsoe.eu/). *%\ elec* time series is the normalised value
-of the difference between the real time series and its minimum value.
+https://www.entsoe.eu/).
 
 .. container::
 
@@ -278,100 +229,21 @@ of the difference between the real time series and its minimum value.
       Services   11.0        14.1
       ========== =========== ============
 
-.. figure:: /images/belgian_data/ts_elec_Belgium.png
-   :alt: Normalised electricity time series over the year.
-   :name: fig:TS_elec
-
-   Normalised electricity time series over the year.
 
 .. _ssec:app1_heating_end_uses_TK:
 
 Heating
 -------
 
-We applied the same methodology as in previous paragraph to compute the
-residential, service heat yearly demand. The industrial heat processes
-demand is assumed to be the overall industrial energy demand where
-electricity and non energy use have been removed. Yearly EUD per sector
-is reported in table `1.4 <#tbl:heat_demand>`__.
-
-A part of the heat is assumed to be a fixed demand, such as hot water in
-households and services, or industrial processes. The other part
-represents the space heating demand and is varying. Similarly to the
-electricity, the ratio between varying electricity and fixed demand are
-the one of Switzerland, presented in
-:cite:`Limpens2019,Moret2017PhDThesis` which are based on
-:cite:`prognos_ag_energieperspektiven_2012`. The varying
-demand of heat is shared over the year according to :math:`%_{sh}`. This time
-series is based on our own calculation. The methodology is the
-following: based on the temperature time series of Uccle 2015 (data from
-IRM :cite:`Reyniers2012`); the HDH are calculated; and then
-the time series. The HDH is a similar approach than the more commonly
-used HDD. According to Wikipedia, HDD is defined as follows: “*HDD is a
-measurement designed to quantify the demand for energy needed to heat a
-building. HDD is derived from measurements of outside air temperature.
-The heating requirements for a given building at a specific location are
-considered to be directly proportional to the number of HDD at that
-location. [...] Heating degree days are defined relative to a base
-temperature*”. According to the European Environment Agency [37b]_, the
-base temperature is 15.5\ :math:`^o`\ C, we took 16\ :math:`^o`\ C. HDH
-are computed as the difference between ambient temperature and the
-reference temperature at each hour of the year. If the ambient
-temperature is above the reference temperature, no heating is needed.
-:numref:`Figure %s <fig:HDD_BE_2015>` compares the result of our methodology
-with real value collected by Eurostat [38]_. The annual HDD was 2633,
-where we find 2507.
-
-By normalising the HDH, we find :math:`%_{sh}`, which is represented in 
-
-.. figure:: /images/belgian_data/belgium_HDD_2015.png
-   :alt: Comparison of HDD between Eurostat and our own calculation.
-   :name: fig:HDD_BE_2015
-
-   Comparison of HDD between Eurostat and our own calculation.
-
-.. figure:: /images/belgian_data/ts_sh_Belgium.png
-   :alt: Normalised space heating time series over the year.
-   :name: fig:TS_heat
-
-   Normalised space heating time series over the year.
-
-.. container::
-
-   .. table:: Yearly heat end use demand per sector, in 2035.
-      :name: tbl:heat_demand
-
-      ========== ================= ============= ========================
-      \          **Space heating** **Hot water** **Process heat**\  [39]_
-      \          [TWh]             [TWh]         [TWh]
-      Households 70.2              18.0          0
-      Industry   13.1              3.4           50.4
-      Services   34.8              7.8           0
-      ========== ================= ============= ========================
-
-   .. [39]
-      We define process heat as the high temperature heat required in the
-      industrial processes. This heat cannot be supplied by technologies
-      such as heat pumps or thermal solar.
-
 .. _ssec:app1_demand_mobility_TK:
 
 Mobility
 --------
 
-The annual passenger transport demand in Colombia for 2035 is expected
-to be 194 billions :cite:`EuropeanCommission2016`.
-Passenger transport demand is divided between public and private
-transport. The lower (:math:`%_{public,min}`) and upper bounds
-(:math:`%_{public,max}`) for the use of public transport are 19.9% [40]_ and
-50% of the annual passenger transport demand, respectively. The
-passenger mobility demand is shared over the day according to
-:math:`%_{pass}`. We assume a constant passenger mobility demand for every
-day of the year. This latter is represented in Figure
-:numref:`Figure %s <fig:TS_mobPass>` (data from Figure 12 of
-:cite:`USTransportation`).
-The annual freight transport demand in Colombia for 2035 is expected to
-be 98e09 tons kilometers :cite:`EuropeanCommission2016`.
+The lower (:math:`%_{public,min}`) and upper bounds
+(:math:`%_{public,max}`) for the use of public transport are 19.9% and
+50% of the annual passenger transport demand, respectively. 
+
 The freight can be supplied by trucks, trains or boats. The lower
 (:math:`%_{fr,rail,min}`) and upper bounds (:math:`%_{fr,rail,max}`) for the use of
 freight trains are 10.9% and 25% of the annual freight transport
@@ -384,61 +256,10 @@ demand, respectively. The bounds and technologies information are
 latter summarised in Table
 `1.15 <#tbl:freight_vehicles_efficiency>`__.
 
-.. figure:: /images/belgian_data/ts_mob.png
-   :alt: Normalised passenger mobility time series over a day. We assume a similar passenger mobility demand over the days of the year.  
-   :name: fig:TS_mobPass
-   :width: 6cm
-   :height: 4cm
-
-   Normalised passenger mobility time series over a day. We assume a
-   similar passenger mobility demand over the days of the year.
-
 .. _app:discount_and_interest_rates_TK:
 
 Discount rate and interest rate
 -------------------------------
-
-To compute their profitability, companies apply a discount rate to the
-investment they make. A discount rate is used for both cost of finance
-and for risk perception and opportunity cost. The cost of finance is to
-be compared with concepts like ‘hurdle rate’ or ‘rate of return’ usually
-calculated in accordance to an annual return on investment. Each
-individual investment physically occurring in year k, results in a
-stream of payments towards the amortization of this investment spread
-over several years in the future. The higher the cost of finance (or
-hurdle rate), the higher the annual payments spread over the lifetime of
-an investment and thus the higher the total cost. The hurdle rate
-affects only the investment costs so the impact is bigger for capital
-intensive technologies. We consider differentiated hurdle discount rates
-for different groups of energy supply and demand technologies,
-representing the different risk perception of industry versus
-individuals.
-
-According with :cite:t:`Meinke-Hubeny2017` who based their
-work on the JRC EU TIMES model :cite:`simoes2013jrc` in line
-with the PRIMES model :cite:`EuropeanCommission2016`, the
-discount rate is around 7.5 up to 12% depending on the technologies.
-Discount rate cannot be directly converted into interest rate as the
-first is fixed by the market and the second is fixed by the central
-banks. As the evidence presented in Figure
-:numref:`Figure %s <fig:path_be_irate_discountrate>` indicates, while these two
-interest rates tend to move together, they also may follow different
-paths from time to time.
-
-
-.. figure:: /images/belgian_data/path_be_i_rate_and_discount_rate.png
-   :alt: Comparison of Belgian interest rate and discount rate. The following rate was chosen to represent the discount rate: floating loans rate over a 1M€ (other than bank overdraft) and up to 1 year initial rate fixation.
-   :name: fig:path_be_irate_discountrate
-
-   Comparison of Belgian interest rate and discount rate. The following
-   rate was chosen to represent the discount rate: floating loans rate
-   over a 1M€ (other than bank overdraft) and up to 1 year initial rate
-   fixation.
-
-For the different studies, the real discount rate for the public
-investor :math:`i_{rate}` is fixed to 1.5%, which is similar to the floating
-loan rate over a million euros (other than bank overdraft) and greater
-than the central bank interest rate.
 
 .. _app:ESTD_TK_data_technologies:
 
@@ -453,131 +274,137 @@ Electricity production
 Renewables
 ~~~~~~~~~~
 
-.. container::
-
-   .. table:: Renewable electricity production technologies, in 2035. Abbreviations: onshore (on.), offshore (off.).
-      :name: tbl:renew_elec_TK
-
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+----------+
-      |             | :math:`c_   | :math:`c_   | :math:`gwp_ | :math:`li   | :math:`c_   | :math:`f_   | :math:`f_|
-      |             | {inv}`      | {maint}`    | {constr}`   | fetime`     | {p}`        | {min}`      | {max}`   |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+----------+
-      |             | [€          | [€          | [kgCO       | [y]         | [%]         | [GW]        |[GW]      |
-      |             | :sub:`2015` | :sub:`2015` | :sub:`2-eq.`|             |             |             |          |
-      |             | /kW         | /kW         | /kW         |             |             |             |          |
-      |             | :sub:`e`]   | :sub:`e`/y] | :sub:`e`]   |             |             |             |          |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+----------+
-      |    Solar    |    870      |    18.8     |    2081     |    25 [57]_ |    11.9     |    0        |    59.2  |
-      |    PV       |    [57]_    |    [57]_    |    :cite:`\ |    :cite:`\ |    [58]_    |             |          |
-      |             |             |             |    weidema_\|    eur\     |             |             |          |
-      |             |             |             |    ecoinven\|    opean\   |             |             |          |
-      |             |             |             |    t_2013`  |    _phot\   |             |             |          |
-      |             |             |             |             |    ovolt\   |             |             |          |
-      |             |             |             |             |    aic_t\   |             |             |          |
-      |             |             |             |             |    echno\   |             |             |          |
-      |             |             |             |             |    logy_\   |             |             |          |
-      |             |             |             |             |    platf\   |             |             |          |
-      |             |             |             |             |    orm_s\   |             |             |          |
-      |             |             |             |             |    trate\   |             |             |          |
-      |             |             |             |             |    gic_2\   |             |             |          |
-      |             |             |             |             |    011`     |             |             |          |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+----------+
-      |    On.      |    1040     |    12.1     |    622.9    |    30 [60]_ |    24.3     |    0        |    10    |
-      |    Wind     |    [60]_    |    [60]_    |    :cite:`\ |    :cite:`\ |    [58]_    |             |          |
-      |    Turbine  |             |             |    weidema_\|    a\       |             |             |          |
-      |             |             |             |    ecoinven\|    ssoci\   |             |             |          |
-      |             |             |             |    t_2013`  |    ation\   |             |             |          |
-      |             |             |             |             |    _des_\   |             |             |          |
-      |             |             |             |             |    entre\   |             |             |          |
-      |             |             |             |             |    prise\   |             |             |          |
-      |             |             |             |             |    s_ele\   |             |             |          |
-      |             |             |             |             |    ctriq\   |             |             |          |
-      |             |             |             |             |    ues_s\   |             |             |          |
-      |             |             |             |             |    uisse\   |             |             |          |
-      |             |             |             |             |    s_aes\   |             |             |          |
-      |             |             |             |             |    _ener\   |             |             |          |
-      |             |             |             |             |    gie_2\   |             |             |          |
-      |             |             |             |             |    013`     |             |             |          |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+----------+
-      |    Off.     |    4975     |    34.6     |    622.9    |    30 [60]_ |    41.2     |    0        |    6     |
-      |    Wind     |    [60]_    |    [60]_    |    :cite:`\ |    :cite:`\ |    [58]_    |             |          |
-      |    Turbine  |             |             |    weidema_\|    a\       |             |             |          |
-      |             |             |             |    ecoinven\|    ssoci\   |             |             |          |
-      |             |             |             |    t_2013`  |    ation\   |             |             |          |
-      |             |             |             |             |    _des_\   |             |             |          |
-      |             |             |             |             |    entre\   |             |             |          |
-      |             |             |             |             |    prise\   |             |             |          |
-      |             |             |             |             |    s_ele\   |             |             |          |
-      |             |             |             |             |    ctriq\   |             |             |          |
-      |             |             |             |             |    ues_s\   |             |             |          |
-      |             |             |             |             |    uisse\   |             |             |          |
-      |             |             |             |             |    s_aes\   |             |             |          |
-      |             |             |             |             |    _ener\   |             |             |          |
-      |             |             |             |             |    gie_2\   |             |             |          |
-      |             |             |             |             |    013`     |             |             |          |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+----------+
-      |    Hydro    |    5045     |    50.44    |    1263     |    40       |    48.4     |    0.38     | 0.38     |
-      |    River    |    :cite:`\ |    :cite:`\ |    :cite:`\ |    :cite:`\ |             |    :cite:`\ | :cite:`\ |
-      |             |    assoc\   |    assoc\   |    weid\    |    assoc\   |             |    swis\    | swis\    |
-      |             |    iatio\   |    iatio\   |    ema_e\   |    iatio\   |             |    s_fed\   | s_fed\   |
-      |             |    n_des\   |    n_des\   |    coinv\   |    n_des\   |             |    eral_of\ | eral_of\ |
-      |             |    _entr\   |    _entr\   |    ent_2\   |    _entr\   |             |    fic\     | fic\     |
-      |             |    epris\   |    epris\   |    013`     |    epris\   |             |    e_of_en\ | e_of_en\ |
-      |             |    es_el\   |    es_el\   |             |    es_el\   |             |    erg\     | erg\     |
-      |             |    ectri\   |    ectri\   |             |    ectri\   |             |    y_sfo\   | y_sfo\   |
-      |             |    ques_\   |    ques_\   |             |    ques_\   |             |    e_sta\   | e_sta\   |
-      |             |    suiss\   |    suiss\   |             |    suiss\   |             |    tisti\   | tisti\   |
-      |             |    es_ae\   |    es_ae\   |             |    es_ae\   |             |    que_2\   | que_2\   |
-      |             |    s_gra\   |    s_gra\   |             |    s_gra\   |             |    013`     | 013`     |
-      |             |    nde_2\   |    nde_2\   |             |    nde_2\   |             |             |          |
-      |             |    014`     |    014`     |             |    014`     |             |             |          |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+----------+
-      | Geothermal  |    7488     |    142      |    24.9     |    30       |    86       |    0        |    0     |
-      | [63]_       |    [63]_    |    [63]_    |    :cite:`\ |             |    :cite:`\ |             |          |
-      |             |             |             |    weid\    |             |    assoc\   |             |          |
-      |             |             |             |    ema_e\   |             |    iatio\   |             |          |
-      |             |             |             |    coinv\   |             |    n_des\   |             |          |
-      |             |             |             |    ent_2\   |             |    _entr\   |             |          |
-      |             |             |             |    013`     |             |    epris\   |             |          |
-      |             |             |             |             |             |    es_el\   |             |          |
-      |             |             |             |             |             |    ectri\   |             |          |
-      |             |             |             |             |             |    ques_\   |             |          |
-      |             |             |             |             |             |    suiss\   |             |          |
-      |             |             |             |             |             |    es_ae\   |             |          |
-      |             |             |             |             |             |    s_ele\   |             |          |
-      |             |             |             |             |             |    ctric\   |             |          |
-      |             |             |             |             |             |    ite_2\   |             |          |
-      |             |             |             |             |             |    012`     |             |          |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+----------+
-
-.. [57]
-   Investment cost based on
-   :cite:`DanishEnergyAgency2019`. OM cost scaled
-   proportionally based on IEA data.
-
-.. [58]
-   Based on the real data of 2015 (data
-   provided by ELIA, the Belgian TSO, which monitored 2952MW of PV,
-   onshore and offshore in 2015 (Source: \url{https://www.elia.be/}, consulted the 06/12/2019.})).
-
-.. [60]
-   Onshore and offshore wind turbines in 2030
-   :cite:`DanishEnergyAgency2019`. 
-   For Offshore, a correction factor of
-   2.58 is applied to have an LCOE of 79€/MWh in 2020, in line with
-   recently published offer:
-   https://www.enerdata.net/publications/daily-energy-news/belgium-agrees-79mwh-lcoe-three-offshore-wind-parks.html,
-   visited on the 12-06-2020.   
-
-.. [63]
-   ORC cycle at 6 km depth for electricity
-   production. Based on Table 17 of :cite:`Carlsson2014`. We
-   took the reference case in 2030.
-
 .. _ssec:app1_non-renewable_TK:
 
 Non-renewable
 ~~~~~~~~~~~~~
+
+Data for the considered fossil electricity production technologies are
+listed in :numref:`Table %s <tbl:nonrenew_elec>`. The
+maximum installed capacity (:math:`f_{max}`) is set to a value high enough
+(100 000 TW\ :sub:`e`) for each technology to potentially cover the
+entire demand.
+
+
+.. container::
+
+   .. table:: Non-renewable electricity supply technologies, in 2035. Abbreviations: Combined Cycles Gas Turbine (CCGT), Ultra-Supecritical (U-S), Integrated Gasification Combined Cycles (IGCC).
+      :name: tbl:nonrenew_elec
+
+      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+      |             | :math:`c_   | :math:`c_   | :math:`gwp_ | :math:`li   | :math:`c_   | :math:`\eta | :math:`C    |
+      |             | {inv}`      | {maint}`    | {constr}`   | fetime`     | {p}`        | _e`         | O_{2,       |
+      |             |             |             |             |             |             |             | direct}`    |
+      |             |             |             |             |             |             |             | [81]_       |
+      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+      |             | [€          | [€          | [kgCO       | [y]         | [%]         | [%]         | [tCO2/      |
+      |             | :sub:`2015` | :sub:`2015` | :sub:`2-eq.`|             |             |             | MWh         |
+      |             | /kW         | /kW         | /kW         |             |             |             | :sub:`e`    |
+      |             | :sub:`e`]   | :sub:`e`/y] | :sub:`e`]   |             |             |             | ] [81]_     |
+      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+      | Nuclear     | 4846 [82]_  | 103         | 707.9       | 60          | 84.9        | 37          | 0           |
+      |             |             | :cite:`\    | \           | :cite:`\    | [83]_       |             |             |
+      |             |             | i\          | :cite:`\    | as\         |             |             |             |
+      |             |             | ea_-_\      | weid\       | socia\      |             |             |             |
+      |             |             | inter\      | ema_e\      | tion_\      |             |             |             |
+      |             |             | natio\      | coinv\      | des_e\      |             |             |             |
+      |             |             | nal_e\      | ent_2\      | nterp\      |             |             |             |
+      |             |             | nergy\      | 013`\       | rises\      |             |             |             |
+      |             |             | _agen\      |             | _elec\      |             |             |             |
+      |             |             | cy_ie\      |             | triqu\      |             |             |             |
+      |             |             | a_201\      |             | es_su\      |             |             |             |
+      |             |             | 4-1`\       |             | isses\      |             |             |             |
+      |             |             |             |             | _ener\      |             |             |             |
+      |             |             |             |             | gie_2\      |             |             |             |
+      |             |             |             |             | 014`        |             |             |             |
+      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+      | CCGT        | 772         | 20          | 183.8       | 25          | 85.0        | 63 [84]_    | 0.317       |
+      |             | :cite:`\    | :cite:`\    | \           | :cite:`\    |             |             |             |
+      |             | i\          | i\          | :cite:`\    | b\          |             |             |             |
+      |             | ea_-_\      | ea_-_\      | weid\       | auer_\      |             |             |             |
+      |             | inter\      | inter\      | ema_e\      | new_2\      |             |             |             |
+      |             | natio\      | natio\      | coinv\      | 008`        |             |             |             |
+      |             | nal_e\      | nal_e\      | ent_2\      |             |             |             |             |
+      |             | nergy\      | nergy\      | 013`\       |             |             |             |             |
+      |             | _agen\      | _agen\      |             |             |             |             |             |
+      |             | cy_ie\      | cy_ie\      |             |             |             |             |             |
+      |             | a_201\      | a_201\      |             |             |             |             |             |
+      |             | 4-1`        | 4-1`        |             |             |             |             |             |
+      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+      | CCGT\       | 772         | 20          | 183.8       | 25          | 85.0        | 50          | 0           |
+      | :sub:`AMMO\ |             |             | :cite:`\    |             |             |             |             |
+      | NIA` [89]_  |             |             | weid\       |             |             |             |             |
+      |             |             |             | ema_e\      |             |             |             |             |
+      |             |             |             | coinv\      |             |             |             |             |
+      |             |             |             | ent_2\      |             |             |             |             |
+      |             |             |             | 013`\       |             |             |             |             |
+      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+      | Coal        | 2517        | 30          | 331.6       | 35          | 86.8        | 49          | 0.735       |
+      |             | [85]_       | [85]_       | :cite:`\    | \           | \           | [86]_       |             |
+      |             |             |             | weid\       | :cite:`\    | :cite:`\    |             |             |
+      |             |             |             | ema_e\      | b\          | b\          |             |             |
+      |             |             |             | coinv\      | auer_\      | auer_\      |             |             |
+      |             |             |             | ent_2\      | new_2\      | new_2\      |             |             |
+      |             |             |             | 013`\       | 008`        | 008`        |             |             |
+      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+      | IGCC        | 3246        | 49          | 331.6       | 35          | 85.6        | 54          | 0.667       |
+      |             | [87]_       | [87]_       | :cite:`\    | \           | \           | [88]_       |             |
+      |             |             |             | weid\       | :cite:`\    | :cite:`\    |             |             |
+      |             |             |             | ema_e\      | b\          | b\          |             |             |
+      |             |             |             | coinv\      | auer_\      | auer_\      |             |             |
+      |             |             |             | ent_2\      | new_2\      | new_2\      |             |             |
+      |             |             |             | 013`\       | 008`        | 008`        |             |             |
+      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+
+.. [81]
+   Direct emissions due to combustion. Expressed
+   in ton CO2 per MWh of electricity produced. Emissions computed based
+   on resource used and specific emissions given in :numref:`Table %s <tbl:prices_resources>`.
+
+.. [82]
+   Investment cost: 3431 €\ \ :sub:`2015`/kW\ \ :math:`_{\text{e}}`
+   :cite:`iea_-_international_energy_agency_iea_2014-1` +
+   dismantling cost in Switzerland: 1415
+   €\ \ :sub:`2015`/kW\ \ :math:`_{\text{e}}`
+   :cite:`swissnuclear_financement_????`.
+
+.. [83]
+   Data for the year 2012
+   :cite:`swiss_federal_office_of_energy_sfoe_swiss_2014`
+
+.. [84]
+   0.4-0.5 GW\ \ :math:`_{e}` CCGT in 2035 (realistic optimistic
+   scenario) :cite:`bauer_new_2008`.
+
+.. [85]
+   1.3 GW\ \ :math:`_{e}` advanced pulverized coal power
+   plant
+   :cite:`u.s._eia_-_energy_information_administration_updated_2013`.
+   *c\ maint* is fixed cost (29.2 €\ \ :sub:`2015`/kW\ \ :sub:`e`/y) +
+   variable cost (0.51 €\ \ :sub:`2015`/kW\ \ :sub:`e`/y assuming 7600
+   h/y).
+
+.. [86]
+   Pulverized coal in 2025 (realistic optimistic scenario)
+   :cite:`bauer_new_2008`.
+
+.. [87]
+   1.2 GW\ \ :math:`_{\text{e}}` IGCC power plant
+   :cite:`u.s._eia_-_energy_information_administration_updated_2013`.
+   *c\ maint* is fixed cost (48.1 €\ \ :sub:`2015`/kW\ \ :sub:`e`/y) +
+   variable cost (0.82 €\ \ :sub:`2015`/kW\ \ :sub:`e`/y assuming 7500
+   h/y).
+
+.. [88]
+   IGCC in 2025 (realistic optimistic scenario)
+   :cite:`bauer_new_2008`.
+
+.. [89]
+   Use of Ammonia in CCGT is at its early stage. Mitsubishi is developping 
+   a 40 MW turbine and promises similar efficiency as gas CCGT :cite:`nose2021development`. 
+   However, the high emissions of NOx requires a removal equipment which will reduce the 
+   power plant efficiency. As gas and ammonia CCGT will be similar, we expect a similar cost and lifetime. 
+   The only exception is the efficiency, which is assumed at 50% instead of 63% for a gas CCGT :cite:`ikaheimo2018power`.
 
 Heating and cogeneration
 ------------------------

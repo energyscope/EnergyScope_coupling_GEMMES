@@ -166,7 +166,7 @@ equality that must be satisfied between variables parameters. The problem is sub
    system cost (**C_tot**). In this example, a specific technology (**F**
    [*’PV’*]) has been chosen from the set TECHNOLOGY.
 
-.. _ssec_conceptual_modelling_framework:
+.. _app:sec:conceptual_modelling_framework:
 
 Conceptual modelling framework
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -836,6 +836,8 @@ European Commission and the IEA mainly use resource-related emissions
 construction of technologies (:math:`\textbf{GWP}_{\textbf{constr}}`). To facilitate the
 comparison with their results, a similar implementation is proposed in
 Eq. :eq:`eq:GWP_tot`.
+
+.. _app:sec:system_design_and_operation:
 
 System design and operation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
