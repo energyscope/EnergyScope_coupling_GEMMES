@@ -13,6 +13,8 @@ The data can be grouped into three parts: resources (Section `Resources <#app:se
 `Demand <#sec:app1_end_uses_TK>`__) and technologies (Section
 `Technologies <#app:BESTD_data_technologies_TK>`__).
 
+Only the data which differ compared to the case of Colombia are presented.
+
 .. _app:sec:ESTD_TK_resources:
 
 Resources
@@ -290,14 +292,13 @@ listed in :numref:`Table %s <tbl:nonrenew_elec>`.
 
       +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
       |             | :math:`c_   | :math:`c_   | :math:`gwp_ | :math:`li   | :math:`c_   | :math:`\eta | :math:`C    |
-      |             | {inv}`      | {maint}`    | {constr}`   | fetime`     | {p}`        | _e`         | O_{2,       |
+      |             | {inv}`      | {maint}`    | {constr}`   | fetime`     | {p}`        | _e`         | O_{2,       | 
       |             |             |             |             |             |             |             | direct}`    |
-      |             |             |             |             |             |             |             | [81]_       |
       +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      |             | [€          | [€          | [kgCO       | [y]         | [%]         | [%]         | [tCO2/      |
+      |             | [€          | [€          | [kgCO       | [y]         | [%]         | [%]         | [tCO2/      | 
       |             | :sub:`2015` | :sub:`2015` | :sub:`2-eq.`|             |             |             | MWh         |
       |             | /kW         | /kW         | /kW         |             |             |             | :sub:`e`    |
-      |             | :sub:`e`]   | :sub:`e`/y] | :sub:`e`]   |             |             |             | ] [81]_     |
+      |             | :sub:`e`]   | :sub:`e`/y] | :sub:`e`]   |             |             |             | ]           |
       +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
       | Nuclear     | 4846 [82]_  | 103         | 707.9       | 60          | 84.9        | 37          | 0           |
       |             |             | :cite:`\    | \           | :cite:`\    | [83]_       |             |             |
@@ -315,48 +316,6 @@ listed in :numref:`Table %s <tbl:nonrenew_elec>`.
       |             |             |             |             | gie_2\      |             |             |             |
       |             |             |             |             | 014`        |             |             |             |
       +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      | CCGT        | 772         | 20          | 183.8       | 25          | 85.0        | 63 [84]_    | 0.317       |
-      |             | :cite:`\    | :cite:`\    | \           | :cite:`\    |             |             |             |
-      |             | i\          | i\          | :cite:`\    | b\          |             |             |             |
-      |             | ea_-_\      | ea_-_\      | weid\       | auer_\      |             |             |             |
-      |             | inter\      | inter\      | ema_e\      | new_2\      |             |             |             |
-      |             | natio\      | natio\      | coinv\      | 008`        |             |             |             |
-      |             | nal_e\      | nal_e\      | ent_2\      |             |             |             |             |
-      |             | nergy\      | nergy\      | 013`\       |             |             |             |             |
-      |             | _agen\      | _agen\      |             |             |             |             |             |
-      |             | cy_ie\      | cy_ie\      |             |             |             |             |             |
-      |             | a_201\      | a_201\      |             |             |             |             |             |
-      |             | 4-1`        | 4-1`        |             |             |             |             |             |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      | CCGT\       | 772         | 20          | 183.8       | 25          | 85.0        | 50          | 0           |
-      | :sub:`AMMO\ |             |             | :cite:`\    |             |             |             |             |
-      | NIA`        |             |             | weid\       |             |             |             |             |
-      |             |             |             | ema_e\      |             |             |             |             |
-      |             |             |             | coinv\      |             |             |             |             |
-      |             |             |             | ent_2\      |             |             |             |             |
-      |             |             |             | 013`\       |             |             |             |             |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      | Coal        | 2517        | 30          | 331.6       | 35          | 86.8        | 49          | 0.735       |
-      |             | [85]_       | [85]_       | :cite:`\    | \           | \           | [86]_       |             |
-      |             |             |             | weid\       | :cite:`\    | :cite:`\    |             |             |
-      |             |             |             | ema_e\      | b\          | b\          |             |             |
-      |             |             |             | coinv\      | auer_\      | auer_\      |             |             |
-      |             |             |             | ent_2\      | new_2\      | new_2\      |             |             |
-      |             |             |             | 013`\       | 008`        | 008`        |             |             |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      | IGCC        | 3246        | 49          | 331.6       | 35          | 85.6        | 54          | 0.667       |
-      |             | [87]_       | [87]_       | :cite:`\    | \           | \           | [88]_       |             |
-      |             |             |             | weid\       | :cite:`\    | :cite:`\    |             |             |
-      |             |             |             | ema_e\      | b\          | b\          |             |             |
-      |             |             |             | coinv\      | auer_\      | auer_\      |             |             |
-      |             |             |             | ent_2\      | new_2\      | new_2\      |             |             |
-      |             |             |             | 013`\       | 008`        | 008`        |             |             |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-
-.. [81]
-   Direct emissions due to combustion. Expressed
-   in ton CO2 per MWh of electricity produced. Emissions computed based
-   on resource used and specific emissions given in :numref:`Table %s <tbl:prices_resources>`.
 
 .. [82]
    Investment cost: 3431 €\ \ :sub:`2015`/kW\ \ :math:`_{\text{e}}`
@@ -369,37 +328,44 @@ listed in :numref:`Table %s <tbl:nonrenew_elec>`.
    Data for the year 2012
    :cite:`swiss_federal_office_of_energy_sfoe_swiss_2014`
 
-.. [84]
-   0.4-0.5 GW\ \ :math:`_{e}` CCGT in 2035 (realistic optimistic
-   scenario) :cite:`bauer_new_2008`.
-
-.. [85]
-   1.3 GW\ \ :math:`_{e}` advanced pulverized coal power
-   plant
-   :cite:`u.s._eia_-_energy_information_administration_updated_2013`.
-   *c\ maint* is fixed cost (29.2 €\ \ :sub:`2015`/kW\ \ :sub:`e`/y) +
-   variable cost (0.51 €\ \ :sub:`2015`/kW\ \ :sub:`e`/y assuming 7600
-   h/y).
-
-.. [86]
-   Pulverized coal in 2025 (realistic optimistic scenario)
-   :cite:`bauer_new_2008`.
-
-.. [87]
-   1.2 GW\ \ :math:`_{\text{e}}` IGCC power plant
-   :cite:`u.s._eia_-_energy_information_administration_updated_2013`.
-   *c\ maint* is fixed cost (48.1 €\ \ :sub:`2015`/kW\ \ :sub:`e`/y) +
-   variable cost (0.82 €\ \ :sub:`2015`/kW\ \ :sub:`e`/y assuming 7500
-   h/y).
-
-.. [88]
-   IGCC in 2025 (realistic optimistic scenario)
-   :cite:`bauer_new_2008`.
-
-
 
 Heating and cogeneration
 ------------------------
+
+Add COAL STOVE
+
+.. container::
+
+   .. table:: District heating technologies, in 2035. Abbreviations: biomass (bio.), CHP, digestion (dig.), hydrolysis (hydro.).
+      :name: tbl:dhn_cogen_boiler_TK
+
+      +------------+------------+------------+------------+------------+------------+------------+------------+------------+
+      |            | :math:`c_  | :math:`c_  | :math:`gwp_| :math:`li  | :math:`c_  | :math:`\eta| :math:`\eta| :math:`C   |
+      |            | {inv}`     | {maint}`   | {constr}`  | fetime`    | {p}`       | _e`        | _{th}`     | O_{2,      |
+      |            |            |            |            |            |            |            |            | direct}`   |
+      +------------+------------+------------+------------+------------+------------+------------+------------+------------+
+      |            | [€         | [€         | [kgCO      | [y]        | [%]        | [%]        | [%]        | [tCO2/     |
+      |            | :sub:`2015`| :sub:`2015`| :sub:`2    |            |            |            |            | MWh        |
+      |            | /kW        | /kW        | -eq.`/kW   |            |            |            |            | :sub:`th`  |
+      |            | :sub:`th`] | :sub:`th`  | :sub:`th`] |            |            |            |            | ]          |
+      |            |            | /y]        |            |            |            |            |            |            |
+      +------------+------------+------------+------------+------------+------------+------------+------------+------------+
+      | Geo        | 1500       | 57.0       | 808.8      | 30         | 85         | 0          | 100        | 0          |
+      | thermal    | [165]_     | [165]_     | \          | [165]_     |            |            |            |            |
+      | [165]_     |            |            | :cite:`\   |            |            |            |            |            |
+      |            |            |            | wei\       |            |            |            |            |            |
+      |            |            |            | dema_ec\   |            |            |            |            |            |
+      |            |            |            | oinvent\   |            |            |            |            |            |
+      |            |            |            | _2013`     |            |            |            |            |            |
+      +------------+------------+------------+------------+------------+------------+------------+------------+------------+
+
+.. [165]
+   Geothermal heat-only plant with steam driven
+   absorption heat pump 70/17\ \ :math:`^o`\ \ C at 2.3 km depth (from
+   :cite:`DanishEnergyAgency2019`).
+
+Cooling
+-------
 
 .. _sec:app1_vehicles_mobility_TK:
 
@@ -409,8 +375,8 @@ Transport
 Passenger mobility
 ~~~~~~~~~~~~~~~~~~
 
-Freight mobility
-~~~~~~~~~~~~~~~~
+Freight
+~~~~~~~
 
 .. _sec:app1_ned_TK:
 
@@ -435,6 +401,53 @@ Carbon capture and storage
 
 Storage
 -------
+
+.. container::
+
+   .. table:: Storage technologies characteristics in 2035: costs, emissions and lifetime. Abbreviations: batteries (batt.), Battery Electric Vehicule (BEV), centralised (cen.), decentralised (dec.), Lithium-ions (Li-on), Natural Gas (NG), Plug-in Hybrid Electric Vehicle (PHEV), Pumped Hydro Storage (PHS), seasonal (seas.), temperature (temp.) and thermal storage (TS).
+      :name: tab:stodatabasic_TK
+
+      +-----------+-----------+-----------+-----------+-----------+
+      |           | :math:`c_ | :math:`c_ | :math:`gw | :math:`li |
+      |           | {inv}`    | {maint}`  | p_{con    | fetime`   |
+      |           |           |           | str}`     |           |
+      +-----------+-----------+-----------+-----------+-----------+
+      |           | [€:math:` | [€:math:` | [kgCO\    | [y]       |
+      |           | \_{2015}` | \_{2015}` | :sub:`2`  |           |
+      |           | /kWh]     | /kWh/y]   | -eq./kWh] |           |
+      +-----------+-----------+-----------+-----------+-----------+
+      | PHS       | 58.8      | 0 [297]_  | 8.33      | 50 [299]_ |
+      |           |           |           | [298]_    |           |
+      +-----------+-----------+-----------+-----------+-----------+
+
+.. [297]
+   Neglected.
+
+.. [298]
+   Own calculation based on Hydro Dams emissions from previous work
+   :cite:`Limpens2019,Moret2017PhDThesis`.
+
+.. [299]
+   Data verified in Table B1 of
+   :cite:`Zakeri2015`.
+
+The PHS in Colombia can be resumed to the Coo-Trois-Ponts hydroelectric
+power station. The characteristics of the station in 2015 are the
+following: installed capacity turbine (1164MW), pumping (1035MW),
+overall efficiency of 75%, all reservoirs capacity (5000 MWh). We assume
+that the energy losses is shared equally between the pumping and
+turbining, resulting by a charge/discharge efficiencies of 86.6%. The
+energy to power ratio are 4h50 and 4h18 for charge and discharge,
+respectively :cite:`Electrabel2014`. A project started to
+increase the height of the reservoirs and thus increase the capacity by
+425 MWh. In addition, the power capacity will be increase by 80MW. The
+overall project cost is estimated to 50M€ and includes also renovation
+of other parts. We arbitrary assume that 50% is dedicated for the
+height increase. It results in an investment cost of 58.8€\ :sub:`2015`
+per kWh of new capacity. The overall potential of the PHS could be
+extended by a third reservoir with an extra capacity of around 1.2 GWh.
+Hence, we assume that the upper limit of PHS capacity is 6.5 GWh. No
+upper bound were constrained for other storage technologies.
 
 .. _App:Data:OtherParam_TK:
 

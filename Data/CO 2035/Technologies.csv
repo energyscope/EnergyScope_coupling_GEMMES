@@ -83,7 +83,7 @@ Mobility;Freight;Boat diesel;BOAT_FREIGHT_DIESEL;76.39;3.82;0;40;0.114155251;0;1
 Mobility;Freight;Boat gas;BOAT_FREIGHT_NG;76.39;3.82;0;40;0.114155251;0;1;0;1.00E+15;
 Mobility;Freight;Boat methanol;BOAT_FREIGHT_METHANOL ;76.39;3.82;0;40;0.114155251;0;1;0;1.00E+15;
 Mobility;Freight;Trucks diesel;TRUCK_DIESEL;371.11;18.56;0;15;0.092592593;0;1;0;1.00E+15;
-Mobility;Freight;Truck gasoline;TRUCK_GASOLINE;678.61;35.88;0;15;0.092592593;0;1;0;1.00E+15;
+Mobility;Freight;Truck gasoline;TRUCK_GASOLINE;371.11;18.56;0;15;0.092592593;0;1;0;1.00E+15;
 Mobility;Freight;Truck methanol;TRUCK_METHANOL ;371.11;18.56;0;15;0.092592593;0;1;0;1.00E+15;
 Mobility;Freight;Truck fuel cell (hydrogen);TRUCK_FUEL_CELL;402.22;12.07;0;15;0.092592593;0;1;0;1.00E+15;
 Mobility;Freight;Truck electric;TRUCK_ELEC;771.11;23.13;0;15;0.092592593;0;1;0;1.00E+15;

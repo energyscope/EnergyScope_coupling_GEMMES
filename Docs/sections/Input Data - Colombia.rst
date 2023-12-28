@@ -164,7 +164,7 @@ not landfill (composting, recycling) and paper cardboard. Finally, *biofuels* ar
       Reliable data for the local potential of bio-fuels could not be obtained. Thus, a reasonable order of magnitude of 100 TWh was chosen for both biodiesel and bioethanol. Using the energy content of biodiesel and bioethanol from :cite:`noauthor_conversion_nodate` and a yield of 4 t/ha, we compute that fully utilizing this biomass potential would amount to covering 5% of Colombia's surface with crops for biofuel production. In 2021, 40% of Colombia's surface was dedicated to agriculture.
 
    .. [7c]
-      Endogenous computation, based on input data from Section XXX. This value matches grossly the primary solid biomass data for year 2019 given in :cite:`IEA_world_energy_balances`.
+      Endogenous computation, based on the data of the EUDs and technologies in 2021. This value matches grossly the primary solid biomass data for year 2019 given in :cite:`IEA_world_energy_balances`.
       
    .. [7d]
       According to :cite:`RE_potential_2023`, :cite:`UPME_2009` gives a gross energy potential from waste biomass in Colombia of 124.9 TWh and :cite:`TECSOL_2018` gives a biogas potential of 14.9 TWh. In Energyscope, biogas is produced based on *wet biomass*, with a conversion factor  of 3.35 in 2021. By using this conversion factor, we can transform the biogas potential into a wet biomass potential of 49.8 TWh. Finally, subtracting the wet biomass potential from the gross energy potential from waste biomass gives the potential for woody biomass.
@@ -354,7 +354,7 @@ Heating and cooling
 -------------------
 
 The aggregated EUD for different heating types and their decomposition into households, services and industry was retrieved from :cite:`plazas_nino_2023`,
-then adapted through the calibration process to match the CO2 emissions of Colombia in 2021. Process heating and hot water are supposed to be fixed through
+then adapted through the calibration process to match the CO\ :math:`_2` emissions of Colombia in 2021. Process heating and hot water are supposed to be fixed through
 time, unlike space heating which is spread over the year according to :math:`\%_{sh}`. We define process heat as the high temperature heat required in some
 industrial processes. This heat cannot be supplied by technologies such as heat pumps or thermal solar.
 
@@ -398,7 +398,7 @@ Mobility
 --------
 
 The aggregated EUDs for passenger mobility and freight were retrieved from :cite:`plazas_nino_2023`, then
-adapted through the calibration process to match the CO2 emissions of Colombia in 2021. These EUDs are
+adapted through the calibration process to match the CO\ :math:`_2` emissions of Colombia in 2021. These EUDs are
 spread over the year according to :math:`\%_{pass}` and :math:`\%_{fr}`, respectively. 
 
 For :math:`\%_{pass}`, we assume that the passenger mobility EUD has the same profile for every day of the
@@ -440,7 +440,8 @@ given in :numref:`Table %s <tab:renewableTechPotentialIn2035>` ("max. potential"
 values for renewable electricity technologies in 2035 are equal to their installed capacity in 2021,
 already given in :numref:`Table %s <tab:renewableTechPotentialIn2035>`. Regarding hydro dam however, the value for
 :math:`f_{min}` in 2035 is equal to the installed capacity in 2021 to which is added the capacity of the 
-Hidroituango power plant (1.2 GW according to :cite:`IEA_2023`), which was completed in 2022.
+Hidroituango power plant (1.2 GW according to :cite:`IEA_2023`), which was completed in 2022. The maximum (:math:`f_{max,\%}`) and minimum
+(:math:`f_{min,\%}`) shares are imposed to 0 and 100% respectively, i.e. they are not constraining the model.
 
 .. container::
 
@@ -528,47 +529,53 @@ Non-renewable
 :numref:`Table %s <tab:elec_prod_nre>` gives the data for the fossil electricity generation technologies
 modelled in EnergyScope Colombia, together with their sources. The minimum installed capacity (:math:`f_{min}`)
 is zero, while the maximum installed capacity (:math:`f_{max}`) is set to a value high enough for each 
-technology to potentially cover the entire demand.
+technology to potentially cover the entire demand. The maximum (:math:`f_{max,\%}`) and minimum
+(:math:`f_{min,\%}`) shares are imposed to 0 and 100% respectively, i.e. they are not constraining the model.
 
 .. container::
 
    .. csv-table:: Non-renewable electricity production technologies in 2035. Abbreviations: combined cycle gas turbine (CCGT).
-      :header: **Technology**, **c**:sub:`inv`, **c**:sub:`maint`, **gwp**:sub:`constr` [15a]_ , **lifetime** [15b]_, **c**:sub:`p`, **efficiency**
-      :widths: 11 17 24 23 12 8 13
+      :header: **Technology**, **c**:sub:`inv`, **c**:sub:`maint`, **gwp**:sub:`constr` [15a]_ , **lifetime** [15b]_, **c**:sub:`p`, **efficiency**, :math:`CO_{2-direct}` [15c]_
+      :widths: 11 17 24 23 12 8 13 8
       :name: tab:elec_prod_nre
 		 
-		  , [€ :sub:`2015`/kW :sub:`e`], [€ :sub:`2015`/kW :sub:`e`/year], [kgCO :sub:`2`-eq./kW :sub:`e`], [year], [%], [%]
-		 CCGT, 772 [15c]_, 19.7 [15c]_, 184, 25, 85, 63 [15d]_
-		 CCGT ammonia [15e]_, 772, 19.6, 184, 25, 50
-		 Coal central, 3246 [15f]_, 49.0 [15f]_, 332, 35, 86 [15b]_, 54 [15g]_
+		  , [€ :sub:`2015`/kW :sub:`e`], [€ :sub:`2015`/kW :sub:`e`/year], [kgCO :sub:`2`-eq./kW :sub:`e`], [year], [%], [%], [tCO2/MWh :sub:`e`]
+		 CCGT, 772 [15d]_, 19.7 [15d]_, 184, 25, 85, 63 [15e]_, 0.317
+		 CCGT ammonia [15f]_, 772, 19.6, 184, 25, 50, 0
+		 Coal central, 3246 [15g]_, 49.0 [15g]_, 332, 35, 86 [15b]_, 54 [15h]_, 0.667
 		 
 .. [15a]
    Data from :cite:`weidema_ecoinvent_2013`
    
 .. [15b]
-   Data from :cite:`bauer_new_2008`	
+   Data from :cite:`bauer_new_2008`
    
 .. [15c]
-   Data from :cite:`iea_-_international_energy_agency_iea_2014-1`   
+   Direct emissions due to combustion. Expressed
+   in ton CO\ :math:`_2` per MWh of electricity produced. Emissions computed based
+   on resource used and specific emissions given in Table 9.
    
 .. [15d]
+   Data from :cite:`iea_-_international_energy_agency_iea_2014-1`   
+   
+.. [15e]
    Data from :cite:`bauer_new_2008`, 0.4-0.5 GW CCGT in 2035 (realistic optimistic scenario)	 
 
-.. [15e]
+.. [15f]
    Use of Ammonia in CCGT is at its early stage. Mitsubishi is developping 
    a 40 MW turbine and promises similar efficiency as gas CCGT :cite:`nose2021development`. 
    However, the high emissions of NOx requires a removal equipment which will reduce the 
    power plant efficiency. As gas and ammonia CCGT will be similar, we expect a similar cost and lifetime. 
    The only exception is the efficiency, which is assumed at 50% instead of 63% for a gas CCGT :cite:`ikaheimo2018power`.
    
-.. [15f]
+.. [15g]
    1.2 GW\ \ :math:`_{\text{e}}` IGCC power plant
    :cite:`u.s._eia_-_energy_information_administration_updated_2013`.
    *c*:sub:`maint` is fixed cost (48.1 €\ \ :sub:`2015`/kW\ \ :sub:`e`/y) +
    variable cost (0.82 €\ \ :sub:`2015`/kW\ \ :sub:`e`/y assuming 7500
    h/y).   
    
-.. [15g]
+.. [15h]
    Data from :cite:`bauer_new_2008`, IGCC in 2025 (realistic optimistic scenario)	 
 
 Heating and cogeneration
@@ -579,13 +586,13 @@ Tables :numref:`%s <tbl:ind_cogen_boiler>`,
 :numref:`%s <tbl:dec_cogen_boiler>` detail the data for
 the considered industrial, centralized and decentralised CHP
 technologies, respectively. In some cases, it is assumed that
-industrial (:numref:`Table %s <tbl:ind_cogen_boiler>`)
-and centralized (:numref:` Table %s <tbl:dhn_cogen_boiler>`) technologies are
+industrial (Table :numref:` %s <tbl:ind_cogen_boiler>`)
+and centralized (Table :numref:`%s <tbl:dhn_cogen_boiler>`) technologies are
 the same.
 :math:`f_{min}` and :math:`f_{max}` for
-heating and CHP technologies are 0 and 100 TW\ :sub:`th`,
+heating and CHP technologies are 0 and 1000 TW\ :sub:`th`,
 respectively. The latter value is high enough for each technology to
-supply the entire heat demand in its layer. the maximum
+supply the entire heat demand in its layer. The maximum
 (:math:`f_{max,\%}`) and minimum
 (:math:`f_{min,\%}`) shares are imposed to 0 and 100%
 respectively, i.e. they are not constraining the model.
@@ -600,23 +607,27 @@ respectively, i.e. they are not constraining the model.
       |              | :math:`c_    | :math:`c_    | :math:`gwp_  | :math:`li    | :math:`c_    | :math:`\eta  | :math:`\eta  | :math:`C     |
       |              | {inv}`       | {maint}`     | {constr}`    | fetime`      | {p}`         | _e`          | _{th}`       | O_{2,        |
       |              |              |              |              |              |              |              |              | direct}`     |
+      |              |              |              |              | 2011`        |              |              |              | [16a]_       |
       +--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+
       |              | [€           | [€           | [kgCO        | [y]          | [%]          | [%]          | [%]          | [tCO2/       |
       |              | :sub:`2015`  | :sub:`2015`  | :sub:`2-eq.` |              |              |              |              | MWh          |
       |              | /kW          | /kW          | /kW          |              |              |              |              | :sub:`th`    |
-      |              | :sub:`th`]   | :sub:`th`/y] | :sub:`th`]   |              |              |              |              | ] [115]_     |
+      |              | :sub:`th`]   | :sub:`th`/y] | :sub:`th`]   |              |              |              |              | ]            |
       +--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+
-      | CHP NG       | 1408         | 92.6         | 1024         | 20           | 85           | 44           | 46           | 0.435        |
-      |              | [116]_       | [117]_       | \            | \            |              | [118]_       | [118]_       |              |
+      | CHP NG       | 1408         | 92.6         | 1024         | 25           | 85           | 44           | 46           | 0.435        |
+      |              | [16b]_       | [16c]_       | \            | \            |              | [16d]_       | [16d]_       |              |
       |              |              |              | :cite:`\     | :cite:`\     |              |              |              |              |
-      |              |              |              | weidem\      | baue\        |              |              |              |              |
-      |              |              |              | a_ecoi\      | r_new_\      |              |              |              |              |
-      |              |              |              | nvent_2013`  | 2008`        |              |              |              |              |
-      |              |              |              |              |              |              |              |              |              |
+      |              |              |              | weidem\      | ove\         |              |              |              |              |
+      |              |              |              | a_ecoi\      | _arup_\      |              |              |              |              |
+      |              |              |              | nvent_2013`  | and_pa\      |              |              |              |              |
+      |              |              |              |              | rtners\      |              |              |              |              |
+      |              |              |              |              | _ltd_r\      |              |              |              |              |
+      |              |              |              |              | eview_\      |              |              |              |              |
+      |              |              |              |              | 2011`        |              |              |              |              |
       +--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+
       | CHP          | 1080         | 40.5         | 165.3        | 25           | 85           | 18           | 53           | 0.735        |
       | Wood         | \            | \            | \            | \            |              | \            | \            |              |
-      | [119]_       | \            | \            | \            | \            |              | \            | \            |              |
+      | [16e]_       | \            | \            | \            | \            |              | \            | \            |              |
       |              | :cite:`\     | :cite:`\     | :cite:`\     | :cite:`\     |              | :cite:`\     | :cite:`\     |              |
       |              | iea_\        | iea_\        | weidem\      | ove\         |              | iea_\        | iea_\        |              |
       |              | -_inte\      | -_inte\      | a_ecoi\      | _arup_\      |              | -_inte\      | -_inte\      |              |
@@ -628,7 +639,7 @@ respectively, i.e. they are not constraining the model.
       |              | 14-1`        | 14-1`        |              |              |              | 14-1`        | 14-1`        |              |
       +--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+
       | CHP          | 2928         | 111.3        | 647.8        | 25           | 85           | 20           | 45           | 0.578        |
-      | Waste        | [120]_       | [120]_       | [121]_       | \            |              | \            | \            |              |
+      | Waste        | [16f]_       | [16f]_       | [16g]_       | \            |              | \            | \            |              |
       |              |              |              |              | :cite:`\     |              | :cite:`\     | :cite:`\     |              |
       |              |              |              |              | ove\         |              | ove\         | ove\         |              |
       |              |              |              |              | _arup_\      |              | _arup_\      | _arup_\      |              |
@@ -639,7 +650,7 @@ respectively, i.e. they are not constraining the model.
       |              |              |              |              | 2011`        |              | 2011`        | 2011`        |              |
       +--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+
       | Boiler       | 58.9         | 1.2          | 12.3         | 17           | 95           | 0            | 92.7         | 0.216        |
-      | NG           | :cite:`\     | :cite:`\     | [122]_       | \            |              |              | \            |              |
+      | NG           | :cite:`\     | :cite:`\     | [16h]_       | \            |              |              | \            |              |
       |              | \            | \            |              | \            |              |              | :cite:`\     |              |
       |              | Mo\          | Mo\          |              | :cite:`\     |              |              | Mo\          |              |
       |              | ret201\      | ret201\      |              | eur\         |              |              | ret201\      |              |
@@ -661,7 +672,7 @@ respectively, i.e. they are not constraining the model.
       |              |              |              |              | 2008`        |              |              |              |              |
       +--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+
       | Boiler       | 54.9         | 1.2          | 12.3         | 17           | 95           | 0            | 87.3         | 0.309        |
-      | Oil          | [123]_       | [124]_       | \            | \            |              |              | \            |              |
+      | Oil          | [16i]_       | [16j]_       | \            | \            |              |              | \            |              |
       |              |              |              | \            | \            |              |              | :cite:`\     |              |
       |              |              |              | :cite:`\     | :cite:`\     |              |              | Mo\          |              |
       |              |              |              | weidem\      | eur\         |              |              | ret201\      |              |
@@ -672,7 +683,7 @@ respectively, i.e. they are not constraining the model.
       |              |              |              |              | 2008`        |              |              |              |              |
       +--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+
       | Boiler       | 115          | 2.3          | 48.2         | 17           | 90           | 0            | 82           | 0.439        |
-      | Coal         | [125]_       | [125]_       | \            | \            |              |              |              |              |
+      | Coal         | [16l]_       | [16l]_       | \            | \            |              |              |              |              |
       |              |              |              | \            | \            |              |              |              |              |
       |              |              |              | :cite:`\     | :cite:`\     |              |              |              |              |
       |              |              |              | weidem\      | eur\         |              |              |              |              |
@@ -683,7 +694,7 @@ respectively, i.e. they are not constraining the model.
       |              |              |              |              | 2008`        |              |              |              |              |
       +--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+
       | Boiler       | 115          | 2.3          | 28.9         | 17           | 90           | 0            | 82           | 0.317        |
-      | Waste        | [125]_       | [125]_       | [126]_       | \            |              |              |              |              |
+      | Waste        | [16l]_       | [16l]_       | [16m]_       | \            |              |              |              |              |
       |              |              |              |              | \            |              |              |              |              |
       |              |              |              |              | :cite:`\     |              |              |              |              |
       |              |              |              |              | eur\         |              |              |              |              |
@@ -694,7 +705,7 @@ respectively, i.e. they are not constraining the model.
       |              |              |              |              | 2008`        |              |              |              |              |
       +--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+
       | Direct       | 332          | 1.5          | 1.47         | 15           | 95           | 0            | 100          | 0            |
-      | Elec.        | [127]_       | [127]_       | \            |              |              |              |              |              |
+      | Elec.        | [16n]_       | [16n]_       | \            |              |              |              |              |              |
       |              |              |              | \            |              |              |              |              |              |
       |              |              |              | :cite:`\     |              |              |              |              |              |
       |              |              |              | weidem\      |              |              |              |              |              |
@@ -703,54 +714,54 @@ respectively, i.e. they are not constraining the model.
       +--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+
 
 
-.. [115]
+.. [16a]
    Direct emissions due to combustion. Expressed
-   in ton CO2 per MWh of heat produced. Emissions computed based on
-   resource used and specific emissions given in :numref:`Table %s <tbl:prices_resources>`.
+   in ton CO\ :math:`_2` per MWh of heat produced. Emissions computed based on
+   resource used and specific emissions given in Table 9.
 
-.. [116]
+.. [16b]
    Calculated as the average of investment costs for 50 kW\ \ :sub:`e`
    and 100 kW\ \ :sub:`e` internal combustion engine cogeneration
    systems :cite:`prognos_ag_energieperspektiven_2012`.
 
-.. [117]
+.. [16c]
    Calculated as the average of investment costs for 50 kW\ \ :sub:`e`
    and 100 kW\ \ :sub:`e` internal combustion engine cogeneration
    systems :cite:`rits_energieperspektiven_2007`.
 
-.. [118]
+.. [16d]
    200 kW\ \ :sub:`e` internal combustion engine cogeneration
    NG system, very optimistic scenario in 2035
    :cite:`bauer_new_2008`.
 
-.. [119]
+.. [16e]
    Biomass cogeneration plant (medium size) in 2030-2035.
 
-.. [120]
+.. [16f]
    Biomass-waste-incineration CHP, 450 scenario in 2035
    :cite:`iea_-_international_energy_agency_iea_2014-1`.
 
-.. [121]
+.. [16g]
    Impact of MSW incinerator in :cite:`Moret2017PhDThesis`,
    using efficiencies reported in the table.
 
-.. [122]
+.. [16h]
    Assuming same impact as industrial oil boiler.
 
-.. [123]
+.. [16i]
    925 kW\ \ :sub:`th` oil boiler (GTU 530)
    :cite:`walter_meier_ag_listes_2011`
 
-.. [124]
+.. [16j]
    Assumed to be equivalent to a NG boiler.
 
-.. [125]
+.. [16l]
    Assumed to be equivalent to a wood boiler.
 
-.. [126]
+.. [16m]
    Assuming same impact as industrial wood boiler.
 
-.. [127]
+.. [16n]
    Commercial/public small direct electric heating
    :cite:`nera_economic_consulting_uk_2009`.
 
@@ -759,7 +770,6 @@ respectively, i.e. they are not constraining the model.
 
    .. table:: District heating technologies, in 2035. Abbreviations: biomass (bio.), CHP, digestion (dig.), hydrolysis (hydro.).
       :name: tbl:dhn_cogen_boiler
-
 
       +------------+------------+------------+------------+------------+------------+------------+------------+------------+
       |            | :math:`c_  | :math:`c_  | :math:`gwp_| :math:`li  | :math:`c_  | :math:`\eta| :math:`\eta| :math:`C   |
@@ -841,14 +851,6 @@ respectively, i.e. they are not constraining the model.
       |            |            |            |            | _energy\   |            |            |            |            |
       |            |            |            |            | _2008`     |            |            |            |            |
       +------------+------------+------------+------------+------------+------------+------------+------------+------------+
-      | Geo        | 1500       | 57.0       | 808.8      | 30         | 85         | 0          | 100        | 0          |
-      | thermal    | [165]_     | [165]_     | \          | [165]_     |            |            |            |            |
-      | [165]_     |            |            | :cite:`\   |            |            |            |            |            |
-      |            |            |            | wei\       |            |            |            |            |            |
-      |            |            |            | dema_ec\   |            |            |            |            |            |
-      |            |            |            | oinvent\   |            |            |            |            |            |
-      |            |            |            | _2013`     |            |            |            |            |            |
-      +------------+------------+------------+------------+------------+------------+------------+------------+------------+
       | Solar      | 362        | 0.43       | 221.8      | 30         | 10         | 0          | 100        | 0          |
       | thermal    | [166]_     | [166]_     | \          | [166]_     |            |            |            |            |
       | [166]_     |            |            | :cite:`\   |            |            |            |            |            |
@@ -861,8 +863,8 @@ respectively, i.e. they are not constraining the model.
 
 .. [154]
    Direct emissions due to combustion. Expressed
-   in ton CO2 per MWh of heat produced. Emissions computed based on
-   resource used and specific emissions given in :numref:` Table %s <tbl:prices_resources>`.
+   in ton CO\ :math:`_2` per MWh of heat produced. Emissions computed based on
+   resource used and specific emissions given in Table 9.
 
 .. [155]
    Calculated with the equation: *c\ inv* [EUR\ \ :sub:`2011`] =
@@ -906,11 +908,6 @@ respectively, i.e. they are not constraining the model.
 
 .. [163]
    Own calculation
-
-.. [165]
-   Geothermal heat-only plant with steam driven
-   absorption heat pump 70/17\ \ :math:`^o`\ \ C at 2.3 km depth (from
-   :cite:`DanishEnergyAgency2019`).
 
 .. [166]
    Total system excluding thermal storage (from
@@ -1144,18 +1141,30 @@ respectively, i.e. they are not constraining the model.
    direct electric heating in the industry sector
    (:numref:`Table %s <tbl:ind_cogen_boiler>`).
 
+Cooling
+-------
 
-:numref:`Figure %s <fig:TS_solar_th>` represents the capacity factor
-(:math:`c_{p,t}`) of solar thermal panels. The time series is the
-direct irradiation in Uccles in 2015, based on measurements of IRM.
-For all the other heat supply technologies (renewable and
-non-renewable) :math:`c_{p,t}` is equal to the default value of 1.
+:numref:`Table %s <tab:cooling_technos>` gives the data for the cooling technologies modelled in EnergySope.
+The cooling technologies are the ones previously modelled in :cite:`borasio2022deep`. All data are taken from
+:cite:`borasio2022deep`, unless indicated otherwise. The minimum installed capacity (:math:`f_{min}`)
+is zero, while the maximum installed capacity (:math:`f_{max}`) is set to a value high enough for each 
+technology to potentially cover the entire demand. The maximum (:math:`f_{max,\%}`) and minimum
+(:math:`f_{min,\%}`) shares are imposed to 0 and 100% respectively, i.e. they are not constraining the model.
 
-.. figure:: /images/belgian_data/TS_solar_th.png
-   :alt: Capacity factor of thermal solar panels over the year.
-   :name: fig:TS_solar_th
+.. container::
 
-   Capacity factor of thermal solar panels over the year.
+   .. csv-table:: Cooling technologies in 2035. Abbreviations: coefficient of performance (COP).
+      :header: **Technology**, **c**:sub:`inv` [19a]_, **c**:sub:`maint` [19a]_, **gwp**:sub:`constr`, **lifetime** [15b]_, **c**:sub:`p`, **COP**
+      :widths: 11 17 24 23 12 8 13
+      :name: tab:cooling_technos
+		 
+		  , [€ :sub:`2015`/kW :sub:`e`], [€ :sub:`2015`/kW :sub:`e`/year], [kgCO :sub:`2`-eq./kW :sub:`e`], [year], [%], [%]
+		 Electrical refrigeration cycle, 474, 20.3, 165, 20, 100, 318
+		 Thermal refrigeration cycle, 304, 9.1, 382, 20, 100, 146
+		 Industrial electric cooling, 754, 9.9, 175, 20, 95, 242
+		 
+.. [19a]
+   ASK PAOLO
 
 .. _sec:app1_vehicles_mobility:
 
@@ -1165,17 +1174,14 @@ Transport
 Passenger mobility
 ~~~~~~~~~~~~~~~~~~
 
-The vehicles available for passenger mobility are regrouped in two
-categories: public and private. Private accounts for all the cars owned
-(or rented) by the user, such as a gasoline car, a diesel car... In
-opposition to private, public mobility accounts for the shared vehicles.
-It accounts for buses, coaches, trains, trams, metro and trolleys. From
-the literature, data about mobility is not directly transposable to the
-model. Data about mobility are usually given per vehicles, such as a
-vehicle cost or an average occupancy per vehicle. These data are
+The vehicles available for passenger mobility are regrouped into two
+categories: public and private. Private vehicles account for vehicles
+owned or rented by the user. On the other hand, public mobility accounts
+for the shared vehicles, such as buses, coaches, trains, trams, metros and trolleys.
+Vehicles' data from the literature are not directly transposable into the
+model. Mobility data are usually given per vehicle, such as a
+vehicle cost or an average occupancy per vehicle. These data from the literature are
 summarised in :numref:`Table %s <tbl:mob_specific_costs_calculation>`.
-
-
 
 .. container::
 
@@ -1226,6 +1232,9 @@ summarised in :numref:`Table %s <tbl:mob_specific_costs_calculation>`.
       | HEV       |           |           |           |           |           |           |           |
       | bus       |           |           |           |           |           |           |           |
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
+      | Gasoline  | 220       | 11.0      | 24        | 39        | 15        | 15        | 0 [247]_  |
+      | bus       |           |           |           |           |           |           |           |
+      +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
       | NG        | 220       | 11.0      | 24        | 39        | 15        | 15        | 0 [247]_  |
       | bus       |           |           |           |           |           |           |           |
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
@@ -1272,7 +1281,7 @@ summarised in :numref:`Table %s <tbl:mob_specific_costs_calculation>`.
 
 
 
-In Colombia, the car occupancy rate is less than 1.3 passengers per car:
+In Belgium, the car occupancy rate is less than 1.3 passengers per car:
 1.3 in 2015 and estimated at 1.26 in
 :cite:`BureaufederalduPlan2012`. The annual distance of a
 car depends on its type of motorization: from 9 500 km/year for a city
@@ -1281,34 +1290,28 @@ is 18 000 km/year. The average age of a car is 8.9 years in 2016, with a
 variation between regions: in Brussels it is 10 years. On average, the
 distance is 18 000 km/year. The average age of a car is 8.9 years in
 2016, with a rather strong variation between regions: in Brussels it is
-10 years. Finally, a car drives on average a slightly more than one hour
-a day (1h12). Although private car usage habits may change, we
-extrapolate these data from today to future years. Certain trends, such
-as the mutualisation of a car, could lead to an increase in the annual
-distance travelled by a car. But other trends, such as autonomous cars,
-could lead to a further decrease in the car occupancy rate, to values
-below 1. These change may influence in both direction the specific price
-of a kilometer passenger provided by a car.
+10 years. Finally, a car drives on average slightly more than one hour
+a day (1h12). By means of simplicity, we ue these data for Colombia.
 
-For public transportation, the data were collected from various report
+For public transportation, data for Belgium were collected from various reports
 :cite:`taszka2018analyse,moawad2013light,james2012mass`.
-These data have been adapted based on discussion with experts in the
+These data were adapted based on discussions with Belgian experts in the
 field. They are reported in :numref:`Table %s <tbl:mob_specific_costs_calculation>`.
 
-Surprisingly, in 2035, vehicles cost are similar regardless the
+Surprisingly, in 2035, vehicles' costs are similar regardless of the
 power-train.  :numref:`Figure %s <fig:car_cost_over_transition>` shows how
-the vehicle cost vary over the transition, data from
+the vehicle cost would vary over the transition, data from
 :cite:`national2013transitions`. Today, we verify a strong
-price difference between the different technologies, this difference
-will diminish with the development of new technologies. The price
+price difference between the different technologies; this difference
+should decrease along with the development of new technologies. The price
 difference between two technologies will become small as early as 2035
-(:math:`\leq`\ 10%). In their work,
+(:math:`\leq`\ 10%). In their work, the
 :cite:t:`national2013transitions` estimates the cost of
 promising technologies in 2015 lower than the real market price. This is
 the case for BEV and FC vehicles, where the price ranges today around
 60 k€\ :sub:`2015` . These differences can be justified by three facts:
 these vehicles are usually more luxurious than others; The selling price
-do not represent the manufacturing cost for prototypes; the study is
+does not represent the manufacturing cost for prototypes; the study is
 from 2013 and may have overestimated the production in 2015 and 2020.
 
 
@@ -1339,19 +1342,18 @@ From data of :numref:`Table %s <tbl:mob_specific_costs_calculation>`,
 specific parameters for the model are deduced. The specific investment
 cost (:math:`c_{inv}`) is calculated from the vehicle cost, its average speed
 and occupancy, Eq. :eq:`eq:c_inv_for_mob_pass_calculation`.
-The capacity factor (*c\ p*) is calculated based on the ratio between
+The capacity factor (:math:`c_{p}`) is calculated based on the ratio between
 yearly distance and average speed, Eq. :eq:`eq:c_p_for_mob_pass_calculation`.
 The vehicle capacity is calculated based on the average occupancy and
 average speed, Eq. . :eq:`eq:veh_capa_for_mob`.
-:numref:`Table %s <tbl:mob_costs>` summarises these information
+:numref:`Table %s <tbl:mob_costs>` summarises this information
 for each passenger vehicle.
 
 An additional vehicle is proposed: methanol car. 
-This choice is motivated to offer a zero emission fuels that could be competitve compared to electric or hydrogen vehicles.
+This choice is motivated to offer a zero emission fuel that could be competitve compared to electric or hydrogen vehicles.
 We assume that methanol is used through a spark-ignition engine in cars, 
-and has similar performances than a gasoline car. 
+and has similar performances compared to a gasoline car. 
 This technology is added in the following tables.
-
 
 .. container::
 
@@ -1380,46 +1382,54 @@ This technology is added in the following tables.
       +----------+----------+----------+----------+----------+----------+
       | PHEV car | 456      | 34       | 519      | 5.1      | 50       |
       +----------+----------+----------+----------+----------+----------+
-      | BEV      | 450      | 10       | 385      | 5.1      | 50       |
+      | BEV      | 434      | 10       | 385      | 5.1      | 50       |
+      |          | [21c]_   |          |          |          |          |
       +----------+----------+----------+----------+----------+----------+
-      | FC car   | 435      | 10       | 786      | 5.1      | 50       |
+      | FC car   | 672      | 10       | 786      | 5.1      | 50       |
+      |          | [21c]_   |          |          |          |          |
       +----------+----------+----------+----------+----------+----------+
       | Methanol | 420      | 24       | 342      | 5.1      | 50       |
       | car      |          |          |          |          |          |
-      | [259]_   |          |          |          |          |          |
+      | [21b]_   |          |          |          |          |          |
       +----------+----------+----------+----------+----------+----------+
       | Tram and | 625      | 12.5     | 0        | 34.2     | 4000     |
-      | metro    |          |          | [250]_   |          |          |
+      | metro    |          |          | [21a]_   |          |          |
       +----------+----------+----------+----------+----------+----------+
       | Diesel   | 611      | 30.6     | 0        | 29.7     | 360      |
-      | bus      |          |          | [250]_   |          |          |
+      | bus      |          |          | [21a]_   |          |          |
       +----------+----------+----------+----------+----------+----------+
       | Diesel   | 833      | 33.3     | 0        | 29.7     | 360      |
-      | HEV bus  |          |          | [250]_   |          |          |
+      | HEV bus  |          |          | [21a]_   |          |          |
       +----------+----------+----------+----------+----------+----------+
-      | NG bus   | 611      | 30.6     | 0 [250]_ | 29.7     | 360      |
+      | Gasoline | 611      | 30.6     | 0        | 29.7     | 360      |
+      | bus      |          |          | [21a]_   |          |          |
       +----------+----------+----------+----------+----------+----------+
-      | FC bus   | 1042     | 31.3     | 0 [250]_ | 29.7     | 360      |
+      | NG bus   | 611      | 30.6     | 0 [21a]_ | 29.7     | 360      |
       +----------+----------+----------+----------+----------+----------+
-      | Train    | 1506     | 54.4     | 0 [250]_ | 27.5     | 6640     |
+      | FC bus   | 1042     | 31.3     | 0 [21a]_ | 29.7     | 360      |
+      +----------+----------+----------+----------+----------+----------+
+      | Train    | 1506     | 54.4     | 0 [21a]_ | 27.5     | 6640     |
       | pub.     |          |          |          |          |          |
       +----------+----------+----------+----------+----------+----------+
 
-.. [250]
+.. [21a]
    No data found
 
-.. [259]
+.. [21b]
    No data were found for methanol cars. Thus, we assume that the 
    technology is similar to a gasoline car (except the fuel).
+   
+.. [21c]
+   ASK PAOLO
 
 
 :numref:`Table %s <tbl:passenger_vehicles>` summarises
-the forecast energy efficiencies for the different vehicles. For public
+the projected energy efficiencies for the different vehicles. For public
 vehicles in 2035, the energy efficiencies are calculated with a linear
-interpolation between the 2010 and 2050 values presented in Table 6 in
+interpolation between the 2010 and 2050 values presented in :numref:`Table %s <tbl:passenger_vehicles>` in
 Codina Gironès et al :cite:`codina_girones_strategic_2015`.
-For private vehicles, Estimation for energy consumption for Colombia cars
-in 2030 are used :cite:`BureaufederalduPlan2012`.
+For private vehicles, estimates of energy consumption of Belgian cars
+in 2030 are taken from :cite:`BureaufederalduPlan2012`.
 
 
 .. container::
@@ -1438,12 +1448,12 @@ in 2030 are used :cite:`BureaufederalduPlan2012`.
       BEV              0            173 [251]_      0                            1
       FC car           264  [254]_  0               0                            1
       Methanol car     497  [251]_  0               0                            1
-      Tram & Trolley   0            63  [255]_      0                            0.17  [256]_
+      Tram & Trolley   0            63  [255]_      0                            0.05  [256]_
       Diesel bus       265          0               0                            1
       Diesel HEV bus   198          0               0                            1
       NG bus           268          0               0                            1
       FC bus           225          0               0                            1
-      Train pub.       0            65 [255]_       0                            0.60 [256]_
+      Train pub.       0            65 [255]_       0                            0.30 [256]_
       ================ ============ =============== ============================ ============================
 
 .. [251]
@@ -1471,11 +1481,7 @@ in 2030 are used :cite:`BureaufederalduPlan2012`.
    of efficiency of 25% was assume.
 
 .. [256]
-   In 2015, the public mobility was shared as follow:
-   trains (37.0%), trams/metros (8.7%) and buses (54.3%)
-   :cite:`Eurostat2017`. In 2035, we assume an upper limit
-   twice greater than real data in 2015. Except for train were a maximum
-   of 60% is imposed.
+   Our own expert guesses.
 
 
 The size of the BEV batteries is assumed to be the one from a Nissan
@@ -1483,15 +1489,22 @@ Leaf (ZE0) (24 kWh [257]_). The size of the PHEV batteries is assumed to
 be the one from Prius III Plug-in Hybrid (4.4 kWh [258]_). The
 performances of BEV and PHEV batteries are assimilated to a Li-ion
 battery as presented in :numref:`Table %s <tab:StoDataAdvanced>`. 
-The state of charge of the electric vehicles (:math:`soc_{ev}`) is constrained to 60% minimum at 7 am every days.
+The state of charge of the electric vehicles (:math:`soc_{ev}`) is 
+constrained to a minimum of 60% at 7 a.m. every days.
+
+:math:`\%_{public,min}` = 0
+
+:math:`\%_{public,max}` = 0.7
+
+:math:`\%_{private,motorc,max}`
 
 
-Freight mobility
-~~~~~~~~~~~~~~~~
+Freight
+~~~~~~~
 
-The technologies available for freight transport are trains, trucks and
-boats. Similarly to previous section, the information for the freight is
-given per vehicles. These data are summarised in :numref:`Table %s <tbl:mob_specific_costs_calculation_freight>`.
+The technologies available for freight are trains, trucks and
+boats. Similarly to previous section, the data for freight are
+given per vehicle type. These data are summarised in :numref:`Table %s <tbl:mob_specific_costs_calculation_freight>`.
 
 .. container::
 
@@ -1501,29 +1514,32 @@ given per vehicles. These data are summarised in :numref:`Table %s <tbl:mob_spec
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+
       | **Vehicle | :math:`Ve | :math:`Ma | :math:`To | :math:`Av.| :math:`Av.| :math:`li |
       | type**    | h.~Cost`  | intenance`| nnage`    | ~distance`| ~speed`   | fetime`   |
-      |           |           | [263]_    |           |           | [263]_    |           |
+      |           |           | [23a]_    |           |           | [23a]_    |           |
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+
       |           |           | [k€\      | [k€\      | [         | [1000     | [         |
       |           |           | :math:`_  | :math:`_  | pass/     | km/y]     | km/h]     |
       |           |           | {2015}`   | {2015}`   | veh.]     |           |           |
       |           |           | /veh.]    | /veh./y]  |           |           |           |
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+
-      | Train     | 4020      | 80.4      | 550       | 210       | 70        | 40        |
-      | freight   |           |           |           |           |           |           |
-      | [263]_    |           |           |           |           |           |           |
+      | Freight   | 4020      | 80.4      | 550       | 210       | 70        | 40        |
+      | train     |           |           |           |           |           |           |
+      | [23a]_    |           |           |           |           |           |           |
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+
       | Boat      | 2750      | 137.5     | 1200      | 30        | 30        | 40        |
       | Diesel    |           |           |           |           |           |           |
-      | [263]_    |           |           |           |           |           |           |
+      | [23a]_    |           |           |           |           |           |           |
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+
       | Boat NG   | 2750      | 137.5     | 1200      | 30        | 30        | 40        |
-      | [263]_    |           |           |           |           |           |           |
+      | [23a]_    |           |           |           |           |           |           |
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+
       | Boat      | 2750      | 137.5     | 1200      | 30        | 30        | 40        |
       | Methanol  |           |           |           |           |           |           |
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+
       | Truck     | 167       | 8.4       | 10        | 36.5      | 45        | 15        |
-      | Diesel    |           |           |           | [264]_    |           |           |
+      | Diesel    |           |           |           | [23b]_    |           |           |
+      +-----------+-----------+-----------+-----------+-----------+-----------+-----------+
+      | Truck     | 167       | 8.4       | 10        | 36.5      | 45        | 15        |
+      | Gasoline  |           |           |           |           |           |           |
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+
       | Truck     | 181       | 5.4       | 10        | 36.5      | 45        | 15        |
       | FC        |           |           |           |           |           |           |
@@ -1535,19 +1551,19 @@ given per vehicles. These data are summarised in :numref:`Table %s <tbl:mob_spec
       | NG        |           |           |           |           |           |           |
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+
 
-.. [263]
+.. [23a]
    Own calculation
 
-.. [264]
+.. [23b]
    In 2016, the average distance was between 16 974 up to 63 305 km per
    year depending on the truck category. Based on our own calculation,
    we found an average of 36 500 km per year.
 
 
 
-Trucks have similar cost except for electric trucks. This last have a
-battery that supplies the same amount of kilometers than other
-technologies. As a consequence, half of the truck cost is related to the
+Trucks have similar cost except for electric trucks. The latter has a
+battery that supplies the same amount of kilometers as other
+technologies. As a consequence, half of the truck's cost is related to the
 battery pack.
 
 .. math::
@@ -1566,24 +1582,24 @@ battery pack.
 From :numref:`Table %s <tbl:mob_specific_costs_calculation_freight>`,
 specific parameters for the model are deduced. Except for the technology
 construction specific GHG emissions (:math:`gwp_{constr}`) where no data was
-found. The specific investment cost (*c\ inv*) is calculated from the
-vehicle cost, its average speed and occupancy, Eq.
+found. The specific investment cost (:math:`c_{inv}`) is calculated from the
+vehicle cost, its average speed and occupancy in Eq.
 :eq:`eq:c_inv_for_mob_calculation_fr`.
-The capacity factor (*c\ p*) is calculated based on the ratio between
-yearly distance and average speed, Eq.
+The capacity factor (:math:`c_{p}`) is calculated based on the ratio between
+yearly distance and average speed in Eq.
 :eq:`eq:c_p_for_mob_calculation_fr`. The
 vehicle capacity is calculated based on the average occupancy and
-average speed, Eq.
+average speed in Eq.
 Eq. :eq:`eq:veh_capa_for_mob_fr`. :numref:`Table %s <tbl:mob_costs_fr>` summarises these information for each
 freight vehicle.
 
-Similarly to the methanol car, additional power trains have been added in order to open the competition between fuels and electric vehicles (including fuel cells electri vehicles). 
-Methanol could be use with performances similar to the use of methane. 
+Similarly to the methanol car, additional power trains have been added in order to open the competition between e-fuels and electric vehicles (including fuel cells electric vehicles). 
+Methanol could be used, with projected performances similar to the ones reached when using methane. 
 Based on this approach, two technologies have been added: methanol boats and methanol trucks.
 
 .. container::
 
-   .. table:: Freight mobility financial information, in 2035. Abbreviations: electric (elec.), Fuel Cell (FC) and Natural Gas (NG).
+   .. table:: Freight financial information, in 2035. Abbreviations: electric (elec.), Fuel Cell (FC) and Natural Gas (NG).
       :name: tbl:mob_costs_fr
    
       +-------------+------------+-------------+-------------+-------------+
@@ -1596,18 +1612,21 @@ Based on this approach, two technologies have been added: methanol boats and met
       |             |            |             |             |             |
       |             |            |             |             |             |
       +-------------+------------+-------------+-------------+-------------+
-      | Train       | 104        | 2.1         | 34.2        | 38500       |
-      | freight     |            |             |             |             |
+      | Freight     | 104        | 2.1         | 34.2        | 38500       |
+      | train       |            |             |             |             |
       +-------------+------------+-------------+-------------+-------------+
       | Boat Diesel | 76         | 3.8         | 11.4        | 36000       |
       +-------------+------------+-------------+-------------+-------------+
       | Boat NG     | 76         | 3.8         | 11.4        | 36000       |
       +-------------+------------+-------------+-------------+-------------+
       | Boat        | 76         | 3.8         | 11.4        | 36000       |
-      | Methnanol   |            |             |             |             |
+      | Methanol    |            |             |             |             |
       +-------------+------------+-------------+-------------+-------------+
       | Truck       | 371        | 18.6        | 9.3         | 450         |
       | Diesel      |            |             |             |             |
+      +-------------+------------+-------------+-------------+-------------+
+      | Truck       | 371        | 18.6        | 9.3         | 450         |
+      | Gasoline    |            |             |             |             |
       +-------------+------------+-------------+-------------+-------------+
       | Truck FC    | 402        | 12.1        | 9.3         | 450         |
       +-------------+------------+-------------+-------------+-------------+
@@ -1620,16 +1639,16 @@ Based on this approach, two technologies have been added: methanol boats and met
       +-------------+------------+-------------+-------------+-------------+
 
 
-Trains and boats benefit on a very high tonnage capacity, and thus
-drastically reduce their specific investment cost down to 4-5 times
-lower than trucks. :numref:`Table %s <tbl:mob_costs_fr>` summarises the
-forecast energy efficiencies for the different vehicles in 2035. Except
-for the technology construction specific GHG emissions (:math:`gwp_{constr}`)
+Trains and boats benefit from a very high tonnage capacity, which
+drastically reducees their specific investment cost (i.e. down to 4-5 times
+lower than for trucks). :numref:`Table %s <tbl:mob_costs_fr>` summarises the
+projected energy efficiencies for the different vehicles in 2035, except
+for the specific GHG emissions for technology construction (:math:`gwp_{constr}`)
 where no data was found.
 
 .. container::
 
-   .. table:: Fuel and electricity consumption for freight mobility technologies, in 2035 :cite:`codina_girones_strategic_2015`. Abbreviations: electric (elec.), Fuel Cell (FC) and Natural Gas (NG).
+   .. table:: Fuel and electricity consumption for freight technologies, in 2035 :cite:`codina_girones_strategic_2015`. Abbreviations: electric (elec.), Fuel Cell (FC) and Natural Gas (NG).
       :name: tbl:freight_vehicles_efficiency
    
    
@@ -1643,17 +1662,17 @@ where no data was found.
       Boat Diesel      107       0
       Truck Diesel     513       0
       Truck FC         440       0
-      Truck Elec.      0         249  [265]_
-      Truck NG  [266]_ 590       0
+      Truck Elec.      0         249  [25a]_
+      Truck NG  [25b]_ 590       0
       Truck Diesel     513       0
       ================ ========= ===============
 
-.. [265]
+.. [25a]
    Energy intensity calculated based on the diesel one, and corrected
    with an electric to diesel powertrain ratio from
    :cite:`Karlstrom_fuetruck_2019`.
 
-.. [266]
+.. [25b]
    The efficiency is corrected with the ratio between NG bus and diesel
    bus.
 
@@ -1661,16 +1680,27 @@ Trains are considered to be only electric. Their efficiency in 2035 is
 0.068 kWh/tkm :cite:`codina_girones_strategic_2015`. The
 efficiency for freight transport by diesel truck is 0.51 kWh/tkm based
 on the weighted average of the efficiencies for the vehicle mix
-in :cite:`codina_girones_strategic_2015`. For NG and H2
+in :cite:`codina_girones_strategic_2015`. For NG and H\ :math:`_2`
 trucks, no exact data were found. Hence, we assume that the efficiency
 ratio between NG coaches and diesel coaches can be used for freight
-(same for H2 trucks). As a consequence, the efficiency of NG and H2
+(same for H\ :math:`_2` trucks). As a consequence, the efficiency of NG and H\ :math:`_2`
 trucks are 0.59 and 0.44 kWh/tkm. Boats are considered to be diesel or
 gas powered. In 2015, the energy intensity ratio between diesel boats
-and diesel trucks were :math:`\approx`\ 20% [267]_. By assuming a
+and diesel trucks was :math:`\approx`\ 20% [267]_. By assuming a
 similar ratio in 2035, we find an efficiency of 0.107 kWh/tkm and 0.123
-kWh/tkm for diesel and gas boats, respectively.
+kWh/tkm for diesel and NG boats, respectively.
 
+:math:`\%_{fr,rail,min}` = 0
+
+:math:`\%_{fr,rail,max}` = 0.3
+
+:math:`\%_{fr,boat,min}` = 0
+
+:math:`\%_{fr,boat,max}` = 0.4
+
+:math:`\%_{fr,truck,min}` = 0
+
+:math:`\%_{fr,truck,max}` = 1
 
 
 .. _sec:app1_ned:
@@ -1678,9 +1708,8 @@ kWh/tkm for diesel and gas boats, respectively.
 Non-energy demand
 -----------------
 
-Non-energy demand plays a major role in the primary energy consumption in Colombia (20% in 2015, :cite:`EurostatEnergyBalanceSheets2015`). 
 :cite:t:`rixhon2021comprehensive` investigates the importance of non-energy demand worlwide and its projection based on the IEA reports (:cite:`iea2018petrochemicals`). 
-Three main feedstocks have been chosen : ammonia, methanol and high-value chemicals (HVCs). This latter encompass different molecules, mainly hydrocarbons chains. 
+Three main feedstocks have been chosen : ammonia, methanol and high-value chemicals (HVCs). The latter encompasses different molecules, mainly hydrocarbons chains. 
 :numref:`Figure %s <fig:ned_prod_pathways>` illustrates the different conversion pathway to produce the different non-energy demand feedstocks.
 
 .. figure:: /images/belgian_data/ned_pathways.png
@@ -1688,22 +1717,18 @@ Three main feedstocks have been chosen : ammonia, methanol and high-value chemic
    :name: fig:ned_prod_pathways
 
    Illustration of the technologies that produce non-energy feedstocks. 
-   For clarity, only the most relevant flows are drawn (Figure
-   :numref:`Figure %s <fig:bes_illustration>` includes all the flows).
+   For clarity, only the most relevant flows are drawn 
+   (:numref:`Figure %s <fig:bes_illustration>` includes all the flows).
    Ammonia and methanol can be used in other sectors.
 
 
-The Non-energy end-use demand is usuallty expressed in TWh/y without specifying the split among the feedstocks, 
-such as the forecast used which are proposed by the European commission :cite:`EuropeanCommission2016`.  
-In :cite:t:`rixhon2021comprehensive`, they analysed the split among the three proposed feedstocks. 
-In 2015, 77.9% of the NED accounted was for HVC, 19.2% for ammonia and only 2.9% for Methanol. 
-Worlwide, the IEA forecast a similar growth for the different feedstocks (see Figure 4.5 of :cite:`iea2018petrochemicals`). 
-Thus, we assume a constant share between the three feedstocks.
-
+The non-energy EUD is usually expressed in TWh/y without specifying the split among the feedstocks, 
+such as in the IEA Extended Energy Balances :cite:`IEA_world_energy_balances`. Given the important
+petroleum refining activity in Colombia, we assume that all non-energy EUD in 2021 was HVC. We keep
+the same assumption for the year 2035.
 
 Similarly to electricity, two of the three feedstocks can be used for other end-use demands. As an example, ammonia can be used for electricity production or methanol for mobility.
-:numref:`Table %s <tab:hvc_prod>` summarises the technology that produces HVC; :numref:`Table %s <tab:methanol_prod>` summarises the technology that produces methanol; 
-and for ammonia, only the Haber-Bosch process is proposed in :numref:`Table %s <tab:ammonia_prod>`  
+:numref:`Table %s <tab:hvc_prod>` summarises the technologies that produce HVC. :numref:`Table %s <tab:methanol_prod>` summarises the technologies that produce methanol; Regarding ammonia, only the Haber-Bosch process is proposed in :numref:`Table %s <tab:ammonia_prod>`. 
 
 .. container::
 
@@ -1813,11 +1838,11 @@ and for ammonia, only the Haber-Bosch process is proposed in :numref:`Table %s <
       |             | {fuel}`]    | {fuel}`/y]  |             |             |             |             |             | :sub:`e`]   |
       +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
       | Haber bosch | 847         | 16.6        | 20          | 85          | 79.8        | 0           |10.7         | 0           |
-      | [364]_      |             |             |             |             | (NH3)       |             |             |             |
+      | [28a]_      |             |             |             |             | (NH3)       |             |             |             |
       +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
 
-.. [364]
-   To produce 1 unit of ammonia, the system uses 1.13 units of H2 and 0.123 of electricity.
+.. [28a]
+   To produce 1 unit of ammonia, the system uses 1.13 units of H\ :math:`_2` and 0.123 of electricity.
 
 
 
@@ -1828,22 +1853,22 @@ Synthetic fuels production
 --------------------------
 
 Synthetic fuels are expected to play a key role to phase out fossil
-fuels :cite:`Rosa2017`. :numref:`Figure %s <fig:CO2andPtGLayers>` 
-represents the technology related to
-synthetic fuels, including the CO2 layers. Synthetic fuels can be
-imported (Bio-ethanol, Bio-Diesel, H2 or SNG) or produced by converting
+fuels worldwide :cite:`Rosa2017`. :numref:`Figure %s <fig:CO2andPtGLayers>` 
+represents the technologies related to
+synthetic fuels, including the CO\ :math:`_2` layers. Synthetic fuels can be
+imported (bio-ethanol, bio-Diesel, H\ :math:`_2` or SNG) or produced by converting
 biomass and/or electricity. The wet biomass - usually organic waste -
-can be converted through the *biogas plant* technology to SNG. This
+can be converted through the *biogas plant* technology to synthetic natural gas (SNG). This
 technology combines anaerobic digestion and cleaning processes. Woody
-biomass can be used to produce H2 through *gasification*, or different oils through
-*pyrolysis* or SNG through *gasification to SNG*. The different oil account for LFO, Gasoline or Diesel. 
+biomass can be used to produce H\ :math:`_2` through *gasification*, or different oils through
+*pyrolysis* or SNG through *gasification to SNG*. The different oils account for LFO, Gasoline or Diesel. 
 The other processes to produce
-synthetic fuels are based on the water electrolysis, where the
-*electrolysers* convert electricity to H2. Then, the H2 can be combined
-with CO2 and upgraded to SNG through the *methanation* technology. In
-this latter, the process requires CO2. It can either be captured from
-large scale emitters, such as the industries and centralised heat
-technologies; or directly captured from the air but at a higher
+synthetic fuels are based on water electrolysis, where the
+*electrolysers* convert electricity to H\ :math:`_2`. Then, the H\ :math:`_2` can be combined
+with CO\ :math:`_2` and upgraded to SNG through the *methanation* technology. In
+this case, the process requires CO\ :math:`_2` as a feedstock. Such CO\ :math:`_2` can either be captured from
+large emitters, such as the industries and centralised heat
+technologies, or directly captured from the air but at a higher
 energetic and financial cost.
 
 .. figure:: /images/belgian_data/PtG_and_CO2_layers.png
@@ -1851,12 +1876,12 @@ energetic and financial cost.
    :name: fig:CO2andPtGLayers
 
    Illustration of the technologies and processes to produce synthetic
-   fuels. For clarity, only the most relevant flows are drawn (Figure
+   fuels. For clarity, only the most relevant flows are drawn (
    :numref:`Figure %s <fig:bes_illustration>` includes all the flows).
-   This Figure also illustrates how Carbon capture is implemented in the model. 
-   The CO:sub:`2` emissions of large scale technologies can be either 
+   This figure also illustrates how carbon capture is implemented in the model. 
+   The CO\ :math:`_2` emissions of large scale technologies can be either 
    released at the atmosphere or captured by the *Carbon Capture Industrial* 
-   technolgy. Otherwise, CO:sub:`2` can be captured from the atmosphere at 
+   technolgy. Otherwise, CO\ :math:`_2` can be captured from the atmosphere at 
    a greater cost.
 
 
@@ -1865,16 +1890,16 @@ Hydrogen production
 
 Three technologies are considered for hydrogen production: electrolysis,
 NG reforming and biomass gasification. The last two options can include
-CCS systems for limiting the CO\ :math:`_2` emissions. They are
-Different technologies for electrolysis, in their work the
-:cite:t:`DanishEnergyAgency2019a` review the PEM-EC, A-EC and
-SO-EC. :numref:`Table %s <tbl:hydrogen_techs_danish>` summarises the key
-characteristics for these technologies in year 2035.
+CCS systems for limiting the CO\ :math:`_2` emissions. There exist
+different technologies for electrolysis. In their work, the
+:cite:t:`DanishEnergyAgency2019a` reviews the PEM-EC, A-EC and
+SO-EC technologies. :numref:`Table %s <tbl:hydrogen_techs_danish>` summarises the key
+characteristics of these technologies in year 2035.
    
 
 .. container::
 
-   .. table:: Characteristics of electrolyser technologies presented in :cite:`DanishEnergyAgency2019a`, in 2035. Efficiencies are represent as follow: Input (negative) and outputs (positive). Abbreviations: temperature (temp.), high temperature (h.t.), low temperature (l.t.), electricity (e), hydrogen (H2).
+   .. table:: Characteristics of electrolyser technologies presented in :cite:`DanishEnergyAgency2019a`, in 2035. Efficiencies are represent as follow: Input (negative) and outputs (positive). Abbreviations: temperature (temp.), high temperature (h.t.), low temperature (l.t.), electricity (e), hydrogen (H\ :math:`_2` ).
       :name: tbl:hydrogen_techs_danish
 
 
@@ -1885,7 +1910,7 @@ characteristics for these technologies in year 2035.
       |             | [€\ :math:`_| [€\ :math:`_| [y]         | [%]         | [%]         | [%]         | [%]         |
       |             | {2015}`/kW\ | {2015}`/kW\ |             |             |             |             |             |
       |             | :math:`_    | :math:`_    |             |             |             |             |             |
-      |             | {H2}`]      | {H2}`/y]    |             |             |             |             |             |
+      |             | {H_2}`]     | {H_2}`/y]   |             |             |             |             |             |
       +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
       | PEM-EC      | 870         | 40          | 15          | -100        |             | 63          | 12          |
       +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
@@ -1896,16 +1921,15 @@ characteristics for these technologies in year 2035.
 
 
 
-The different electrolyser cell technologies have a similar cost,
-however each technologies differ by their lifetime and electricity to
-hydrogen efficiencies. PEM-EC has the shortest lifetime and the lowest
-electricity to hydrogen efficiency, thus this technology will never be
-implemented in the model [335]_. Electrolysers will be needed during
-excesses of electricity production, where heat demand is usually low.
+The different electrolyser technologies have a similar cost,
+but they differ by their respective lifetime and electricity-to-hydrogen
+efficiency. PEM-EC has the shortest lifetime and the lowest
+electricity to hydrogen efficiency, therefore this technology will never be
+implemented in the model [335]_. Electrolysers will be needed during times of
+excesse electricity production, when heat demand is usually low.
 Thus, they aim at maximising the production of hydrogen rather than low
-temperature heat. For this reason, SO-EC appear as the most promising
-technology SO-EC appears as the most promising technology and will be
-implemented in the model. Thus, in this work, the term *Electrolysis*
+temperature heat. For this reason, SO-EC appears to be the most promising
+technology and will be implemented in the model. Thus, in this work, the term *Electrolysis*
 refers to SO-EC. :numref:`Table %s <tbl:hydrogen>` contains the
 data for the hydrogen production technologies.
 
@@ -1918,23 +1942,23 @@ data for the hydrogen production technologies.
       +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
       |               | :math:`c_     | :math:`c_     | :math:`life   | :math:`c_p`   | :math:`\eta_  | :math:`CO_    |
       |               | {inv}`        | {maint}`      | time`         |               | {H2}`         | {2,direct}`   |
-      |               |               |               |               |               |               | [346]_        |
+      |               |               |               |               |               |               | [30a]_        |
       +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
       |               | [€\ :math:`_  | [€\ :math:`_  | [y]           | [%]           | [%]           | [tCO\ :sub:`2`|
       |               | {2015}`/kW\   | {2015}`/kW\   |               |               |               | /MWh\         |
       |               | :math:`_      | :math:`_      |               |               |               | :sub:`e`]     |
       |               | {H2}`]        | {H2}`/y]      |               |               |               |               |
       +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
-      | Electrolysis  | 696           | 21            | 23            | 90            | 79            | 0             |
-      | [347]_        |               |               |               | [348]_        | [351]_        |               |
+      | Electrolysis  | 696           | 19.2 [30x]_   | 15 [30x]_     | 90            | 79            | 0             |
+      | [30b]_        |               |               |               | [30c]_        | [30f]_        |               |
       | :cite:`\      |               |               |               |               |               |               |
       | DanishEnerg\  |               |               |               |               |               |               |
       | yAgency\      |               |               |               |               |               |               |
       | 2019a`        |               |               |               |               |               |               |
       +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
-      | NG            | 681           | 64.4          | 25            | 86            | 73            | 0.273         |
+      | NG            | 775 [30x]_    | 64.4          | 25            | 86            | 73            | 0.273         |
       | reforming     |               |               |               |               |               |               |
-      | [349]_        |               |               |               |               |               |               |
+      | [30d]_        |               |               |               |               |               |               |
       | :cite:`to\    |               |               |               |               |               |               |
       | ck_ther\      |               |               |               |               |               |               |
       | mo-envi\      |               |               |               |               |               |               |
@@ -1943,44 +1967,47 @@ data for the hydrogen production technologies.
       +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
       | Biomass       | 2525          | 196           | 25            | 86            | 43            | 0.902         |
       | gasification  |               |               |               |               |               |               |
-      | [350]_        |               |               |               |               |               |               |
+      | [30e]_        |               |               |               |               |               |               |
       | :cite:`to\    |               |               |               |               |               |               |
       | ck_ther\      |               |               |               |               |               |               |
       | mo-envi\      |               |               |               |               |               |               |
       | ronomic\      |               |               |               |               |               |               |
       | _2013`        |               |               |               |               |               |               |
       +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
-      | Ammonia       | 1365          | 38            | 25            | 85            | 59.1          | 0             |
+      | Ammonia       | 681 [30x]_    | 62.9 [30x]_   | 25            | 86            | 66 [30x]_     | 0             |
       | cracking      |               |               |               |               |               |               |
-      | [352]_        |               |               |               |               |               |               | 
+      | [30g]_        |               |               |               |               |               |               | 
       +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
 
 
-.. [346]
+.. [30a]
    Direct emissions due to combustion. Expressed
-   in ton CO2 per MWh of fuel produced. Emissions computed based on
-   resource used and specific emissions given in :numref:`Table %s <tbl:prices_resources>`.
+   in ton CO\ :math:`_2` per MWh of fuel produced. Emissions computed based on
+   resource used and specific emissions given in Table 9.
 
-.. [347]
+.. [30b]
    It uses electricity and high temperature heat as feedstock, see :numref:`Table %s <tbl:hydrogen_techs_danish>`.
 
-.. [348]
+.. [30c]
    Own assumptions.
 
-.. [349]
+.. [30d]
    It uses gas as feedstock, such as NG.
 
-.. [350]
+.. [30e]
    It uses wood biomass as feedstock.
 
-.. [351]
-   To produce one unit of H2, the system requires 1.076 units of electricity and 0.19 units of heat high temperature. 
-   We assume that, on top of the unit of H2 produced, an extra 0.019 units of low temperature heat can be recovered 
+.. [30f]
+   To produce one unit of H\ :math:`_2`, the system requires 1.076 units of electricity and 0.19 units of heat high temperature. 
+   We assume that, on top of the unit of H\ :math:`_2` produced, an extra 0.019 units of low temperature heat can be recovered 
    for district heating.
 
-.. [352]
-   Cracking ammonia doesn't exist at industrial scale. Indeed, ammonia is produced from hydrogen throuth the Haber-Bosch process.
+.. [30g]
+   Cracking ammonia does not exist at industrial scale. Indeed, ammonia is produced from hydrogen throuth the Haber-Bosch process.
    Thus, we didn't found reliable data and did our own calculation based on Haber bosch process and methane cracking.
+   
+.. [30x]
+   ASK PAOLO
 
 
 
@@ -1996,17 +2023,17 @@ biomethanation processes are SNG, which is considered equivalent to
 gas. Data for the technologies are reported in :numref:`Table %s <tbl:sng_pyro>` (from
 :cite:`Moret2017PhDThesis`). The biomethanation process is
 based on anaerobic digestion followed by a cleaning process in order to
-have gas that can be reinjected in the gas grid
+have gas that can be reinjected in the gas network
 :cite:`DanishEnergyAgency2019a,Energiforsk2016`. In the
 table, efficiencies are calculated with respect to the wood in input
-(50% humidity, on a wet basis LHV) and ‘*fuel*’ stands for the main
+(50% humidity, on a wet basis lower heating value). ‘*Fuel*’ stands for the main
 synthetic fuel in output. 
-Finally, a last technology can produce methane from hydrogen and sequestrated CO:sub:`2`.
+Finally, a last technology can produce methane from hydrogen and sequestrated CO\ :math:`_2`.
 
 
 .. container::
 
-   .. table:: Synthetic fuels (except H2) conversion technologies (from :cite:`DanishEnergyAgency2019a,Moret2017PhDThesis` or specified), in 2035.
+   .. table:: Synthetic fuels (except H\ :math:`_2`) conversion technologies (from :cite:`DanishEnergyAgency2019a,Moret2017PhDThesis` or specified), in 2035.
       :name: tbl:sng_pyro
    
       +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
@@ -2054,8 +2081,8 @@ Finally, a last technology can produce methane from hydrogen and sequestrated CO
 
 .. [359]
    Direct emissions due to combustion. Expressed
-   in ton CO2 per MWh of fuel produced. Emissions computed based on
-   resource used and produced and specific emissions given in :numref:`Table %s <tbl:prices_resources>`.
+   in ton CO\ :math:`_2` per MWh of fuel produced. Emissions computed based on
+   resource used and produced and specific emissions given in Table 9.
 
 .. [360]
    Costs are adapted from :cite:`ro2007catalytic` and
@@ -2087,25 +2114,25 @@ Carbon capture and storage
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 As represented in  :numref:`Figure %s <fig:CO2andPtGLayers>`, two
-technologies are proposed to capture the CO2, one from atmosphere (*CC
-atmospheric*) and the other from exhaust gases of conversions processes
+technologies are proposed to capture the CO\ :math:`_2`, one from atmosphere (*CC
+atmospheric*) and the other one from exhaust gases of conversions processes
 (*CC industry*), such as after a coal power plant. Indeed, resources
-emit direct CO2 from combustion and *CC industry* can concentrate CO2
-contained in the exhaust gas and inject it in CO2 captured layer. The
-same process can be performed at a higher energetical cost with CO2 from
-the atmosphere. No restriction on the available limit of CO2 from the
+emit direct CO\ :math:`_2` from combustion and *CC industry* can concentrate CO\ :math:`_2`
+contained in the exhaust gas and inject it in the layer for captured CO\ :math:`_2`. The
+same process can be performed at a higher energy cost with CO\ :math:`_2` from
+the atmosphere. No restriction on the available limit of CO\ :math:`_2` from the
 atmosphere is considered. Data are summarised in :numref:`Table %s <tbl:CC_techs>`.
 
-We suppose that *CC industry* has similar characteristics than a
-sequestration unit on a coal power plant as proposed in
-:cite:`DanishEnergyAgency2019`. Based on our own
-calculation, we evaluated the economical and technical data. We assumed
-that the energy drop of the power plant represents the amount of energy
-that the sequestration unit consumes. We assume that this energy must be
+We suppose that *CC industry* has similar characteristics as a
+sequestration unit on a coal power plant, as proposed in
+:cite:`DanishEnergyAgency2019`. We evaluated the economical and technical
+data based on our own calculations. We assumed
+that the energy drop of the power plant represented the amount of energy
+that the sequestration unit consumeed. We assume that this energy must be
 supplied by electricity.
 
 For *CC atmospheric*, :cite:t:`Keith2018` proposed an
-installation where 1 ton of CO2 is captured from the atmosphere with 1.3
+installation where 1 ton of CO\ :math:`_2` is captured from the atmosphere with 1.3
 kWh of natural gas and electricity. We assume that it can be done with
 1.3 kWh of electricity. The thermodynamical limit is estimated to be
 around 0.2 kWh of energy to sequestrate this amount
@@ -2114,37 +2141,36 @@ around 0.2 kWh of energy to sequestrate this amount
 
 .. container::
 
-   .. table:: Carbon capture (CC) technologies, in 2035. :math:`E_e` represents the electricity required to capture sequestrate CO2. :math:`\eta_{CO_2}` represents the amount of CO2 sequestrated from the CO2 source. Abbreviations: industrial (ind.), atmospheric (atm.).
+   .. table:: Carbon capture (CC) technologies, in 2035. :math:`E_e` represents the electricity required to capture sequestrate CO\ :math:`_2`. :math:`\eta_{CO_2}` represents the amount of CO\ :math:`_2` sequestrated from the CO\ :math:`_2` source. Abbreviations: industrial (ind.), atmospheric (atm.).
       :name: tbl:CC_techs
  
  
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      |             | :math:`c_   | :math:`c_   | :math:`life | :math:`E_e` | :math:`\eta_| :math:`f_   | :math:`f_   |
-      |             | {inv}`      | {maint}`    | time`       |             | {CO_2}`     | {min,\%}`   | {max,\%}`   |
-      |             |             |             |             |             |             |             |             |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      |             | [€\ :math:`_| [€\ :math:`_| [y]         | [kWh\:sub`e`| [%]         | [%]         | [%]         |
-      |             | {2015}`/kg\ | {2015}`/kg\ |             | /           |             |             |             |
-      |             | :math:`_    | :math:`_    |             | kg\         |             |             |             |
-      |             | {CO_2}`/h]  | {CO_2}`/h   |             | :sub:`2`]   |             |             |             |
-      |             |             | /y]         |             |             |             |             |             |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      | CC Ind.     | 2580        | 64.8        | 40          | 0.233       | 90 [367]_   | 0           | 100         |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      | CC Atm.     | 5160 [368]_ | 129.6       | 40          | 1.3         | 100         | 0           | 100         |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-
+      +-------------+-------------+-------------+-------------+-------------------+-------------+-------------+-------------+
+      |             | :math:`c_   | :math:`c_   | :math:`life | :math:`E_e`       | :math:`\eta_| :math:`f_   | :math:`f_   |
+      |             | {inv}`      | {maint}`    | time`       |                   | {CO_2}`     | {min,\%}`   | {max,\%}`   |
+      |             |             |             |             |                   |             |             |             |
+      +-------------+-------------+-------------+-------------+-------------------+-------------+-------------+-------------+
+      |             | [€\ :math:`_| [€\ :math:`_| [y]         | [kWh :math:`_e`/  | [%]         | [%]         | [%]         |
+      |             | {2015}`/kg\ | {2015}`/kg\ |             | kg :math:`_{CO_2}`|             |             |             |
+      |             | :math:`_    | :math:`_    |             |                   |             |             |             |
+      |             | {CO_2}`/h]  | {CO_2}`/h   |             |                   |             |             |             |
+      |             |             | /y]         |             |                   |             |             |             |
+      +-------------+-------------+-------------+-------------+-------------------+-------------+-------------+-------------+
+      | CC Ind.     | 2580        | 64.8        | 40          | 0.233             | 90 [367]_   | 0           | 100         |
+      +-------------+-------------+-------------+-------------+-------------------+-------------+-------------+-------------+
+      | CC Atm.     | 5160 [368]_ | 129.6       | 40          | 1.3               | 100         | 0           | 100         |
+      +-------------+-------------+-------------+-------------+-------------------+-------------+-------------+-------------+
 
 .. [367]
-   We consider that 10% of the CO2 cannot be collected.
+   We consider that 10% of the CO\ :math:`_2` cannot be collected.
 
 .. [368]
    Based on the economical data given in :cite:`Keith2018`
-   and own calculation.
+   and on own calculation.
 
 
 No relevant data were found for the capacity factor (:math:`\textbf{c}_\textbf{p}`) and the
-GWP associated to the unit construction.
+GWP associated to the construction of the unit.
 
 
 
@@ -2172,15 +2198,12 @@ technical performances of each technology.
       |           | {inv}`    | {maint}`  | p_{con    | fetime`   |
       |           |           |           | str}`     |           |
       +-----------+-----------+-----------+-----------+-----------+
-      |           | [€:math:` | [€:math:` | [kgCO\    | [y]       |
+      |           | [€ :math:`| [€:math: `| [kgCO\    | [y]       |
       |           | \_{2015}` | \_{2015}` | :sub:`2`  |           |
       |           | /kWh]     | /kWh/y]   | -eq./kWh] |           |
       +-----------+-----------+-----------+-----------+-----------+
       | Li-on     | 302       | 0.62      | 61.3      | 15 [296]_ |
       | batt.     | [294]_    | [294]_    | [295]_    |           |
-      +-----------+-----------+-----------+-----------+-----------+
-      | PHS       | 58.8      | 0 [297]_  | 8.33      | 50 [299]_ |
-      |           |           |           | [298]_    |           |
       +-----------+-----------+-----------+-----------+-----------+
       | TS dec.   | 19.0      | 0.13      | 0         | 25        |
       |           | [300]_    | [300]_    | [297]_    | [300]_    |
@@ -2193,6 +2216,8 @@ technical performances of each technology.
       +-----------+-----------+-----------+-----------+-----------+
       | TS high   | 28        | 0.28      | 0         | 25        |
       | temp.     |           |           | [297]_    |           |
+      +-----------+-----------+-----------+-----------+-----------+
+      | TS cold   | 25        | 0.3       | 0         | 20        |
       +-----------+-----------+-----------+-----------+-----------+
       | Gas       | 0.051     | 0.0013    | 0         | 30        |
       |           | [302]_    | [302]_    | [297]_    | [302]_    |
@@ -2231,17 +2256,9 @@ technical performances of each technology.
 .. [296]
    Trade off between various sources:
    :cite:`Zakeri2015,DanishEnergyAgency2018`
-
+   
 .. [297]
    Neglected.
-
-.. [298]
-   Own calculation based on Hydro Dams emissions from previous work
-   :cite:`Limpens2019,Moret2017PhDThesis`.
-
-.. [299]
-   Data verified in Table B1 of
-   :cite:`Zakeri2015`.
 
 .. [300]
    Adapted from Table 5.2 of
@@ -2270,7 +2287,7 @@ technical performances of each technology.
 
 
 .. [305]
-   Based on liquid CO2 tank storage. Data from a
+   Based on liquid CO\ :math:`_2` tank storage. Data from a
    datasheet of *Ever grow gas* company https://www.evergrowgas.com/.
    Lifetime and maintenance cost based on own calculation.
 
@@ -2278,24 +2295,6 @@ technical performances of each technology.
    Units: **c\ inv** [€\ \ :sub:`2015`/tCO\ \ :sub:`2`],
    **c\ op** [€\ \ :sub:`2015`/tCO\ \ :sub:`2`/y]
 
-
-The PHS in Colombia can be resumed to the Coo-Trois-Ponts hydroelectric
-power station. The characteristics of the station in 2015 are the
-following: installed capacity turbine (1164MW), pumping (1035MW),
-overall efficiency of 75%, all reservoirs capacity (5000 MWh). We assume
-that the energy losses is shared equally between the pumping and
-turbining, resulting by a charge/discharge efficiencies of 86.6%. The
-energy to power ratio are 4h50 and 4h18 for charge and discharge,
-respectively :cite:`Electrabel2014`. A project started to
-increase the height of the reservoirs and thus increase the capacity by
-425 MWh. In addition, the power capacity will be increase by 80MW. The
-overall project cost is estimated to 50M€ and includes also renovation
-of other parts [307]_. We arbitrary assume that 50% is dedicated for the
-height increase. It results in an investment cost of 58.8€\ :sub:`2015`
-per kWh of new capacity. The overall potential of the PHS could be
-extended by a third reservoir with an extra capacity of around 1.2 GWh.
-Hence, we assume that the upper limit of PHS capacity is 6.5 GWh. No
-upper bound were constrained for other storage technologies.
 
 Estimation for the gas storage is based on an existing facility using
 salt caverns as reservoirs: Lille Torup in Danemark
@@ -2308,7 +2307,7 @@ used for heating up the gas during the discharge. These quantities
 slightly impact the charge and discharge efficiency of the system. The
 charge and discharge power are 2200 and 6600 [MW] respectively. As the
 technology is mature, we assume that the cost of the technology in 2035
-will be similar to Lille Torup project.
+will be similar to the one of the Lille Torup project.
 
 
 .. container::
@@ -2349,10 +2348,12 @@ will be similar to Lille Torup project.
       | TS high       | 1             | 1             | 2             | 2             | 3.55e-4       | 1             |
       | temp.         | [331]_        | [331]_        |               |               | [331]_        |               |
       +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
+      | TS cold       | 0.99          | 0.99          | 4             | 4             | 8.24e-3       | 1             |
+      +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
       | NG            | 0.99          | 0.995         | 2256          | 752           | 0             | 1             |
       |               | [332]_        | [332]_        | [332]_        | [332]_        |               |               |
       +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
-      | H2            | 0.90          | 0.98          | 4             | 4             | 0             | 1             |
+      | H\ :math:`_2` | 0.90          | 0.98          | 4             | 4             | 0             | 1             |
       |               | [333]_        | [333]_        | [333]_        | [333]_        |               |               |
       +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
       | Diesel        | 1             | 1             | 168           | 168           | 0             | 1             |
@@ -2370,7 +2371,7 @@ will be similar to Lille Torup project.
       | Methanol      | 1             | 1             | 168           | 168           | 0             | 1             |
       | [334]_        |               |               |               |               |               |               |
       +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
-      | CO2           | 1             | 1             | 1             | 1             | 0             | 1             |
+      | CO\ :math:`_2`| 1             | 1             | 1             | 1             | 0             | 1             |
       +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
 
 
@@ -2456,77 +2457,20 @@ As a consequence, the estimated cost of the Belgian grid is
 :math:`58.6/1.0679\cdot 11.25/8.24=74.9` b€\ :sub:`2015`. And the extra
 cost is :math:`393/1.0679\approx 367.8` M€\ :sub:`2015`/GW.
 
-Colombia is strongly interconnected to neighbouring countries. Based on
-an internal report of the TSO
-:cite:`ELIA_2016_avancementInterconnexion`, the TTC is
-estimated to be 6500 GW in 2020, which is in line with another study
-from EnergyVille :cite:`Meinke-Hubeny2017` and the ENTSOE
-:cite:`ENTSO-E2019`. However, the NTC published by the TSO
-on his website is much lower, around 3100 MW: 950 MW from Netherlands,
-1800 MW from France and 350 MW from England (in 2020). This NTC is
-defined as ‘*The net transfer capacity (NTC) is the forecast transfer
-capacity agreed by Elia and its neighbouring transmission system
-operators (TSOs) for imports and exports across Colombia’s borders. [...]
-EU Regulation 543/2013 refers to net transmission capacity as
-‘forecasted capacity’.*’ [369]_. As explained in an internal report of
-the TSO :cite:`ELIA_ntcCalculation_2019`, the TTC is an
-upper bound of the NTC. In the literature, studies analysing the Colombia
-energy system accounts for the TTC, thus this capacity was implemented
-in this work: 6500 MW in 2020. The ENTSOE published his Ten Year Network
-Development Plan for different periods up to 2040. They estimates, if
-all projects are commissionned before 2035, the cross border capacities
-in 2035 up to 14 780 MW, which represents more than twice the available
-capacity in 2020 :cite:`ENTSO-E2019`. 
-:numref:`Figure %s <fig:be_ttc>` illustrates the capacity changes for each
-neighbouring country, interconnections are reinforced in every countries
-more or less proportionally to the existing capacities.
+Data regarding cross-border interconnexions are given in Section
+*Electricity imports and exports*.
 
-
-.. figure:: /images/belgian_data/TTC_entsoe.png
-   :alt: Expected capacities between Colombia and neighbouring countries. Data from :cite:`ENTSO-E2019`.
-   :name: fig:be_ttc
-   :width: 14cm
-
-   Expected capacities between Colombia and neighbouring countries. Data
-   from :cite:`ENTSO-E2019`.
-
-
-Losses (:math:`\%_{\emph{net\textsubscript{loss}}}`) in the electricity
+Losses (:math:`\%_{net,loss}`) in the electricity
 grid are fixed to 4.7%. This is the ratio between the losses in the grid
-and the total annual electricity production in Colombia in
+and the total annual electricity production in Belgium in
 2016 :cite:`Eurostat2017`.
-
-
-In a study about “\ *electricity scenarios for Colombia towards
-2050*\ ´´, the TSO estimates the overall import capacity up to 9.88 GW
-:cite:`EliaSystemOperator2017`. The interconnections are
-built as follow: 3.4 GW from Netherlands, 4.3 GW from France, 1.0 GW
-from Germany, 1.0 GW from Great Britain and 0.18 GW from
-Luxembourg [370]_. However, a maximum simultaneous import capacity is
-fixed to 6.5 GW and justified as follow “\ *Additionally, the total
-maximum simultaneous import level for Colombia is capped at 6500 MW. For
-a relatively small country with big and roughly adequate neighbours, the
-simulations show that a variable import volume up to the maximum of 6500
-MW can happen, thanks to the non-simultaneousness of peaks between the
-countries. But during certain hours, there is not enough generation
-capacity abroad due to simultaneous needs in two or more countries which
-will result in a lower import potential for Colombia. This effect is
-taken into account in the model*\ ´´
-:cite:`EliaSystemOperator2017`. The same ratio of
-simultaneous import and NTC (66%) is used for the other years.
-
-Losses (:math:`%_{net_{loss}}`) in the electricity
-grid are fixed to 4.7%. This is the ratio between the losses in the grid
-and the total annual electricity production in Colombia in
-2016 :cite:`Eurostat2017`.
-
 
 .. _app:DHN_grid_data:
 
 DHN grid
 ~~~~~~~~
 
-For the DHN, the investment for the network is also accounted for. The
+For the DHN, the investment into network is also accounted for. The
 specific investment (:math:`c_{inv}`) is 882 CHF\ :sub:`2015`/kW\ :sub:`th` in
 Switzerland. This value is based on the mean value of all points in
 :cite:`s._thalmann_analyse_2013` (Figure 3.19), assuming a
@@ -2536,11 +2480,11 @@ is expected to be 60 years. DHN losses are assumed to be 5%.
 
 As no relevant data were found for Colombia, the DHN infrastructure cost
 of Switzerland was used. As a consequence, the investment cost
-(:math:`c_{inv}`) is 825 €\ :sub:`2015`/kW\ :sub:`th`. Based on the heat
-roadmap study :cite:`Paardekooper2018`, heat provided by DHN
+(:math:`c_{inv}`) is 826 €\ :sub:`2015`/kW\ :sub:`th`. Based on the heat
+roadmap study :cite:`Paardekooper2018`, heat provided by DHN in the European Union
 is “*around 2% of the heating for the built environment (excluding for
 industry) today to at least 37% of the heating market in 2050*”. Hence,
-the lower (*%\ dhn,min*) and upper bounds (*%\ dhn,max*) for the use of
+the lower (:math:`\%_{dhn,min}`) and upper bounds (:math:`\%_{dhn,max}`) for the use of
 DHN are 2% and 37% of the annual low temperature heat demand,
 respectively.
  
@@ -2548,26 +2492,9 @@ respectively.
 Energy demand reduction cost
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-By replacing former device at the end user side, the EUD can be reduced.
-This is usually called an ‘*energy efficiency*’ measure. As an example,
-by insulating a house, the space heating demand can be reduced. However,
-energy efficiency has a cost which represents the extra cost to reduce
-the final energy needed to supply the same energy service. As in the
-model the demand reduction is fixed, hence the energy efficiency cost is
-fixed. The American Council for an Energy-Efficient Economy summarises
-study about the levelised cost of energy savings
-:cite:`ACEEE2015`. They conclude that this cost is below
-0.04 USD\ :sub:`2014`/kWh saved and around 0.024 USD\ :sub:`2014`/kWh,
-hence 0.018€\ :sub:`2015`/kWh. In 2015, Colombia FEC was 415 TWh
-:cite:`EurostatEnergyBalanceSheets2015` and the energy
-efficiency around 15% compare to 1990. The European target is around 35%
-in 2035, hence the energy efficiency cost for Colombia between 2015 and
-2035 is 3.32b€\ :sub:`2015`. This result is in line with another study
-for Switzerland where the energy efficiency cost is 1.8b€\ :sub:`2015`
-for the same period and similar objectives
-:cite:`_perspectives_2013` (see
-:cite:`Moret2017PhDThesis` for more details about
-Switzerland).
+[TO BE COMPLETED]
+
+
 
 
 
@@ -2575,7 +2502,7 @@ Switzerland).
 
 
 .. [1]
-   The database is consulted online: http://www.ecoinvent.org
+   The database can be consulted online: http://www.ecoinvent.org
 
 .. [2]
    *Real* values are expressed at the net of inflation. They differ from
@@ -2595,28 +2522,9 @@ Switzerland).
    the consumed energy per technologies in 2015. Data from
    :cite:`EuropeanCommission2016`
 
-
-.. [307]
-   This information was shared by Engie, the facility manager
-   https://corporate.engie-electrabel.be/projet-extension-centrale-coo/
-   and also publicised by newspapers:
-   https://www.renouvelle.be/fr/actualite-belgique/la-centrale-de-coo-augmente-sa-capacite-de-stockage,
-   https://www.lameuse.be/403176/article/2019-06-20/va-agrandir-les-lacs-de-la-centrale-coo.
-
-
 .. [335]
    Not all the characteristics of the cell has been implemented, thus
    PEM-EC can be competitive compare to other technologies.
 
 
-
-.. [369]
-   Information and definition from the TSO website:
-   https://www.elia.be/en/grid-data/transmission/yearly-capacity,
-   visited on the 29th of May 2020
-
-
-.. [370]
-   More details about capacities and projects are given in Figure 56 of
-   :cite:`EliaSystemOperator2017`.
 
