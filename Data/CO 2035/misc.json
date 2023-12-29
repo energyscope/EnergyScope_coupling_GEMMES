@@ -16,7 +16,7 @@
     "share_freight_road_max" : 1,
     "share_freight_boat_min" : 0,
     "share_freight_boat_max" : 0.4,
-    "share_private_motorcycle_max" : 0.52,
+    "share_private_motorcycle_max" : 0.55,
     "share_heat_dhn_min" : 0,
     "share_heat_dhn_max" : 0.5,
     "share_ned" : {"HVC":1.0, "METHANOL":0.0, "AMMONIA":0.0},

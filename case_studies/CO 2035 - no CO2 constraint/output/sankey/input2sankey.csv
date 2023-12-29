@@ -13,8 +13,8 @@ Gas,Mob public,88.10,GAS,#FFD700,TWh
 Gas,Freight,6.74,GAS,#FFD700,TWh
 Gas,refrig. cycles,0.03,GAS,#FFD700,TWh
 Electricity,Elec,0.07,Electricity,#00BFFF,TWh
-Wind,Elec,94.16,Wind,#27AE34,TWh
-Hydro River,Elec,16.32,Hydro River,#0000FF,TWh
+Wind,Elec,94.10,Wind,#27AE34,TWh
+Hydro River,Elec,16.33,Hydro River,#0000FF,TWh
 Hydro Dams,Elec,40.89,Hydro Dam,#0000FF,TWh
 Coal,Boilers,41.04,Coal,#A0522D,TWh
 PV,Elec,0.50,PV,#FFFF00,TWh
@@ -26,11 +26,11 @@ Elec,Mob priv,13.68,Electricity,#00BFFF,TWh
 Elec,Mob public,0.75,Electricity,#00BFFF,TWh
 Elec,Freight,2.80,Electricity,#00BFFF,TWh
 Elec,Exp & Loss,8.45,Electricity,#00BFFF,TWh
-Elec,Curt.,0.11,Electricity,#00BFFF,TWh
+Elec,Curt.,0.12,Electricity,#00BFFF,TWh
 Elec,Elec demand,93.95,Electricity,#00BFFF,TWh
-PV,Curt.,0.94,Solar,#FFFF00,TWh
-Wind,Curt.,0.68,Wind,#27AE34,TWh
-Elec,Storage,12.89,Electricity,#00BFFF,TWh
+PV,Curt.,0.88,Solar,#FFFF00,TWh
+Wind,Curt.,0.74,Wind,#27AE34,TWh
+Elec,Storage,12.88,Electricity,#00BFFF,TWh
 Storage,Elec demand,12.47,Electricity,#00BFFF,TWh
 Elec,HPs,22.26,Electricity,#00BFFF,TWh
 Elec,refrig. cycles,2.24,Electricity,#00BFFF,TWh

@@ -102,7 +102,7 @@
  ##  PARAMETERS  presented  in  Table  2.	 
  param  i_rate  :=  0.064;  #  part  [2.7.4] 
  param  re_share_primary  :=  0;  #  Minimum  RE  share  in  primary  consumption 
- param  gwp_limit  :=  200000;  #  gwp_limit  [ktCO2-eq./year]:  maximum  GWP  emissions 
+ param  gwp_limit  :=  1000000;  #  gwp_limit  [ktCO2-eq./year]:  maximum  GWP  emissions 
  param  solar_area_rooftop  :=  529; 
  param  solar_area_ground  :=  3809; 
  param  solar_area_ground_high_irr  :=  70; 
@@ -381,7 +381,7 @@ BOAT_FREIGHT_DIESEL	72.2	3.8	0.0	40.0	0.114155251	0.0	1.0	0.0	Infinity
 BOAT_FREIGHT_NG	73.1	3.8	0.0	40.0	0.114155251	0.0	1.0	0.0	0.0
 BOAT_FREIGHT_METHANOL	72.2	3.8	0.0	40.0	0.114155251	0.0	1.0	0.0	0.0
 TRUCK_DIESEL	351.0	18.6	0.0	15.0	0.092592593	0.5	1.0	0.0	Infinity
-TRUCK_GASOLINE	678.6	35.9	0.0	15.0	0.092592593	0.5	1.0	0.0	Infinity
+TRUCK_GASOLINE	351.0	18.6	0.0	15.0	0.092592593	0.5	1.0	0.0	Infinity
 TRUCK_METHANOL	351.0	18.6	0.0	15.0	0.092592593	0.0	1.0	0.0	0.0
 TRUCK_FUEL_CELL	430.2	12.1	0.0	15.0	0.092592593	0.0	1.0	0.0	0.0
 TRUCK_ELEC	878.4	23.1	0.0	15.0	0.092592593	0.0	1.0	0.0	0.0
@@ -416,7 +416,7 @@ BATT_LI	501.3	0.6	95.0	15.0	1.0	0.0	1.0	0.0	Infinity
 CAES	38.9	3.2	0.0	50.0	1.0	0.0	1.0	0.0	Infinity
 BEV_BATT	0.0	0.0	0.0	1.0	1.0	0.0	1.0	0.0	Infinity
 PHEV_BATT	0.0	0.0	0.0	1.0	1.0	0.0	1.0	0.0	Infinity
-DAM_STORAGE	0.0	0.0	0.0	1.0	1.0	0.0	1.0	18181.0	18189.93854
+DAM_STORAGE	0.0	0.0	0.0	40.0	1.0	0.0	1.0	18181.0	18189.93854
 PHS	107.1	0.0	12.0	50.0	1.0	0.0	1.0	0.0	0.0
 TS_DEC_DIRECT_ELEC	19.0	0.1	0.0	25.0	1.0	0.0	1.0	0.0	Infinity
 TS_DEC_HP_ELEC	19.0	0.1	0.0	25.0	1.0	0.0	1.0	0.0	Infinity

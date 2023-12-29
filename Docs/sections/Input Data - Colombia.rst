@@ -8,7 +8,10 @@ Input Data - Colombia
    :format: latex
 ..
 
-This section details the input data utilized in applying the LP modeling framework to the Colombia case study. The primary objective is provide data to reproduce the historical Colombian energy system for the year 2021, serving as a validation of EnergyScope's accuracy in modeling this intricate system. Additionally, we provide data for modeling a prospective Colombian energy system for the year 2035.
+This section details the input data utilized in applying the LP modeling framework to the Colombia case study.
+The primary objective is to provide data for modelling a prospective Colombian energy system for the year 2035.
+Additionally, we provide the necessary data to reproduce the historical Colombian energy system for the year 2021,
+serving as a validation of EnergyScope's accuracy in modeling this intricate system.
 
 The data can be grouped into three parts: resources (Section `Resources <#app:sec:ESTD_CO_resources>`__), demand (Section
 `Demand <#sec:app1_end_uses>`__) and technologies (Section
@@ -16,7 +19,7 @@ The data can be grouped into three parts: resources (Section `Resources <#app:se
 
 Regarding resources, ...
 
-Regarding GWP and GHG emissions, LCA data are taken from the Ecoinvent
+Regarding the GWP, LCA data are taken from the Ecoinvent
 database v3.2 [1]_ :cite:`weidema_ecoinvent_2013` using the
 “allocation at the point of substitution” method. GWP is assessed with
 the “GWP100a - IPCC2013” indicator. For technologies, the GWP
@@ -27,7 +30,6 @@ combustion are taken from :cite:t:`Quaschning2015`.
 Regarding the costs, ... *real*\  [2]_ Euros for the
 year 2015 (€\ :sub:`2015`) ...
 
-`Resources <#app:sec:ESTD_CO_resources>`__
 
 .. _app:sec:ESTD_CO_resources:
 
@@ -51,7 +53,7 @@ Solar, wind, hydro and geothermal
       
 .. container::
 
-   .. csv-table:: Comparison of installed capacity of technologies for renewable electricity production in 2021 with their maximum potentials. Abbreviations: maximum (max.), photovoltaic panel (PV), Concentrated Solar Power (CSP).
+   .. csv-table:: Comparison of installed capacity of technologies for renewable electricity generation in 2021 with their maximum potentials. Abbreviations: maximum (max.), photovoltaic panel (PV), Concentrated Solar Power (CSP).
       :header: **Technology**, **2021**\  [5a]_ , **max. potential** , **Units**
       :widths: 15 15 15 15
       :name: tab:renewableTechPotentialIn2035
@@ -65,9 +67,10 @@ Solar, wind, hydro and geothermal
       geothermal , 0 ,  1.2 [5g]_ , [GW]
       CSP parabolic trough , 0 , 13 [5d]_, [GW]
       CSP solar tower , 0 , 13 [5d]_, [GW]
+      biomass central , 0.21 , ~ [5h]_, [GW]
 
    .. [5a]
-      Data from :cite:`IEA_2023`.
+      Data from :cite:`IEA_2023`, unless otherwise specified.
 
    .. [5b]
       :cite:`IEA_2023` gives an installed hydropower capacity of 11.91 GW in 2021. We split it between hydro dam and hydro river according to percentages received from Departamento Nacional de Planeación (DNP), the Colombian National Planning Department.
@@ -86,6 +89,9 @@ Solar, wind, hydro and geothermal
       
    .. [5g]
       Data from :cite:`plazas_nino_2023`. This potential is in line with the one indicated in :cite:`RE_potential_2023`.
+      
+   .. [5h]
+      No constraint on the number of GW installable. The real constraint is on the availability of woody biomass (see below).
 
 As described by eqs. :eq:`eq:solarAreaRooftopLimited` - :eq:`eq:solarAreaGroundHighIrrLimited`, the potential of solar technologies is constrained by the available areas for their deployment. The values for these available areas, as well as the other parameters present in eqs. :eq:`eq:solarAreaRooftopLimited` - :eq:`eq:solarAreaGroundHighIrrLimited`, are given in :numref:`Table %s <tab:solarArea>`. The values of maximum installed capacities indicated in :numref:`Table %s <tab:renewableTechPotentialIn2035>` are a simplified translation of these equations into [GW] constraints.
 
@@ -220,7 +226,7 @@ Prices and GHG emissions given in :numref:`Table %s <tab:prices_resources_fossil
 		natural gas , 44.3 , 330 , 200
 		gasoline , 82.4 , 430 , 250
 		diesel , 79.7 , 400 , 270
-		LFO , 60.2 , 370 , 280
+		LFO , 60.2 , 370 , 260
 
 .. [9a]
    GWP100a-IPCC2013 metric: impact associated to extraction, transportation and combustion
@@ -534,15 +540,15 @@ technology to potentially cover the entire demand. The maximum (:math:`f_{max,\%
 
 .. container::
 
-   .. csv-table:: Non-renewable electricity production technologies in 2035. Abbreviations: combined cycle gas turbine (CCGT).
-      :header: **Technology**, **c**:sub:`inv`, **c**:sub:`maint`, **gwp**:sub:`constr` [15a]_ , **lifetime** [15b]_, **c**:sub:`p`, **efficiency**, :math:`CO_{2-direct}` [15c]_
-      :widths: 11 17 24 23 12 8 13 8
+   .. csv-table:: Non-renewable electricity production technologies in 2035. Abbreviations: combined cycle gas turbine (CCGT), capacity (capa.).
+      :header: **Technology**, **c**:sub:`inv`, **c**:sub:`maint`, **gwp**:sub:`constr` [15a]_ , **lifetime** [15b]_, **c**:sub:`p`, **efficiency**, :math:`CO_{2-direct}` [15c]_, installed capa. (2021) [15i]_
+      :widths: 11 17 24 23 12 8 13 8 8
       :name: tab:elec_prod_nre
 		 
-		  , [€ :sub:`2015`/kW :sub:`e`], [€ :sub:`2015`/kW :sub:`e`/year], [kgCO :sub:`2`-eq./kW :sub:`e`], [year], [%], [%], [tCO2/MWh :sub:`e`]
-		 CCGT, 772 [15d]_, 19.7 [15d]_, 184, 25, 85, 63 [15e]_, 0.317
-		 CCGT ammonia [15f]_, 772, 19.6, 184, 25, 50, 0
-		 Coal central, 3246 [15g]_, 49.0 [15g]_, 332, 35, 86 [15b]_, 54 [15h]_, 0.667
+		  , [€ :sub:`2015`/kW :sub:`e`], [€ :sub:`2015`/kW :sub:`e`/year], [kgCO :sub:`2`-eq./kW :sub:`e`], [year], [%], [%], [tCO2/MWh :sub:`e`], [GW]
+		 CCGT, 772 [15d]_, 19.7 [15d]_, 184, 25, 85, 63 [15e]_, 0.317, 2.43
+		 CCGT ammonia [15f]_, 772, 19.6, 184, 25, 59, 50, 0, 0
+		 Coal central, 3246 [15g]_, 49.0 [15g]_, 332, 35, 86 [15b]_, 54 [15h]_, 0.667, 0.61
 		 
 .. [15a]
    Data from :cite:`weidema_ecoinvent_2013`
@@ -578,6 +584,10 @@ technology to potentially cover the entire demand. The maximum (:math:`f_{max,\%
 .. [15h]
    Data from :cite:`bauer_new_2008`, IGCC in 2025 (realistic optimistic scenario)	 
 
+.. [15i]
+   Data from :cite:`IEA_2023`
+   
+   
 Heating and cogeneration
 ------------------------
 
@@ -1183,66 +1193,67 @@ model. Mobility data are usually given per vehicle, such as a
 vehicle cost or an average occupancy per vehicle. These data from the literature are
 summarised in :numref:`Table %s <tbl:mob_specific_costs_calculation>`.
 
+
 .. container::
 
    .. table:: Specific investment cost calculation based on vehicle investment data, in 2035. Abbreviations: average (av.), Fuel Cell (FC), Hybrid Electric Vehicle (HEV), Natural Gas (NG), Plug-in Hybrid Electric Vehicle (PHEV), public (pub.).
       :name: tbl:mob_specific_costs_calculation
 
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
-      | **Vehicle | :math:`Ve | :math:`Ma | :math:`Oc | :math:`Av.| :math:`Av.| :math:`li | :math:`gw |
+      | **Vehicle | :math:`Ve | :math:`Ma | :math:`Oc | :math:`Av.| :math:`Av.| :math:`li | :math:`gw | 
       | type**    | h.~Cost`  | intenance`| cupancy`  | ~distance`| ~speed`   | fetime`   | p_{       |
-      |           |           | [241]_    |           |           |           | [242]_    | constr}`  |
+      |           |           | [241]_    |           |           |           | [242]_    | constr}`  |                                
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
-      |           |           | [k€\      | [k€\      | [         | [1000     | [         | [         |
-      |           |           | :math:`_\ | :math:`_\ | pass/     | km/y]     | km/h]     | years]    |
-      |           |           | 2015`     | 2015`     | veh.]     |           |           |           |
-      |           |           | /veh.]    | /veh./y]  |           |           |           |           |
+      |           |           | [k€\      | [k€\      | [         | [1000     | [         | [         |                            
+      |           |           | :math:`_\ | :math:`_\ | pass/     | km/y]     | km/h]     | years]    |                                
+      |           |           | 2015`     | 2015`     | veh.]     |           |           |           |                                
+      |           |           | /veh.]    | /veh./y]  |           |           |           |           |                                
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
-      | Gasoline  | 21 [243]_ | 1.2       | 1.26      | 18 [245]_ | 40        | 10        | 17.2      |
-      | car       |           |           | [244]_    |           |           |           |           |
-      |           |           |           |           |           |           |           |           |
+      | Gasoline  | 21 [243]_ | 1.2       | 1.26      | 18 [245]_ | 40        | 10        | 17.2      | 
+      | car       |           |           | [244]_    |           |           |           |           |                                
+      |           |           |           |           |           |           |           |           |                                
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
       | Diesel    | 22 [243]_ | 1.2       | 1.26      | 18 [245]_ | 40        | 10        | 17.4      |
-      | car       |           |           | [244]_    |           |           |           |           |
-      |           |           |           |           |           |           |           |           |
+      | car       |           |           | [244]_    |           |           |           |           |                                
+      |           |           |           |           |           |           |           |           |                                
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
       | NG        | 22 [243]_ | 1.2       | 1.26      | 18 [245]_ | 40        | 10        | 17.2      |
-      | car       |           |           | [244]_    |           |           |           |           |
+      | car       |           |           | [244]_    |           |           |           |           |                                
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
       | HEV       | 22 [243]_ | 1.74      | 1.26      | 18 [245]_ | 40        | 10        | 26.2      |
-      | car       |           |           | [244]_    |           |           |           |           |
+      | car       |           |           | [244]_    |           |           |           |           |                                
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
       | PHEV      | 23 [243]_ | 1.82      | 1.26      | 18 [245]_ | 40        | 10        | 26.2      |
-      | car       |           |           | [244]_    |           |           |           |           |
+      | car       |           |           | [244]_    |           |           |           |           |                                
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
       | BEV       | 23 [243]_ | 0.5       | 1.26      | 18 [245]_ | 40        | 10        | 19.4      |
-      | [246]_    |           |           | [244]_    |           |           |           |           |
+      | [246]_    |           |           | [244]_    |           |           |           |           |                                
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
       | FC        | 22 [243]_ | 0.5       | 1.26      | 18 [245]_ | 40        | 10        | 39.6      |
-      | car       |           |           | [244]_    |           |           |           |           |
+      | car       |           |           | [244]_    |           |           |           |           |                                
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
       | Tram      | 2500      | 50.0      | 200       | 60        | 20        | 30        | 0         |
-      | and       |           |           |           |           |           |           | [247]_    |
-      | metro     |           |           |           |           |           |           |           |
+      | and       |           |           |           |           |           |           | [247]_    |                                
+      | metro     |           |           |           |           |           |           |           |                                
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
       | Diesel    | 220       | 11.0      | 24        | 39        | 15        | 15        | 0 [247]_  |
-      | bus       |           |           |           |           |           |           |           |
+      | bus       |           |           |           |           |           |           |           |                                
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
       | Diesel    | 300       | 12.0      | 24        | 39        | 15        | 15        | 0 [247]_  |
-      | HEV       |           |           |           |           |           |           |           |
-      | bus       |           |           |           |           |           |           |           |
+      | HEV       |           |           |           |           |           |           |           |                                
+      | bus       |           |           |           |           |           |           |           |                                
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
       | Gasoline  | 220       | 11.0      | 24        | 39        | 15        | 15        | 0 [247]_  |
-      | bus       |           |           |           |           |           |           |           |
+      | bus       |           |           |           |           |           |           |           |                                
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
       | NG        | 220       | 11.0      | 24        | 39        | 15        | 15        | 0 [247]_  |
-      | bus       |           |           |           |           |           |           |           |
+      | bus       |           |           |           |           |           |           |           |                                
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
       | FC        | 375       | 11.3      | 24        | 39        | 15        | 15        | 0 [247]_  |
-      | bus       |           |           |           |           |           |           |           |
+      | bus       |           |           |           |           |           |           |           |                                
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
       | Train     | 10000     | 200.0     | 80        | 200       | 83        | 40        | 0 [247]_  |
-      | pub.      |           |           |           |           |           |           |           |
+      | pub.      |           |           |           |           |           |           |           |                                
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
 
 
@@ -1430,31 +1441,35 @@ interpolation between the 2010 and 2050 values presented in :numref:`Table %s <t
 Codina Gironès et al :cite:`codina_girones_strategic_2015`.
 For private vehicles, estimates of energy consumption of Belgian cars
 in 2030 are taken from :cite:`BureaufederalduPlan2012`.
-
+:numref:`Table %s <tbl:passenger_vehicles>` also gives the minimum and maximum shares
+of each vehicle type in 2035. The shares in 2021 are also given
 
 .. container::
 
    .. table:: Fuel and electricity consumption for passenger mobility technologies in 2035 :cite:`codina_girones_strategic_2015`, and minimum/maximum shares allowed in the model. Abbreviations: Fuel Cell (FC), Hybrid Electric Vehicle (HEV), Natural Gas (NG), Plug-in Hybrid Electric Vehicle (PHEV), public (pub.).
       :name: tbl:passenger_vehicles
 
-      ================ ============ =============== ============================ ============================
-      **Vehicle type** **Fuel**     **Electricity** **f**:math:`_\textbf{min,%}` **f**:math:`_\textbf{max,%}`
-      \                [Wh/km-pass] [Wh/km-pass]    [Wh/km-pass]                 [%]
-      Gasoline car     497  [251]_  0               0                            1
-      Diesel car       435  [251]_  0               0                            1
-      NG car           543  [251]_  0               0                            1
-      HEV [252]_       336  [251]_  0               0                            1
-      PHEV [253]_      138  [251]_  109 [251]_      0                            1
-      BEV              0            173 [251]_      0                            1
-      FC car           264  [254]_  0               0                            1
-      Methanol car     497  [251]_  0               0                            1
-      Tram & Trolley   0            63  [255]_      0                            0.05  [256]_
-      Diesel bus       265          0               0                            1
-      Diesel HEV bus   198          0               0                            1
-      NG bus           268          0               0                            1
-      FC bus           225          0               0                            1
-      Train pub.       0            65 [255]_       0                            0.30 [256]_
-      ================ ============ =============== ============================ ============================
+      ================ ============ =============== ============================ ============================ ======================================
+      **Vehicle type** **Fuel**     **Electricity** **f**:math:`_\textbf{min,%}` **f**:math:`_\textbf{max,%}` **f**:math:`_\textbf{%}` (2021) [22a]_
+      \                [Wh/km-pass] [Wh/km-pass]    [Wh/km-pass]                 [%]	                      [%]		
+      Gasoline car     497  [251]_  0               0                            1                            33
+      Diesel car       435  [251]_  0               0                            1                            0
+      NG car           543  [251]_  0               0                            1                            15
+      HEV [252]_       336  [251]_  0               0                            1                            0
+      PHEV [253]_      138  [251]_  109 [251]_      0                            1                            0
+      BEV              0            173 [251]_      0                            1                            0
+      FC car           264  [254]_  0               0                            1                            0
+      Methanol car     497  [251]_  0               0                            1                            0
+      Tram & Trolley   0            63  [255]_      0                            0.05  [256]_                 0
+      Diesel bus       265          0               0                            1                            75
+      Diesel HEV bus   198          0               0                            1                            0
+      NG bus           268          0               0                            1                            0
+      FC bus           225          0               0                            1                            0
+      Train pub.       0            65 [255]_       0                            0.30 [256]_                  0
+      ================ ============ =============== ============================ ============================ ======================================
+
+.. [22a]
+   Data deduced from energy consumption of transport in :cite:`IEA_2023`.
 
 .. [251]
    calculation based on vehicle consumption in
@@ -1492,11 +1507,24 @@ battery as presented in :numref:`Table %s <tab:StoDataAdvanced>`.
 The state of charge of the electric vehicles (:math:`soc_{ev}`) is 
 constrained to a minimum of 60% at 7 a.m. every days.
 
-:math:`\%_{public,min}` = 0
+Finally, the share of passenger mobility which can be supplied by public mobility is bounded by :math:`\%_{public,min}` and :math:`\%_{public,max}`. Similarly, the maximum share of private passenger mobility that can be supplied by motorcycles is given by :math:`\%_{private,motorc,max}` (see Eq. :eq:`eq:f_max_perc_motorcycle` in the Model Formulation Section). The values and assumptions for these three parameters are given in :numref:`Table %s <tab:passenger_mob_shares>`.
 
-:math:`\%_{public,max}` = 0.7
+.. container::
 
-:math:`\%_{private,motorc,max}`
+   .. csv-table:: Limiting shares for passenger mobility in 2021 and 2035.
+      :header: **Parameter**, **Value in 2021**, **Value in 2035**
+      :widths: 20 20 20 
+      :name: tab:passenger_mob_shares
+		 
+		 :math:`\%_{public_{min}}`, 0%, 70%
+		 :math:`\%_{public_{max}}` [23a]_, 70%, 70%
+		 :math:`\%_{private_{motorc_{max}}}` [23b]_, 55%, 55%
+		 
+.. [23a]
+   We assume that the maximum share of public passenger mobility in 2035 is the value it had in 2021. This value is taken from :cite:`plazas_nino_2023`.
+   
+.. [23b]
+   We assume that the maximum share of motorcycles in 2035 is the value it had in 2021. This value is taken from :cite:`plazas_nino_2023`.  
 
 
 Freight
@@ -1514,7 +1542,7 @@ given per vehicle type. These data are summarised in :numref:`Table %s <tbl:mob_
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+
       | **Vehicle | :math:`Ve | :math:`Ma | :math:`To | :math:`Av.| :math:`Av.| :math:`li |
       | type**    | h.~Cost`  | intenance`| nnage`    | ~distance`| ~speed`   | fetime`   |
-      |           |           | [23a]_    |           |           | [23a]_    |           |
+      |           |           | [24a]_    |           |           | [24a]_    |           |
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+
       |           |           | [k€\      | [k€\      | [         | [1000     | [         |
       |           |           | :math:`_  | :math:`_  | pass/     | km/y]     | km/h]     |
@@ -1523,20 +1551,20 @@ given per vehicle type. These data are summarised in :numref:`Table %s <tbl:mob_
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+
       | Freight   | 4020      | 80.4      | 550       | 210       | 70        | 40        |
       | train     |           |           |           |           |           |           |
-      | [23a]_    |           |           |           |           |           |           |
+      | [24a]_    |           |           |           |           |           |           |
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+
       | Boat      | 2750      | 137.5     | 1200      | 30        | 30        | 40        |
       | Diesel    |           |           |           |           |           |           |
-      | [23a]_    |           |           |           |           |           |           |
+      | [24a]_    |           |           |           |           |           |           |
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+
       | Boat NG   | 2750      | 137.5     | 1200      | 30        | 30        | 40        |
-      | [23a]_    |           |           |           |           |           |           |
+      | [24a]_    |           |           |           |           |           |           |
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+
       | Boat      | 2750      | 137.5     | 1200      | 30        | 30        | 40        |
       | Methanol  |           |           |           |           |           |           |
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+
       | Truck     | 167       | 8.4       | 10        | 36.5      | 45        | 15        |
-      | Diesel    |           |           |           | [23b]_    |           |           |
+      | Diesel    |           |           |           | [24b]_    |           |           |
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+
       | Truck     | 167       | 8.4       | 10        | 36.5      | 45        | 15        |
       | Gasoline  |           |           |           |           |           |           |
@@ -1551,10 +1579,10 @@ given per vehicle type. These data are summarised in :numref:`Table %s <tbl:mob_
       | NG        |           |           |           |           |           |           |
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+
 
-.. [23a]
+.. [24a]
    Own calculation
 
-.. [23b]
+.. [24b]
    In 2016, the average distance was between 16 974 up to 63 305 km per
    year depending on the truck category. Based on our own calculation,
    we found an average of 36 500 km per year.
@@ -1662,17 +1690,17 @@ where no data was found.
       Boat Diesel      107       0
       Truck Diesel     513       0
       Truck FC         440       0
-      Truck Elec.      0         249  [25a]_
-      Truck NG  [25b]_ 590       0
+      Truck Elec.      0         249  [26a]_
+      Truck NG  [26b]_ 590       0
       Truck Diesel     513       0
       ================ ========= ===============
 
-.. [25a]
+.. [26a]
    Energy intensity calculated based on the diesel one, and corrected
    with an electric to diesel powertrain ratio from
    :cite:`Karlstrom_fuetruck_2019`.
 
-.. [25b]
+.. [26b]
    The efficiency is corrected with the ratio between NG bus and diesel
    bus.
 
@@ -1690,19 +1718,30 @@ and diesel trucks was :math:`\approx`\ 20% [267]_. By assuming a
 similar ratio in 2035, we find an efficiency of 0.107 kWh/tkm and 0.123
 kWh/tkm for diesel and NG boats, respectively.
 
-:math:`\%_{fr,rail,min}` = 0
+The share of freight which can be supplied by different modes are bounded by the values :math:`\%_{fr,X,min}` and :math:`\%_{fr,X,max}`. 
+These values are given in :numref:`Table %s <tab:freight_shares>` for 2021 and 2035. Moreover, based on energy consumption of transport 
+given in :cite:`IEA_2023`, we impose that in 2021, 50% of truck transport was carried out by diesel trucks and 50% by gasoline trucks.
 
-:math:`\%_{fr,rail,max}` = 0.3
+.. container::
 
-:math:`\%_{fr,boat,min}` = 0
-
-:math:`\%_{fr,boat,max}` = 0.4
-
-:math:`\%_{fr,truck,min}` = 0
-
-:math:`\%_{fr,truck,max}` = 1
-
-
+   .. csv-table:: Limiting shares for freight in 2021 and 2035.
+      :header: **Parameter**, **Value in 2021**, **Value in 2035**
+      :widths: 20 20 20
+      :name: tab:freight_shares
+		 
+		 :math:`\%_{fr_{rail_{min}}}`, 0.21 [27a]_, 0
+		 :math:`\%_{fr_{rail_{max}}}`, 0.21 [27a]_,  0.3 [27b]_
+		 :math:`\%_{fr_{boat_{min}}}`, 0.09 [27a]_, 0
+		 :math:`\%_{fr_{boat_{max}}}`, 0.09 [27a]_, 0.4 [27b]_
+		 :math:`\%_{fr_{road_{min}}}`, 0, 0
+		 :math:`\%_{fr_{road_{max}}}`, 1, 1
+		  
+.. [27a]
+   Data from :cite:`plazas_nino_2023`.
+   
+.. [27b]
+   Our own expert guesses.
+    
 .. _sec:app1_ned:
 
 Non-energy demand
@@ -1838,10 +1877,10 @@ Similarly to electricity, two of the three feedstocks can be used for other end-
       |             | {fuel}`]    | {fuel}`/y]  |             |             |             |             |             | :sub:`e`]   |
       +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
       | Haber bosch | 847         | 16.6        | 20          | 85          | 79.8        | 0           |10.7         | 0           |
-      | [28a]_      |             |             |             |             | (NH3)       |             |             |             |
+      | [30a]_      |             |             |             |             | (NH3)       |             |             |             |
       +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
 
-.. [28a]
+.. [30a]
    To produce 1 unit of ammonia, the system uses 1.13 units of H\ :math:`_2` and 0.123 of electricity.
 
 
@@ -1942,23 +1981,23 @@ data for the hydrogen production technologies.
       +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
       |               | :math:`c_     | :math:`c_     | :math:`life   | :math:`c_p`   | :math:`\eta_  | :math:`CO_    |
       |               | {inv}`        | {maint}`      | time`         |               | {H2}`         | {2,direct}`   |
-      |               |               |               |               |               |               | [30a]_        |
+      |               |               |               |               |               |               | [32a]_        |
       +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
       |               | [€\ :math:`_  | [€\ :math:`_  | [y]           | [%]           | [%]           | [tCO\ :sub:`2`|
       |               | {2015}`/kW\   | {2015}`/kW\   |               |               |               | /MWh\         |
       |               | :math:`_      | :math:`_      |               |               |               | :sub:`e`]     |
       |               | {H2}`]        | {H2}`/y]      |               |               |               |               |
       +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
-      | Electrolysis  | 696           | 19.2 [30x]_   | 15 [30x]_     | 90            | 79            | 0             |
-      | [30b]_        |               |               |               | [30c]_        | [30f]_        |               |
+      | Electrolysis  | 696           | 19.2 [32x]_   | 15 [32x]_     | 90            | 79            | 0             |
+      | [32b]_        |               |               |               | [32c]_        | [32f]_        |               |
       | :cite:`\      |               |               |               |               |               |               |
       | DanishEnerg\  |               |               |               |               |               |               |
       | yAgency\      |               |               |               |               |               |               |
       | 2019a`        |               |               |               |               |               |               |
       +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
-      | NG            | 775 [30x]_    | 64.4          | 25            | 86            | 73            | 0.273         |
+      | NG            | 775 [32x]_    | 64.4          | 25            | 86            | 73            | 0.273         |
       | reforming     |               |               |               |               |               |               |
-      | [30d]_        |               |               |               |               |               |               |
+      | [32d]_        |               |               |               |               |               |               |
       | :cite:`to\    |               |               |               |               |               |               |
       | ck_ther\      |               |               |               |               |               |               |
       | mo-envi\      |               |               |               |               |               |               |
@@ -1967,46 +2006,46 @@ data for the hydrogen production technologies.
       +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
       | Biomass       | 2525          | 196           | 25            | 86            | 43            | 0.902         |
       | gasification  |               |               |               |               |               |               |
-      | [30e]_        |               |               |               |               |               |               |
+      | [32e]_        |               |               |               |               |               |               |
       | :cite:`to\    |               |               |               |               |               |               |
       | ck_ther\      |               |               |               |               |               |               |
       | mo-envi\      |               |               |               |               |               |               |
       | ronomic\      |               |               |               |               |               |               |
       | _2013`        |               |               |               |               |               |               |
       +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
-      | Ammonia       | 681 [30x]_    | 62.9 [30x]_   | 25            | 86            | 66 [30x]_     | 0             |
+      | Ammonia       | 681 [32x]_    | 62.9 [32x]_   | 25            | 86            | 66 [32x]_     | 0             |
       | cracking      |               |               |               |               |               |               |
-      | [30g]_        |               |               |               |               |               |               | 
+      | [32g]_        |               |               |               |               |               |               | 
       +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
 
 
-.. [30a]
+.. [32a]
    Direct emissions due to combustion. Expressed
    in ton CO\ :math:`_2` per MWh of fuel produced. Emissions computed based on
    resource used and specific emissions given in Table 9.
 
-.. [30b]
+.. [32b]
    It uses electricity and high temperature heat as feedstock, see :numref:`Table %s <tbl:hydrogen_techs_danish>`.
 
-.. [30c]
+.. [32c]
    Own assumptions.
 
-.. [30d]
+.. [32d]
    It uses gas as feedstock, such as NG.
 
-.. [30e]
+.. [32e]
    It uses wood biomass as feedstock.
 
-.. [30f]
+.. [32f]
    To produce one unit of H\ :math:`_2`, the system requires 1.076 units of electricity and 0.19 units of heat high temperature. 
    We assume that, on top of the unit of H\ :math:`_2` produced, an extra 0.019 units of low temperature heat can be recovered 
    for district heating.
 
-.. [30g]
+.. [32g]
    Cracking ammonia does not exist at industrial scale. Indeed, ammonia is produced from hydrogen throuth the Haber-Bosch process.
    Thus, we didn't found reliable data and did our own calculation based on Haber bosch process and methane cracking.
    
-.. [30x]
+.. [32x]
    ASK PAOLO
 
 
@@ -2193,56 +2232,59 @@ technical performances of each technology.
    .. table:: Storage technologies characteristics in 2035: costs, emissions and lifetime. Abbreviations: batteries (batt.), Battery Electric Vehicule (BEV), centralised (cen.), decentralised (dec.), Lithium-ions (Li-on), Natural Gas (NG), Plug-in Hybrid Electric Vehicle (PHEV), Pumped Hydro Storage (PHS), seasonal (seas.), temperature (temp.) and thermal storage (TS).
       :name: tab:stodatabasic
 
-      +-----------+-----------+-----------+-----------+-----------+
-      |           | :math:`c_ | :math:`c_ | :math:`gw | :math:`li |
-      |           | {inv}`    | {maint}`  | p_{con    | fetime`   |
-      |           |           |           | str}`     |           |
-      +-----------+-----------+-----------+-----------+-----------+
-      |           | [€ :math:`| [€:math: `| [kgCO\    | [y]       |
-      |           | \_{2015}` | \_{2015}` | :sub:`2`  |           |
-      |           | /kWh]     | /kWh/y]   | -eq./kWh] |           |
-      +-----------+-----------+-----------+-----------+-----------+
-      | Li-on     | 302       | 0.62      | 61.3      | 15 [296]_ |
-      | batt.     | [294]_    | [294]_    | [295]_    |           |
-      +-----------+-----------+-----------+-----------+-----------+
-      | TS dec.   | 19.0      | 0.13      | 0         | 25        |
-      |           | [300]_    | [300]_    | [297]_    | [300]_    |
-      +-----------+-----------+-----------+-----------+-----------+
-      | TS seas.  | 0.54      | 0.003     | 0         | 25        |
-      | cen.      | [301]_    | [301]_    | [297]_    | [301]_    |
-      +-----------+-----------+-----------+-----------+-----------+
-      | TS daily  | 3         | 0.0086    | 0         | 40        |
-      | cen.      | [301]_    | [301]_    | [297]_    | [300]_    |
-      +-----------+-----------+-----------+-----------+-----------+
-      | TS high   | 28        | 0.28      | 0         | 25        |
-      | temp.     |           |           | [297]_    |           |
-      +-----------+-----------+-----------+-----------+-----------+
-      | TS cold   | 25        | 0.3       | 0         | 20        |
-      +-----------+-----------+-----------+-----------+-----------+
-      | Gas       | 0.051     | 0.0013    | 0         | 30        |
-      |           | [302]_    | [302]_    | [297]_    | [302]_    |
-      +-----------+-----------+-----------+-----------+-----------+
-      | H2        | 6.19      | 0.03      | 0         | 20        |
-      |           | [303]_    | [303]_    | [297]_    | [303]_    |
-      +-----------+-----------+-----------+-----------+-----------+
-      | Diesel    | 6.35e-3   | 3.97e-4   | 0         | 20        |
-      | [304]_    |           |           | [297]_    |           |
-      +-----------+-----------+-----------+-----------+-----------+
-      | Gasoline  | 6.35e-3   | 3.97e-4   | 0         | 20        |
-      | [304]_    |           |           | [297]_    |           |
-      +-----------+-----------+-----------+-----------+-----------+
-      | LFO       | 6.35e-3   | 3.97e-4   | 0         | 20        |
-      | [304]_    |           |           | [297]_    |           |
-      +-----------+-----------+-----------+-----------+-----------+
-      | Ammonia   | 6.35e-3   | 3.97e-4   | 0         | 20        |
-      | [304]_    |           |           | [297]_    |           |
-      +-----------+-----------+-----------+-----------+-----------+
-      | Methanol  | 6.35e-3   | 3.97e-4   | 0         | 20        |
-      | [304]_    |           |           | [297]_    |           |
-      +-----------+-----------+-----------+-----------+-----------+
-      | CO2       | 49.5      | 0.495     | 0         | 20        |
-      | [305]_    | [306]_    |           | [297]_    |           |
-      +-----------+-----------+-----------+-----------+-----------+
+      +-----------+------------+------------+-----------+-----------+
+      |           | :math:`c_  | :math:`c_  | :math:`gw | :math:`li |
+      |           | {inv}`     | {maint}`   | p_{con    | fetime`   |
+      |           |            |            | str}`     |           |
+      +-----------+------------+------------+-----------+-----------+
+      |           | [€ :math:`_| [€ :math:`_| [kgCO\    | [y]       |
+      |           | {2015}`    | {2015}`    | :sub:`2`  |           |
+      |           | /kWh]      | /kWh/y]    | -eq./kWh] |           |
+      +-----------+------------+------------+-----------+-----------+
+      | Li-on     | 302        | 0.62       | 61.3      | 15 [296]_ |
+      | batt.     | [294]_     | [294]_     | [295]_    |           |
+      +-----------+------------+------------+-----------+-----------+
+      | TS dec.   | 19.0       | 0.13       | 0         | 25        |
+      |           | [300]_     | [300]_     | [297]_    | [300]_    |
+      +-----------+------------+------------+-----------+-----------+
+      | TS seas.  | 0.54       | 0.003      | 0         | 25        |
+      | cen.      | [301]_     | [301]_     | [297]_    | [301]_    |
+      +-----------+------------+------------+-----------+-----------+
+      | TS daily  | 3          | 0.0086     | 0         | 40        |
+      | cen.      | [301]_     | [301]_     | [297]_    | [300]_    |
+      +-----------+------------+------------+-----------+-----------+
+      | TS high   | 28         | 0.28       | 0         | 25        |
+      | temp.     |            |            | [297]_    |           |
+      +-----------+------------+------------+-----------+-----------+
+      | TS cold   | 25         | 0.3        | 0         | 20        |
+      +-----------+------------+------------+-----------+-----------+
+      | Gas       | 0.051      | 0.0013     | 0         | 30        |
+      |           | [302]_     | [302]_     | [297]_    | [302]_    |
+      +-----------+------------+------------+-----------+-----------+
+      | H2        | 6.19       | 0.03       | 0         | 20        |
+      |           | [303]_     | [303]_     | [297]_    | [303]_    |
+      +-----------+------------+------------+-----------+-----------+
+      | Diesel    | 6.35e-3    | 3.97e-4    | 0         | 20        |
+      | [304]_    |            |            | [297]_    |           |
+      +-----------+------------+------------+-----------+-----------+
+      | Gasoline  | 6.35e-3    | 3.97e-4    | 0         | 20        |
+      | [304]_    |            |            | [297]_    |           |
+      +-----------+------------+------------+-----------+-----------+
+      | LFO       | 6.35e-3    | 3.97e-4    | 0         | 20        |
+      | [304]_    |            |            | [297]_    |           |
+      +-----------+------------+------------+-----------+-----------+
+      | Ammonia   | 6.35e-3    | 3.97e-4    | 0         | 20        |
+      | [304]_    |            |            | [297]_    |           |
+      +-----------+------------+------------+-----------+-----------+
+      | Methanol  | 6.35e-3    | 3.97e-4    | 0         | 20        |
+      | [304]_    |            |            | [297]_    |           |
+      +-----------+------------+------------+-----------+-----------+
+      | CO2       | 49.5       | 0.495      | 0         | 20        |
+      | [305]_    | [306]_     |            | [297]_    |           |
+      +-----------+------------+------------+-----------+-----------+
+      | Dam       | 0          | 0          | 0         | 40        |
+      | storage   |            |            |           |           |
+      +-----------+------------+------------+-----------+-----------+
 
 
 .. [294]
@@ -2373,6 +2415,8 @@ will be similar to the one of the Lille Torup project.
       +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
       | CO\ :math:`_2`| 1             | 1             | 1             | 1             | 0             | 1             |
       +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
+      | Dam storage   | 1             | 0.99          | 1             | 1             | 0             | 1             |
+      +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
 
 
 .. [326]
@@ -2416,8 +2460,16 @@ will be similar to the one of the Lille Torup project.
 .. [334]
    We assume a perfect storage with 1 week of charge/discharge time.
 
-
-
+The last rows of Tables :numref:`%s <tab:StoDataBasic>` and :numref:`%s <tab:StoDataAdvanced>` concern
+the Technology *Dam Storage*. As explained in the Model Formulation Section, hydro-electric dams are modelled
+as two separate technologies in EnergyScope, linked by the constraints defined in eqs 
+:eq:`eq:link_dam_storage_to_hydro_dam` - :eq:`eq:dam_storage_out`. Since all costs and gwp are already 
+included in the technology of *Hydro Dam*, a null cost and a null gwp are assumed for *Dam Storage*.
+The values of :math:`f_{min/max}(Hydro~Dam)` and :math:`f_{min/max}(Dam~Storage)` are also linked.
+According to data received from Departamento Nacional de Planeación (DNP), the ratio between
+the two is of 
+:math:`2~240` [h]. The 2035 values of :math:`f_{min}(Hydro~Dam)=9.3` [GW] and :math:`f_{max}(Hydro~Dam)=51.2` [GW] 
+therefore translate into :math:`f_{min}(Dam~Storage)=20~800` [GWh] and :math:`f_{max}(Dam~Storage)=114~400` [GWh].
 
 .. _App:Data:OtherParam:
 
@@ -2480,13 +2532,12 @@ is expected to be 60 years. DHN losses are assumed to be 5%.
 
 As no relevant data were found for Colombia, the DHN infrastructure cost
 of Switzerland was used. As a consequence, the investment cost
-(:math:`c_{inv}`) is 826 €\ :sub:`2015`/kW\ :sub:`th`. Based on the heat
-roadmap study :cite:`Paardekooper2018`, heat provided by DHN in the European Union
-is “*around 2% of the heating for the built environment (excluding for
-industry) today to at least 37% of the heating market in 2050*”. Hence,
-the lower (:math:`\%_{dhn,min}`) and upper bounds (:math:`\%_{dhn,max}`) for the use of
-DHN are 2% and 37% of the annual low temperature heat demand,
-respectively.
+(:math:`c_{inv}`) is 826 €\ :sub:`2015`/kW\ :sub:`th`.
+
+The lower (:math:`\%_{dhn,min}`) and upper bounds (:math:`\%_{dhn,max}`) for the use of
+DHN are chosen as 0% and 50%, respectively. The latter value is the same as
+the one from :cite:`borasio2022deep` for the case of Italy. Indeed, the population
+density in urban and surburban areas is grossly similar in both countries.
  
 
 Energy demand reduction cost
@@ -2494,6 +2545,93 @@ Energy demand reduction cost
 
 [TO BE COMPLETED]
 
+
+.. _app:sec:ESTD_CO_CO2_emissions:
+
+GHG emissions
+=============
+
+As already explicited in :numref:`Table %s <tab:prices_resources_fossil>`, two CO :sub:`2`-eq
+emissions metrics are used: CO :sub:`2,direct` and gwp :sub:`op`. The first one relates to 
+the direct emissions associated with the fuels' combustion, while the second one is the
+GWP100a-IPCC2013 metric: it covers emissions associated to extraction, transportation and combustion.
+The former is used to complete the calibration of EnergyScope to the 2021 Colombian energy
+system, whereas the second one determines the maximum GHG emissions allowed in 2035.
+
+
+Calibration of EnergyScope to the 2021 energy system
+----------------------------------------------------
+
+After having found values for all parameters of the model, as described in the previous sections, it
+is time to verify that the model's simulation of the 2021 Colombian energy system is coherent with historical
+data. A practical check is to verify that CO :sub:`2`-eq emissions match. Indeed, CO :sub:`2`-eq
+emissions derive from the laws of natural sciences and are independent of the economic assumptions chosen.
+They therefore give a more objective metric for comparison purposes.
+The resource use simulated by the model in 2021 can be multiplied by CO :sub:`2,direct` to obtain CO :sub:`2`-eq
+emissions, which are then compared to historical data. Thanks to this, we were able to correct some values
+initially taken from :cite:`plazas_nino_2023` for the heating EUDs, passenger mobility EUD and freight EUD.
+The resource use and emissions simulated by EnergyScope for the year 2021 after performing these corrections are
+given in :numref:`Table %s <tab:2021_CO2_check>`.
+
+.. container::
+
+   .. csv-table:: Resource use and CO :sub:`2`-eq emissions simulated by EnergyScope for the year 2021, compared with historical data. Abbreviations: Liquid Fuel Oil (LFO).
+      :header: **Resource** , **Quantity used in 2021** [37a]_ , **CO**:sub:`2direct` (per MWh of fuel) , **CO**:sub:`2direct` (total) [37a]_ , 2021 **CO**:sub:`2`-eq emissions [37b]_
+      :widths: 15 15 15 15 15
+      :name: tab:2021_CO2_check
+		
+		 , [GWh] , [tCO :sub:`2`-eq/MWh :sub:`fuel`] , [MtCO :sub:`2`-eq] , [MtCO :sub:`2`-eq]
+		coal , 40 990 , 0.36 , 14.8 , 14
+		natural gas , 76 014 , 0.20 , 15.2 , 18
+		gasoline , 69 435 , 0.25 , 17.4, 17.7 [37c]_
+		diesel , 70 949 , 0.27 , 19.2 , 19.5 [37c]_
+		LFO , 40 769 , 0.26 , 10.6 , 10.8 [37c]_
+		bio-ethanol , 7 166 , 0.25 , 1.8 , ~ [37d]_
+		bio-diesel , 2 540 , 0.27 , 0.7 , ~ [37d]_
+		woody biomass , 38 395 , 0.39 , 15.0 , ~ [37d]_
+
+.. [37a]
+   Obtained after running EnergyScope with the 2021 data. 
+   
+.. [37b]
+   Data from Figure 3.3 of :cite:`IEA_2023`.
+
+.. [37c]
+   In :cite:`IEA_2023`, the emissions for gasoline, diesel and LFO are aggregated. We disaggregate them according to the proportions from the EnergyScome simulation for year 2021.
+
+.. [37d]
+   Not given in :cite:`IEA_2023`.
+
+According to :cite:`IEA_2023`, the total CO :sub:`2`-eq emissions from fossil fuels in Colombia were of 79.7 MtCO :sub:`2`-eq in 2021.
+The sum of the values simulated with EnergyScope for fossil fuels (thus excluding bio-fuels and biomass) and given in
+:numref:`Table %s <tab:2021_CO2_check>` is 77.1 MtCO :sub:`2`-eq. The difference between the two is of 3% and is therefore acceptable.
+
+
+Setting a gwp limit for the year 2035
+-------------------------------------
+
+The gwp :sub:`op` computed by EnergyScope for the 2021 Colombian energy system is of :math:`118~\text{MtCO}_2\text{-eq}`. It is broken down by
+resource type in :numref:`Table %s <tab:2021_gwp>`.
+
+.. container::
+
+   .. csv-table:: Resource use and gwp :sub:`op` simulated by EnergyScope for the year 2021. Abbreviations: Liquid Fuel Oil (LFO).
+      :header: **Resource** , **Quantity used in 2021** [37a]_ , **gwp**:sub:`op` (per MWh of fuel) , **gwp**:sub:`op` (total)
+      :widths: 15 15 15 15
+      :name: tab:2021_gwp
+		
+		 , [GWh] , [tCO :sub:`2`-eq/MWh :sub:`fuel`] , [MtCO :sub:`2`-eq]
+		coal , 40 990 , 0.47 , 19.3
+		natural gas , 76 014 , 0.33 , 25.1
+		gasoline , 69 435 , 0.43 , 29.9
+		diesel , 70 949 , 0.40 , 28.4
+		LFO , 40 769 , 0.37 , 15.1
+		bio-ethanol , 7 166 , 0 , 0
+		bio-diesel , 2 540 , 0 , 0
+		woody biomass , 38 395 , 0.01 , 0.4
+		
+Decarbonisation of the energy system is enforced in EnergyScope by defining a threshold on the GWP (:math:`gwp_{limit}`). The simplest method
+for choosing a value for :math:`gwp_{limit}` is to take a certain percentage of the 2021 gwp. 
 
 
 

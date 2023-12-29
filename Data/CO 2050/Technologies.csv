@@ -118,7 +118,7 @@ Storage;Electricity storage;Batteries;BATT_LI;156.66;0.242195364;61.3;15;1;0;1;0
 Storage;Electricity storage;Compressed air energy storage;CAES;38.938;3.1799;0;50;1;0;1;0;0.00E+00;
 Storage;Electricity storage;Batteries of electric cars;BEV_BATT;0;0;0;1;1;0;1;0;1.00E+15;
 Storage;Electricity storage;Batteries of plug-in hybrid cars;PHEV_BATT;0;0;0;1;1;0;1;0;1.00E+15;
-Storage;Electricity storage;Hydro dam storage;DAM_STORAGE;0;0;0;1;1;0;1;20868.8550091445;114447.876656834;
+Storage;Electricity storage;Hydro dam storage;DAM_STORAGE;0;0;0;40;1;0;1;20868.8550091445;114447.876656834;
 Storage;Electricity storage;Pumped hydro storage;PHS;58.8;0;8.33;50;1;0;1;0;0.00E+00;
 Storage;Thermal storage;Decentralised direct elec;TS_DEC_DIRECT_ELEC ;18.97;0.13;0;25;1;0;1;0;1.00E+15;
 Storage;Thermal storage;Decentralised electrical heat pumps;TS_DEC_HP_ELEC ;18.97;0.13;0;25;1;0;1;0;1.00E+15;
