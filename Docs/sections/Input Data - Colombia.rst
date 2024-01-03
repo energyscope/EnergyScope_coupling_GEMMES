@@ -198,7 +198,7 @@ Prices and GHG emissions of biomass resources given in :numref:`Table %s <tab:pr
    GWP100a-IPCC2013 metric: impact associated to extraction, transportation and combustion
    
 .. [8b]
-   Direct emissions related to combustion :cite:`Quaschning2015`. These data are not used in the LP problem, but help us to check that the calibration of EnergyScope to the 2021 Colombian energy system of is correct.
+   Direct emissions related to combustion :cite:`Quaschning2015`. These data are not used in EnergyScope Colombia (since the capacity of technology CCS_industrial is set to zero), but they help us to check that the calibration of EnergyScope to the 2021 Colombian energy system is correct.
 
 .. [8c]
    Assuming that the energy content can be assimilated to plastics.
@@ -232,7 +232,7 @@ Prices and GHG emissions given in :numref:`Table %s <tab:prices_resources_fossil
    GWP100a-IPCC2013 metric: impact associated to extraction, transportation and combustion
    
 .. [9b]
-   Direct emissions related to combustion :cite:`Quaschning2015`. These data are not used in the LP problem, but help us to check that the calibration of EnergyScope to the 2021 Colombian energy system of is correct.
+   Direct emissions related to combustion :cite:`Quaschning2015`. These data are not used in EnergyScope Colombia (since the capacity of technology CCS_industrial is set to zero), but they help us to check that the calibration of EnergyScope to the 2021 Colombian energy system of is correct.
 
 Electricity imports and exports
 -------------------------------
