@@ -170,14 +170,14 @@ Prices and GHG emissions given in :numref:`Table %s <tab:prices_imported_resourc
       :name: tab:prices_imported_resources_TK
 		
 		 , [€\ :sub:`2015`/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`]
-		coal , 17.7 , 470 , 360
-		natural gas , 44.3 , 330 , 200
-		gasoline , 82.4 , 430 , 250
-		diesel , 79.7 , 400 , 270
-		LFO , 60.2 , 370 , 260
+		coal , 17.7 , 401 , 360
+		natural gas , 44.3 , 267 , 200
+		gasoline , 82.4 , 345 , 250
+		diesel , 79.7 , 315 , 270
+		LFO , 60.2 , 312 , 260
 		bioethanol , 111.3 , 0 , 250
 		biodiesel , 120.1 , 0 , 270
-		uranium, 3.9, 3.9, 0
+		uranium, 3.9, 4, 0
 
 .. [43a]
    GWP100a-IPCC2013 metric: impact associated to extraction, transportation and combustion
@@ -185,6 +185,49 @@ Prices and GHG emissions given in :numref:`Table %s <tab:prices_imported_resourc
 .. [43b]
    Direct emissions related to combustion :cite:`Quaschning2015`. These data are not used in EnergyScope Colombia (since the capacity of technology CCS_industrial is set to zero), but they help us to check that the calibration of EnergyScope to the 2021 Colombian energy system of is correct.
 
+
+Electricity imports and exports
+-------------------------------
+
+The availability of the cross-border electricity imports and exports, when defined as "resources", is considered as infinite. Indeed, the real constraint comes from the grid infrastructure for imports and exports, as expressed by eqs. :eq:`eq:elecImpLimited` and :eq:`eq:elecExpLimited`. The values of parameters for these equations are given in :numref:`Table %s <tab:elecImpExpParams_TK>`.
+
+.. container::
+
+   .. csv-table:: Values of the parameters which constrain cross-border electricity imports and exports.
+      :header: "Parameter", "Value", "Units"
+      :widths: 15 15 15
+      :name: tab:elecImpExpParams_TK
+
+      ":math:`elec_{import,max}`", "1.17 [44a]_ ", "[GW]"
+      ":math:`elec_{export,max}`", "1.17 [44a]_ ", "[GW]"
+      ":math:`f_{max}(HVAC)`", "9.0 [44b]_ ", "[GW]"
+      
+   .. [44a]
+      Cross-border connection capacities in 2019 indicated in :cite:t:`IEA_TK_2021`.
+      
+   .. [44b]
+      Value inspired from the interconnection projects described in :cite:t:`IEA_TK_2021`.
+
+
+
+Prices and GHG emissions given in :numref:`Table %s <tab:prices_elec_import_export_TK>` ... source ...
+
+.. container::
+
+   .. csv-table:: Price and GHG emissions associated to electricity imports and exports, in 2035. Abbreviations: Electricity (elec.).
+      :header: **Resources** , **c**:sub:`op` , **gwp**:sub:`op` , **CO**:sub:`2direct`
+      :widths: 15 15 15 15
+      :name: tab:prices_elec_import_export_TK
+		
+		 , [€\ :sub:`2015`/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`]
+		elec imports , 84.3 , 413 [45a]_ , 0
+		elec exports , 75.9 [45b]_ , 0 , 0
+
+.. [45a] This value is based on the CO :sub:`2` intensity of the EU electricity grid. Indeed, :cite:t:`IEA_TK_2021` indicates
+   that in 2019, most of the electricity imports of Turkey came from Bulgaria, which is part of the European grid.
+   
+.. [45b]
+   The price of electricity exports is assumed to be equal to 90% of the price of electricity imports, to account for cross-border tariffs.
 
 
 .. _sec:app1_end_uses_TK:
@@ -208,8 +251,8 @@ Aggregated values for the calibration of the 2019 EUDs are given in :numref:`Tab
 		process heating , 0,2645.3,62440.8,0,[GWh]
 		space cooling , 74275.4,126474.1,39988.6,0,[GWh]
 		process cooling , 0,8667.6,8447.4,0,[GWh]
-		passenger mobility , 0,0,0,346532.0 ,[Mpkm]
-		freight , 0,0,0,278728.0 ,[Mtkm]
+		passenger mobility , 0,0,0,346531.6 ,[Mpkm]
+		freight , 0,0,0,278728.1 ,[Mtkm]
 		non-energy demand , 0,0,58996.0,2088.0,[GWh] 
    
 The aim is to compute the evolution of these EUDs across years with GEMMES, which will then feed them to EnergyScope. However, as a first approximation,
@@ -259,21 +302,21 @@ areas surrounding those cities.
 Mobility
 --------
 
-The lower (:math:`%_{public,min}`) and upper bounds
-(:math:`%_{public,max}`) for the use of public transport are 5% and
-50% of the annual passenger transport demand, respectively. 
+Aggregated numbers are retrieved from :cite:`TK_traffic_survey_2021` for the demand for passenger mobility and freight.
+These numbers are only for road transportation. The demand for passenger mobility is therefore divided by 98% to obtain
+the total EUD for passenger mobility, which includes rail transport but excludes domestic aviation transport. Similarly,
+the demand for freight is divided by 96% to obtain the total EUD for freight, which includes rail transport but excludes
+coastal shipping, aviation and pipeline transport.
 
-The freight can be supplied by trucks, trains or boats. The lower
-(:math:`%_{fr,rail,min}`) and upper bounds (:math:`%_{fr,rail,max}`) for the use of
-freight trains are 10.9% and 25% of the annual freight transport
-demand, respectively. The lower (:math:`%_{fr,boat,min}`) and upper bounds
-(:math:`%_{fr,boat,max}`) for the use of freight inland boats are 15.6% and
-30% of the annual freight transport demand, respectively. The lower
-(:math:`%_{fr,trucks,min}`) and upper bounds (:math:`%_{fr,trucks,max}`) for the use
-of freight trucks are 0% and 100% of the annual freight transport
-demand, respectively. The bounds and technologies information are
-latter summarised in Table
-`1.15 <#tbl:freight_vehicles_efficiency>`__.
+For :math:`\%_{pass}`, we assume that the passenger mobility EUD has the same profile for every day of the
+year. This daily profile is taken from data for Switerzland (data from Figure 12 of :cite:`USTransportation`).
+For :math:`\%_{fr}`, we take a uniform value over the 8760 hours of the year.
+
+Non-energy
+----------
+
+Non-energy EUD value in 2019 is taken from :cite:t:`IEA_world_energy_balances_TK`. We assume it to be uniformly spread over the
+8760 hours of the year.
 
 .. _app:discount_and_interest_rates_TK:
 

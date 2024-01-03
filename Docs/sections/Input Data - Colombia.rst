@@ -257,7 +257,7 @@ The availability of the cross-border electricity imports and exports, when defin
       Export capacities to Ecuador indicated in :cite:`IEA_2023`.
       
    .. [10c]
-      Value inspired from the interconnexion projects described in :cite:`IEA_2023`.
+      Value inspired from the interconnection projects described in :cite:`IEA_2023`.
 
 
 Prices and GHG emissions given in :numref:`Table %s <tab:prices_elec_import_export>` ... source ...
@@ -2509,7 +2509,7 @@ As a consequence, the estimated cost of the Belgian grid is
 :math:`58.6/1.0679\cdot 11.25/8.24=74.9` b€\ :sub:`2015`. And the extra
 cost is :math:`393/1.0679\approx 367.8` M€\ :sub:`2015`/GW.
 
-Data regarding cross-border interconnexions are given in Section
+Data regarding cross-border interconnections are given in Section
 *Electricity imports and exports*.
 
 Losses (:math:`\%_{net,loss}`) in the electricity
