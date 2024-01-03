@@ -7,13 +7,14 @@ Input Data - Turkey
 .. role:: raw-latex(raw)
    :format: latex
    
-This section details the input data utilized in applying the LP modeling framework to the Turkey case study. The primary objective is provide data to reproduce the historical Colombian energy system for the year 2021, serving as a validation of EnergyScope's accuracy in modeling this intricate system. Additionally, we provide data for modeling a prospective Turkey energy system for the year 2035.
+This section details the input data utilized in applying the LP modeling framework to the case study of Turkey.
+The primary objective is to provide data for modelling a prospective Turkish energy system for the year 2035.
+Additionally, we provide the necessary data to reproduce the historical Turkish energy system for the year 2019,
+serving as a validation of EnergyScope's accuracy in modeling this intricate system.
 
-The data can be grouped into three parts: resources (Section `Resources <#app:sec:ESTD_CO-2021_resources_TK>`__), demand (Section
-`Demand <#sec:app1_end_uses_TK>`__) and technologies (Section
-`Technologies <#app:BESTD_data_technologies_TK>`__).
-
-Only the data which differ compared to the case of Colombia are presented.
+Since many data are common between the Colombian and Turkish case studies, we will only present in the following sections
+the data and assumptions that differ between the two. If nothing is indicated, the same data and assumptions as for
+Colombia can be used.
 
 .. _app:sec:ESTD_TK_resources:
 
@@ -23,11 +24,87 @@ Resources
 Local renewable resources
 -------------------------
 
+The energy transition heavily relies on renewable energies, which makes their
+deployment potential a critical parameter. Yet, this potential was still very 
+little used in 2019. As highlighted by :cite:t:`IEA_TK_2021`,
+*in 2019, the share of fossil fuels in total primary energy supply [of Turkey] was
+83%, which ranked the ninth-highest among IEA member countries.*
+
 Solar, wind, hydro and geothermal
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+:numref:`Table %s <tab:renewableTechPotentialIn2035_TK>` gives the Turkish potential for solar, wind, hydro and geothermal energy. These data are put into perspective with the values used for the calibration to the year 2019.
+      
+.. container::
+
+   .. csv-table:: Comparison of installed capacity of technologies for renewable electricity generation in 2019 with their maximum potentials. Abbreviations: maximum (max.), photovoltaic panel (PV), District Heating Network (DHN), Concentrated Solar Power (CSP).
+      :header: **Technology**, **2019**\  [39a]_ , **max. potential** , **Units**
+      :widths: 15 15 15 15
+      :name: tab:renewableTechPotentialIn2035_TK
+   
+      hydro dam , 15.7 [39b]_ , 19.9 [39c]_ , [GW]
+      hydro river , 12.8 [39b]_ , 16.3 [39c]_ , [GW]
+      rooftop PV , 6.0 , :math:`\approx`\ 120 [39d]_ , [GW]
+      utility scale PV , 0 , :math:`\approx`\ 1350 [39d]_ , [GW]
+      onshore wind , 7.6 [39e]_ , 48 [39e]_ , [GW]
+      offshore wind , 0 , 66.2 [39f]_ , [GW]
+      geothermal for electricity, 1.2 ,  4.2 [39g]_ , [GW]
+      geothermal for DHN, 3.05, 30.8 [39g]_ , [GW]
+      CSP parabolic trough , 0 , 107 [39d]_, [GW]
+      CSP solar tower , 0 , 107 [39d]_, [GW]
+      Solar thermal (decentralised), 5.3, no limit imposed, [GW]
+
+   .. [39a]
+      Data from :cite:t:`IEA_TK_2021`, unless otherwise specified.
+
+   .. [39b]
+      Data from :cite:`TK_gov_hydro`
+
+   .. [39c]
+      from :cite:t:`Rebiere2019thesis`
+      
+   .. [39d]
+      The real constraint on solar potential is not a constraint on installable capacity, but a constraint on available area, as described below.
+
+   .. [39e]
+      Ministry of Energy and Natural Resources, cited by :cite:t:`IEA_TK_2021`.
+
+   .. [39f]
+      :cite:t:`emeksiz_2019` computes an offshore wind potential of 9.2 GW with rather conservative asumptions (max. water depth of 50 m). It is in line with the 10 GW potential computable based on the open-source database from :cite:`dupont_2020`, available at https://github.com/EliseDup/WorldEROI. To this number is added the 57 GW potential of floating wind offshore, reported by the Offshore Wind Energy Association (DÜRED) in :cite:`Daily_Sabah_2021`.
+      
+   .. [39g]
+      :cite:t:`IEA_TK_2021` reports a 35 GW potential for geothermal energy in Turkey. :cite:t:`Balat_2004` affirms that 12% of this potential is appropriate for electricity generation and 88% for heat production.
+
+As described by eqs. :eq:`eq:solarAreaRooftopLimited` - :eq:`eq:solarAreaGroundHighIrrLimited`, the potential of solar technologies is constrained by the available areas for their deployment. The values for these available areas are given in :numref:`Table %s <tab:solarArea_TK>`. The values of maximum installed capacities indicated in :numref:`Table %s <tab:renewableTechPotentialIn2035_TK>` are a simplified translation of these equations into [GW] constraints.
+
+.. container::
+
+   .. csv-table:: Values of the parameters which constrain the solar potential of Colombia. Abbreviations: solar multiple (sm), high irradiation (high irr.), photovoltaic panel (PV), Concentrated Solar Power (CSP).
+      :header: "Parameter", "Value", "Units"
+      :widths: 15 15 15
+      :name: tab:solarArea_TK
+
+      ":math:`solar_{area,rooftop}`", "630 [40a]_ ", ":math:`[km^2]`"
+      ":math:`solar_{area,ground}`", "7300 [40a]_ ", ":math:`[km^2]`"
+      ":math:`solar_{area,ground,high~irr}`", "580 [40a]_ ", ":math:`[km^2]`"
+      
+   .. [40a]
+      Computed based on the open-source database from :cite:`dupont_2020`, available at https://github.com/EliseDup/WorldEROI.
+      
+Note that the ground areas given in :numref:`Table %s <tab:renewableTechPotentialIn2035>`
+are not the total areas occupied by the solar power plants, but only the areas occupied 
+by the solar panels themselves. After taking into account the *ground cover ratio*, we can compute that
+the value given for :math:`solar_{area,ground}` corresponds to covering
+4.6% of Turkey's land surface with solar power plants (not taking into account the rooftop area
+used by rooftop PV).
+
 Biomass and non-renewable waste
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+
+
 
 Imported resources
 ------------------
@@ -203,39 +280,67 @@ communication of the European Commission
 Energy demand and political framework
 =====================================
 
+Aggregated values for the calibration of the 2019 EUDs are given in :numref:`Table %s <tab:eud_2019>`. Details and assumptions for these EUDs are given in the following sub-sections, as well as their yearly profiles.
+
+.. container::
+
+   .. csv-table:: EUD in 2019. Abbreviations: end-use type (EUT)
+      :header: **EUT** , **Households** , **Services** , **Industry**, **Transportation** , "Units"
+      :widths: 30 20 20 20 15 10
+      :name: tab:eud_2019
+		
+		electricity - baseload , 20535.1,27069,44803.8,933.4,[GWh]
+		electricity - variable , 16944.5,22336,36969.9,770.2,[GWh]
+		space heating , 205997.3,61791.1,23670.2,0,[GWh]
+		hot water , 122077,34139.4,0,0,[GWh]
+		process heating , 0,2645.3,62440.8,0,[GWh]
+		space cooling , 74275.4,126474.1,39988.6,0,[GWh]
+		process cooling , 0,8667.6,8447.4,0,[GWh]
+		passenger mobility , 0,0,0,346532.0 ,[Mpkm]
+		freight , 0,0,0,278728.0 ,[Mtkm]
+		non-energy demand , 0,0,58996.0,2088.0,[GWh] 
+   
+The aim is to compute the evolution of these EUDs across years with GEMMES, which will then feed them to EnergyScope. However, as a first approximation,
+the 2035 EUDs can simply be computed by multiplying the values of :numref:`Table %s <tab:eud_2021>` by 1.42. This factor is computed based on the projection
+of final energy consumption given in :cite:`TK_national_energy_plan`.
+
 .. _ssec:app1_electricity_end_uses_TK:
 
 Electricity
 -----------
 
-The ratio between varying
-electricity and fixed demand are calculated in order to fit the real curve 
-in 2015 (data provided by ENTSO-E
-https://www.entsoe.eu/). It results in a share of 32.5% of varying electricity demand  
-and 67.5% of baseload electricity demand.
+Final electricity consumption in 2019 is taken from PFU_DATABASE. The electricity used for heating and cooling in 2019 is subtracted from it, based
+on the values given in PFU_DATABASE. This aggregated electricity EUD is then divided between baseload and variable load according to the proportions
+retrieved from the EPIAS Transparency Portal for the year 2019 (https://seffaflik.epias.com.tr/transparency/). This gives a share of 55% baseload and
+45% variable load. Finally, the values for baseload and variable load are divided between the different economic sectors by using the proportions given in :cite:t:`IEA_world_energy_balances_TK` (and aggregating together industry, agriculture and fishing).
 
-For *%\ elec* ... we use the real
-2015 Belgian electricity demand (data provided by ENTSO-E
-https://www.entsoe.eu/).
-
-.. container::
-
-   .. table:: Yearly electricity demand not related to heating by sector, in 2035.
-      :name: tbl:elec_demand
-
-      ========== =========== ============
-      \          **Varying** **Constant**
-      \          [TWh]       [TWh]
-      Households 7.7         14.3
-      Industry   11.1        33.7
-      Services   11.0        14.1
-      ========== =========== ============
-
+For *%\ elec*, we normalize the real electricity demand from the year 2019, available on the EPIAS Transparency Portal
+(https://seffaflik.epias.com.tr/transparency/).
 
 .. _ssec:app1_heating_end_uses_TK:
 
-Heating
--------
+Heating and cooling
+-------------------
+
+The aggregated EUDs for different heating and cooling types were retrieved from PFU_DATABASE. The time series :math:`\%_{sh}` and :math:`\%_{sc}` are 
+based on our own computations, following the method described in :cite:`borasio2022deep`.
+
+.. math::
+    HDD = \sum_{t \in \text{T}}(T_{comf}(t) - T_{out}(t))\quad\text{if}\quad T_{out}(t) < 15°C\\
+    HDD = 0\quad\text{if}\quad T_{out}(t) \geq 15°C
+    :label: eq:HDD_TK
+    
+.. math::
+    CDD = \sum_{t \in \text{T}}(T_{out}(t) - T_{comf}(t))\quad\text{if}\quad T_{out}(t) > 24°C\\
+    CDD = 0\quad\text{if}\quad T_{out}(t) \leq 24°C
+    :label: eq:CDD_TK
+
+Hourly outdoor temperature time series were retrieved from :cite:`Renewables_ninja` for the cities of 
+Istanbul, Izmir, Ankara, Ordu, Sanliurfa, Van and Antalya. The HDD and CDD time series for these individual
+cities were then computed following eqs. :eq:`eq:HDD_TK` and :eq:`eq:CDD_TK`. The HDD and CDD time series for
+Turkey were computed by taking a weighted average of these 7 time series, with weights 
+(0.32, 0.13, 0.15, 0.09, 0.10, 0.08, 0.13). These weights were computed as proportional to the populations of the
+areas surrounding those cities.
 
 .. _ssec:app1_demand_mobility_TK:
 
@@ -243,7 +348,7 @@ Mobility
 --------
 
 The lower (:math:`%_{public,min}`) and upper bounds
-(:math:`%_{public,max}`) for the use of public transport are 19.9% and
+(:math:`%_{public,max}`) for the use of public transport are 5% and
 50% of the annual passenger transport demand, respectively. 
 
 The freight can be supplied by trucks, trains or boats. The lower
@@ -275,6 +380,93 @@ Electricity production
 
 Renewables
 ~~~~~~~~~~
+
+:numref:`Table %s <tab:elec_prod_re_TK>` gives the data for the renewable electricity generation technologies
+modelled in EnergyScope Turkey, together with their sources. The data for :math:`f_{max}` were already
+given in :numref:`Table %s <tab:renewableTechPotentialIn2035_TK>` ("max. potential"). The :math:`f_{min}`
+values for renewable electricity technologies in 2035 are equal to their installed capacity in 2021,
+already given in :numref:`Table %s <tab:renewableTechPotentialIn2035>`. The maximum (:math:`f_{max,\%}`) and minimum
+(:math:`f_{min,\%}`) shares are imposed to 0 and 100% respectively, i.e. they are not constraining the model.
+
+.. container::
+
+   .. csv-table:: Renewable electricity production technologies in 2035. Abbreviations: concentrated solar power 
+      with parabolic trough (CSP PT), concentrated solar power with solar tower (CSP ST).
+      :header: **Technology**, **c**:sub:`inv`, **c**:sub:`maint`, **gwp**:sub:`constr` [82a]_ , **lifetime**, **c**:sub:`p`
+      :widths: 19 18 24 23 15 15
+      :name: tab:elec_prod_re_TK
+		 
+		  , [€ :sub:`2015`/kW :sub:`e`], [€ :sub:`2015`/kW :sub:`e`/year], [kgCO :sub:`2`-eq./kW :sub:`e`], [year], [%]
+		 Hydro dam, 4201 [82b]_, 21.0 [82b]_, 1693, 40 [82b]_, 50 [82c]_
+		 Hydro river, 5045 [82b]_, 50.4 [82b]_, 1263, 40 [82b]_, 50 [82c]_
+		 Rooftop PV, 738 [82d]_, 9.7 [82d]_, 2081, 40 [82d]_, 19 [82e]_
+		 Utility scale PV, 335 [82d]_, 8.4 [82d]_, 2081, 40 [82d]_, 21 [82e]_
+		 Onshore wind, 1010 [82d]_, 16.8 [82d]_, 623, 30 [82f]_, 27 [82g]_
+		 Offshore wind, 1255 [82d]_, 50.6 [82d]_, 623, 30 [82f]_, 50 [82h]_
+		 Geothermal, 7488 [82i]_, 142.3 [82i]_, 24929, 30, 86 [82j]_
+		 CSP PT, 1045 [82k]_, 62.7 [82k]_, 0, 25 [82k]_, 32 [82k]_
+		 CSP ST, 768 [82k]_, 63.0 [82k]_, 0, 25 [82k]_, 32 [82k]_
+		 Biomass central, 1677 [82l]_, 69.9 [82l]_, 332, 35, 87
+		 
+.. [82a]
+   Data from :cite:`weidema_ecoinvent_2013`
+
+.. [82b]
+   Data taken from :cite:`association_des_entreprises_electriques_suisses_aes_grande_2014`
+   
+.. [82c]
+   Computed based on installed capacities and yearly production of hydro power pants in 2021, with data from :cite:`IEA_2023`.
+   
+.. [82d]
+   ASK PAOLO.
+   
+.. [82e]
+   Retrieved from the open-source database from :cite:`dupont_2020`, available at https://github.com/EliseDup/WorldEROI. 
+   
+.. [82f]
+   Data taken from :cite:`association_des_entreprises_electriques_suisses_aes_energie_2013`  
+   
+.. [82g]
+   Data from :cite:`plazas_nino_2023`.
+   
+.. [82h]
+   Data from :cite:`Renewables_ninja`.
+   
+.. [82i]
+   ORC cycle at 6 km depth for electricity generation. Based on Table 17 of :cite:`Carlsson2014`. We took the reference case in 2030.
+   
+.. [82j]
+   Data from :cite:`association_des_entreprises_electriques_suisses_aes_electricite_2012`
+	
+.. [82k]
+   ASK PAOLO	 
+   
+.. [82l]
+   ASK PAOLO	
+
+:numref:`Table %s <tab:elec_prod_re>` includes the values of the yearly capacity factor (:math:`c_p`) of technologies.
+As described in the model formulation Section, the values of :math:`c_p` for intermittent renewables is in fact equal to one, while
+it is the value of their hourly load factor, :math:`c_{p,t}`, which is binding. The value of :math:`c_p` given in 
+:numref:`Table %s <tab:elec_prod_re>` for intermittent renewables is in fact the mean value of :math:`c_{p,t}` over the year.
+The yearly profile (which sums to one) of :math:`c_{p,t}` for intermittent renewables is computed as follows.
+
+Power production profile of PV [10]_ were retrieved from :cite:`Renewables_ninja` for the cities of 
+Istanbul, Izmir, Ankara, Ordu, Sanliurfa, Van and Antalya. The yearly profile of :math:`c_{p,t}`
+for PV in Turkey was then computed by taking a weighted average of these 7 time series, with weights 
+(0.32, 0.13, 0.15, 0.09, 0.10, 0.08, 0.13). These weights were computed as proportional to the populations of the
+areas surrounding those cities.
+
+The yearly profile of :math:`c_{p,t}` for solar thermal technologies in Turkey was computed in the same way, retrieving from
+:cite:`Renewables_ninja` global horizontal irradiation (GHI) profiles instead of power production profiles of PV. Idem for the
+yearly profile of :math:`c_{p,t}` for onshore wind, by retrieving from :cite:`Renewables_ninja` power production profiles of
+wind turbines [11]_ instead of PV.
+
+The same 7 time series as for onshore wind were used for offshore wind, but the weighted average to obtain the yearly profile of :math:`c_{p,t}`
+was computed by using the weights (0.2,0.2,0,0.3,0,0,0.3). These weights were adjusted to reflect the length of the coastline near each city.
+
+Finally, for hydro dam and hydro river, daily incoming water flow to hydro-electric facilities in Turkey was taken from the Turkish TSO website
+for the 365 days of the year. These data were normalized to give a yearly profile :math:`c_{p,t}`, taking the same value for each hour of a same
+day.
 
 .. _ssec:app1_non-renewable_TK:
 
@@ -375,13 +567,73 @@ Transport
 Passenger mobility
 ~~~~~~~~~~~~~~~~~~
 
+:numref:`Table %s <tbl:passenger_vehicles_TK>` also gives the minimum and maximum shares
+of each vehicle type in 2035. The shares in 2019 are also given.
+
+.. container::
+
+   .. table:: Fuel and electricity consumption for passenger mobility technologies in 2035 :cite:`codina_girones_strategic_2015`, and minimum/maximum shares allowed in the model. Abbreviations: Fuel Cell (FC), Hybrid Electric Vehicle (HEV), Natural Gas (NG), Plug-in Hybrid Electric Vehicle (PHEV), public (pub.).
+      :name: tbl:passenger_vehicles_TK
+
+      ================  ============================ ============================ ===============================
+      **Vehicle type**  **f**:math:`_\textbf{min,%}` **f**:math:`_\textbf{max,%}` **f**:math:`_\textbf{%}` (2019) 
+      \                 [Wh/km-pass]                 [%]	                      [%]		
+      Gasoline car      0                            1                            33
+      Diesel car        0                            1                            0
+      NG car            0                            1                            15
+      HEV               0                            1                            0
+      PHEV              0                            1                            0
+      BEV               0                            1                            0
+      FC car            0                            1                            0
+      Methanol car      0                            1                            0
+      Tram & Trolley    0                            0.05  [80a]_                 0
+      Diesel bus        0                            1                            75
+      Diesel HEV bus    0                            1                            0
+      NG bus            0                            1                            0
+      FC bus            20                            1                            0
+      Train pub.        0                            0.30 [80a]_                  0
+      ================  ============================ ============================ ===============================
+
+.. [80a]
+   Our own expert guesses.
+
 Freight
 ~~~~~~~
+
+The share of freight which can be supplied by different modes are bounded by the values :math:`\%_{fr,X,min}` and :math:`\%_{fr,X,max}`. 
+These values are given in :numref:`Table %s <tab:freight_shares>` for 2021 and 2035. Moreover, based on energy consumption of transport 
+given in :cite:`IEA_2023`, we impose that in 2021, 50% of truck transport was carried out by diesel trucks and 50% by gasoline trucks.
+
+Boat freight not taken into account because could not find any data.
+
+.. container::
+
+   .. csv-table:: Limiting shares for freight in 2021 and 2035.
+      :header: **Parameter**, **Value in 2021**, **Value in 2035**
+      :widths: 20 20 20
+      :name: tab:freight_shares
+		 
+		 :math:`\%_{fr_{rail_{min}}}`, 0.04 [81a]_, 0
+		 :math:`\%_{fr_{rail_{max}}}`, 0.04 [81a]_,  0.25 [81b]_
+		 :math:`\%_{fr_{boat_{min}}}`, 0    [81a]_, 0
+		 :math:`\%_{fr_{boat_{max}}}`, 0    [81a]_, 0
+		 :math:`\%_{fr_{road_{min}}}`, 0, 0
+		 :math:`\%_{fr_{road_{max}}}`, 1, 1
+		  
+.. [81a]
+   Data from :cite:`plazas_nino_2023`.
+   
+.. [81b]
+   Our own expert guesses.
 
 .. _sec:app1_ned_TK:
 
 Non-energy demand
 -----------------
+
+Given the important
+petroleum refining activity in Turkey, we assume that all non-energy EUD in 2021 was HVC. We keep
+the same assumption for the year 2035.
 
 .. _ssec:app1_syn_fuels_TK:
 
@@ -464,7 +716,22 @@ Electricity grid
 DHN grid
 ~~~~~~~~
 
+The lower (:math:`\%_{dhn,min}`) and upper bounds (:math:`\%_{dhn,max}`) for the use of
+DHN are chosen as 2% and 50%, respectively. The latter value is the same as
+the one from :cite:`borasio2022deep` for the case of Italy. Indeed, the population
+density in urban and surburban areas is grossly similar in Italy and in Turkey.
+
 Energy demand reduction cost
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+
+
+.. [10]
+   Solar PV with system loss = 0.1, Tilt=35°, Azimut=180°
+   
+.. [11]
+   4 MW wind turbine with Hub height=100m, Vestas V150 4000
 
 

@@ -1442,7 +1442,7 @@ Codina Gironès et al :cite:`codina_girones_strategic_2015`.
 For private vehicles, estimates of energy consumption of Belgian cars
 in 2030 are taken from :cite:`BureaufederalduPlan2012`.
 :numref:`Table %s <tbl:passenger_vehicles>` also gives the minimum and maximum shares
-of each vehicle type in 2035. The shares in 2021 are also given
+of each vehicle type in 2035. The shares in 2021 are given as well.
 
 .. container::
 
