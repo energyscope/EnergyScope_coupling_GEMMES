@@ -1,11 +1,11 @@
 {
     "i_rate" : 0.015,
-	"gwp_limit": 1e15,
+	"gwp_limit": 10000000,
     "re_share_primary" : 0,
     "solar_area_rooftop" : 632.6,
     "solar_area_ground" : 7272,
     "solar_area_ground_high_irr" : 89,
-	"power_density_pv" : 0.170,
+	"power_density_pv" : 0.186,
     "power_density_solar_thermal" : 0.7,
 	"sm_max" : 4,
 	"share_mobility_public_min" : 0.37,
@@ -16,7 +16,7 @@
     "share_freight_road_max" : 1,
     "share_freight_boat_min" : 0,
     "share_freight_boat_max" : 0,
-    "share_private_motorcycle_max" : 1,
+    "share_private_motorcycle_max" : 0,
     "share_heat_dhn_min" : 0.02,
     "share_heat_dhn_max" : 0.37,
     "share_ned" : {"HVC":1.0, "METHANOL":0.0, "AMMONIA":0.0},
@@ -31,5 +31,6 @@
     "export_capacity" : 1.17,
     "STORAGE_DAILY" : ["TS_DEC_HP_ELEC", "TS_DEC_THHP_GAS", "TS_DEC_COGEN_GAS", "TS_DEC_COGEN_OIL",
                     "TS_DEC_ADVCOGEN_GAS", "TS_DEC_ADVCOGEN_H2", "TS_DEC_BOILER_GAS", "TS_DEC_BOILER_WOOD", "TS_DEC_BOILER_OIL",
-                    "TS_DEC_DIRECT_ELEC", "TS_DHN_DAILY", "BATT_LI", "TS_HIGH_TEMP"]
+                    "TS_DEC_DIRECT_ELEC", "TS_DHN_DAILY", "BATT_LI", "TS_HIGH_TEMP"],
+    "carbon_price" : 0
 }
