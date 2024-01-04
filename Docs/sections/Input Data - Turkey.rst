@@ -38,13 +38,13 @@ Solar, wind, hydro and geothermal
 .. container::
 
    .. csv-table:: Comparison of installed capacity of technologies for renewable electricity generation in 2019 with their maximum potentials. Abbreviations: maximum (max.), photovoltaic panel (PV), District Heating Network (DHN), Concentrated Solar Power (CSP).
-      :header: **Technology**, **2019**\  [39a]_ , **max. potential** , **Units**
+      :header: **Technology**, **2019**\ , **max. potential** , **Units**
       :widths: 15 15 15 15
       :name: tab:renewableTechPotentialIn2035_TK
    
-      hydro dam , 15.7 [39b]_ , 19.9 [39c]_ , [GW]
-      hydro river , 12.8 [39b]_ , 16.3 [39c]_ , [GW]
-      rooftop PV , 6.0 , :math:`\approx`\ 120 [39d]_ , [GW]
+      hydro dam , 15.7 [39a]_ , 19.9 [39c]_ , [GW]
+      hydro river , 12.8 [39a]_ , 16.3 [39c]_ , [GW]
+      rooftop PV , 6.0 [39b]_ , :math:`\approx`\ 120 [39d]_ , [GW]
       utility scale PV , 0 , :math:`\approx`\ 1350 [39d]_ , [GW]
       onshore wind , 7.6 [39e]_ , 48 [39e]_ , [GW]
       offshore wind , 0 , 66.2 [39f]_ , [GW]
@@ -52,16 +52,16 @@ Solar, wind, hydro and geothermal
       geothermal for heat (with DHN), 3.05 [39i]_ , 30.8 [39h]_ , [GW]
       CSP parabolic trough , 0 , 107 [39d]_, [GW]
       CSP solar tower , 0 , 107 [39d]_, [GW]
-      Solar thermal (decentralised), 5.3, no limit imposed, [GW]
+      Solar thermal (decentralised), 5.3 [39j]_ , no limit imposed, [GW]
 
    .. [39a]
-      Data from :cite:t:`IEA_TK_2021`, unless otherwise specified.
-
-   .. [39b]
       Data from :cite:`TK_gov_RE`
+      
+   .. [39b]
+      Data from :cite:t:`IEA_TK_2021`
 
    .. [39c]
-      from :cite:t:`Rebiere2019thesis`
+      A hydro potential of 35.1 [GW] is given by :cite:t:`Rebiere2019thesis`. We split it between hydro dam and hydro river using the 55%-45% shares from 2019.
       
    .. [39d]
       The real constraint on solar potential is not a constraint on installable capacity, but a constraint on available area, as described below.
@@ -80,6 +80,9 @@ Solar, wind, hydro and geothermal
       
    .. [39i]
       Computed using the heat generation from geothermia in 2019, given in :cite:`IEA_world_energy_balances_TK` (including heat for agriculture), and the capacity factor of 85% given in Table :numref:`%s <tbl:dhn_cogen_boiler_TK>` 
+      
+   .. [39j]
+      Computed using the heat generation from decentralised solar thermal in 2019, given in :cite:`IEA_world_energy_balances_TK`, and the capacity factor of 20.8% sourced in Table :numref:`%s <tbl:dhn_cogen_boiler_TK>` 
 
 As described by eqs. :eq:`eq:solarAreaRooftopLimited` - :eq:`eq:solarAreaGroundHighIrrLimited`, the potential of solar technologies is constrained by the available areas for their deployment. The values for these available areas are given in :numref:`Table %s <tab:solarArea_TK>`. The values of maximum installed capacities indicated in :numref:`Table %s <tab:renewableTechPotentialIn2035_TK>` are a simplified translation of these equations into [GW] constraints.
 
@@ -446,7 +449,7 @@ nuclear power plants is not simply based on market dynamics. It results from pol
 international relations.
 
 :math:`f_{min} = 4.8` [GW] (normally installed in 2028)
-:math:`f_{max} = 7.2` [GW]
+:math:`f_{max} = 7.2` [GW] (voir national energy plan)
 
 .. container::
 
@@ -456,9 +459,9 @@ international relations.
       :name: tab:elec_prod_nre_TK
 		 
 		  , [€ :sub:`2015`/kW :sub:`e`], [€ :sub:`2015`/kW :sub:`e`/year], [kgCO :sub:`2`-eq./kW :sub:`e`], [year], [%], [%], [%], [tCO2/MWh :sub:`e`]
-		 CCGT, 772 [48d]_, 19.7 [48d]_, 184, 25, 85, 63 [48e]_, 63, 0.317
+		 CCGT, 772 [48d]_, 19.7 [48d]_, 184, 25, 85, 64 [48e]_ , 63 [48l]_, 0.317
 		 CCGT ammonia [48f]_, 772, 19.6, 184, 25, 59, 50, 50, 0
-		 Coal central, 3246 [48g]_, 49.0 [48g]_, 332, 35, 86 [48b]_, 54 [48h]_, 54 [48h]_, 0.667
+		 Coal central, 3246 [48g]_, 49.0 [48g]_, 332, 35, 86 [48b]_, 32 [48h]_, 54 [48k]_, 0.667
 		 Nuclear, 4846 [48i]_ , 103 :cite:`iea_-_international_energy_agency_iea_2014-1` , 708, 60 :cite:`association_des_enterprises_electriques_suisses_energie_2014` , 84 [48j]_ , 37, 37 , 0
 		 
 .. [48a]
@@ -475,8 +478,7 @@ international relations.
 .. [48d]
    Data from :cite:`iea_-_international_energy_agency_iea_2014-1`   
    
-.. [48e]
-   Data from :cite:`bauer_new_2008`, 0.4-0.5 GW CCGT in 2035 (realistic optimistic scenario)	 
+.. [48e] Computed based on PFU_DATABASE	 
 
 .. [48f]
    Use of Ammonia in CCGT is at its early stage. Mitsubishi is developping 
@@ -493,7 +495,8 @@ international relations.
    h/y).   
    
 .. [48h]
-   Data from :cite:`bauer_new_2008`, IGCC in 2025 (realistic optimistic scenario)	 
+   Computed based on :cite:`IEA_world_energy_balances_TK`. It is not surprising to obtain such a low efficiency, 
+   since the coal mined locally in Turkey is low-quality lignite.
 
 .. [48i]
    Investment cost: 3431 €\ \ :sub:`2015`/kW\ \ :math:`_{\text{e}}`
@@ -504,7 +507,13 @@ international relations.
 .. [48j]
    Data for the year 2012 from :cite:`swiss_federal_office_of_energy_sfoe_swiss_2014`
    
-     
+.. [48k]
+   Data from :cite:`bauer_new_2008`, IGCC in 2025 (realistic optimistic scenario)
+   
+.. [48l]
+   Data from :cite:`bauer_new_2008`, 0.4-0.5 GW CCGT in 2035 (realistic optimistic scenario)   
+   
+   
 
 Heating and cogeneration
 ------------------------
