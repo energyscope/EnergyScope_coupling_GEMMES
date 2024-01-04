@@ -597,7 +597,7 @@ Tables :numref:`%s <tbl:ind_cogen_boiler>`,
 :numref:`%s <tbl:dec_cogen_boiler>` detail the data for
 the considered industrial, centralized and decentralised CHP
 technologies, respectively. In some cases, it is assumed that
-industrial (Table :numref:` %s <tbl:ind_cogen_boiler>`)
+industrial (Table :numref:`%s <tbl:ind_cogen_boiler>`)
 and centralized (Table :numref:`%s <tbl:dhn_cogen_boiler>`) technologies are
 the same.
 :math:`f_{min}` and :math:`f_{max}` for

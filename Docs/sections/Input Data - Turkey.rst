@@ -445,11 +445,12 @@ technology to potentially cover the entire demand - except for nuclear energy. T
 The efficiencies of each technology in 2019 and 2035 are given as well.
 
 The values of (:math:`f_{min}`) and (:math:`f_{max}`) of nuclear energy are set differently. Indeed, the choice to build new
-nuclear power plants is not simply based on market dynamics. It results from political decisions, often closely linked to
-international relations.
-
-:math:`f_{min} = 4.8` [GW] (normally installed in 2028)
-:math:`f_{max} = 7.2` [GW] (voir national energy plan)
+nuclear power plants is not simply based on a cost-benefit analysis. It results from political decisions, often closely linked to
+international relations. We set :math:`f_{min} = 4.8` [GW] and :math:`f_{max} = 7.2` [GW] for nuclear power in Turkey in 2035.
+Indeed, the Akuyu power plant of capacity 4.8 [GW] should be operational by then :cite:`CCDR_TK`. The value of 7.2 [GW] corresponds
+to the capacity envisaged in Turkey's National Energy Plan for 2035 :cite:`TK_national_energy_plan`, although no plan to build a new
+nuclear central besides Akuyu has yet been announced. We leave it to the cost optimization of EnergyScope to decide the capacity 
+to be installed between those two bounds.
 
 .. container::
 
@@ -459,9 +460,9 @@ international relations.
       :name: tab:elec_prod_nre_TK
 		 
 		  , [€ :sub:`2015`/kW :sub:`e`], [€ :sub:`2015`/kW :sub:`e`/year], [kgCO :sub:`2`-eq./kW :sub:`e`], [year], [%], [%], [%], [tCO2/MWh :sub:`e`]
-		 CCGT, 772 [48d]_, 19.7 [48d]_, 184, 25, 85, 64 [48e]_ , 63 [48l]_, 0.317
+		 CCGT, 772 [48d]_, 19.7 [48d]_, 184, 25, 85, 53 [48e]_ , 53 [48e]_, 0.377
 		 CCGT ammonia [48f]_, 772, 19.6, 184, 25, 59, 50, 50, 0
-		 Coal central, 3246 [48g]_, 49.0 [48g]_, 332, 35, 86 [48b]_, 32 [48h]_, 54 [48k]_, 0.667
+		 Coal central, 3246 [48g]_, 49.0 [48g]_, 332, 35, 86 [48b]_, 32 [48h]_, 40 [48e]_, 0.9
 		 Nuclear, 4846 [48i]_ , 103 :cite:`iea_-_international_energy_agency_iea_2014-1` , 708, 60 :cite:`association_des_enterprises_electriques_suisses_energie_2014` , 84 [48j]_ , 37, 37 , 0
 		 
 .. [48a]
@@ -478,14 +479,15 @@ international relations.
 .. [48d]
    Data from :cite:`iea_-_international_energy_agency_iea_2014-1`   
    
-.. [48e] Computed based on PFU_DATABASE	 
+.. [48e] 
+   Computed based on Background Note 4, p. 22 of :cite:`CCDR_TK`
 
 .. [48f]
    Use of Ammonia in CCGT is at its early stage. Mitsubishi is developping 
    a 40 MW turbine and promises similar efficiency as gas CCGT :cite:`nose2021development`. 
    However, the high emissions of NOx requires a removal equipment which will reduce the 
    power plant efficiency. As gas and ammonia CCGT will be similar, we expect a similar cost and lifetime. 
-   The only exception is the efficiency, which is assumed at 50% instead of 63% for a gas CCGT :cite:`ikaheimo2018power`.
+   The only exception is the efficiency, which is assumed at 50% instead of 63% for a Belgian gas CCGT :cite:`ikaheimo2018power`.
    
 .. [48g]
    1.2 GW\ \ :math:`_{\text{e}}` IGCC power plant
@@ -505,13 +507,7 @@ international relations.
    :cite:`swissnuclear_financement_????`.
 
 .. [48j]
-   Data for the year 2012 from :cite:`swiss_federal_office_of_energy_sfoe_swiss_2014`
-   
-.. [48k]
-   Data from :cite:`bauer_new_2008`, IGCC in 2025 (realistic optimistic scenario)
-   
-.. [48l]
-   Data from :cite:`bauer_new_2008`, 0.4-0.5 GW CCGT in 2035 (realistic optimistic scenario)   
+   Data for the year 2012 from :cite:`swiss_federal_office_of_energy_sfoe_swiss_2014` 
    
    
 

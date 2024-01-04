@@ -13,19 +13,19 @@ Setting $presolve_fixeps >= 8.77e-06 could change presolve results.
 presolve results:
 	variables omitted:	637569
 	constraints omitted:	995494
-	ranges relaxed:		13842
-	bounds improved:	632557
+	ranges relaxed:		15288
+	bounds improved:	632560
 	constraint_drop_tol breakpoints: 0, 0, 6720.50174443415
 	nba cycles:		4
-	bound row scans:	312860
-	row-scan updates:	25471
+	bound row scans:	312864
+	row-scan updates:	26345
 Gurobi 10.0.3:   pre:dual = -1
   alg:method = 2
   bar:crossover = 0
   pre:passes = 3
   bar:convtol = 1e-06
   pre:solve = -1
-Gurobi 10.0.3: optimal solution; objective 146550.2989
+Gurobi 10.0.3: optimal solution; objective 154046.1122
 0 simplex iterations
 64 barrier iterations
  
@@ -33,20 +33,22 @@ Gurobi 10.0.3:   pre:dual = -1
 WARNING:  "Solution Check"
      [ sol:chk:feastol=1e-06, :feastolrel=1e-06, :inttol=1e-05,
        :round='', :prec='' ]
+  - 1 original variable(s) violate bounds,
+        up to 2E-06 (abs)
 Algebraic expression violations:
   - 5 original expression(s) of type ':linrange',
-        up to 1E-04 (abs)
+        up to 3E-04 (abs), up to 1E-06 (rel)
  
  
 solve_result = solved
 
 solve_result_num = 0
 
-_solve_elapsed_time = 33.5653
+_solve_elapsed_time = 30.0566
 
-TotalCost 146550.2988909843
+TotalCost 154046.1121854158
 Carbon_cost 0
-GWP_op 524168.4333520727
+GWP_op 472536.8342727388
 carbon_price 0
 --------------SAVING COSTS -----------
 --------------SAVING RESOURCES -----------
