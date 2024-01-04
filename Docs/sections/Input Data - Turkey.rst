@@ -182,7 +182,7 @@ Prices and GHG emissions given in :numref:`Table %s <tab:prices_imported_resourc
 		coal , 17.7 , 401 , 360
 		natural gas , 44.3 , 267 , 200
 		gasoline , 82.4 , 345 , 250
-		diesel , 79.7 , 315 , 270
+		diesel , 79.7 , 315 , 260 [43c]_
 		LFO , 60.2 , 312 , 260
 		bioethanol , 111.3 , 0 , 250
 		biodiesel , 120.1 , 0 , 270
@@ -192,7 +192,9 @@ Prices and GHG emissions given in :numref:`Table %s <tab:prices_imported_resourc
    GWP100a-IPCC2013 metric: impact associated to extraction, transportation and combustion
    
 .. [43b]
-   Direct emissions related to combustion :cite:`Quaschning2015`. These data are not used in EnergyScope Turkey (since the capacity of technology CCS_industrial is set to zero), but they help us to check that the calibration of EnergyScope to the 2019 Turkish energy system of is correct.
+   Direct emissions related to combustion from :cite:`Quaschning2015`, unless specified otherwise. These data are not used in EnergyScope Turkey (since the capacity of technology CCS_industrial is set to zero), but they help us to check that the calibration of EnergyScope to the 2019 Turkish energy system of is correct.
+   
+.. [43c] Emission intensity taken from :cite:`TK_CO2_2020` (year 2018)
 
 
 Electricity imports and exports
@@ -438,7 +440,7 @@ Non-renewable
 ~~~~~~~~~~~~~
 
 :numref:`Table %s <tab:elec_prod_nre_TK>` gives the data for the non-renewable electricity generation technologies
-modelled in EnergyScope Colombia, together with their sources. The minimum installed capacity (:math:`f_{min}`)
+modelled in EnergyScope Turkey, together with their sources. The minimum installed capacity (:math:`f_{min}`)
 is zero, while the maximum installed capacity (:math:`f_{max}`) is set to a value high enough for each 
 technology to potentially cover the entire demand - except for nuclear energy. The maximum (:math:`f_{max,\%}`) and minimum
 (:math:`f_{min,\%}`) shares are imposed to 0 and 100% respectively, i.e. they are not constraining the model.
@@ -713,6 +715,93 @@ density in urban and surburban areas is grossly similar in Italy and in Turkey.
 
 Energy demand reduction cost
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+[TO BE COMPLETED]
+
+
+.. _app:sec:ESTD_CO_CO2_emissions_TK:
+
+GHG emissions
+=============
+
+As already explicited in :numref:`Table %s <tab:prices_imported_resources_TK>`, two CO :sub:`2`-eq
+emissions metrics are used: CO :sub:`2,direct` and gwp :sub:`op`. The first one relates to 
+the direct emissions associated with the fuels' combustion, while the second one is the
+GWP100a-IPCC2013 metric: it covers emissions associated to extraction, transportation and combustion.
+The former is used to complete the calibration of EnergyScope to the 2019 Turkish energy
+system, whereas the second one determines the maximum GHG emissions allowed in 2035.
+
+
+Calibration of EnergyScope to the 2019 energy system
+----------------------------------------------------
+
+After having found values for all parameters of the model, as described in the previous sections, it
+is time to verify that the model's simulation of the 2019 Turkish energy system is coherent with historical
+data. A practical check is to verify that CO :sub:`2`-eq emissions match. The resources' use and emissions 
+simulated by running EnergyScope for the year 2019 are given in :numref:`Table %s <tab:2019_CO2_check>`.
+They are compared in the table with the historical emissions. To do so, the value of 365.6 CO :sub:`2`-eq
+in 2019 is taken from :cite:`TK_CO2_2023`. These emissions are then divided between coal, natural gas and
+oil using the shares (0.43,0.24,0.33) of the year 2018 given in :cite:`IEA_TK_2021`. 
+
+.. container::
+
+   .. csv-table:: Resource use and CO :sub:`2`-eq emissions simulated by EnergyScope for the year 2019, compared with historical data. Abbreviations: Liquid Fuel Oil (LFO).
+      :header: **Resource** , **Quantity used in 2019** [90a]_ , **CO**:sub:`2direct` (per MWh of fuel) , **CO**:sub:`2direct` (total) [90a]_ , historical **CO**:sub:`2`-eq emissions
+      :widths: 15 15 15 15 15
+      :name: tab:2019_CO2_check
+		
+		 , [GWh] , [tCO :sub:`2`-eq/MWh :sub:`fuel`] , [MtCO :sub:`2`-eq] , [MtCO :sub:`2`-eq]
+		coal , 448 447 , 0.36 , 161.4 , 158.5
+		natural gas , 453 447 , 0.20 , 90.7 , 88.2
+		gasoline , 13 015 , 0.25 , 3.3, 3.0 [90b]_
+		diesel , 214 907 , 0.26 , 55.9 , 52.1 [90b]_
+		LFO , 262 663 , 0.26 , 68.3 , 63.7 [90b]_
+		woody biomass , 40 000 , 0.40 , 16.0 , ~ [90c]_
+		non-renewable waste , 121 , 0.26 , 0.03 , ~ [90c]_
+
+.. [90a]
+   Obtained after running EnergyScope with the 2019 data 
+
+.. [90b]
+   The historical emissions for gasoline, diesel and LFO are aggregated. We disaggregate them according to the proportions from the EnergyScope simulation for year 2019.
+
+.. [90c]
+   Not included in the scope of :cite:`TK_CO2_2023`
+
+According to :cite:`TK_CO2_2023`, the total CO :sub:`2`-eq emissions from fossil fuels in Turkey were of 365.6 MtCO :sub:`2`-eq in 2019.
+The sum of the values simulated with EnergyScope for fossil fuels (excluding woody biomass and waste) and given in
+:numref:`Table %s <tab:2019_CO2_check>` is 379.6 MtCO :sub:`2`-eq. The difference between the two is less than 4% and is therefore acceptable.
+
+
+Setting a gwp limit for the year 2035
+-------------------------------------
+
+The gwp :sub:`op` computed by EnergyScope for the 2019 Turkish energy system is of 456 MtCO :sub:`2`-eq. It is broken down by
+resource type in :numref:`Table %s <tab:2019_gwp>`.
+
+.. container::
+
+   .. csv-table:: Resource use and gwp :sub:`op` simulated by EnergyScope for the year 2019. Abbreviations: Liquid Fuel Oil (LFO).
+      :header: **Resource** , **Quantity used in 2019** [91a]_ , **gwp**:sub:`op` (per MWh of fuel) , **gwp**:sub:`op` (total)
+      :widths: 15 15 15 15
+      :name: tab:2019_gwp
+		
+		 , [GWh] , [tCO :sub:`2`-eq/MWh :sub:`fuel`] , [MtCO :sub:`2`-eq]
+		coal , 448 447 , 0.40 , 180.0
+		natural gas , 453 447 , 0.27 , 120.9
+		gasoline , 13 015 , 0.34 , 4.5
+		diesel , 214 907 , 0.31 , 67.7
+		LFO , 262 663 , 0.31 , 81.8
+		woody biomass , 40 000 , 0.01 , 0.5
+		non-renewable waste , 121, 0.15 , 0.02
+		electricity imports, 2 210, 0.41, 0.9
+		electricity exports, 226, 0, 0
+
+.. [91a]
+   Obtained after running EnergyScope with the 2019 data 
+		
+Decarbonisation of the energy system is enforced in EnergyScope by defining a threshold on the GWP (:math:`gwp_{limit}`). The simplest method
+for choosing a value for :math:`gwp_{limit}` is to take a certain percentage of the 2019 gwp.
 
 
 

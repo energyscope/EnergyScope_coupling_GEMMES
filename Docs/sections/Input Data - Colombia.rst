@@ -618,7 +618,7 @@ respectively, i.e. they are not constraining the model.
       |              | :math:`c_    | :math:`c_    | :math:`gwp_  | :math:`li    | :math:`c_    | :math:`\eta  | :math:`\eta  | :math:`C     |
       |              | {inv}`       | {maint}`     | {constr}`    | fetime`      | {p}`         | _e`          | _{th}`       | O_{2,        |
       |              |              |              |              |              |              |              |              | direct}`     |
-      |              |              |              |              | 2011`        |              |              |              | [16a]_       |
+      |              |              |              |              |              |              |              |              | [16a]_       |
       +--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+
       |              | [€           | [€           | [kgCO        | [y]          | [%]          | [%]          | [%]          | [tCO2/       |
       |              | :sub:`2015`  | :sub:`2015`  | :sub:`2-eq.` |              |              |              |              | MWh          |
@@ -2611,13 +2611,13 @@ The sum of the values simulated with EnergyScope for fossil fuels (thus excludin
 Setting a gwp limit for the year 2035
 -------------------------------------
 
-The gwp :sub:`op` computed by EnergyScope for the 2021 Colombian energy system is of :math:`118~\text{MtCO}_2\text{-eq}`. It is broken down by
+The gwp :sub:`op` computed by EnergyScope for the 2021 Colombian energy system is of 118 MtCO :sub:`2`-eq. It is broken down by
 resource type in :numref:`Table %s <tab:2021_gwp>`.
 
 .. container::
 
    .. csv-table:: Resource use and gwp :sub:`op` simulated by EnergyScope for the year 2021. Abbreviations: Liquid Fuel Oil (LFO).
-      :header: **Resource** , **Quantity used in 2021** [37a]_ , **gwp**:sub:`op` (per MWh of fuel) , **gwp**:sub:`op` (total)
+      :header: **Resource** , **Quantity used in 2021** [38a]_ , **gwp**:sub:`op` (per MWh of fuel) , **gwp**:sub:`op` (total)
       :widths: 15 15 15 15
       :name: tab:2021_gwp
 		
@@ -2630,7 +2630,11 @@ resource type in :numref:`Table %s <tab:2021_gwp>`.
 		bio-ethanol , 7 166 , 0 , 0
 		bio-diesel , 2 540 , 0 , 0
 		woody biomass , 38 395 , 0.01 , 0.4
-		
+
+.. [38a]
+   Obtained after running EnergyScope with the 2021 data. 
+   
+   	
 Decarbonisation of the energy system is enforced in EnergyScope by defining a threshold on the GWP (:math:`gwp_{limit}`). The simplest method
 for choosing a value for :math:`gwp_{limit}` is to take a certain percentage of the 2021 gwp. 
 
