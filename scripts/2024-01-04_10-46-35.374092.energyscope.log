@@ -1,0 +1,7 @@
+24/01/04 10:46:35 [INFO    ] (_init_num_threads): NumExpr defaulting to 8 threads.
+24/01/04 10:46:35 [INFO    ] (import_data): Importing data files from /home/pjacques/Desktop/PhD/EnergyScope/Data/TK 2035
+24/01/04 10:46:36 [INFO    ] (print_data): Printing ESTD_data.dat
+24/01/04 10:46:36 [INFO    ] (print_data): Printing ESTD_12TD.dat
+24/01/04 10:46:36 [INFO    ] (run_es): Running EnergyScope
+24/01/04 10:48:04 [INFO    ] (run_es): End of run
+24/01/04 10:48:05 [INFO    ] (read_outputs): Reading outputs from: /home/pjacques/Desktop/PhD/EnergyScope/case_studies/TK 2035 - net zero/output

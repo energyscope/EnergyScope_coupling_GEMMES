@@ -48,8 +48,8 @@ Solar, wind, hydro and geothermal
       utility scale PV , 0 , :math:`\approx`\ 1350 [39d]_ , [GW]
       onshore wind , 7.6 [39e]_ , 48 [39e]_ , [GW]
       offshore wind , 0 , 66.2 [39f]_ , [GW]
-      geothermal for electricity, 1.2 ,  4.2 [39g]_ , [GW]
-      geothermal for DHN, 3.05, 30.8 [39g]_ , [GW]
+      geothermal for electricity, 1.2 [39g]_ ,  4.2 [39h]_ , [GW]
+      geothermal for heat (with DHN), 3.05 [39i]_ , 30.8 [39h]_ , [GW]
       CSP parabolic trough , 0 , 107 [39d]_, [GW]
       CSP solar tower , 0 , 107 [39d]_, [GW]
       Solar thermal (decentralised), 5.3, no limit imposed, [GW]
@@ -71,15 +71,21 @@ Solar, wind, hydro and geothermal
 
    .. [39f]
       :cite:t:`emeksiz_2019` computes an offshore wind potential of 9.2 GW with rather conservative asumptions (max. water depth of 50 m). It is in line with the 10 GW potential computable based on the open-source database from :cite:`dupont_2020`, available at https://github.com/EliseDup/WorldEROI. To this number is added the 57 GW potential of floating wind offshore, reported by the Offshore Wind Energy Association (DÜRED) in :cite:`Daily_Sabah_2021`.
-      
+
    .. [39g]
+      Computed using the electricity production from geothermia in 2019, given in :cite:`IEA_world_energy_balances_TK`, and the capacity factor of 85% sourced in :numref:`Table %s <tab:elec_prod_re_TK>` 
+
+   .. [39h]
       :cite:t:`IEA_TK_2021` reports a 35 GW potential for geothermal energy in Turkey. :cite:t:`Balat_2004` affirms that 12% of this potential is appropriate for electricity generation and 88% for heat production.
+      
+   .. [39i]
+      Computed using the heat generation from geothermia in 2019, given in :cite:`IEA_world_energy_balances_TK` (including heat for agriculture), and the capacity factor of 85% given in Table :numref:`%s <tbl:dhn_cogen_boiler_TK>` 
 
 As described by eqs. :eq:`eq:solarAreaRooftopLimited` - :eq:`eq:solarAreaGroundHighIrrLimited`, the potential of solar technologies is constrained by the available areas for their deployment. The values for these available areas are given in :numref:`Table %s <tab:solarArea_TK>`. The values of maximum installed capacities indicated in :numref:`Table %s <tab:renewableTechPotentialIn2035_TK>` are a simplified translation of these equations into [GW] constraints.
 
 .. container::
 
-   .. csv-table:: Values of the parameters which constrain the solar potential of Colombia. Abbreviations: solar multiple (sm), high irradiation (high irr.), photovoltaic panel (PV), Concentrated Solar Power (CSP).
+   .. csv-table:: Values of the parameters which constrain the solar potential of Turkey. Abbreviations: solar multiple (sm), high irradiation (high irr.), photovoltaic panel (PV), Concentrated Solar Power (CSP).
       :header: "Parameter", "Value", "Units"
       :widths: 15 15 15
       :name: tab:solarArea_TK
@@ -183,7 +189,7 @@ Prices and GHG emissions given in :numref:`Table %s <tab:prices_imported_resourc
    GWP100a-IPCC2013 metric: impact associated to extraction, transportation and combustion
    
 .. [43b]
-   Direct emissions related to combustion :cite:`Quaschning2015`. These data are not used in EnergyScope Colombia (since the capacity of technology CCS_industrial is set to zero), but they help us to check that the calibration of EnergyScope to the 2021 Colombian energy system of is correct.
+   Direct emissions related to combustion :cite:`Quaschning2015`. These data are not used in EnergyScope Turkey (since the capacity of technology CCS_industrial is set to zero), but they help us to check that the calibration of EnergyScope to the 2019 Turkish energy system of is correct.
 
 
 Electricity imports and exports
@@ -269,7 +275,7 @@ on the values given in PFU_DATABASE. This aggregated electricity EUD is then div
 retrieved from the EPIAS Transparency Portal for the year 2019 (https://seffaflik.epias.com.tr/transparency/). This gives a share of 55% baseload and
 45% variable load. Finally, the values for baseload and variable load are divided between the different economic sectors by using the proportions given in :cite:t:`IEA_world_energy_balances_TK` (and aggregating together industry, agriculture and fishing).
 
-For *%\ elec*, we normalize the real electricity demand from the year 2019, available on the EPIAS Transparency Portal
+For :math:`\%_{elec}`, we normalize the real electricity demand from the year 2019, available on the EPIAS Transparency Portal
 (https://seffaflik.epias.com.tr/transparency/).
 
 .. _ssec:app1_heating_end_uses_TK:
@@ -309,7 +315,7 @@ the demand for freight is divided by 96% to obtain the total EUD for freight, wh
 coastal shipping, aviation and pipeline transport.
 
 For :math:`\%_{pass}`, we assume that the passenger mobility EUD has the same profile for every day of the
-year. This daily profile is taken from data for Switerzland (data from Figure 12 of :cite:`USTransportation`).
+year. This daily profile is taken from data for Switzerland (data from Figure 12 of :cite:`USTransportation`).
 For :math:`\%_{fr}`, we take a uniform value over the 8760 hours of the year.
 
 Non-energy
@@ -328,8 +334,13 @@ Discount rate and interest rate
 Technologies
 ============
 
-Electricity production
+The technologies are regrouped by their main output types.
+
+Electricity generation
 ----------------------
+
+The electricity generation technologies are regrouped into two categories depending
+on the resources used: renewable or not.
 
 .. _ssec:app1_renewables_TK:
 
@@ -339,78 +350,77 @@ Renewables
 :numref:`Table %s <tab:elec_prod_re_TK>` gives the data for the renewable electricity generation technologies
 modelled in EnergyScope Turkey, together with their sources. The data for :math:`f_{max}` were already
 given in :numref:`Table %s <tab:renewableTechPotentialIn2035_TK>` ("max. potential"). The :math:`f_{min}`
-values for renewable electricity technologies in 2035 are equal to their installed capacity in 2021,
-already given in :numref:`Table %s <tab:renewableTechPotentialIn2035>`. The maximum (:math:`f_{max,\%}`) and minimum
+values for renewable electricity technologies in 2035 are equal to their installed capacity in 2019,
+already given in :numref:`Table %s <tab:renewableTechPotentialIn2035_TK>`. The maximum (:math:`f_{max,\%}`) and minimum
 (:math:`f_{min,\%}`) shares are imposed to 0 and 100% respectively, i.e. they are not constraining the model.
 
 .. container::
 
    .. csv-table:: Renewable electricity production technologies in 2035. Abbreviations: concentrated solar power 
       with parabolic trough (CSP PT), concentrated solar power with solar tower (CSP ST).
-      :header: **Technology**, **c**:sub:`inv`, **c**:sub:`maint`, **gwp**:sub:`constr` [82a]_ , **lifetime**, **c**:sub:`p` [2019], **c**:sub:`p` [2035]
+      :header: **Technology**, **c**:sub:`inv`, **c**:sub:`maint`, **gwp**:sub:`constr` [47a]_ , **lifetime**, **c**:sub:`p` [2019], **c**:sub:`p` [2035]
       :widths: 19 18 24 23 15 15 15
       :name: tab:elec_prod_re_TK
 		 
 		  , [€ :sub:`2015`/kW :sub:`e`], [€ :sub:`2015`/kW :sub:`e`/year], [kgCO :sub:`2`-eq./kW :sub:`e`], [year], [%], [%]
-		 Hydro dam, 4201 [82b]_, 21.0 [82b]_, 1693, 40 [82b]_, 35.6 [82c]_ , 35.6 [82u]_
-		 Hydro river, 5045 [82b]_, 50.4 [82b]_, 1263, 40 [82b]_, 35.6 [82c]_ , 44.0 [82v]_
-		 Rooftop PV, 738 [82d]_, 9.7 [82d]_, 2081, 40 [82d]_, 17.6 [82c]_ , 17.0 [82w]_
-		 Utility scale PV, 335 [82d]_, 8.4 [82d]_, 2081, 40 [82d]_, 17.6 [82c]_ , 19.0 [82w]_
-		 Onshore wind, 1010 [82d]_, 16.8 [82d]_, 623, 30 [82f]_, 33.5 [82c]_ , 34.8
-		 Offshore wind, 1255 [82d]_, 50.6 [82d]_, 623, 30 [82f]_, 41.2 , 41.2
-		 Geothermal, 7488 [82i]_, 142.3 [82i]_, 24929, 30, 86 [82j]_ , 86 [82j]_
-		 CSP PT, 1045 [82k]_, 62.7 [82k]_, 0, 25 [82k]_, 23.7 [82k]_ , 23.7 [82k]_
-		 CSP ST, 768 [82k]_, 63.0 [82k]_, 0, 25 [82k]_, 23.7 [82k]_ , 23.7 [82k]_
+		 Hydro dam, 4201 [47b]_, 21.0 [47b]_, 1693, 40 [47b]_, 35.6 [47c]_ , 35.6 [47u]_
+		 Hydro river, 5045 [47b]_, 50.4 [47b]_, 1263, 40 [47b]_, 35.6 [47c]_ , 44.0 [47v]_
+		 Rooftop PV, 738 [47d]_, 9.7 [47d]_, 2081, 40 [47d]_, 17.6 [47c]_ , 17.0 [47w]_
+		 Utility scale PV, 335 [47d]_, 8.4 [47d]_, 2081, 40 [47d]_, 17.6 [47c]_ , 19.0 [47w]_
+		 Onshore wind, 1010 [47d]_, 16.8 [47d]_, 623, 30 [47f]_, 33.5 [47c]_ , 34.8
+		 Offshore wind, 1255 [47d]_, 50.6 [47d]_, 623, 30 [47f]_, 41.2 , 41.2
+		 Geothermal, 7488 [47i]_, 142.3 [47i]_, 24929, 30, 86 [47j]_ , 86 [47j]_
+		 CSP PT, 1045 [47k]_, 62.7 [47k]_, 0, 25 [47k]_, 23.7 [47k]_ , 23.7 [47k]_
+		 CSP ST, 768 [47k]_, 63.0 [47k]_, 0, 25 [47k]_, 23.7 [47k]_ , 23.7 [47k]_
 		 
-.. [82a]
+.. [47a]
    Data from :cite:`weidema_ecoinvent_2013`
 
-.. [82b]
+.. [47b]
    Data taken from :cite:`association_des_entreprises_electriques_suisses_aes_grande_2014`
    
-.. [82c]
+.. [47c]
    Computed using the installed capacity reported in :cite:`TK_gov_RE` and the yearly electricity generation given by :cite:t:`IEA_TK_2021`
 
-.. [82u]
+.. [47u]
    Taken as equal to the value in 2019
    
-.. [82v]
+.. [47v]
    Value taken from :cite:`CCDR_TK`
 
-.. [82d]
+.. [47d]
    ASK PAOLO.
    
-.. [82w]
+.. [47w]
    Retrieved from the open-source database from :cite:`dupont_2020`, available at https://github.com/EliseDup/WorldEROI
    
-.. [82f]
+.. [47f]
    Data taken from :cite:`association_des_entreprises_electriques_suisses_aes_energie_2013`
    
-.. [82i]
+.. [47i]
    ORC cycle at 6 km depth for electricity generation. Based on Table 17 of :cite:`Carlsson2014`. We took the reference case in 2030
    
-.. [82j]
+.. [47j]
    Data from :cite:`association_des_entreprises_electriques_suisses_aes_electricite_2012`
 	
-.. [82k]
-   ASK PAOLO	 
+.. [47k]
+   ASK PAOLO	
 
-:numref:`Table %s <tab:elec_prod_re>` includes the values of the yearly capacity factor (:math:`c_p`) of technologies.
-As described in the model formulation Section, the values of :math:`c_p` for intermittent renewables is in fact equal to one, while
+
+:numref:`Table %s <tab:elec_prod_re_TK>` includes the values of the yearly capacity factor (:math:`c_p`) of technologies.
+As described in the Model Formulation Section, the values of :math:`c_p` for intermittent renewables is in fact equal to one, while
 it is the value of their hourly load factor, :math:`c_{p,t}`, which is binding. The value of :math:`c_p` given in 
-:numref:`Table %s <tab:elec_prod_re>` for intermittent renewables is in fact the mean value of :math:`c_{p,t}` over the year.
-The yearly profile (which sums to one) of :math:`c_{p,t}` for intermittent renewables is computed as follows.
+:numref:`Table %s <tab:elec_prod_re_TK>` for intermittent renewables is in fact the mean value of :math:`c_{p,t}` over the year.
+The yearly profile (which sums up to one) of :math:`c_{p,t}` for intermittent renewables is computed as follows.
 
 Power production profile of PV [10]_ were retrieved from :cite:`Renewables_ninja` for the cities of 
 Istanbul, Izmir, Ankara, Ordu, Sanliurfa, Van and Antalya. The yearly profile of :math:`c_{p,t}`
 for PV in Turkey was then computed by taking a weighted average of these 7 time series, with weights 
-(0.32, 0.13, 0.15, 0.09, 0.10, 0.08, 0.13). These weights were computed as proportional to the populations of the
+(0.32, 0.13, 0.15, 0.09, 0.10, 0.08, 0.13). These weights were taken proportional to the populations of the
 areas surrounding those cities.
 
-The yearly profile of :math:`c_{p,t}` for solar thermal technologies in Turkey was computed in the same way, retrieving from
-:cite:`Renewables_ninja` global horizontal irradiation (GHI) profiles instead of power production profiles of PV. Idem for the
-yearly profile of :math:`c_{p,t}` for onshore wind, by retrieving from :cite:`Renewables_ninja` power production profiles of
-wind turbines [11]_ instead of PV.
+The yearly profile of :math:`c_{p,t}` for onshore wind was computed in the same way, retrieving from
+:cite:`Renewables_ninja` power production profiles of wind turbines [11]_ instead of PV.
 
 The same 7 time series as for onshore wind were used for offshore wind, but the weighted average to obtain the yearly profile of :math:`c_{p,t}`
 was computed by using the weights (0.2,0.2,0,0.3,0,0,0.3). These weights were adjusted to reflect the length of the coastline near each city.
@@ -424,53 +434,77 @@ day.
 Non-renewable
 ~~~~~~~~~~~~~
 
-Data for the considered fossil electricity production technologies are
-listed in :numref:`Table %s <tbl:nonrenew_elec>`. 
+:numref:`Table %s <tab:elec_prod_nre_TK>` gives the data for the non-renewable electricity generation technologies
+modelled in EnergyScope Colombia, together with their sources. The minimum installed capacity (:math:`f_{min}`)
+is zero, while the maximum installed capacity (:math:`f_{max}`) is set to a value high enough for each 
+technology to potentially cover the entire demand - except for nuclear energy. The maximum (:math:`f_{max,\%}`) and minimum
+(:math:`f_{min,\%}`) shares are imposed to 0 and 100% respectively, i.e. they are not constraining the model.
+The efficiencies of each technology in 2019 and 2035 are given as well.
 
+The values of (:math:`f_{min}`) and (:math:`f_{max}`) of nuclear energy are set differently. Indeed, the choice to build new
+nuclear power plants is not simply based on market dynamics. It results from political decisions, often closely linked to
+international relations.
+
+:math:`f_{min} = 4.8` [GW] (normally installed in 2028)
+:math:`f_{max} = 7.2` [GW]
 
 .. container::
 
-   .. table:: Non-renewable electricity supply technologies, in 2035. Abbreviations: Combined Cycles Gas Turbine (CCGT), Ultra-Supecritical (U-S), Integrated Gasification Combined Cycles (IGCC).
-      :name: tbl:nonrenew_elec
+   .. csv-table:: Non-renewable electricity production technologies in 2035. Abbreviations: combined cycle gas turbine (CCGT), capacity (capa.).
+      :header: **Technology**, **c**:sub:`inv`, **c**:sub:`maint`, **gwp**:sub:`constr` [48a]_ , **lifetime** [48b]_, **c**:sub:`p`, **efficiency** (2019), **efficiency** (2035), :math:`CO_{2-direct}` [48c]_
+      :widths: 11 17 24 22 12 8 8 8 14
+      :name: tab:elec_prod_nre_TK
+		 
+		  , [€ :sub:`2015`/kW :sub:`e`], [€ :sub:`2015`/kW :sub:`e`/year], [kgCO :sub:`2`-eq./kW :sub:`e`], [year], [%], [%], [%], [tCO2/MWh :sub:`e`]
+		 CCGT, 772 [48d]_, 19.7 [48d]_, 184, 25, 85, 63 [48e]_, 63, 0.317
+		 CCGT ammonia [48f]_, 772, 19.6, 184, 25, 59, 50, 50, 0
+		 Coal central, 3246 [48g]_, 49.0 [48g]_, 332, 35, 86 [48b]_, 54 [48h]_, 54 [48h]_, 0.667
+		 Nuclear, 4846 [48i]_ , 103 :cite:`iea_-_international_energy_agency_iea_2014-1` , 708, 60 :cite:`association_des_enterprises_electriques_suisses_energie_2014` , 84 [48j]_ , 37, 37 , 0
+		 
+.. [48a]
+   Data from :cite:`weidema_ecoinvent_2013`
+   
+.. [48b]
+   Data from :cite:`bauer_new_2008`
+   
+.. [48c]
+   Direct emissions due to combustion. Expressed
+   in ton CO\ :math:`_2` per MWh of electricity produced. Emissions computed based
+   on resource used and specific emissions given in Table 9.
+   
+.. [48d]
+   Data from :cite:`iea_-_international_energy_agency_iea_2014-1`   
+   
+.. [48e]
+   Data from :cite:`bauer_new_2008`, 0.4-0.5 GW CCGT in 2035 (realistic optimistic scenario)	 
 
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      |             | :math:`c_   | :math:`c_   | :math:`gwp_ | :math:`li   | :math:`c_   | :math:`\eta | :math:`C    |
-      |             | {inv}`      | {maint}`    | {constr}`   | fetime`     | {p}`        | _e`         | O_{2,       | 
-      |             |             |             |             |             |             |             | direct}`    |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      |             | [€          | [€          | [kgCO       | [y]         | [%]         | [%]         | [tCO2/      | 
-      |             | :sub:`2015` | :sub:`2015` | :sub:`2-eq.`|             |             |             | MWh         |
-      |             | /kW         | /kW         | /kW         |             |             |             | :sub:`e`    |
-      |             | :sub:`e`]   | :sub:`e`/y] | :sub:`e`]   |             |             |             | ]           |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      | Nuclear     | 4846 [82]_  | 103         | 707.9       | 60          | 84.9        | 37          | 0           |
-      |             |             | :cite:`\    | \           | :cite:`\    | [83]_       |             |             |
-      |             |             | i\          | :cite:`\    | as\         |             |             |             |
-      |             |             | ea_-_\      | weid\       | socia\      |             |             |             |
-      |             |             | inter\      | ema_e\      | tion_\      |             |             |             |
-      |             |             | natio\      | coinv\      | des_e\      |             |             |             |
-      |             |             | nal_e\      | ent_2\      | nterp\      |             |             |             |
-      |             |             | nergy\      | 013`\       | rises\      |             |             |             |
-      |             |             | _agen\      |             | _elec\      |             |             |             |
-      |             |             | cy_ie\      |             | triqu\      |             |             |             |
-      |             |             | a_201\      |             | es_su\      |             |             |             |
-      |             |             | 4-1`\       |             | isses\      |             |             |             |
-      |             |             |             |             | _ener\      |             |             |             |
-      |             |             |             |             | gie_2\      |             |             |             |
-      |             |             |             |             | 014`        |             |             |             |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+.. [48f]
+   Use of Ammonia in CCGT is at its early stage. Mitsubishi is developping 
+   a 40 MW turbine and promises similar efficiency as gas CCGT :cite:`nose2021development`. 
+   However, the high emissions of NOx requires a removal equipment which will reduce the 
+   power plant efficiency. As gas and ammonia CCGT will be similar, we expect a similar cost and lifetime. 
+   The only exception is the efficiency, which is assumed at 50% instead of 63% for a gas CCGT :cite:`ikaheimo2018power`.
+   
+.. [48g]
+   1.2 GW\ \ :math:`_{\text{e}}` IGCC power plant
+   :cite:`u.s._eia_-_energy_information_administration_updated_2013`.
+   *c*:sub:`maint` is fixed cost (48.1 €\ \ :sub:`2015`/kW\ \ :sub:`e`/y) +
+   variable cost (0.82 €\ \ :sub:`2015`/kW\ \ :sub:`e`/y assuming 7500
+   h/y).   
+   
+.. [48h]
+   Data from :cite:`bauer_new_2008`, IGCC in 2025 (realistic optimistic scenario)	 
 
-.. [82]
+.. [48i]
    Investment cost: 3431 €\ \ :sub:`2015`/kW\ \ :math:`_{\text{e}}`
    :cite:`iea_-_international_energy_agency_iea_2014-1` +
-   dismantling cost in Switzerland: 1415
-   €\ \ :sub:`2015`/kW\ \ :math:`_{\text{e}}`
+   dismantling cost in Switzerland: 1415    €\ \ :sub:`2015`/kW\ \ :math:`_{\text{e}}`
    :cite:`swissnuclear_financement_????`.
 
-.. [83]
-   Data for the year 2012
-   :cite:`swiss_federal_office_of_energy_sfoe_swiss_2014`
-
+.. [48j]
+   Data for the year 2012 from :cite:`swiss_federal_office_of_energy_sfoe_swiss_2014`
+   
+     
 
 Heating and cogeneration
 ------------------------
@@ -552,15 +586,15 @@ Freight
 ~~~~~~~
 
 The share of freight which can be supplied by different modes are bounded by the values :math:`\%_{fr,X,min}` and :math:`\%_{fr,X,max}`. 
-These values are given in :numref:`Table %s <tab:freight_shares_TK>` for 2021 and 2035. Moreover, based on energy consumption of transport 
-given in :cite:`IEA_2023`, we impose that in 2021, 50% of truck transport was carried out by diesel trucks and 50% by gasoline trucks.
+These values are given in :numref:`Table %s <tab:freight_shares_TK>` for 2019 and 2035. Moreover, based on energy consumption of transport 
+given in :cite:`IEA_2023`, we impose that in 2019, 50% of truck transport was carried out by diesel trucks and 50% by gasoline trucks.
 
 Boat freight not taken into account because could not find any data.
 
 .. container::
 
-   .. csv-table:: Limiting shares for freight in 2021 and 2035.
-      :header: **Parameter**, **Value in 2021**, **Value in 2035**
+   .. csv-table:: Limiting shares for freight in 2019 and 2035.
+      :header: **Parameter**, **Value in 2019**, **Value in 2035**
       :widths: 20 20 20
       :name: tab:freight_shares_TK
 		 
@@ -583,7 +617,7 @@ Non-energy demand
 -----------------
 
 Given the important
-petroleum refining activity in Turkey, we assume that all non-energy EUD in 2021 was HVC. We keep
+petroleum refining activity in Turkey, we assume that all non-energy EUD in 2019 was HVC. We keep
 the same assumption for the year 2035.
 
 .. _ssec:app1_syn_fuels_TK:
@@ -634,7 +668,7 @@ Storage
    Data verified in Table B1 of
    :cite:`Zakeri2015`.
 
-The PHS in Colombia can be resumed to the Coo-Trois-Ponts hydroelectric
+The PHS in Turkey can be resumed to the Coo-Trois-Ponts hydroelectric
 power station. The characteristics of the station in 2015 are the
 following: installed capacity turbine (1164MW), pumping (1035MW),
 overall efficiency of 75%, all reservoirs capacity (5000 MWh). We assume

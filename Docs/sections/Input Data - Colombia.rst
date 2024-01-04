@@ -408,7 +408,7 @@ adapted through the calibration process to match the CO\ :math:`_2` emissions of
 spread over the year according to :math:`\%_{pass}` and :math:`\%_{fr}`, respectively. 
 
 For :math:`\%_{pass}`, we assume that the passenger mobility EUD has the same profile for every day of the
-year. This daily profile is taken from data for Switerzland (data from Figure 12 of :cite:`USTransportation`).
+year. This daily profile is taken from data for Switzerland (data from Figure 12 of :cite:`USTransportation`).
 For :math:`\%_{fr}`, we take a uniform value over the 8760 hours of the year.
 
 Non-energy
@@ -506,10 +506,10 @@ Hidroituango power plant (1.2 GW according to :cite:`IEA_2023`), which was compl
    ASK PAOLO	
 
 :numref:`Table %s <tab:elec_prod_re>` includes the values of the yearly capacity factor (:math:`c_p`) of technologies.
-As described in the model formulation Section, the values of :math:`c_p` for intermittent renewables is in fact equal to one, while
+As described in the Model Formulation Section, the values of :math:`c_p` for intermittent renewables is in fact equal to one, while
 it is the value of their hourly load factor, :math:`c_{p,t}`, which is binding. The value of :math:`c_p` given in 
 :numref:`Table %s <tab:elec_prod_re>` for intermittent renewables is in fact the mean value of :math:`c_{p,t}` over the year.
-The yearly profile (which sums to one) of :math:`c_{p,t}` for intermittent renewables is computed as follows.
+The yearly profile (which sums up to one) of :math:`c_{p,t}` for intermittent renewables is computed as follows.
 
 The areas with high solar potential are first identified using the open-source database from :cite:`dupont_2020`, available
 at https://github.com/EliseDup/WorldEROI. The yearly PV production profile is then retrieved from :cite:`Renewables_ninja` 
@@ -537,6 +537,7 @@ modelled in EnergyScope Colombia, together with their sources. The minimum insta
 is zero, while the maximum installed capacity (:math:`f_{max}`) is set to a value high enough for each 
 technology to potentially cover the entire demand. The maximum (:math:`f_{max,\%}`) and minimum
 (:math:`f_{min,\%}`) shares are imposed to 0 and 100% respectively, i.e. they are not constraining the model.
+The installed capacity of each technology in 2021 is given as well.
 
 .. container::
 

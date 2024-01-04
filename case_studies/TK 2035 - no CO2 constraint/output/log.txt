@@ -1,50 +1,50 @@
 
-Presolve eliminates 913806 constraints and 590248 variables.
+Presolve eliminates 932197 constraints and 599878 variables.
 "option presolve 10;" used, but "option presolve 5;" would suffice.
 Adjusted problem:
-335738 variables, all linear
-615189 constraints, all linear; 1927388 nonzeros
-	406675 equality constraints
-	208514 inequality constraints
+326108 variables, all linear
+596798 constraints, all linear; 1871069 nonzeros
+	397911 equality constraints
+	198887 inequality constraints
 1 linear objective; 1 nonzero.
 
 presolve results:
-	variables omitted:	590248
-	constraints omitted:	913806
-	ranges relaxed:		43542
-	bounds improved:	588287
-	constraint_drop_tol breakpoints: 0, 0, Infinity
+	variables omitted:	599878
+	constraints omitted:	932197
+	ranges relaxed:		43832
+	bounds improved:	597635
+	constraint_drop_tol breakpoints: 0, 0, 7021.151751316723
 	nba cycles:		4
-	bound row scans:	393031
-	row-scan updates:	49631
+	bound row scans:	383976
+	row-scan updates:	49645
 Gurobi 10.0.3:   pre:dual = -1
   alg:method = 2
   bar:crossover = 0
   pre:passes = 3
   bar:convtol = 1e-06
   pre:solve = -1
-Gurobi 10.0.3: optimal solution; objective 123482.4915
+Gurobi 10.0.3: optimal solution; objective 125192.1985
 0 simplex iterations
-90 barrier iterations
+76 barrier iterations
  
 ------------ WARNINGS ------------
 WARNING:  "Solution Check"
      [ sol:chk:feastol=1e-06, :feastolrel=1e-06, :inttol=1e-05,
        :round='', :prec='' ]
 Algebraic expression violations:
-  - 72 original expression(s) of type ':linrange',
-        up to 2E-04 (abs)
+  - 13 original expression(s) of type ':linrange',
+        up to 3E-04 (abs)
  
  
 solve_result = solved
 
 solve_result_num = 0
 
-_solve_elapsed_time = 63.9999
+_solve_elapsed_time = 50.796
 
-TotalCost 123482.4915092779
+TotalCost 125192.1984987796
 Carbon_cost 0
-GWP_op 35966.59527811969
+GWP_op 28807.36110808852
 carbon_price 0
 --------------SAVING COSTS -----------
 --------------SAVING RESOURCES -----------
