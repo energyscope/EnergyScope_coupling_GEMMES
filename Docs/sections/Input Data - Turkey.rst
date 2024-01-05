@@ -79,10 +79,11 @@ Solar, wind, hydro and geothermal
       :cite:t:`IEA_TK_2021` reports a 35 GW potential for geothermal energy in Turkey. :cite:t:`Balat_2004` affirms that 12% of this potential is appropriate for electricity generation and 88% for heat production.
       
    .. [39i]
-      Computed using the heat generation from geothermia in 2019, given in :cite:`IEA_world_energy_balances_TK` (including heat for agriculture), and the capacity factor of 85% given in Table :numref:`%s <tbl:dhn_cogen_boiler_TK>` 
+      Computed using the heat generation from geothermia in 2019, given in :cite:`IEA_world_energy_balances_TK` (including heat for agriculture), and the capacity factor of 85% given in Table :numref:`%s <tbl:dhn_cogen_boiler>` 
       
    .. [39j]
-      Computed using the heat generation from decentralised solar thermal in 2019, given in :cite:`IEA_world_energy_balances_TK`, and the capacity factor of 20.8% sourced in Table :numref:`%s <tbl:dhn_cogen_boiler_TK>` 
+      Computed using the heat generation from decentralised solar thermal in 2019, given in :cite:`IEA_world_energy_balances_TK`, and the capacity factor of 20.8% whose determination is given in Subsection "Technologies - Heating and cogeneration"
+      
 
 As described by eqs. :eq:`eq:solarAreaRooftopLimited` - :eq:`eq:solarAreaGroundHighIrrLimited`, the potential of solar technologies is constrained by the available areas for their deployment. The values for these available areas are given in :numref:`Table %s <tab:solarArea_TK>`. The values of maximum installed capacities indicated in :numref:`Table %s <tab:renewableTechPotentialIn2035_TK>` are a simplified translation of these equations into [GW] constraints.
 
@@ -510,46 +511,67 @@ to be installed between those two bounds.
 
 .. [48j]
    Data for the year 2012 from :cite:`swiss_federal_office_of_energy_sfoe_swiss_2014` 
-   
-   
+
+According to :cite:`IEA_TK_2021`, electricity generation in 2019 in Turkey was of 304.3 [TWh],
+among which 37.2% from coal, 29.2% from hydro, 18.7% from natural gas, 7.2% from wind, 3.5% from solar
+and 4% from geothermal, biomass and waste. This amounts to installing the following capacities in EnergyScope
+for non-renewable electricity technologies:
+
+.. container::
+
+   .. csv-table:: Installed capacities of non-renewable electricity generation technologies in 2019.
+      :header: **Technology**, **Installed capacity** [GW]
+      :widths: 20 20
+      :name: tab:intalled_capa_elec_nre_TK
+		 
+		CCGT, 27.0 
+		Coal central, 16.1
+
 
 Heating and cogeneration
 ------------------------
 
-Add COAL STOVE
+Tables :numref:`%s <tbl:ind_cogen_boiler>`, :numref:`%s <tbl:dhn_cogen_boiler>` and :numref:`%s <tbl:dec_cogen_boiler>`
+previously gave the characteristics of the heating and cogeneration technologies modelled in EnergyScope. By using the
+data from PFU_DATABASE, we can determine that the following capacities were installed in 2019:
 
 .. container::
 
-   .. table:: District heating technologies, in 2035. Abbreviations: biomass (bio.), CHP, digestion (dig.), hydrolysis (hydro.).
-      :name: tbl:dhn_cogen_boiler_TK
+   .. csv-table:: Installed capacities of heating and cogeneration technologies in 2019. Abbreviations: Natural Gas (NG), Combined Heat and Power (CHP), Heat Pump (HP). 
+      :header: **Technology**, **Installed capacity in 2019** [GW]
+      :widths: 20 20
+      :name: tab:intalled_capa_heating_TK
+		 
+		Industrial boiler NG, 7.5
+		Industrial boiler coal, 3.0
+		DHN CHP NG, 1.7
+		DHN boiler wood, 8.1
+		Decentralized HP, 5.0
+		Decentralized boiler NG, 52.2
+		Decentralized boiler oil, 17.4
+		Coal stove, 15.0
 
-      +------------+------------+------------+------------+------------+------------+------------+------------+------------+
-      |            | :math:`c_  | :math:`c_  | :math:`gwp_| :math:`li  | :math:`c_  | :math:`\eta| :math:`\eta| :math:`C   |
-      |            | {inv}`     | {maint}`   | {constr}`  | fetime`    | {p}`       | _e`        | _{th}`     | O_{2,      |
-      |            |            |            |            |            |            |            |            | direct}`   |
-      +------------+------------+------------+------------+------------+------------+------------+------------+------------+
-      |            | [€         | [€         | [kgCO      | [y]        | [%]        | [%]        | [%]        | [tCO2/     |
-      |            | :sub:`2015`| :sub:`2015`| :sub:`2    |            |            |            |            | MWh        |
-      |            | /kW        | /kW        | -eq.`/kW   |            |            |            |            | :sub:`th`  |
-      |            | :sub:`th`] | :sub:`th`  | :sub:`th`] |            |            |            |            | ]          |
-      |            |            | /y]        |            |            |            |            |            |            |
-      +------------+------------+------------+------------+------------+------------+------------+------------+------------+
-      | Geo        | 1500       | 57.0       | 808.8      | 30         | 85         | 0          | 100        | 0          |
-      | thermal    | [165]_     | [165]_     | \          | [165]_     |            |            |            |            |
-      | [165]_     |            |            | :cite:`\   |            |            |            |            |            |
-      |            |            |            | wei\       |            |            |            |            |            |
-      |            |            |            | dema_ec\   |            |            |            |            |            |
-      |            |            |            | oinvent\   |            |            |            |            |            |
-      |            |            |            | _2013`     |            |            |            |            |            |
-      +------------+------------+------------+------------+------------+------------+------------+------------+------------+
+Similarly to intermittent renewable electricity technologies, the time series for :math:`c_{p,t}` for solar thermal facilities must be computed.
+To do so, global horizontal irradiation (GHI) profiles are retrieved from :cite:`Renewables_ninja` for the cities of Istanbul, Izmir, Ankara, Ordu, 
+Sanliurfa, Van and Antalya. A weighted average of these 7 time series is then computed, with weights (0.32, 0.13, 0.15, 0.09, 0.10, 0.08, 0.13). These weights were taken proportional to the populations of the areas surrounding those cities. The :math:`c_{p,t}` time series for solar thermal in Turkey is obtained
+by dividing this weighted average time series by 8760 (number of hours in the year) and by 1000 (standard irradiation). The mean capacity factor of solar 
+thermal (i.e. the mean of its :math:`c_{p,t}` time series) is thus found to be 20.8%.
 
-.. [165]
-   Geothermal heat-only plant with steam driven
-   absorption heat pump 70/17\ \ :math:`^o`\ \ C at 2.3 km depth (from
-   :cite:`DanishEnergyAgency2019`).
 
 Cooling
 -------
+
+Based on data from PFU_DATABASE, we could determine the 2019 coefficient of performance of some cooling technnologies:
+
+.. container::
+
+   .. csv-table:: 2019 efficiency of cooling technologies. Abbreviations: Natural Gas (NG), Combined Heat and Power (CHP), Heat Pump (HP). 
+      :header: **Technology**, **Installed capacity in 2019** [GW]
+      :widths: 20 20
+      :name: tab:intalled_capa_cooling_TK
+		 
+		Decentralised electricity cooling, 470
+		Process cooling, 92.7
 
 .. _sec:app1_vehicles_mobility_TK:
 
@@ -559,7 +581,7 @@ Transport
 Passenger mobility
 ~~~~~~~~~~~~~~~~~~
 
-:numref:`Table %s <tbl:passenger_vehicles_TK>` also gives the minimum and maximum shares
+:numref:`Table %s <tbl:passenger_vehicles_TK>` gives the minimum and maximum shares
 of each vehicle type in 2035. The shares in 2019 are also given.
 
 .. container::
@@ -569,34 +591,57 @@ of each vehicle type in 2035. The shares in 2019 are also given.
 
       ================  ============================ ============================ ===============================
       **Vehicle type**  **f**:math:`_\textbf{min,%}` **f**:math:`_\textbf{max,%}` **f**:math:`_\textbf{%}` (2019) 
-      \                 [Wh/km-pass]                 [%]	                      [%]		
-      Gasoline car      0                            1                            33
-      Diesel car        0                            1                            0
-      NG car            0                            1                            15
-      HEV               0                            1                            0
-      PHEV              0                            1                            0
-      BEV               0                            1                            0
-      FC car            0                            1                            0
-      Methanol car      0                            1                            0
-      Tram & Trolley    0                            0.05  [80a]_                 0
-      Diesel bus        0                            1                            75
-      Diesel HEV bus    0                            1                            0
-      NG bus            0                            1                            0
-      FC bus            20                            1                            0
-      Train pub.        0                            0.30 [80a]_                  0
+                        [%]                          [%]	                  [%]		
+      Gasoline car      0                            100                          12 [52b]_ 
+      Diesel car        0                            100                          50 [52b]_ 
+      NG car            0                            100                          38 [52b]_ 
+      HEV               0                            100                          0
+      PHEV              0                            100                          0
+      BEV               0                            100                          0
+      FC car            0                            100                          0
+      Methanol car      0                            100                          0
+      Tram & Trolley    0                            0 [52a]_                     0
+      Diesel bus        0                            100                          89 [52c]_ 
+      Diesel HEV bus    0                            100                          0
+      NG bus            0                            100                          0
+      FC bus            0                            100                          0
+      Train pub.        0                            50 [52a]_                    11 [52c]_ 
       ================  ============================ ============================ ===============================
 
-.. [80a]
+.. [52a]
    Our own expert guesses.
+   
+.. [52b]
+   Computed based on the information contained in :cite:`IEA_world_energy_balances_TK` and the Background Note 2 of :cite:`CCDR_TK`
+
+.. [52c]
+   Computed based on data from :cite:`TK_traffic_survey_2021`
+
+Finally, the share of passenger mobility which can be supplied by public mobility is bounded by :math:`\%_{public,min}` and :math:`\%_{public,max}`. Similarly, the maximum share of private passenger mobility that can be supplied by motorcycles is given by :math:`\%_{private,motorc,max}` (see Eq. :eq:`eq:f_max_perc_motorcycle` in the Model Formulation Section). The values and assumptions for these three parameters are given in :numref:`Table %s <tab:passenger_mob_shares_TK>`.
+
+.. container::
+
+   .. csv-table:: Limiting shares for passenger mobility in 2021 and 2035.
+      :header: **Parameter**, **Value in 2021**, **Value in 2035**
+      :widths: 20 20 20 
+      :name: tab:passenger_mob_shares_TK
+		 
+		 :math:`\%_{public_{min}}`, 37% [53a]_, 5% [53b]_
+		 :math:`\%_{public_{max}}`, 37% [53a]_, 50% [53b]_
+		 :math:`\%_{private_{motorc_{max}}}`, 0%, 0%
+		 
+.. [53a]
+   Computed based on data from :cite:`TK_traffic_survey_2021`
+
+.. [53b]
+   Our own expert guesses.
+   
 
 Freight
 ~~~~~~~
 
 The share of freight which can be supplied by different modes are bounded by the values :math:`\%_{fr,X,min}` and :math:`\%_{fr,X,max}`. 
-These values are given in :numref:`Table %s <tab:freight_shares_TK>` for 2019 and 2035. Moreover, based on energy consumption of transport 
-given in :cite:`IEA_2023`, we impose that in 2019, 50% of truck transport was carried out by diesel trucks and 50% by gasoline trucks.
-
-Boat freight not taken into account because could not find any data.
+These values are given in :numref:`Table %s <tab:freight_shares_TK>` for 2019 and 2035.
 
 .. container::
 
@@ -605,18 +650,21 @@ Boat freight not taken into account because could not find any data.
       :widths: 20 20 20
       :name: tab:freight_shares_TK
 		 
-		 :math:`\%_{fr_{rail_{min}}}`, 0.04 [81a]_, 0
-		 :math:`\%_{fr_{rail_{max}}}`, 0.04 [81a]_,  0.25 [81b]_
-		 :math:`\%_{fr_{boat_{min}}}`, 0    [81a]_, 0
-		 :math:`\%_{fr_{boat_{max}}}`, 0    [81a]_, 0
+		 :math:`\%_{fr_{rail_{min}}}`, 0.04 [54a]_, 0
+		 :math:`\%_{fr_{rail_{max}}}`, 0.04 [54a]_,  0.25 [54b]_
+		 :math:`\%_{fr_{boat_{min}}}`, 0    [54c]_, 0
+		 :math:`\%_{fr_{boat_{max}}}`, 0    [54c]_, 0
 		 :math:`\%_{fr_{road_{min}}}`, 0, 0
 		 :math:`\%_{fr_{road_{max}}}`, 1, 1
 		  
-.. [81a]
-   Data from :cite:`plazas_nino_2023`.
+.. [54a]
+   Background Note 2 of :cite:`CCDR_TK`
    
-.. [81b]
-   Our own expert guesses.
+.. [54b]
+   Our own expert guess
+   
+.. [54c]
+   Freight by boat is not included in EnergyScope Turkey because no data could be found
 
 .. _sec:app1_ned_TK:
 
@@ -627,28 +675,22 @@ Given the important
 petroleum refining activity in Turkey, we assume that all non-energy EUD in 2019 was HVC. We keep
 the same assumption for the year 2035.
 
-.. _ssec:app1_syn_fuels_TK:
-
-Synthetic fuels production
---------------------------
-
-Hydrogen production
-~~~~~~~~~~~~~~~~~~~
-
-Synthetic methane and oils production
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Carbon capture and storage
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 .. _sec:app1_storage_TK:
 
 Storage
 -------
 
+The values of :math:`f_{min/max}(Hydro~Dam)` and :math:`f_{min/max}(Dam~Storage)` are linked. According to 
+data from ASK_PAOLO, the ratio between the two is of 450 [h]. The 2035 values of
+:math:`f_{min}(Hydro~Dam)=15.7` [GW] and :math:`f_{max}(Hydro~Dam)=19.9` [GW] therefore translate into 
+:math:`f_{min}(Dam~Storage)=7055` [GWh] and :math:`f_{max}(Dam~Storage)=8974` [GWh].
+
+On top of hydro dams, it is envisaged that pumped hydro storage systems could be developed in Turkey. The main data
+for these potential projects are taken from :cite:`PHS_TK` and summarised in :numref:`Table %s <tab:stodatabasic_TK>`.
+
 .. container::
 
-   .. table:: Storage technologies characteristics in 2035: costs, emissions and lifetime. Abbreviations: batteries (batt.), Battery Electric Vehicule (BEV), centralised (cen.), decentralised (dec.), Lithium-ions (Li-on), Natural Gas (NG), Plug-in Hybrid Electric Vehicle (PHEV), Pumped Hydro Storage (PHS), seasonal (seas.), temperature (temp.) and thermal storage (TS).
+   .. table:: Storage technologies characteristics in 2035: costs, emissions and lifetime. Abbreviations: Pumped Hydro Storage (PHS).
       :name: tab:stodatabasic_TK
 
       +-----------+-----------+-----------+-----------+-----------+
@@ -675,6 +717,15 @@ Storage
    Data verified in Table B1 of
    :cite:`Zakeri2015`.
 
+on suppose que f_max[PHS] = 91
+
+Data on potential PHS in Turkey are taken from JICA_PHS_study_2011-full-summary.pdf
+PHS_discharge_time = 7 # h
+f_max_PHS = 13 * PHS_discharge_time
+c_inv_PHS = 750 # [$/kW]
+c_inv_PHS *= 1/PHS_discharge_time # [$/kW] ≃ [€_2015/kW]
+
+
 The PHS in Turkey can be resumed to the Coo-Trois-Ponts hydroelectric
 power station. The characteristics of the station in 2015 are the
 following: installed capacity turbine (1164MW), pumping (1035MW),
@@ -692,6 +743,8 @@ per kWh of new capacity. The overall potential of the PHS could be
 extended by a third reservoir with an extra capacity of around 1.2 GWh.
 Hence, we assume that the upper limit of PHS capacity is 6.5 GWh. No
 upper bound were constrained for other storage technologies.
+
+
 
 .. _App:Data:OtherParam_TK:
 

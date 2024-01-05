@@ -862,6 +862,14 @@ respectively, i.e. they are not constraining the model.
       |            |            |            |            | _energy\   |            |            |            |            |
       |            |            |            |            | _2008`     |            |            |            |            |
       +------------+------------+------------+------------+------------+------------+------------+------------+------------+
+      | Geo        | 1500       | 57.0       | 808.8      | 30         | 85         | 0          | 100        | 0          |
+      | thermal    | [165]_     | [165]_     | \          | [165]_     |            |            |            |            |
+      | [165]_     |            |            | :cite:`\   |            |            |            |            |            |
+      |            |            |            | wei\       |            |            |            |            |            |
+      |            |            |            | dema_ec\   |            |            |            |            |            |
+      |            |            |            | oinvent\   |            |            |            |            |            |
+      |            |            |            | _2013`     |            |            |            |            |            |
+      +------------+------------+------------+------------+------------+------------+------------+------------+------------+
       | Solar      | 362        | 0.43       | 221.8      | 30         | 10         | 0          | 100        | 0          |
       | thermal    | [166]_     | [166]_     | \          | [166]_     |            |            |            |            |
       | [166]_     |            |            | :cite:`\   |            |            |            |            |            |
@@ -919,6 +927,11 @@ respectively, i.e. they are not constraining the model.
 
 .. [163]
    Own calculation
+
+.. [165]
+   Geothermal heat-only plant with steam driven
+   absorption heat pump 70/17\ \ :math:`^o`\ \ C at 2.3 km depth (from
+   :cite:`DanishEnergyAgency2019`).
 
 .. [166]
    Total system excluding thermal storage (from
@@ -1009,8 +1022,8 @@ respectively, i.e. they are not constraining the model.
       |            |            |            |            | rgy_2\     |            |            |            |
       |            |            |            |            | 008`       |            |            |            |
       +------------+------------+------------+------------+------------+------------+------------+------------+
-      | Boiler     | 462        | 16         | 2          | 17         | 100        | 0          | 85         |
-      | Wood       | \          | \          | 1.1 [220]_ | \          |            |            | \          |
+      | Boiler     | 462        | 16         | 21.1       | 17         | 100        | 0          | 85         |
+      | Wood       | \          | \          | [220]_     | \          |            |            | \          |
       |            | \          | \          |            | \          |            |            | \          |
       |            | \          | \          |            | \          |            |            | \          |
       |            | :cite:`\   | :cite:`\   |            | :cite:`\   |            |            | :cite:`\   |
@@ -1021,6 +1034,9 @@ respectively, i.e. they are not constraining the model.
       |            | n_201\     | n_201\     |            | n_ene\     |            |            | n_201\     |
       |            | 4-1`       | 4-1`       |            | rgy_2\     |            |            | 4-1`       |
       |            |            |            |            | 008`       |            |            |            |
+      +------------+------------+------------+------------+------------+------------+------------+------------+
+      | Coal stove | 462        | 16         | 21.1       | 17         | 100        | 0          | 85         |
+      | [18a]_     |            |            |            |            |            |            |            |
       +------------+------------+------------+------------+------------+------------+------------+------------+
       | Boiler     | 142        | 8.5 [221]_ | 21.1\      | 17         | 100        | 0          | 85         |
       | Oil        | \          |            | \          | \          |            |            | \          |
@@ -1121,6 +1137,9 @@ respectively, i.e. they are not constraining the model.
 
 .. [220]
    Assuming same impact as NG and oil decentralised boilers.
+   
+.. [18a] 
+   We take the same characteristics for coal stove as for wood boiler  
 
 .. [221]
    6% of *c\ inv*, based on ratio between investment and OM cost of
@@ -1453,20 +1472,20 @@ of each vehicle type in 2035. The shares in 2021 are given as well.
       ================ ============ =============== ============================ ============================ ======================================
       **Vehicle type** **Fuel**     **Electricity** **f**:math:`_\textbf{min,%}` **f**:math:`_\textbf{max,%}` **f**:math:`_\textbf{%}` (2021) [22a]_
       \                [Wh/km-pass] [Wh/km-pass]    [Wh/km-pass]                 [%]	                      [%]		
-      Gasoline car     497  [251]_  0               0                            1                            33
-      Diesel car       435  [251]_  0               0                            1                            0
-      NG car           543  [251]_  0               0                            1                            15
-      HEV [252]_       336  [251]_  0               0                            1                            0
-      PHEV [253]_      138  [251]_  109 [251]_      0                            1                            0
-      BEV              0            173 [251]_      0                            1                            0
-      FC car           264  [254]_  0               0                            1                            0
-      Methanol car     497  [251]_  0               0                            1                            0
-      Tram & Trolley   0            63  [255]_      0                            0.05  [256]_                 0
-      Diesel bus       265          0               0                            1                            75
-      Diesel HEV bus   198          0               0                            1                            0
-      NG bus           268          0               0                            1                            0
-      FC bus           225          0               0                            1                            0
-      Train pub.       0            65 [255]_       0                            0.30 [256]_                  0
+      Gasoline car     497  [251]_  0               0                            100                          33
+      Diesel car       435  [251]_  0               0                            100                          0
+      NG car           543  [251]_  0               0                            100                          15
+      HEV [252]_       336  [251]_  0               0                            100                          0
+      PHEV [253]_      138  [251]_  109 [251]_      0                            100                          0
+      BEV              0            173 [251]_      0                            100                          0
+      FC car           264  [254]_  0               0                            100                          0
+      Methanol car     497  [251]_  0               0                            100                          0
+      Tram & Trolley   0            63  [255]_      0                            50 [256]_                    0
+      Diesel bus       265          0               0                            100                          75
+      Diesel HEV bus   198          0               0                            100                          0
+      NG bus           268          0               0                            100                          0
+      FC bus           225          0               0                            100                          0
+      Train pub.       0            65 [255]_       0                            30 [256]_                    0
       ================ ============ =============== ============================ ============================ ======================================
 
 .. [22a]
