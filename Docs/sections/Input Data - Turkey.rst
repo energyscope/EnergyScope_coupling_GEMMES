@@ -120,17 +120,20 @@ Biomass and non-renewable waste
       :widths: 15 15 15 15
       :name: tab:renewableResourcesPotentialIn2035_TK
 
-		woody biomass , xxx , 215.0 [41a]_ , [TWh]
-		wet biomass , xxx , 250.0 [41b]_ , [TWh]
-		non-renewable waste, xxx , 53.8 [41c]_ , [TWh]
+		woody biomass , 40.0 [41a]_ , 215.0 [41b]_ , [TWh]
+		wet biomass , 0 , 250.0 [41c]_ , [TWh]
+		non-renewable waste, 0.1 [41a]_ , 53.8 [41d]_ , [TWh]
    
    .. [41a]
+      Computed based on :cite:`IEA_world_energy_balances_TK`
+
+   .. [41b]
       We aggregate in woody biomass the numbers from :cite:`Biomass_Atlas_2017` for: dedicated woody and lignocellulosic biomass crops, total forestry potential, secondary residues from the wood industry, secondary residues from the sawmill industry, secondary residues from other wood processing industries, secondary residues from agro-industries, biowaste and post-consumer wood.
       
-   .. [41b]
+   .. [41c]
       We aggregate in woody biomass the numbers from :cite:`Biomass_Atlas_2017` for: straw & stubbles, prunings, dedicated crops, agro-industrial residues and road-side verge grass.
       
-   .. [41c]
+   .. [41d]
       Data could not be found for Turkey. The value taken for Italy by :cite:`borasio2022deep` was chosen to have a relevant order of magnitude, since Turkey and Italy had a grossly similar Total Energy Consumption in 2019 according to IEA data.
       
       
@@ -423,13 +426,15 @@ Power production profile of PV [10]_ were retrieved from :cite:`Renewables_ninja
 Istanbul, Izmir, Ankara, Ordu, Sanliurfa, Van and Antalya. The yearly profile of :math:`c_{p,t}`
 for PV in Turkey was then computed by taking a weighted average of these 7 time series, with weights 
 (0.32, 0.13, 0.15, 0.09, 0.10, 0.08, 0.13). These weights were taken proportional to the populations of the
-areas surrounding those cities.
+geographical regions encompassing these cities, given in :cite:`TK_geog_regions`.
+
 
 The yearly profile of :math:`c_{p,t}` for onshore wind was computed in the same way, retrieving from
 :cite:`Renewables_ninja` power production profiles of wind turbines [11]_ instead of PV.
 
 The same 7 time series as for onshore wind were used for offshore wind, but the weighted average to obtain the yearly profile of :math:`c_{p,t}`
-was computed by using the weights (0.2,0.2,0,0.3,0,0,0.3). These weights were adjusted to reflect the length of the coastline near each city.
+was computed by using the weights (0.2,0.2,0,0.3,0,0,0.3). These weights are proportional to the length of coastline near each city, according to
+numbers from :cite:`TK_coast`.
 
 Finally, for hydro dam and hydro river, daily incoming water flow to hydro-electric facilities in Turkey was taken from the Turkish TSO website
 for the 365 days of the year. These data were normalized to give a yearly profile :math:`c_{p,t}`, taking the same value for each hour of a same
@@ -690,60 +695,34 @@ for these potential projects are taken from :cite:`PHS_TK` and summarised in :nu
 
 .. container::
 
-   .. table:: Storage technologies characteristics in 2035: costs, emissions and lifetime. Abbreviations: Pumped Hydro Storage (PHS).
+   .. csv-table:: Foreseen Pumped Hydro Storage (PHS) characteristics in 2035 in Turkey.
+      :header: **Technology**, **c**:sub:`inv`, **c**:sub:`maint`, **gwp**:sub:`constr`, :math:`\eta_{sto-in}`, :math:`\eta_{sto-out}`, **t**:sub:`sto-out`, **lifetime**, **f**:sub:`max`
+      :widths: 15 15 15 25 10 10 10 10 10
       :name: tab:stodatabasic_TK
 
-      +-----------+-----------+-----------+-----------+-----------+
-      |           | :math:`c_ | :math:`c_ | :math:`gw | :math:`li |
-      |           | {inv}`    | {maint}`  | p_{con    | fetime`   |
-      |           |           |           | str}`     |           |
-      +-----------+-----------+-----------+-----------+-----------+
-      |           | [€:math:` | [€:math:` | [kgCO\    | [y]       |
-      |           | \_{2015}` | \_{2015}` | :sub:`2`  |           |
-      |           | /kWh]     | /kWh/y]   | -eq./kWh] |           |
-      +-----------+-----------+-----------+-----------+-----------+
-      | PHS       | 58.8      | 0 [297]_  | 8.33      | 50 [299]_ |
-      |           |           |           | [298]_    |           |
-      +-----------+-----------+-----------+-----------+-----------+
+		 , [:math:`\text{€}_{2015}`/kWh], [:math:`\text{€}_{2015}`/kWh/y], [kgCO :sub:`2`-eq/kWh], [%], [%], [h], [y], [GWh]
+		 PHS, 58.8, 0 [55a]_, 8.33 [55b]_, 7 [55c]_, 86.6 [55d]_, 86.6 [55d]_, 50 [55e]_, 91 [55f]_
+		 
 
-.. [297]
+.. [55a]
    Neglected.
 
-.. [298]
+.. [55b]
    Own calculation based on Hydro Dams emissions from previous work
    :cite:`Limpens2019,Moret2017PhDThesis`.
 
-.. [299]
+.. [55c]
+   :cite:`PHS_TK`
+   
+.. [55d]
+   A round-trip efficiency of 75% (i.e. :math:`0.866^2`) is taken, identical to the one of the Coo-Trois-Ponts hydroelectric power station in Belgium.
+   
+.. [55e]
    Data verified in Table B1 of
    :cite:`Zakeri2015`.
 
-on suppose que f_max[PHS] = 91
-
-Data on potential PHS in Turkey are taken from JICA_PHS_study_2011-full-summary.pdf
-PHS_discharge_time = 7 # h
-f_max_PHS = 13 * PHS_discharge_time
-c_inv_PHS = 750 # [$/kW]
-c_inv_PHS *= 1/PHS_discharge_time # [$/kW] ≃ [€_2015/kW]
-
-
-The PHS in Turkey can be resumed to the Coo-Trois-Ponts hydroelectric
-power station. The characteristics of the station in 2015 are the
-following: installed capacity turbine (1164MW), pumping (1035MW),
-overall efficiency of 75%, all reservoirs capacity (5000 MWh). We assume
-that the energy losses is shared equally between the pumping and
-turbining, resulting by a charge/discharge efficiencies of 86.6%. The
-energy to power ratio are 4h50 and 4h18 for charge and discharge,
-respectively :cite:`Electrabel2014`. A project started to
-increase the height of the reservoirs and thus increase the capacity by
-425 MWh. In addition, the power capacity will be increase by 80MW. The
-overall project cost is estimated to 50M€ and includes also renovation
-of other parts. We arbitrary assume that 50% is dedicated for the
-height increase. It results in an investment cost of 58.8€\ :sub:`2015`
-per kWh of new capacity. The overall potential of the PHS could be
-extended by a third reservoir with an extra capacity of around 1.2 GWh.
-Hence, we assume that the upper limit of PHS capacity is 6.5 GWh. No
-upper bound were constrained for other storage technologies.
-
+.. [55f]
+   Computed based on potential projects informed in :cite:`PHS_TK`
 
 
 .. _App:Data:OtherParam_TK:
@@ -756,14 +735,28 @@ Others
 Electricity grid
 ~~~~~~~~~~~~~~~~
 
+Several data regarding cross-border interconnections are given in Section
+*Electricity imports and exports*. The costs of new High-Voltage
+transfer capacity (HVAC Line) with neighbouring countries are computed to be
+:math:`c_{inv} = 2~\text{€}_{2015}`/kW/km and 
+:math:`c_{maint} = 0.04~\text{€}_{2015}`/kW/km/year, based on :cite:`IEA_HVAC`,
+:cite:`brown_synergies_2018` and :cite:`prina_multi-objective_2020`. By multiplying these
+costs by 853 km (i.e. the distance between sofia and Ankara),
+we obtain for the technology HVAC in EnergyScope in 2035:
+:math:`c_{inv} = 1706~\text{M€}_{2015}`/GW and 
+:math:`c_{maint} = 34.12~\text{M€}_{2015}`/GW/year.
+We take the distance from capital city to capital city, and not the
+distance from border to border, to grossly reflect the local grid
+reinforcement costs that such new interconnection projects entail.
+
 .. _app:DHN_grid_data_TK:
 
 DHN grid
 ~~~~~~~~
 
 The lower (:math:`\%_{dhn,min}`) and upper bounds (:math:`\%_{dhn,max}`) for the use of
-DHN are chosen as 2% and 50%, respectively. The latter value is the same as
-the one from :cite:`borasio2022deep` for the case of Italy. Indeed, the population
+DHN are chosen as 2% and 50%, respectively. These values are the same as
+the ones from :cite:`borasio2022deep` for the case of Italy. Indeed, the population
 density in urban and surburban areas is grossly similar in Italy and in Turkey.
 
 Energy demand reduction cost
@@ -804,11 +797,11 @@ oil using the shares (0.43,0.24,0.33) of the year 2018 given in :cite:`IEA_TK_20
       :name: tab:2019_CO2_check
 		
 		 , [GWh] , [tCO :sub:`2`-eq/MWh :sub:`fuel`] , [MtCO :sub:`2`-eq] , [MtCO :sub:`2`-eq]
-		coal , 448 447 , 0.36 , 161.4 , 158.5
-		natural gas , 453 447 , 0.20 , 90.7 , 88.2
-		gasoline , 13 015 , 0.25 , 3.3, 3.0 [90b]_
-		diesel , 214 907 , 0.26 , 55.9 , 52.1 [90b]_
-		LFO , 262 663 , 0.26 , 68.3 , 63.7 [90b]_
+		coal , 457 078 , 0.36 , 164.5 , 158.5
+		natural gas , 453 821 , 0.20 , 90.8 , 88.2
+		gasoline , 13 015 , 0.25 , 3.3, 3.6 [90b]_
+		diesel , 214 907 , 0.26 , 55.9 , 62.6 [90b]_
+		LFO , 180 767 , 0.26 , 47.0 , 52.7 [90b]_
 		woody biomass , 40 000 , 0.40 , 16.0 , ~ [90c]_
 		non-renewable waste , 121 , 0.26 , 0.03 , ~ [90c]_
 
@@ -829,7 +822,7 @@ The sum of the values simulated with EnergyScope for fossil fuels (excluding woo
 Setting a gwp limit for the year 2035
 -------------------------------------
 
-The gwp :sub:`op` computed by EnergyScope for the 2019 Turkish energy system is of 456 MtCO :sub:`2`-eq. It is broken down by
+The gwp :sub:`op` computed by EnergyScope for the 2019 Turkish energy system is of 434 MtCO :sub:`2`-eq. It is broken down by
 resource type in :numref:`Table %s <tab:2019_gwp>`.
 
 .. container::
@@ -840,15 +833,15 @@ resource type in :numref:`Table %s <tab:2019_gwp>`.
       :name: tab:2019_gwp
 		
 		 , [GWh] , [tCO :sub:`2`-eq/MWh :sub:`fuel`] , [MtCO :sub:`2`-eq]
-		coal , 448 447 , 0.40 , 180.0
-		natural gas , 453 447 , 0.27 , 120.9
+		coal , 457 078 , 0.40 , 183.5
+		natural gas , 453 821 , 0.27 , 121.0
 		gasoline , 13 015 , 0.34 , 4.5
 		diesel , 214 907 , 0.31 , 67.7
-		LFO , 262 663 , 0.31 , 81.8
+		LFO , 180 767 , 0.31 , 56.3
 		woody biomass , 40 000 , 0.01 , 0.5
 		non-renewable waste , 121, 0.15 , 0.02
 		electricity imports, 2 210, 0.41, 0.9
-		electricity exports, 226, 0, 0
+		electricity exports, 0, 0, 0
 
 .. [91a]
    Obtained after running EnergyScope with the 2019 data 

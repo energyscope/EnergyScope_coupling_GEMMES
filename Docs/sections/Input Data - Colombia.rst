@@ -2523,14 +2523,25 @@ years.
 By assuming a linear correlation between grid reinforcement and
 intermittent renewable deployment, the specific cost of integration is
 estimated to 393 MCHF per GW of renewable intermittent energy installed
-(:math:`(9.4+2.5)`\ bCHF\ :math:`/(25+5.3)GW = 0.393`\ bCHF/GW) .
+(:math:`(9.4+2.5)`\ bCHF\ :math:`/(25+5.3)GW = 0.393`\ bCHF/GW).
 
 As a consequence, the estimated cost of the Belgian grid is
 :math:`58.6/1.0679\cdot 11.25/8.24=74.9` b€\ :sub:`2015`. And the extra
 cost is :math:`393/1.0679\approx 367.8` M€\ :sub:`2015`/GW.
 
-Data regarding cross-border interconnections are given in Section
-*Electricity imports and exports*.
+Several data regarding cross-border interconnections are given in Section
+*Electricity imports and exports*. The costs of new High-Voltage
+transfer capacity (HVAC Line) with neighbouring countries are computed to be
+:math:`c_{inv} = 2~\text{€}_{2015}`/kW/km and 
+:math:`c_{maint} = 0.04~\text{€}_{2015}`/kW/km/year, based on :cite:`IEA_HVAC`,
+:cite:`brown_synergies_2018` and :cite:`prina_multi-objective_2020`. By multiplying these
+costs by 766 km (i.e. the distance between Panama City and Bogotá),
+we obtain for the technology HVAC in EnergyScope in 2035:
+:math:`c_{inv} = 1532~\text{M€}_{2015}`/GW and 
+:math:`c_{maint} = 30.64~\text{M€}_{2015}`/GW/year.
+We take the distance from capital city to capital city, and not the
+distance from border to border, to grossly reflect the local grid
+reinforcement costs that such new interconnection projects entail.
 
 Losses (:math:`\%_{net,loss}`) in the electricity
 grid are fixed to 4.7%. This is the ratio between the losses in the grid
