@@ -50,8 +50,8 @@ Solar, wind, hydro and geothermal
       offshore wind , 0 , 66.2 [39f]_ , [GW]
       geothermal for electricity, 1.2 [39g]_ ,  4.2 [39h]_ , [GW]
       geothermal for heat (with DHN), 3.05 [39i]_ , 30.8 [39h]_ , [GW]
-      CSP parabolic trough , 0 , 107 [39d]_, [GW]
-      CSP solar tower , 0 , 107 [39d]_, [GW]
+      CSP parabolic trough , 0, 107 [39d]_, [GW]
+      CSP solar tower , 0, 107 [39d]_, [GW]
       Solar thermal (decentralised), 5.3 [39j]_ , no limit imposed, [GW]
 
    .. [39a]
@@ -381,8 +381,8 @@ already given in :numref:`Table %s <tab:renewableTechPotentialIn2035_TK>`. The m
 		 Onshore wind, 1010 [47d]_, 16.8 [47d]_, 623, 30 [47f]_, 33.5 [47c]_ , 34.8
 		 Offshore wind, 1255 [47d]_, 50.6 [47d]_, 623, 30 [47f]_, 41.2 , 41.2
 		 Geothermal, 7488 [47i]_, 142.3 [47i]_, 24929, 30, 86 [47j]_ , 86 [47j]_
-		 CSP PT, 1045 [47k]_, 62.7 [47k]_, 0, 25, 23.7 [47l]_ , 23.7 [47l]_
-		 CSP ST, 768 [47k]_, 63.0 [47k]_, 0, 25, 23.7 [47l]_ , 23.7 [47l]_
+		 CSP PT, 1045 [47k]_, 62.7 [47k]_, 0 [47m]_ , 25, 23.7 [47l]_ , 23.7 [47l]_
+		 CSP ST, 768 [47k]_, 63.0 [47k]_, 0 [47m]_ , 25, 23.7 [47l]_ , 23.7 [47l]_
 		 
 .. [47a]
    Data from :cite:`weidema_ecoinvent_2013`
@@ -421,7 +421,10 @@ already given in :numref:`Table %s <tab:renewableTechPotentialIn2035_TK>`. The m
    Figure 2 of :cite:`viebahn_potential_2011`.
    
 .. [47l]
-   Mean value of the :math:`c_{p,t}` time series computed below.		
+   This value of :math:`c_{p}` is the mean value of the :math:`c_{p,t}` time series computed below.
+   
+.. [47m]
+   Not computed yet. To be completed in the near future.		
 
 
 :numref:`Table %s <tab:elec_prod_re_TK>` includes the values of the yearly capacity factor (:math:`c_p`) of technologies.
@@ -701,8 +704,8 @@ the same assumption for the year 2035.
 Storage
 -------
 
-The values of :math:`f_{min/max}(Hydro~Dam)` and :math:`f_{min/max}(Dam~Storage)` are linked. According to 
-data from ASK_PAOLO, the ratio between the two is of 450 [h]. The 2035 values of
+The values of :math:`f_{min/max}(Hydro~Dam)` and :math:`f_{min/max}(Dam~Storage)` are linked.
+The ratio between the two is taken to be 450 [h]. The 2035 values of
 :math:`f_{min}(Hydro~Dam)=15.7` [GW] and :math:`f_{max}(Hydro~Dam)=19.9` [GW] therefore translate into 
 :math:`f_{min}(Dam~Storage)=7055` [GWh] and :math:`f_{max}(Dam~Storage)=8974` [GWh].
 

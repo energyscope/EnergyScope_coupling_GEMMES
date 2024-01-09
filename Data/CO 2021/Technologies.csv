@@ -68,14 +68,14 @@ Mobility;Passenger public;Bus diesel hybrid;BUS_COACH_HYDIESEL;822.6;33.3;0;15;0
 Mobility;Passenger public;Bus gas;BUS_COACH_CNG_STOICH;585;30.6;0;15;0.296803653;0;1;0;0;
 Mobility;Passenger public;Bus fuel cell (H2);BUS_COACH_FC_HYBRIDH2;1114;31.3;0;15;0.296803653;0;1;0;0;
 Mobility;Passenger public;Train (passenger);TRAIN_PUB;1506;54.4;0;40;0.275072894;0;1;0;1000000000000000;
-Mobility;Passenger private;Gasoline motorcycle;MOTORCYCLE;198.7;12;0;10;0.051369863;0.52;1;0;1000000000000000;
+Mobility;Passenger private;Gasoline motorcycle;MOTORCYCLE;20.31225;1.2264;0;10;0.051369863;0.52;1;0;1000000000000000;
 Mobility;Passenger private;Car gasoline;CAR_GASOLINE;397.5;24;0;10;0.051369863;0.33;1;0;1000000000000000;
 Mobility;Passenger private;Car diesel;CAR_DIESEL;410.9;24;0;10;0.051369863;0;1;0;0;
 Mobility;Passenger private;Car gas;CAR_NG;411.1;24;0;10;0.051369863;0.15;1;0;1000000000000000;
 Mobility;Passenger private;Car methanol;CAR_METHANOL;397.5;24;0;10;0.051369863;0;1;0;0;
 Mobility;Passenger private;Car hybrid (gasoline);CAR_HEV;423.9;34;0;10;0.051369863;0;1;0;0;
 Mobility;Passenger private;Car plug-in hybrid;CAR_PHEV;473.5;34;0;10;0.051369863;0;1;0;0;
-Mobility;Passenger private;Electrical motorcycle;MOTORCYCLE_ELECTRIC;306.8;5;0;10;0.051369863;0;1;0;0;
+Mobility;Passenger private;Electrical motorcycle;MOTORCYCLE_ELECTRIC;49.096;0.8;0;10;0.051369863;0;1;0;0;
 Mobility;Passenger private;Car electric;CAR_BEV;613.7;10;0;10;0.051369863;0;1;0;0;
 Mobility;Passenger private;Car fuel cell (H2);CAR_FUEL_CELL;1062.1;10;0;10;0.051369863;0;1;0;0;
 Mobility;Freight;Train (freight);TRAIN_FREIGHT;104.4;2.1;0;40;0.342465753;0;1;0;1000000000000000;

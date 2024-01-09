@@ -92,6 +92,7 @@ Solar, wind, hydro and geothermal
       
    .. [5h]
       No constraint on the number of GW installable. The real constraint is on the availability of woody biomass (see below).
+        
 
 As described by eqs. :eq:`eq:solarAreaRooftopLimited` - :eq:`eq:solarAreaGroundHighIrrLimited`, the potential of solar technologies is constrained by the available areas for their deployment. The values for these available areas, as well as the other parameters present in eqs. :eq:`eq:solarAreaRooftopLimited` - :eq:`eq:solarAreaGroundHighIrrLimited`, are given in :numref:`Table %s <tab:solarArea>`. The values of maximum installed capacities indicated in :numref:`Table %s <tab:renewableTechPotentialIn2035>` are a simplified translation of these equations into [GW] constraints.
 
@@ -466,8 +467,8 @@ Hidroituango power plant (1.2 GW according to :cite:`IEA_2023`), which was compl
 		 Onshore wind, 1010 [14d]_, 16.8 [14d]_, 623, 30 [14f]_, 27 [14g]_
 		 Offshore wind, 1255 [14d]_, 50.6 [14d]_, 623, 30 [14f]_, 50 [14h]_
 		 Geothermal, 7488 [14i]_, 142.3 [14i]_, 24929, 30, 86 [14j]_
-		 CSP PT, 1045 [14k]_, 62.7 [14k]_, 0, 25, 32 [14l]_
-		 CSP ST, 768 [14k]_, 63.0 [14k]_, 0, 25, 32 [14l]_
+		 CSP PT, 1045 [14k]_, 62.7 [14k]_, 0 [14m]_ , 25, 32 [14l]_
+		 CSP ST, 768 [14k]_, 63.0 [14k]_, 0 [14m]_ , 25, 32 [14l]_
 		 Biomass central, 1677 [14d]_, 69.9 [14d]_, 332, 35, 87
 		 
 .. [14a]
@@ -507,7 +508,10 @@ Hidroituango power plant (1.2 GW according to :cite:`IEA_2023`), which was compl
    Figure 2 of :cite:`viebahn_potential_2011`.
    
 .. [14l]
-   Mean value of the :math:`c_{p,t}` time series computed below.
+   This value of :math:`c_{p}` is the mean value of the :math:`c_{p,t}` time series computed below.
+   
+.. [14m]
+   Not computed yet. To be completed in the near future.
  
 
 :numref:`Table %s <tab:elec_prod_re>` includes the values of the yearly capacity factor (:math:`c_p`) of technologies.
@@ -1403,57 +1407,63 @@ This technology is added in the following tables.
    .. table:: Passenger mobility financial information, in 2035 (based on data in :numref:`Table %s <tbl:mob_specific_costs_calculation>`). Abbreviations: Fuel Cell (FC), Hybrid Electric Vehicle (HEV), Natural Gas (NG), Plug-in Hybrid Electric Vehicle (PHEV), public (pub.).
       :name: tbl:mob_costs
 
-      +----------+----------+----------+----------+----------+----------+
-      | **Vehicle| :math:`c_| :math:`c_| :math:`g | :math:`c_| :math:`V |
-      | type**   | {inv}`   | {maint}` | wp_{     | p`       | eh.~capa`|
-      |          |          |          | constr}` |          |          |
-      +----------+----------+----------+----------+----------+----------+
-      | [€/km    | [€/km    | [€/km    | [kgCO\   | [%]      | [pass-km |
-      | -pass]   | -pass/h] | -pass    | :sub:`2` |          | /h/veh.] |
-      |          |          | /h/y]    | -eq./km  |          |          |
-      |          |          |          | -pass/h] |          |          |
-      +----------+----------+----------+----------+----------+----------+
-      | Gasoline | 420      | 24       | 342      | 5.1      | 50       |
-      | car      |          |          |          |          |          |
-      +----------+----------+----------+----------+----------+----------+
-      | Diesel   | 434      | 24       | 346      | 5.1      | 50       |
-      | car      |          |          |          |          |          |
-      +----------+----------+----------+----------+----------+----------+
-      | NG car   | 429      | 24       | 342      | 5.1      | 50       |
-      +----------+----------+----------+----------+----------+----------+
-      | HEV car  | 429      | 34       | 519      | 5.1      | 50       |
-      +----------+----------+----------+----------+----------+----------+
-      | PHEV car | 456      | 34       | 519      | 5.1      | 50       |
-      +----------+----------+----------+----------+----------+----------+
-      | BEV      | 434      | 10       | 385      | 5.1      | 50       |
-      |          | [21c]_   |          |          |          |          |
-      +----------+----------+----------+----------+----------+----------+
-      | FC car   | 672      | 10       | 786      | 5.1      | 50       |
-      |          | [21c]_   |          |          |          |          |
-      +----------+----------+----------+----------+----------+----------+
-      | Methanol | 420      | 24       | 342      | 5.1      | 50       |
-      | car      |          |          |          |          |          |
-      | [21b]_   |          |          |          |          |          |
-      +----------+----------+----------+----------+----------+----------+
-      | Tram and | 625      | 12.5     | 0        | 34.2     | 4000     |
-      | metro    |          |          | [21a]_   |          |          |
-      +----------+----------+----------+----------+----------+----------+
-      | Diesel   | 611      | 30.6     | 0        | 29.7     | 360      |
-      | bus      |          |          | [21a]_   |          |          |
-      +----------+----------+----------+----------+----------+----------+
-      | Diesel   | 833      | 33.3     | 0        | 29.7     | 360      |
-      | HEV bus  |          |          | [21a]_   |          |          |
-      +----------+----------+----------+----------+----------+----------+
-      | Gasoline | 611      | 30.6     | 0        | 29.7     | 360      |
-      | bus      |          |          | [21a]_   |          |          |
-      +----------+----------+----------+----------+----------+----------+
-      | NG bus   | 611      | 30.6     | 0 [21a]_ | 29.7     | 360      |
-      +----------+----------+----------+----------+----------+----------+
-      | FC bus   | 1042     | 31.3     | 0 [21a]_ | 29.7     | 360      |
-      +----------+----------+----------+----------+----------+----------+
-      | Train    | 1506     | 54.4     | 0 [21a]_ | 27.5     | 6640     |
-      | pub.     |          |          |          |          |          |
-      +----------+----------+----------+----------+----------+----------+
+      +-----------+----------+----------+----------+----------+----------+
+      | **Vehicle | :math:`c_| :math:`c_| :math:`g | :math:`c_| :math:`V |
+      | type**    | {inv}`   | {maint}` | wp_{     | p`       | eh.~capa`|
+      |           |          |          | constr}` |          |          |
+      +-----------+----------+----------+----------+----------+----------+
+      | [€/km     | [€/km    | [€/km    | [kgCO\   | [%]      | [pass-km |
+      | -pass]    | -pass/h] | -pass    | :sub:`2` |          | /h/veh.] |
+      |           |          | /h/y]    | -eq./km  |          |          |
+      |           |          |          | -pass/h] |          |          |
+      +-----------+----------+----------+----------+----------+----------+
+      | Gasoline  | 420      | 24       | 342      | 5.1      | 50       |
+      | car       |          |          |          |          |          |
+      +-----------+----------+----------+----------+----------+----------+
+      | Diesel    | 434      | 24       | 346      | 5.1      | 50       |
+      | car       |          |          |          |          |          |
+      +-----------+----------+----------+----------+----------+----------+
+      | NG car    | 429      | 24       | 342      | 5.1      | 50       |
+      +-----------+----------+----------+----------+----------+----------+
+      | HEV car   | 429      | 34       | 519      | 5.1      | 50       |
+      +-----------+----------+----------+----------+----------+----------+
+      | PHEV car  | 456      | 34       | 519      | 5.1      | 50       |
+      +-----------+----------+----------+----------+----------+----------+
+      | BEV       | 434      | 10       | 385      | 5.1      | 50       |
+      |           | [21c]_   |          |          |          |          |
+      +-----------+----------+----------+----------+----------+----------+
+      | FC car    | 672      | 10       | 786      | 5.1      | 50       |
+      |           | [21c]_   |          |          |          |          |
+      +-----------+----------+----------+----------+----------+----------+
+      | Methanol  | 420      | 24       | 342      | 5.1      | 50       |
+      | car       |          |          |          |          |          |
+      | [21b]_    |          |          |          |          |          |
+      +-----------+----------+----------+----------+----------+----------+
+      | Gasoline  | 21       | 1.2      | 17       | 5.1      | 10       |
+      | motorcycle| [21d]_   | [21d]_   |          |          |          |
+      +-----------+----------+----------+----------+----------+----------+
+      | Electrical| 35       | 0.8      | 31       | 5.1      | 10       |
+      | motorcycle| [21e]_   | [21e]_   |          |          |          |
+      +-----------+----------+----------+----------+----------+----------+
+      | Tram and  | 625      | 12.5     | 0        | 34.2     | 4000     |
+      | metro     |          |          | [21a]_   |          |          |
+      +-----------+----------+----------+----------+----------+----------+
+      | Diesel    | 611      | 30.6     | 0        | 29.7     | 360      |
+      | bus       |          |          | [21a]_   |          |          |
+      +-----------+----------+----------+----------+----------+----------+
+      | Diesel    | 833      | 33.3     | 0        | 29.7     | 360      |
+      | HEV bus   |          |          | [21a]_   |          |          |
+      +-----------+----------+----------+----------+----------+----------+
+      | Gasoline  | 611      | 30.6     | 0        | 29.7     | 360      |
+      | bus       |          |          | [21a]_   |          |          |
+      +-----------+----------+----------+----------+----------+----------+
+      | NG bus    | 611      | 30.6     | 0 [21a]_ | 29.7     | 360      |
+      +-----------+----------+----------+----------+----------+----------+
+      | FC bus    | 1042     | 31.3     | 0 [21a]_ | 29.7     | 360      |
+      +-----------+----------+----------+----------+----------+----------+
+      | Train     | 1506     | 54.4     | 0 [21a]_ | 27.5     | 6640     |
+      | pub.      |          |          |          |          |          |
+      +-----------+----------+----------+----------+----------+----------+
 
 .. [21a]
    No data found
@@ -1463,8 +1473,20 @@ This technology is added in the following tables.
    technology is similar to a gasoline car (except the fuel).
    
 .. [21c]
-   ASK PAOLO
+   ASK Xavier
+   
+.. [21d]
+   A cost ratio of 5% between gasoline car and gasoline motorcycle is given in
+   :cite:`plazas_nino_2023`. We thus compute the investment and maintenance costs of 
+   gasoline motorcycle by multiplying the data of the technology 'gasoline car'
+   by this ratio.
 
+.. [21e]
+   A cost ratio of 8% between BEV and electrical motorcycle is given in
+   :cite:`plazas_nino_2023`. We thus compute the investment and maintenance costs of 
+   electrical motorcycle by multiplying the data of the technology BEV
+   by this ratio.
+   
 
 :numref:`Table %s <tbl:passenger_vehicles>` summarises
 the projected energy efficiencies for the different vehicles. For public
@@ -1481,53 +1503,67 @@ of each vehicle type in 2035. The shares in 2021 are given as well.
    .. table:: Fuel and electricity consumption for passenger mobility technologies in 2035 :cite:`codina_girones_strategic_2015`, and minimum/maximum shares allowed in the model. Abbreviations: Fuel Cell (FC), Hybrid Electric Vehicle (HEV), Natural Gas (NG), Plug-in Hybrid Electric Vehicle (PHEV), public (pub.).
       :name: tbl:passenger_vehicles
 
-      ================ ============ =============== ============================ ============================ ======================================
-      **Vehicle type** **Fuel**     **Electricity** **f**:math:`_\textbf{min,%}` **f**:math:`_\textbf{max,%}` **f**:math:`_\textbf{%}` (2021) [22a]_
-      \                [Wh/km-pass] [Wh/km-pass]    [Wh/km-pass]                 [%]	                      [%]		
-      Gasoline car     497  [251]_  0               0                            100                          33
-      Diesel car       435  [251]_  0               0                            100                          0
-      NG car           543  [251]_  0               0                            100                          15
-      HEV [252]_       336  [251]_  0               0                            100                          0
-      PHEV [253]_      138  [251]_  109 [251]_      0                            100                          0
-      BEV              0            173 [251]_      0                            100                          0
-      FC car           264  [254]_  0               0                            100                          0
-      Methanol car     497  [251]_  0               0                            100                          0
-      Tram & Trolley   0            63  [255]_      0                            50 [256]_                    0
-      Diesel bus       265          0               0                            100                          75
-      Diesel HEV bus   198          0               0                            100                          0
-      NG bus           268          0               0                            100                          0
-      FC bus           225          0               0                            100                          0
-      Train pub.       0            65 [255]_       0                            30 [256]_                    0
-      ================ ============ =============== ============================ ============================ ======================================
+      ===================== ============ =============== ============================ ============================ ======================================
+      **Vehicle type**      **Fuel**     **Electricity** **f**:math:`_\textbf{min,%}` **f**:math:`_\textbf{max,%}` **f**:math:`_\textbf{%}` (2021) [22a]_
+      \                     [Wh/km-pass] [Wh/km-pass]    [Wh/km-pass]                 [%]	                      [%]		
+      Gasoline car          497  [22b]_  0               0                            100                          33
+      Diesel car            435  [22b]_  0               0                            100                          0
+      NG car                543  [22b]_  0               0                            100                          15
+      HEV [22c]_            336  [22b]_  0               0                            100                          0
+      PHEV [22d]_           138  [22b]_  109 [22b]_      0                            100                          0
+      BEV                   0            195 [22b]_      0                            100                          0
+      FC car                264  [22e]_  0               0                            100                          0
+      Methanol car          497  [22b]_  0               0                            100                          0
+      Gasoline motorcycle   149  [22f]_  0               0                            100			   55
+      Electrical motorcycle 0 		 55  [22g]_      0			      100			   0
+      Tram & Trolley        0            63  [22h]_      0                            50 [22i]_                    0
+      Diesel bus            265          0               0                            100                          75
+      Diesel HEV bus        198          0               0                            100                          0
+      NG bus                268          0               0                            100                          0
+      FC bus                225          0               0                            100                          0
+      Train pub.            0            65 [22h]_       0                            30 [22i]_                    0
+      ===================== ============ =============== ============================ ============================ ======================================
 
 .. [22a]
    Data deduced from energy consumption of transport in :cite:`IEA_2023`.
 
-.. [251]
+.. [22b]
    calculation based on vehicle consumption in
    2030 :cite:`BureaufederalduPlan2012` and occupancy of
    2030 :cite:`BureaufederalduPlan2012`. According to
    :cite:`codina_girones_strategic_2015`, gas car are
    assumed to consume 25% more than diesel cars.
 
-.. [252]
+.. [22c]
    Using gasoline as only fuel.
 
-.. [253]
+.. [22d]
    It is assumed that electricity is used to cover 40% of the total
    distance and petrol to cover the remaining 60%.
 
-.. [254]
+.. [22e]
    In FC car are estimated to consume 52.6%
    more than BEV in 2035, see Table 2.12 in
    :cite:`national2013transitions`
 
-.. [255]
+.. [22f]
+   A fuel consumption ratio of 27% between gasoline motorcycle and gasoline car is given in
+   :cite:`plazas_nino_2023`. We thus compute the fuel consumption of 
+   gasoline motorcycle by multiplying the value of the technology 'gasoline car'
+   by this ratio.
+   
+.. [22g]
+   A fuel consumption ratio of 28% between electrical motorcycle and BEV is given in
+   :cite:`plazas_nino_2023`. We thus compute the fuel consumption of 
+   electrical motorcycle by multiplying the value of the technology BEV
+   by this ratio.
+
+.. [22h]
    Based on real data for the French case
    in 2004, from :cite:`enerdata2004efficacite`. An increase
    of efficiency of 25% was assume.
 
-.. [256]
+.. [22i]
    Our own expert guesses.
 
 
@@ -2078,7 +2114,7 @@ data for the hydrogen production technologies.
    Thus, we didn't found reliable data and did our own calculation based on Haber bosch process and methane cracking.
    
 .. [32x]
-   ASK PAOLO
+   ASK Xavier
 
 
 
@@ -2628,13 +2664,13 @@ given in :numref:`Table %s <tab:2021_CO2_check>`.
 		
 		 , [GWh] , [tCO :sub:`2`-eq/MWh :sub:`fuel`] , [MtCO :sub:`2`-eq] , [MtCO :sub:`2`-eq]
 		coal , 40 990 , 0.36 , 14.8 , 14
-		natural gas , 76 014 , 0.20 , 15.2 , 18
-		gasoline , 69 435 , 0.25 , 17.4, 17.7 [37c]_
+		natural gas , 76 295 , 0.20 , 15.3 , 18
+		gasoline , 69 438 , 0.25 , 15.9, 17.7 [37c]_
 		diesel , 70 949 , 0.27 , 19.2 , 19.5 [37c]_
 		LFO , 40 769 , 0.26 , 10.6 , 10.8 [37c]_
-		bio-ethanol , 7 166 , 0.25 , 1.8 , ~ [37d]_
+		bio-ethanol , 6 179 , 0.25 , 1.5 , ~ [37d]_
 		bio-diesel , 2 540 , 0.27 , 0.7 , ~ [37d]_
-		woody biomass , 38 395 , 0.39 , 15.0 , ~ [37d]_
+		woody biomass , 38 357 , 0.39 , 15.0 , ~ [37d]_
 
 .. [37a]
    Obtained after running EnergyScope with the 2021 data. 
@@ -2656,7 +2692,7 @@ The sum of the values simulated with EnergyScope for fossil fuels (thus excludin
 Setting a gwp limit for the year 2035
 -------------------------------------
 
-The gwp :sub:`op` computed by EnergyScope for the 2021 Colombian energy system is of 118 MtCO :sub:`2`-eq. It is broken down by
+The gwp :sub:`op` computed by EnergyScope for the 2021 Colombian energy system is of 94 MtCO :sub:`2`-eq. It is broken down by
 resource type in :numref:`Table %s <tab:2021_gwp>`.
 
 .. container::
@@ -2667,14 +2703,14 @@ resource type in :numref:`Table %s <tab:2021_gwp>`.
       :name: tab:2021_gwp
 		
 		 , [GWh] , [tCO :sub:`2`-eq/MWh :sub:`fuel`] , [MtCO :sub:`2`-eq]
-		coal , 40 990 , 0.47 , 19.3
-		natural gas , 76 014 , 0.33 , 25.1
-		gasoline , 69 435 , 0.43 , 29.9
-		diesel , 70 949 , 0.40 , 28.4
-		LFO , 40 769 , 0.37 , 15.1
-		bio-ethanol , 7 166 , 0 , 0
+		coal , 40 990 , 0.40 , 16.5
+		natural gas , 76 295 , 0.27 , 20.3
+		gasoline , 63 438 , 0.34 , 21.9
+		diesel , 70 949 , 0.31 , 22.3
+		LFO , 40 769 , 0.31 , 12.7
+		bio-ethanol , 6 179 , 0 , 0
 		bio-diesel , 2 540 , 0 , 0
-		woody biomass , 38 395 , 0.01 , 0.4
+		woody biomass , 38 357 , 0.01 , 0.5
 
 .. [38a]
    Obtained after running EnergyScope with the 2021 data. 
