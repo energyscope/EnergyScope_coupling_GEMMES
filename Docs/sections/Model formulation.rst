@@ -1400,10 +1400,10 @@ In EnergyScope, there are two technologies related to hydro-electric dams: *Hydr
 .. math::
     -\frac{\textbf{F}(PT~Collector)}{f(PT~Power~Block, PT~Heat)} \leq sm_{max} \cdot \textbf{F}(PT~Power~Block)
     :label: eq:limit_solar_mulitple_PT
-    
-TO DO: EXPLAIN eqs. :eq:`eq:limit_solar_mulitple_ST` - :eq:`eq:limit_solar_mulitple_PT`
 
-oemof thermal csp model : https://oemof-thermal.readthedocs.io/en/latest/concentrating_solar_power.html
+Concentrated solar power (CSP) technologies are modelled with 3 elements: *Collectors*, *Storage* and *Power Block*.
+The link between the 3 elements is kept into a "realistic" range thanks to Equations
+:eq:`eq:limit_solar_mulitple_ST` and :eq:`eq:limit_solar_mulitple_PT`.
 
 .. math::
     \frac{\textbf{F}(PV~Rooftop)}{power\_density_{pv}} + \frac{\textbf{F}(Dec_{Solar}) + \textbf{F}(DHN_{Solar})}{power\_density_{solar~thermal}}  \leq solar_{area,rooftop}
@@ -1431,6 +1431,8 @@ Eq. :eq:`eq:solarAreaRooftopLimited` imposes a constraint on the available rooft
 Eq. :eq:`eq:solarAreaLandLimited`, does the same for ground area. Finally, eq. :eq:`eq:solarAreaGroundHighIrrLimited`
 proceeds similarly for ground area with high irradiation, suitable for the installation of CSP plants
 (i.e. with a Direct Normal Irradiation (DNI) superior to 1800 [kWh/m\ :math:`^2`/year]).
+The area limitation is applied on the *Collector* element of the CSP, assuming that 
+*Storage* and *Power Block* keep a standard size.
 Note that in eqs. :eq:`eq:solarAreaLandLimited` and :eq:`eq:solarAreaGroundHighIrrLimited`, the terms associated
 to CSP are counted as positive (the minus signs are present to compensate for the negative signs of :math:`f(\cdot)`).
 

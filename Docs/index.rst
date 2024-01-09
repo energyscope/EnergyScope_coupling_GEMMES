@@ -14,9 +14,9 @@ EnergyScope is an open-source, whole-energy system model for national or regiona
    :width: 16cm
 
 EnergyScope is developed by EPFL (Switzerland) and UCLouvain (Belgium).
-This documentation introduces the *core* EnergyScope model. Its main performances are detailed in the :doc:`/sections/Overview` section.
-It has been applied to various countries and further extended to overcome most of its limitations.
-For more information on versions, applications, and acknowledgments, see the :doc:`/sections/Releases` section.
+This documentation introduces the version of EnergyScope applied to Colombia and Turkey. The main performances of EnergyScope are detailed in the :doc:`/sections/Overview` Section. The :doc:`/sections/Releases` Section gives more information on the various versions of the model, as well as applications and acknowledgments. Section :doc:`/sections/Model formulation` presents the structure and equations of the model, which apply both for the Colombian and Turkish case studies.
+Finally, Sections :doc:`/sections/Input Data - Colombia` and :doc:`/sections/Input Data - Turkey` present the data, sources and assumptions specific to each case study.
+
 
 Downloading EnergyScope
 =======================

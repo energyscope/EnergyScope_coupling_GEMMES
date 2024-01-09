@@ -12,7 +12,7 @@ The primary objective is to provide data for modelling a prospective Turkish ene
 Additionally, we provide the necessary data to reproduce the historical Turkish energy system for the year 2019,
 serving as a validation of EnergyScope's accuracy in modeling this intricate system.
 
-Since many data are common between the Colombian and Turkish case studies, we will only present in the following sections
+Since many data are common between the Colombian and Turkish case studies, we will only present
 the data and assumptions that differ between the two. If nothing is indicated, the same data and assumptions as for
 Colombia can be used.
 
@@ -155,7 +155,8 @@ Prices and GHG emissions of biomass resources given in :numref:`Table %s <tab:pr
 		non-renewable waste, 8.1 , 150 , 260 [42c]_
 
 .. [42a]
-   GWP100a-IPCC2013 metric: impact associated to extraction, transportation and combustion
+   GWP100a-IPCC2013 metric: impact associated to extraction, transportation and combustion. Note that this metric accounts for negative 
+   upstream emissions, hence the very low value for the biomass resources.
    
 .. [42b]
    Direct emissions related to combustion :cite:`Quaschning2015`. These data are not used in EnergyScope Turkey (since the capacity of technology CCS_industrial is set to zero), but they help us to check that the calibration of EnergyScope to the 2019 Turkish energy system is correct.
@@ -193,7 +194,8 @@ Prices and GHG emissions given in :numref:`Table %s <tab:prices_imported_resourc
 		uranium, 3.9, 4, 0
 
 .. [43a]
-   GWP100a-IPCC2013 metric: impact associated to extraction, transportation and combustion
+   GWP100a-IPCC2013 metric: impact associated to extraction, transportation and combustion. Note that this metric accounts for negative 
+   upstream emissions, hence the null value for the biomass resources.
    
 .. [43b]
    Direct emissions related to combustion from :cite:`Quaschning2015`, unless specified otherwise. These data are not used in EnergyScope Turkey (since the capacity of technology CCS_industrial is set to zero), but they help us to check that the calibration of EnergyScope to the 2019 Turkish energy system of is correct.
@@ -379,8 +381,8 @@ already given in :numref:`Table %s <tab:renewableTechPotentialIn2035_TK>`. The m
 		 Onshore wind, 1010 [47d]_, 16.8 [47d]_, 623, 30 [47f]_, 33.5 [47c]_ , 34.8
 		 Offshore wind, 1255 [47d]_, 50.6 [47d]_, 623, 30 [47f]_, 41.2 , 41.2
 		 Geothermal, 7488 [47i]_, 142.3 [47i]_, 24929, 30, 86 [47j]_ , 86 [47j]_
-		 CSP PT, 1045 [47k]_, 62.7 [47k]_, 0, 25 [47k]_, 23.7 [47k]_ , 23.7 [47k]_
-		 CSP ST, 768 [47k]_, 63.0 [47k]_, 0, 25 [47k]_, 23.7 [47k]_ , 23.7 [47k]_
+		 CSP PT, 1045 [47k]_, 62.7 [47k]_, 0, 25, 23.7 [47l]_ , 23.7 [47l]_
+		 CSP ST, 768 [47k]_, 63.0 [47k]_, 0, 25, 23.7 [47l]_ , 23.7 [47l]_
 		 
 .. [47a]
    Data from :cite:`weidema_ecoinvent_2013`
@@ -398,7 +400,7 @@ already given in :numref:`Table %s <tab:renewableTechPotentialIn2035_TK>`. The m
    Value taken from :cite:`CCDR_TK`
 
 .. [47d]
-   ASK PAOLO.
+   Data from :cite:`Danish_energy_agency_2023`
    
 .. [47w]
    Retrieved from the open-source database from :cite:`dupont_2020`, available at https://github.com/EliseDup/WorldEROI
@@ -413,7 +415,13 @@ already given in :numref:`Table %s <tab:renewableTechPotentialIn2035_TK>`. The m
    Data from :cite:`association_des_entreprises_electriques_suisses_aes_electricite_2012`
 	
 .. [47k]
-   ASK PAOLO	
+   The cost and its repartition between :math:`c_{inv}`	and :math:`c_{maint}` is taken from :cite:`CSP_IRENA`. The
+   evolution through time is the one from :cite:`CSP_IEA`, assuming an identical evolution as the one of the LCOE.
+   These data are cross-checked with the ones of the Figure 4 of :cite:`boretti_techno_economic_2021` and of the 
+   Figure 2 of :cite:`viebahn_potential_2011`.
+   
+.. [47l]
+   Mean value of the :math:`c_{p,t}` time series computed below.		
 
 
 :numref:`Table %s <tab:elec_prod_re_TK>` includes the values of the yearly capacity factor (:math:`c_p`) of technologies.
@@ -428,13 +436,21 @@ for PV in Turkey was then computed by taking a weighted average of these 7 time 
 (0.32, 0.13, 0.15, 0.09, 0.10, 0.08, 0.13). These weights were taken proportional to the populations of the
 geographical regions encompassing these cities, given in :cite:`TK_geog_regions`.
 
-
 The yearly profile of :math:`c_{p,t}` for onshore wind was computed in the same way, retrieving from
 :cite:`Renewables_ninja` power production profiles of wind turbines [11]_ instead of PV.
 
 The same 7 time series as for onshore wind were used for offshore wind, but the weighted average to obtain the yearly profile of :math:`c_{p,t}`
 was computed by using the weights (0.2,0.2,0,0.3,0,0,0.3). These weights are proportional to the length of coastline near each city, according to
 numbers from :cite:`TK_coast`.
+
+Regarding CSP, the (non-normalized) time series for :math:`c_{p,t}` is computed with the oemof thermal :cite:`oemf_thermal` and 
+pvlib :cite:`pvlib` packages (to extract pvgis data :cite:`pvgis`). These time series give the thermal GWh of energy produced
+by thermal GW of *Collector* installed. These time series are computed for the 6 locations of respective (lat,lon):
+(37.72, 27.9), (37.38, 30.75), (37.73, 33.69), (38.45, 36.95), (38.12, 39.62) and (38.25, 43.08). These locations were identified 
+as the ones having the highest CSP potential, based on the open-source database from :cite:`dupont_2020`. The weighted mean
+of these six time series is then computed, using the weights (0.05, 0.11, 0.3 , 0.13, 0.33, 0.09) which reflect the
+respective potentials of these different locations, according to :cite:`dupont_2020`. The obtained mean time series is the
+yearly :math:`c_{p,t}` time series for CSP in Turkey in 2035.
 
 Finally, for hydro dam and hydro river, daily incoming water flow to hydro-electric facilities in Turkey was taken from the Turkish TSO website
 for the 365 days of the year. These data were normalized to give a yearly profile :math:`c_{p,t}`, taking the same value for each hour of a same

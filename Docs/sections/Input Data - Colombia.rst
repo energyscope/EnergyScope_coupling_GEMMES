@@ -117,7 +117,7 @@ As described by eqs. :eq:`eq:solarAreaRooftopLimited` - :eq:`eq:solarAreaGroundH
       Data from :cite:`dupont_2020` (mono-silicon PV).
       
    .. [6c]
-      ASK PAOLO
+      Based on existing design configurations (c.f. Section 2.5 of :cite:`dupont_2020`)
       
 Note that the ground areas given in :numref:`Table %s <tab:renewableTechPotentialIn2035>`
 are not the total areas occupied by the solar power plants, but only the areas occupied 
@@ -195,7 +195,8 @@ Prices and GHG emissions of biomass resources given in :numref:`Table %s <tab:pr
 		non-renewable waste, 8.1 , 190 , 260 [8c]_
 
 .. [8a]
-   GWP100a-IPCC2013 metric: impact associated to extraction, transportation and combustion
+   GWP100a-IPCC2013 metric: impact associated to extraction, transportation and combustion. Note that this metric accounts for negative 
+   upstream emissions, hence the null or very low value for the different biomass resources.
    
 .. [8b]
    Direct emissions related to combustion :cite:`Quaschning2015`. These data are not used in EnergyScope Colombia (since the capacity of technology CCS_industrial is set to zero), but they help us to check that the calibration of EnergyScope to the 2021 Colombian energy system is correct.
@@ -465,9 +466,9 @@ Hidroituango power plant (1.2 GW according to :cite:`IEA_2023`), which was compl
 		 Onshore wind, 1010 [14d]_, 16.8 [14d]_, 623, 30 [14f]_, 27 [14g]_
 		 Offshore wind, 1255 [14d]_, 50.6 [14d]_, 623, 30 [14f]_, 50 [14h]_
 		 Geothermal, 7488 [14i]_, 142.3 [14i]_, 24929, 30, 86 [14j]_
-		 CSP PT, 1045 [14k]_, 62.7 [14k]_, 0, 25 [14k]_, 32 [14k]_
-		 CSP ST, 768 [14k]_, 63.0 [14k]_, 0, 25 [14k]_, 32 [14k]_
-		 Biomass central, 1677 [14l]_, 69.9 [14l]_, 332, 35, 87
+		 CSP PT, 1045 [14k]_, 62.7 [14k]_, 0, 25, 32 [14l]_
+		 CSP ST, 768 [14k]_, 63.0 [14k]_, 0, 25, 32 [14l]_
+		 Biomass central, 1677 [14d]_, 69.9 [14d]_, 332, 35, 87
 		 
 .. [14a]
    Data from :cite:`weidema_ecoinvent_2013`
@@ -479,7 +480,7 @@ Hidroituango power plant (1.2 GW according to :cite:`IEA_2023`), which was compl
    Computed based on installed capacities and yearly production of hydro power pants in 2021, with data from :cite:`IEA_2023`.
    
 .. [14d]
-   ASK PAOLO.
+   Data from :cite:`Danish_energy_agency_2023`
    
 .. [14e]
    Retrieved from the open-source database from :cite:`dupont_2020`, available at https://github.com/EliseDup/WorldEROI. 
@@ -500,10 +501,14 @@ Hidroituango power plant (1.2 GW according to :cite:`IEA_2023`), which was compl
    Data from :cite:`association_des_entreprises_electriques_suisses_aes_electricite_2012`
 	
 .. [14k]
-   ASK PAOLO	 
+   The cost and its repartition between :math:`c_{inv}`	and :math:`c_{maint}` is taken from :cite:`CSP_IRENA`. The
+   evolution through time is the one from :cite:`CSP_IEA`, assuming an identical evolution as the one of the LCOE.
+   These data are cross-checked with the ones of the Figure 4 of :cite:`boretti_techno_economic_2021` and of the 
+   Figure 2 of :cite:`viebahn_potential_2011`.
    
 .. [14l]
-   ASK PAOLO	
+   Mean value of the :math:`c_{p,t}` time series computed below.
+ 
 
 :numref:`Table %s <tab:elec_prod_re>` includes the values of the yearly capacity factor (:math:`c_p`) of technologies.
 As described in the Model Formulation Section, the values of :math:`c_p` for intermittent renewables is in fact equal to one, while
@@ -523,7 +528,14 @@ these 3 profiles is then computed, with respective weights (0.25, 0.25, 0.5). Th
 :math:`c_{p,t}` for onshore wind.
 
 For wind offshore, based on the same open-source database, the profile at latitude (13.5,-81.75) is selected with
-:cite:`Renewables_ninja`.  
+:cite:`Renewables_ninja`. 
+
+Regarding CSP, the (non-normalized) time series for :math:`c_{p,t}` is computed with the oemof thermal :cite:`oemf_thermal` and 
+pvlib :cite:`pvlib` packages (to extract pvgis data :cite:`pvgis`). These time series give the thermal GWh of energy produced
+by thermal GW of *Collector* installed. These time series are computed 
+for locations of (lat,lon)=(12,-72) and (lat,lon)=(12,-71.25). These locations were identified as the ones having the highest 
+CSP potential, based on the open-source database from :cite:`dupont_2020`. The mean of the two time series is then computed
+to give the yearly :math:`c_{p,t}` time series for Colombia in 2035.
 
 For hydro dam and hydro river, ...
 
@@ -1194,7 +1206,7 @@ technology to potentially cover the entire demand. The maximum (:math:`f_{max,\%
 		 Industrial electric cooling, 754, 9.9, 175, 20, 95, 242
 		 
 .. [19a]
-   ASK PAOLO
+   Data taken from :cite:`borasio2022deep`
 
 .. _sec:app1_vehicles_mobility:
 
@@ -2167,6 +2179,9 @@ Finally, a last technology can produce methane from hydrogen and sequestrated CO
    A distinction is made between pyrolysis to LFO and other fuels. 
    The first can produce oil for heating or non-energy demand. The second produce a 
    blend of diesel and gasoline (18% of gasoline and 39.4% of diesel).
+   The characteristics of these technologies are taken from
+   :cite:`Danish_energy_agency_2023_re_fuels` using the representative technology
+   "Fischer-Tropsch".
 
 
 Carbon capture and storage
