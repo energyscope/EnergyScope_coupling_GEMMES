@@ -17,12 +17,12 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'EnergyScope_documentation'
-copyright = '2021, G. Limpens'
-author = 'G. Limpens'
+project = 'REHO'
+copyright = '2023, IPESE, EPFL'
+author = 'D. Lepour'
 
 # The full version, including alpha/beta/rc tags
-release = '2.2'
+release = '1.0'
 
 
 # -- General configuration ---------------------------------------------------
@@ -30,7 +30,8 @@ release = '2.2'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = [ 'sphinxcontrib.bibtex']
+extensions = ['sphinxcontrib.bibtex']
+
 # Bibliography:
 bibtex_bibfiles = ['refs.bib']
 bibtex_default_style = 'unsrt'
@@ -50,7 +51,7 @@ exclude_patterns = []
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'sphinx_book_theme' # default #There is a mistake with sphinx_rtd_theme, cannot be installed even by adding it in requirements and extensions = []. Issue discussed here: https://github.com/readthedocs/sphinx_rtd_theme/issues/1463
+html_theme = 'piccolo_theme'
 numfig = True # Add figure numbering
 numtab = True # Add table numbering
 
@@ -59,7 +60,3 @@ numtab = True # Add table numbering
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = []
 
-
-# The name of an image file (relative to this directory) to place at the top
-# of the sidebar.
-html_logo = 'images/estd_graphical_abstract.png'
