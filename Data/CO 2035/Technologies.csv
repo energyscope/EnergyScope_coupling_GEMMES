@@ -25,8 +25,8 @@ Electricity;Electricity;Hydro dam;HYDRO_DAM;4200.7;21;1692.88;40;1;0;1;9.336;51.
 Electricity;Electricity;Hydro river;HYDRO_RIVER;5044.92;50.44;1262.82;40;1;0;1;3.777;2.78E+01;
 Electricity;Electricity;Tidal;TIDAL;2867;178;0;20;1;0;1;0;0.00E+00;
 Electricity;Electricity;Wave;WAVE;1909;42;0;20;1;0;1;0;0.00E+00;
-Electricity;Electricity;Geothermal power plant;GEOTHERMAL;7488;142.27;24929.09;30;0.86;0;1;0;1.20E+00;
-Heat;Heat high temperature;Cogeneration gas (industry);IND_COGEN_GAS;1408.03;92.61;1024.32;25;0.85;0;1;0;1.00E+15;
+Electricity;Electricity;Geothermal power plant;GEOTHERMAL;7488;162.8;24929.09;30;0.86;0;1;0;1.20E+00;
+Heat;Heat high temperature;Cogeneration gas (industry);IND_COGEN_GAS;1408.03;98.2;1024.32;25;0.85;0;1;0;1.00E+15;
 Heat;Heat high temperature;Cogeneration wood (industry);IND_COGEN_WOOD;1080.79;40.49;165.33;25;0.85;0;1;0;1.00E+15;
 Heat;Heat high temperature;Cogeneration waste (industry);IND_COGEN_WASTE;2927.87;111.32;647.82;25;0.85;0;1;0;1.00E+15;
 Heat;Heat high temperature;Boiler gas (industry);IND_BOILER_GAS;58.89;1.18;12.32;17;0.95;0;1;0;1.00E+15;
@@ -39,8 +39,8 @@ Heat;Heat low temperature centralised;Heat pump (DHN);DHN_HP_ELEC;344.76;12;174.
 Heat;Heat low temperature centralised;Cogeneration gas (DHN);DHN_COGEN_GAS;1254.49;37.53;490.88;25;0.85;0;1;0;1.00E+15;
 Heat;Heat low temperature centralised;Cogeneration wood (DHN);DHN_COGEN_WOOD;1080.79;40.49;165.33;25;0.85;0;1;0;1.00E+15;
 Heat;Heat low temperature centralised;Cogeneration waste (DHN);DHN_COGEN_WASTE;2927.87;111.32;647.82;25;0.85;0;1;0;1.00E+15;
-Heat;Heat low temperature centralised;Cogeneration wet biomass (DHN);DHN_COGEN_WET_BIOMASS;1491.64;228.7;1513;25;0.7455;0;1;0;1.00E+15;
-Heat;Heat low temperature centralised;Cogeneration hydrolysis (DHN);DHN_COGEN_BIO_HYDROLYSIS;4923.77;221.69;988;15;0.8449;0;1;0;1.00E+15;
+Heat;Heat low temperature centralised;Cogeneration wet biomass (DHN);DHN_COGEN_WET_BIOMASS;1374.44;228.7;1513;25;0.7455;0;1;0;1.00E+15;
+Heat;Heat low temperature centralised;Cogeneration hydrolysis (DHN);DHN_COGEN_BIO_HYDROLYSIS;4536.9;221.69;988;15;0.8449;0;1;0;1.00E+15;
 Heat;Heat low temperature centralised;Boiler gas (DHN);DHN_BOILER_GAS;58.89;1.18;12.32;17;0.95;0;1;0;1.00E+15;
 Heat;Heat low temperature centralised;Boiler wood (DHN);DHN_BOILER_WOOD;115.18;2.3;28.87;17;0.9;0;1;0;1.00E+15;
 Heat;Heat low temperature centralised;Boiler oil (DHN);DHN_BOILER_OIL;54.86;1.18;12.32;17;0.95;0;1;0;1.00E+15;
@@ -75,7 +75,7 @@ Mobility;Passenger private;Car gas;CAR_NG;429.38;24;0;10;0.051369863;0;1;0;1.00E
 Mobility;Passenger private;Car methanol;CAR_METHANOL;420.29;24;0;10;0.051369863;0;1;0;1.00E+15;
 Mobility;Passenger private;Car hybrid (gasoline);CAR_HEV;429.41;34;0;10;0.051369863;0;1;0;1.00E+15;
 Mobility;Passenger private;Car plug-in hybrid;CAR_PHEV;456.37;34;0;10;0.051369863;0;1;0;1.00E+15;
-Mobility;Passenger private;Electrical motorcycle;MOTORCYCLE_ELECTRIC;306.83;5;0;10;0.051369863;0;0.52;0;1.00E+15;
+Mobility;Passenger private;Electrical motorcycle;MOTORCYCLE_ELECTRIC;34.807;0.8;0;10;0.051369863;0;0.52;0;1.00E+15;
 Mobility;Passenger private;Car electric;CAR_BEV;433.83;10;0;10;0.051369863;0;1;0;1.00E+15;
 Mobility;Passenger private;Car fuel cell (H2);CAR_FUEL_CELL;672.41;10;0;10;0.051369863;0;1;0;1.00E+15;
 Mobility;Freight;Train (freight);TRAIN_FREIGHT;104.42;2.09;0;40;0.342465753;0;1;0;1.00E+15;
@@ -90,24 +90,24 @@ Mobility;Freight;Truck electric;TRUCK_ELEC;771.11;23.13;0;15;0.092592593;0;1;0;1
 Mobility;Freight;Truck gas;TRUCK_NG;371.11;18.56;0;15;0.092592593;0;1;0;1.00E+15;
 Infrastructure;Infrastructure;Efficiency mesures in energy system;EFFICIENCY;0;0;0;1;1;0;1;0;1.00E+15;
 Infrastructure;Infrastructure;Distric heating network;DHN;825.88;0;0;60;1;0;1;0;1.00E+15;
-Infrastructure;Infrastructure;Electrical grid cost;GRID ;446394.73;0;0;80;1;0;1;0;1.00E+15;
+Infrastructure;Infrastructure;Electrical grid cost;GRID ;74919.06;0;0;80;1;0;1;0;1.00E+15;
 Infrastructure;Infrastructure;Cost for increasing the import capacity of the electrical grid;HVAC_LINE;1532;30.64;0;40;1;0;1;0;1.50E+00;
 Electricity;Electricity;Parabolic trough collectors;PT_COLLECTOR;4504.71;62.65;0;25;1;0;1;0;1.00E+15;
 Electricity;Electricity;Solar tower collectors;ST_COLLECTOR;5517.02;63;0;25;1;0;1;0;1.00E+15;
 Synthetic fuels;Synthetic fuels;Electrolysers;H2_ELECTROLYSIS;696.2;19.15;0;15;0.9;0;1;0;1.00E+15;
-Synthetic fuels;Synthetic fuels;Steam methane reforming;SMR ;775.33;64.43;0;25;0.85484;0;1;0;1.00E+15;
+Synthetic fuels;Synthetic fuels;Steam methane reforming;SMR ;681.24;64.43;0;25;0.85484;0;1;0;1.00E+15;
 Synthetic fuels;Synthetic fuels;Biomass to hydrogen;H2_BIOMASS;2525.39;195.7;0;25;0.86;0;1;0;1.00E+15;
-Synthetic fuels;Synthetic fuels;Wood gasification;GASIFICATION_SNG;4007.94;139.94;0;25;0.8449;0;1;0;1.00E+15;
+Synthetic fuels;Synthetic fuels;Wood gasification;GASIFICATION_SNG;2525;139.94;0;25;0.8449;0;1;0;1.00E+15;
 Synthetic fuels;Synthetic fuels;Hydrogen methanation;SYN_METHANATION;262.2;66.99;0;40;1;0;1;0;1.00E+15;
 Synthetic fuels;Synthetic fuels;Biomass methanation;BIOMETHANATION;986.05;13.66;0;20;0.85;0;1;0;1.00E+15;
-Synthetic fuels;Synthetic fuels;Biomass hydrolysis;BIO_HYDROLYSIS;1811.76;108.54;0;15;0.8449;0;1;0;1.00E+15;
-Synthetic fuels;Synthetic fuels;Wood pyrolysis to LFO;PYROLYSIS_TO_LFO ;2554.01;61.1;0;25;0.8449;0;1;0;1.00E+15;OIL
-Synthetic fuels;Synthetic fuels;Wood pyrolysis to gasoline and diesel;PYROLYSIS_TO_FUELS;2593.5;38;0;25;0.8449;0;1;0;1.00E+15;
+Synthetic fuels;Synthetic fuels;Biomass hydrolysis;BIO_HYDROLYSIS;1591.91;108.54;0;15;0.8449;0;1;0;1.00E+15;
+Synthetic fuels;Synthetic fuels;Wood pyrolysis to LFO;PYROLYSIS_TO_LFO ;1344.22;61.1;0;25;0.8449;0;1;0;1.00E+15;OIL
+Synthetic fuels;Synthetic fuels;Wood pyrolysis to gasoline and diesel;PYROLYSIS_TO_FUELS;1365;38;0;25;0.8449;0;1;0;1.00E+15;
 Synthetic fuels;Synthetic fuels;Carbon capture atmospheric;ATM_CCS;5160;129.6;0;40;1;0;1;0;1.00E+15;
 Synthetic fuels;Synthetic fuels;Carbon capture from industry;INDUSTRY_CCS;2580;64.8;0;40;1;0;1;0;1.00E+15;
 Synthetic fuels;Synthetic fuels;Hydrogen methanolation;SYN_METHANOLATION;1679.65;47.66;0;20;0.95;0;1;0;1.00E+15;
 Synthetic fuels;Synthetic fuels;Methane to methanol;METHANE_TO_METHANOL;958.58;41.92;0;25;0.85;0;1;0;1.00E+15;
-Synthetic fuels;Synthetic fuels;Biomass methanolation;BIOMASS_TO_METHANOL ;4536;94.25;0;20;1;0;1;0;1.00E+15;METHANOL
+Synthetic fuels;Synthetic fuels;Biomass methanolation;BIOMASS_TO_METHANOL ;2520;94.25;0;20;1;0;1;0;1.00E+15;METHANOL
 Synthetic fuels;Synthetic fuels;Haber bosch (H2 to amonia);HABER_BOSCH ;847;16.56;0;20;1;0;1;0;1.00E+15;AMMONIA
 Synthetic fuels;Synthetic fuels;Amonia to H2;AMMONIA_TO_H2 ;681.24;62.87;0;25;0.86;0;1;0;1.00E+15;AMMONIA
 Synthetic fuels;Synthetic fuels;Oil to HVC;OIL_TO_HVC ;395;2.1;0;15;1;0;1;0;1.00E+15;HVC
