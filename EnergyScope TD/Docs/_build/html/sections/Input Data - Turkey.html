@@ -1,0 +1,1812 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Input Data - Turkey &mdash; EnergyScope_documentation 2.2 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=f35be339"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Bibliography" href="Bibliography.html" />
+    <link rel="prev" title="Input Data - Colombia" href="Input%20Data%20-%20Colombia.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            EnergyScope_documentation
+              <img src="../_static/estd_graphical_abstract.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Getting%20started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="How%20to%20contribute.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Model%20formulation.html">Model formulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Input%20Data%20-%20Colombia.html">Input Data - Colombia</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Input Data - Turkey</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#resources">Resources</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#local-renewable-resources">Local renewable resources</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#solar-wind-hydro-and-geothermal">Solar, wind, hydro and geothermal</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#biomass-and-non-renewable-waste">Biomass and non-renewable waste</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#imported-resources">Imported resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#electricity-imports-and-exports">Electricity imports and exports</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#energy-demand-and-political-framework">Energy demand and political framework</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#electricity">Electricity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#heating-and-cooling">Heating and cooling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mobility">Mobility</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#non-energy">Non-energy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#discount-rate-and-interest-rate">Discount rate and interest rate</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#technologies">Technologies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#electricity-generation">Electricity generation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#renewables">Renewables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#non-renewable">Non-renewable</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#heating-and-cogeneration">Heating and cogeneration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cooling">Cooling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#transport">Transport</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#passenger-mobility">Passenger mobility</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#freight">Freight</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#non-energy-demand">Non-energy demand</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#storage">Storage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#others">Others</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#electricity-grid">Electricity grid</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dhn-grid">DHN grid</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#energy-demand-reduction-cost">Energy demand reduction cost</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ghg-emissions">GHG emissions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#calibration-of-energyscope-to-the-2019-energy-system">Calibration of EnergyScope to the 2019 energy system</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setting-a-gwp-limit-for-the-year-2035">Setting a gwp limit for the year 2035</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Bibliography.html">Bibliography</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">EnergyScope_documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Input Data - Turkey</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/sections/Input Data - Turkey.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="input-data-turkey">
+<span id="app-estd-tk-data"></span><h1>Input Data - Turkey<a class="headerlink" href="#input-data-turkey" title="Link to this heading"></a></h1>
+<p>This section details the input data utilized in applying the LP modeling framework to the case study of Turkey.
+The primary objective is to provide data for modelling a prospective Turkish energy system for the year 2035.
+Additionally, we provide the necessary data to reproduce the historical Turkish energy system for the year 2019,
+serving as a validation of EnergyScope’s accuracy in modeling this intricate system.</p>
+<p>Since many data are common between the Colombian and Turkish case studies, we will only present
+the data and assumptions that differ between the two. If nothing is indicated, the same data and assumptions as for
+Colombia can be used.</p>
+<section id="resources">
+<span id="app-sec-estd-tk-resources"></span><h2>Resources<a class="headerlink" href="#resources" title="Link to this heading"></a></h2>
+<section id="local-renewable-resources">
+<h3>Local renewable resources<a class="headerlink" href="#local-renewable-resources" title="Link to this heading"></a></h3>
+<p>The energy transition heavily relies on renewable energies, which makes their
+deployment potential a critical parameter. Yet, this potential was still very
+little used in 2019. As highlighted by <span id="id1">IEA<sup><a class="reference internal" href="Bibliography.html#id25" title="IEA. Turkey 2021. Technical Report, 2021. License: CC BY 4.0. URL: https://www.iea.org/reports/turkey-2021.">132</a></sup></span>,
+<em>in 2019, the share of fossil fuels in total primary energy supply [of Turkey] was
+83%, which ranked the ninth-highest among IEA member countries.</em></p>
+<section id="solar-wind-hydro-and-geothermal">
+<h4>Solar, wind, hydro and geothermal<a class="headerlink" href="#solar-wind-hydro-and-geothermal" title="Link to this heading"></a></h4>
+<p><a class="reference internal" href="#tab-renewabletechpotentialin2035-tk"><span class="std std-numref">Table 39</span></a> gives the Turkish potential for solar, wind, hydro and geothermal energy. These data are put into perspective with the values used for the calibration to the year 2019.</p>
+<div class="docutils container">
+<table class="docutils align-default" id="tab-renewabletechpotentialin2035-tk">
+<caption><span class="caption-number">Table 39 </span><span class="caption-text">Comparison of installed capacity of technologies for renewable electricity generation in 2019 with their maximum potentials. Abbreviations: maximum (max.), photovoltaic panel (PV), District Heating Network (DHN), Concentrated Solar Power (CSP).</span><a class="headerlink" href="#tab-renewabletechpotentialin2035-tk" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Technology</strong></p></th>
+<th class="head"><p><strong>2019</strong></p></th>
+<th class="head"><p><strong>max. potential</strong></p></th>
+<th class="head"><p><strong>Units</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>hydro dam</p></td>
+<td><p>15.7 <a class="reference internal" href="#a" id="id2"><span>[39a]</span></a></p></td>
+<td><p>19.9 <a class="reference internal" href="#c" id="id3"><span>[39c]</span></a></p></td>
+<td><p>[GW]</p></td>
+</tr>
+<tr class="row-odd"><td><p>hydro river</p></td>
+<td><p>12.8 <a class="reference internal" href="#a" id="id4"><span>[39a]</span></a></p></td>
+<td><p>16.3 <a class="reference internal" href="#c" id="id5"><span>[39c]</span></a></p></td>
+<td><p>[GW]</p></td>
+</tr>
+<tr class="row-even"><td><p>rooftop PV</p></td>
+<td><p>6.0 <a class="reference internal" href="#b" id="id6"><span>[39b]</span></a></p></td>
+<td><p><span class="math notranslate nohighlight">\(\approx\)</span>120 <a class="reference internal" href="#d" id="id7"><span>[39d]</span></a></p></td>
+<td><p>[GW]</p></td>
+</tr>
+<tr class="row-odd"><td><p>utility scale PV</p></td>
+<td><p>0</p></td>
+<td><p><span class="math notranslate nohighlight">\(\approx\)</span>1350 <a class="reference internal" href="#d" id="id8"><span>[39d]</span></a></p></td>
+<td><p>[GW]</p></td>
+</tr>
+<tr class="row-even"><td><p>onshore wind</p></td>
+<td><p>7.6 <a class="reference internal" href="#e" id="id9"><span>[39e]</span></a></p></td>
+<td><p>48 <a class="reference internal" href="#e" id="id10"><span>[39e]</span></a></p></td>
+<td><p>[GW]</p></td>
+</tr>
+<tr class="row-odd"><td><p>offshore wind</p></td>
+<td><p>0</p></td>
+<td><p>66.2 <a class="reference internal" href="#f" id="id11"><span>[39f]</span></a></p></td>
+<td><p>[GW]</p></td>
+</tr>
+<tr class="row-even"><td><p>geothermal for electricity</p></td>
+<td><p>1.2 <a class="reference internal" href="#g" id="id12"><span>[39g]</span></a></p></td>
+<td><p>4.2 <a class="reference internal" href="#h" id="id13"><span>[39h]</span></a></p></td>
+<td><p>[GW]</p></td>
+</tr>
+<tr class="row-odd"><td><p>geothermal for heat (with DHN)</p></td>
+<td><p>3.05 <a class="reference internal" href="#i" id="id14"><span>[39i]</span></a></p></td>
+<td><p>30.8 <a class="reference internal" href="#h" id="id15"><span>[39h]</span></a></p></td>
+<td><p>[GW]</p></td>
+</tr>
+<tr class="row-even"><td><p>CSP parabolic trough</p></td>
+<td><p>0</p></td>
+<td><p>107 <a class="reference internal" href="#d" id="id16"><span>[39d]</span></a></p></td>
+<td><p>[GW]</p></td>
+</tr>
+<tr class="row-odd"><td><p>CSP solar tower</p></td>
+<td><p>0</p></td>
+<td><p>107 <a class="reference internal" href="#d" id="id17"><span>[39d]</span></a></p></td>
+<td><p>[GW]</p></td>
+</tr>
+<tr class="row-even"><td><p>Solar thermal (decentralised)</p></td>
+<td><p>5.3 <a class="reference internal" href="#j" id="id18"><span>[39j]</span></a></p></td>
+<td><p>no limit imposed</p></td>
+<td><p>[GW]</p></td>
+</tr>
+</tbody>
+</table>
+<div role="list" class="citation-list">
+<div class="citation" id="a" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>39a<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id2">1</a>,<a role="doc-backlink" href="#id4">2</a>)</span>
+<p>Data from <span id="id19"><sup><a class="reference internal" href="Bibliography.html#id29" title="Ministry of Energy and Natural Resources. Knowledge centre. URL: https://enerji.gov.tr (visited on 03-01-2024).">133</a></sup></span></p>
+</div>
+<div class="citation" id="b" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">39b</a><span class="fn-bracket">]</span></span>
+<p>Data from <span id="id20">IEA<sup><a class="reference internal" href="Bibliography.html#id25" title="IEA. Turkey 2021. Technical Report, 2021. License: CC BY 4.0. URL: https://www.iea.org/reports/turkey-2021.">132</a></sup></span></p>
+</div>
+<div class="citation" id="c" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>39c<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id3">1</a>,<a role="doc-backlink" href="#id5">2</a>)</span>
+<p>A hydro potential of 35.1 [GW] is given by <span id="id21">Rebière<sup><a class="reference internal" href="Bibliography.html#id35" title="Noémie Rebière. Géopolique de la sécurité énergétique : la Turquie au cœur des enjeux énergétiques régionaux. PhD thesis, IFG-LAB - Centre de recherches et d'analyses géopolitiques (Université Paris 8), 2019. doi:.">134</a></sup></span>. We split it between hydro dam and hydro river using the 55%-45% shares from 2019.</p>
+</div>
+<div class="citation" id="d" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>39d<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id7">1</a>,<a role="doc-backlink" href="#id8">2</a>,<a role="doc-backlink" href="#id16">3</a>,<a role="doc-backlink" href="#id17">4</a>)</span>
+<p>The real constraint on solar potential is not a constraint on installable capacity, but a constraint on available area, as described below.</p>
+</div>
+<div class="citation" id="e" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>39e<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id9">1</a>,<a role="doc-backlink" href="#id10">2</a>)</span>
+<p>Ministry of Energy and Natural Resources, cited by <span id="id22">IEA<sup><a class="reference internal" href="Bibliography.html#id25" title="IEA. Turkey 2021. Technical Report, 2021. License: CC BY 4.0. URL: https://www.iea.org/reports/turkey-2021.">132</a></sup></span>.</p>
+</div>
+<div class="citation" id="f" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id11">39f</a><span class="fn-bracket">]</span></span>
+<p><span id="id23">Emeksiz and Demirci<sup><a class="reference internal" href="Bibliography.html#id36" title="Cem Emeksiz and Bahattin Demirci. The determination of offshore wind energy potential of turkey by using novelty hybrid site selection method. Sustainable Energy Technologies and Assessments, 36:100562, December 2019. URL: https://www.sciencedirect.com/science/article/pii/S221313881930428X (visited on 2024-01-03), doi:10.1016/j.seta.2019.100562.">135</a></sup></span> computes an offshore wind potential of 9.2 GW with rather conservative asumptions (max. water depth of 50 m). It is in line with the 10 GW potential computable based on the open-source database from <span id="id24"><sup><a class="reference internal" href="Bibliography.html#id11" title="Elise Dupont, Rembrandt Koppelaar, and Hervé Jeanmart. Global available solar energy under physical and energy return on investment constraints. Applied Energy, 257:113968, January 2020. URL: (visited on 2021-01-22), doi:10.1016/j.apenergy.2019.113968.">48</a></sup></span>, available at <a class="reference external" href="https://github.com/EliseDup/WorldEROI">https://github.com/EliseDup/WorldEROI</a>. To this number is added the 57 GW potential of floating wind offshore, reported by the Offshore Wind Energy Association (DÜRED) in <span id="id25"><sup><a class="reference internal" href="Bibliography.html#id34" title="Daily Sabah. Turkey holds 75 gigawatts of offshore wind energy potential. URL: https://www.dailysabah.com/business/energy/turkey-holds-75-gigawatts-of-offshore-wind-energy-potential (visited on 03-01-2024).">136</a></sup></span>.</p>
+</div>
+<div class="citation" id="g" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id12">39g</a><span class="fn-bracket">]</span></span>
+<p>Computed using the electricity production from geothermia in 2019, given in <span id="id26"><sup><a class="reference internal" href="Bibliography.html#id32" title="IEA. World energy balances - extended energy balances for turkey, 2019. Technical Report, 2023. URL: https://www.iea.org/data-and-statistics/data-product/world-energy-balances.">137</a></sup></span>, and the capacity factor of 85% sourced in <a class="reference internal" href="#tab-elec-prod-re-tk"><span class="std std-numref">Table 47</span></a></p>
+</div>
+<div class="citation" id="h" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>39h<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id13">1</a>,<a role="doc-backlink" href="#id15">2</a>)</span>
+<p><span id="id27">IEA<sup><a class="reference internal" href="Bibliography.html#id25" title="IEA. Turkey 2021. Technical Report, 2021. License: CC BY 4.0. URL: https://www.iea.org/reports/turkey-2021.">132</a></sup></span> reports a 35 GW potential for geothermal energy in Turkey. <span id="id28">Balat<sup><a class="reference internal" href="Bibliography.html#id37" title="Mustafa Balat. The Use of Renewable Energy Sources for Energy in Turkey and Potential Trends. Energy Exploration &amp; Exploitation, 22:235-251, 2004. URL: https://journals.sagepub.com/doi/10.1260/0144598042886317 (visited on ), doi:10.1260/0144598042886317.">138</a></sup></span> affirms that 12% of this potential is appropriate for electricity generation and 88% for heat production.</p>
+</div>
+<div class="citation" id="i" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id14">39i</a><span class="fn-bracket">]</span></span>
+<p>Computed using the heat generation from geothermia in 2019, given in <span id="id29"><sup><a class="reference internal" href="Bibliography.html#id32" title="IEA. World energy balances - extended energy balances for turkey, 2019. Technical Report, 2023. URL: https://www.iea.org/data-and-statistics/data-product/world-energy-balances.">137</a></sup></span> (including heat for agriculture), and the capacity factor of 85% given in Table <a class="reference internal" href="Input%20Data%20-%20Colombia.html#tbl-dhn-cogen-boiler"><span class="std std-numref">17</span></a></p>
+</div>
+<div class="citation" id="j" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id18">39j</a><span class="fn-bracket">]</span></span>
+<p>Computed using the heat generation from decentralised solar thermal in 2019, given in <span id="id30"><sup><a class="reference internal" href="Bibliography.html#id32" title="IEA. World energy balances - extended energy balances for turkey, 2019. Technical Report, 2023. URL: https://www.iea.org/data-and-statistics/data-product/world-energy-balances.">137</a></sup></span>, and the capacity factor of 20.8% whose determination is given in Subsection “Technologies - Heating and cogeneration”</p>
+</div>
+</div>
+</div>
+<p>As described by eqs. <a class="reference internal" href="Model%20formulation.html#equation-eq-solararearooftoplimited">(51)</a> - <a class="reference internal" href="Model%20formulation.html#equation-eq-solarareagroundhighirrlimited">(53)</a>, the potential of solar technologies is constrained by the available areas for their deployment. The values for these available areas are given in <a class="reference internal" href="#tab-solararea-tk"><span class="std std-numref">Table 40</span></a>. The values of maximum installed capacities indicated in <a class="reference internal" href="#tab-renewabletechpotentialin2035-tk"><span class="std std-numref">Table 39</span></a> are a simplified translation of these equations into [GW] constraints.</p>
+<div class="docutils container">
+<table class="docutils align-default" id="tab-solararea-tk">
+<caption><span class="caption-number">Table 40 </span><span class="caption-text">Values of the parameters which constrain the solar potential of Turkey. Abbreviations: solar multiple (sm), high irradiation (high irr.), photovoltaic panel (PV), Concentrated Solar Power (CSP).</span><a class="headerlink" href="#tab-solararea-tk" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 33.3%" />
+<col style="width: 33.3%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Units</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(solar_{area,rooftop}\)</span></p></td>
+<td><p>630 <a class="reference internal" href="#id34" id="id31"><span>[40a]</span></a></p></td>
+<td><p><span class="math notranslate nohighlight">\([km^2]\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(solar_{area,ground}\)</span></p></td>
+<td><p>7300 <a class="reference internal" href="#id34" id="id32"><span>[40a]</span></a></p></td>
+<td><p><span class="math notranslate nohighlight">\([km^2]\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(solar_{area,ground,high~irr}\)</span></p></td>
+<td><p>580 <a class="reference internal" href="#id34" id="id33"><span>[40a]</span></a></p></td>
+<td><p><span class="math notranslate nohighlight">\([km^2]\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<div role="list" class="citation-list">
+<div class="citation" id="id34" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>40a<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id31">1</a>,<a role="doc-backlink" href="#id32">2</a>,<a role="doc-backlink" href="#id33">3</a>)</span>
+<p>Computed based on the open-source database from <span id="id35"><sup><a class="reference internal" href="Bibliography.html#id11" title="Elise Dupont, Rembrandt Koppelaar, and Hervé Jeanmart. Global available solar energy under physical and energy return on investment constraints. Applied Energy, 257:113968, January 2020. URL: (visited on 2021-01-22), doi:10.1016/j.apenergy.2019.113968.">48</a></sup></span>, available at <a class="reference external" href="https://github.com/EliseDup/WorldEROI">https://github.com/EliseDup/WorldEROI</a>.</p>
+</div>
+</div>
+</div>
+<p>Note that the ground areas given in <a class="reference internal" href="Input%20Data%20-%20Colombia.html#tab-renewabletechpotentialin2035"><span class="std std-numref">Table 5</span></a>
+are not the total areas occupied by the solar power plants, but only the areas occupied
+by the solar panels themselves. After taking into account the <em>ground cover ratio</em>, we can compute that
+the value given for <span class="math notranslate nohighlight">\(solar_{area,ground}\)</span> corresponds to covering
+4.6% of Turkey’s land surface with solar power plants (not taking into account the rooftop area
+used by rooftop PV).</p>
+</section>
+<section id="biomass-and-non-renewable-waste">
+<h4>Biomass and non-renewable waste<a class="headerlink" href="#biomass-and-non-renewable-waste" title="Link to this heading"></a></h4>
+<p><a class="reference internal" href="#tab-renewableresourcespotentialin2035-tk"><span class="std std-numref">Table 41</span></a> gives the Turkish potential for biomass and non-renewable waste, together with their values used for the calibration to the year 2019. Note that contrary to the case of Colombia, bioethanol and biodiesel are assumed to be imported from abroad. They are therefore not given in <a class="reference internal" href="#tab-renewableresourcespotentialin2035-tk"><span class="std std-numref">Table 41</span></a>, which gives only the local biomass potential.</p>
+<div class="docutils container">
+<table class="docutils align-default" id="tab-renewableresourcespotentialin2035-tk">
+<caption><span class="caption-number">Table 41 </span><span class="caption-text">Biomass and waste resources consumed in 2021 and their potential.</span><a class="headerlink" href="#tab-renewableresourcespotentialin2035-tk" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Resources</strong></p></th>
+<th class="head"><p><strong>2019</strong></p></th>
+<th class="head"><p><strong>Max. potential</strong></p></th>
+<th class="head"><p><strong>Units</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>woody biomass</p></td>
+<td><p>40.0 <a class="reference internal" href="#id41" id="id36"><span>[41a]</span></a></p></td>
+<td><p>215.0 <a class="reference internal" href="#id43" id="id37"><span>[41b]</span></a></p></td>
+<td><p>[TWh]</p></td>
+</tr>
+<tr class="row-odd"><td><p>wet biomass</p></td>
+<td><p>0</p></td>
+<td><p>250.0 <a class="reference internal" href="#id45" id="id38"><span>[41c]</span></a></p></td>
+<td><p>[TWh]</p></td>
+</tr>
+<tr class="row-even"><td><p>non-renewable waste</p></td>
+<td><p>0.1 <a class="reference internal" href="#id41" id="id39"><span>[41a]</span></a></p></td>
+<td><p>53.8 <a class="reference internal" href="#id47" id="id40"><span>[41d]</span></a></p></td>
+<td><p>[TWh]</p></td>
+</tr>
+</tbody>
+</table>
+<div role="list" class="citation-list">
+<div class="citation" id="id41" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>41a<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id36">1</a>,<a role="doc-backlink" href="#id39">2</a>)</span>
+<p>Computed based on <span id="id42"><sup><a class="reference internal" href="Bibliography.html#id32" title="IEA. World energy balances - extended energy balances for turkey, 2019. Technical Report, 2023. URL: https://www.iea.org/data-and-statistics/data-product/world-energy-balances.">137</a></sup></span></p>
+</div>
+<div class="citation" id="id43" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id37">41b</a><span class="fn-bracket">]</span></span>
+<p>We aggregate in woody biomass the numbers from <span id="id44"><sup><a class="reference internal" href="Bibliography.html#id38" title="M. Dees, B. Elbersen, J. Fitzgerald, M. Vis, P. Anttila, N. Forsell, J. Ramirez-Almeyda, D. Garcia, A. Monti, B. Glavonjic, I. Staritsky, H. Verkerk, R. Prinz, S. Leduc, P. Datta, M. Lindner, S. Zudin, and M. Höhl. Atlas with regional cost supply biomass potentials for EU 28, Western Balkan Countries, Moldavia, Turkey and Ukraine. Project Report. S2BIOM – a project funded under the European Union 7th Framework Programme for Research. Grant Agreement n°608622. Technical Report, Chair of Remote Sensing and Landscape Information Systems, Institute of Forest Sciences, University of Freiburg, Germany, 2017. 105 p. URL: https://www.s2biom.eu/images/Publications/D1.8_S2Biom_Atlas_of_regional_cost_supply_biomass_potential_Final.pdf.">139</a></sup></span> for: dedicated woody and lignocellulosic biomass crops, total forestry potential, secondary residues from the wood industry, secondary residues from the sawmill industry, secondary residues from other wood processing industries, secondary residues from agro-industries, biowaste and post-consumer wood.</p>
+</div>
+<div class="citation" id="id45" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id38">41c</a><span class="fn-bracket">]</span></span>
+<p>We aggregate in woody biomass the numbers from <span id="id46"><sup><a class="reference internal" href="Bibliography.html#id38" title="M. Dees, B. Elbersen, J. Fitzgerald, M. Vis, P. Anttila, N. Forsell, J. Ramirez-Almeyda, D. Garcia, A. Monti, B. Glavonjic, I. Staritsky, H. Verkerk, R. Prinz, S. Leduc, P. Datta, M. Lindner, S. Zudin, and M. Höhl. Atlas with regional cost supply biomass potentials for EU 28, Western Balkan Countries, Moldavia, Turkey and Ukraine. Project Report. S2BIOM – a project funded under the European Union 7th Framework Programme for Research. Grant Agreement n°608622. Technical Report, Chair of Remote Sensing and Landscape Information Systems, Institute of Forest Sciences, University of Freiburg, Germany, 2017. 105 p. URL: https://www.s2biom.eu/images/Publications/D1.8_S2Biom_Atlas_of_regional_cost_supply_biomass_potential_Final.pdf.">139</a></sup></span> for: straw &amp; stubbles, prunings, dedicated crops, agro-industrial residues and road-side verge grass.</p>
+</div>
+<div class="citation" id="id47" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id40">41d</a><span class="fn-bracket">]</span></span>
+<p>Data could not be found for Turkey. The value taken for Italy by <span id="id48"><sup><a class="reference internal" href="Bibliography.html#id81" title="M Borasio and S Moret. Deep decarbonisation of regional energy systems: a novel modelling approach and its application to the italian energy transition. Renewable and Sustainable Energy Reviews, 153:111730, 2022.">23</a></sup></span> was chosen to have a relevant order of magnitude, since Turkey and Italy had a grossly similar Total Energy Consumption in 2019 according to IEA data.</p>
+</div>
+</div>
+</div>
+<p>In order to compute the potentials for woody biomass and wet biomass, we take from <span id="id49"><sup><a class="reference internal" href="Bibliography.html#id38" title="M. Dees, B. Elbersen, J. Fitzgerald, M. Vis, P. Anttila, N. Forsell, J. Ramirez-Almeyda, D. Garcia, A. Monti, B. Glavonjic, I. Staritsky, H. Verkerk, R. Prinz, S. Leduc, P. Datta, M. Lindner, S. Zudin, and M. Höhl. Atlas with regional cost supply biomass potentials for EU 28, Western Balkan Countries, Moldavia, Turkey and Ukraine. Project Report. S2BIOM – a project funded under the European Union 7th Framework Programme for Research. Grant Agreement n°608622. Technical Report, Chair of Remote Sensing and Landscape Information Systems, Institute of Forest Sciences, University of Freiburg, Germany, 2017. 105 p. URL: https://www.s2biom.eu/images/Publications/D1.8_S2Biom_Atlas_of_regional_cost_supply_biomass_potential_Final.pdf.">139</a></sup></span> the base potentials in 2030, defined by the authors as the sustainable (thus conservative) technical potential. The values expressed in kt dry mass were taken. Then, these kt dry mass were converted into energy units using a LHV of 18 [MJ/kg] for wet biomass and 19 [MJ/kg] for woody biomass. These values of LHV are the average values of the corresponding biomass types, extracted from <span id="id50"><sup><a class="reference internal" href="Bibliography.html#id39" title="Database phyllis2. URL: https://phyllis.nl/ (visited on 05-09-2022).">140</a></sup></span>.</p>
+<p>Prices and GHG emissions of biomass resources given in <a class="reference internal" href="#tab-prices-resources-biomass-tk"><span class="std std-numref">Table 42</span></a> … source …</p>
+<div class="docutils container">
+<table class="docutils align-default" id="tab-prices-resources-biomass-tk">
+<caption><span class="caption-number">Table 42 </span><span class="caption-text">Price and GHG emissions of biomass and waste resources.</span><a class="headerlink" href="#tab-prices-resources-biomass-tk" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Resources</strong></p></th>
+<th class="head"><p><strong>c</strong><sub>op</sub></p></th>
+<th class="head"><p><strong>gwp</strong><sub>op</sub> <a class="reference internal" href="#id54" id="id51"><span>[42a]</span></a></p></th>
+<th class="head"><p><strong>CO</strong><sub>2direct</sub> <a class="reference internal" href="#id55" id="id52"><span>[42b]</span></a></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td></td>
+<td><p>[€<sub>2015</sub>/MWh <sub>fuel</sub>]</p></td>
+<td><p>[kgCO <sub>2</sub>-eq/MWh <sub>fuel</sub>]</p></td>
+<td><p>[kgCO <sub>2</sub>-eq/MWh <sub>fuel</sub>]</p></td>
+</tr>
+<tr class="row-odd"><td><p>woody biomass</p></td>
+<td><p>32.8</p></td>
+<td><p>12</p></td>
+<td><p>390</p></td>
+</tr>
+<tr class="row-even"><td><p>wet biomass</p></td>
+<td><p>5.8</p></td>
+<td><p>12</p></td>
+<td><p>390</p></td>
+</tr>
+<tr class="row-odd"><td><p>non-renewable waste</p></td>
+<td><p>8.1</p></td>
+<td><p>150</p></td>
+<td><p>260 <a class="reference internal" href="#id57" id="id53"><span>[42c]</span></a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div role="list" class="citation-list">
+<div class="citation" id="id54" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id51">42a</a><span class="fn-bracket">]</span></span>
+<p>GWP100a-IPCC2013 metric: impact associated to extraction, transportation and combustion. Note that this metric accounts for negative
+upstream emissions, hence the very low value for the biomass resources.</p>
+</div>
+<div class="citation" id="id55" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id52">42b</a><span class="fn-bracket">]</span></span>
+<p>Direct emissions related to combustion <span id="id56"><sup><a class="reference internal" href="Bibliography.html#id91" title="Volker Quaschning. Regenerative Energiesysteme: Technologie-Berechnung-Simulation. Carl Hanser Verlag GmbH Co KG, pages 1–12, 2015. doi:10.3139/9783446461147.fm.">43</a></sup></span>. These data are not used in EnergyScope Turkey (since the capacity of technology CCS_industrial is set to zero), but they help us to check that the calibration of EnergyScope to the 2019 Turkish energy system is correct.</p>
+</div>
+<div class="citation" id="id57" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id53">42c</a><span class="fn-bracket">]</span></span>
+<p>Assuming that the energy content can be assimilated to plastics.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="imported-resources">
+<h3>Imported resources<a class="headerlink" href="#imported-resources" title="Link to this heading"></a></h3>
+<p>A certain share of coal (and gas) is produced domestically … <span id="id58"><sup><a class="reference internal" href="Bibliography.html#id25" title="IEA. Turkey 2021. Technical Report, 2021. License: CC BY 4.0. URL: https://www.iea.org/reports/turkey-2021.">132</a></sup></span></p>
+<p>Imported resources include coal, hydrocarbons (natural gas, gasoline, diesel, light fuel oil), bio-fuels and uranium.</p>
+<p>No constraint regarding the availability of imported resources, since the cost-optimization already does the trick ?</p>
+<p>Prices and GHG emissions given in <a class="reference internal" href="#tab-prices-imported-resources-tk"><span class="std std-numref">Table 43</span></a> … source …</p>
+<div class="docutils container">
+<table class="docutils align-default" id="tab-prices-imported-resources-tk">
+<caption><span class="caption-number">Table 43 </span><span class="caption-text">Price and GHG emissions of domestically produced fossil fuels, in 2035. Abbreviations: Liquid Fuel Oil (LFO).</span><a class="headerlink" href="#tab-prices-imported-resources-tk" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Resources</strong></p></th>
+<th class="head"><p><strong>c</strong><sub>op</sub></p></th>
+<th class="head"><p><strong>gwp</strong><sub>op</sub> <a class="reference internal" href="#id62" id="id59"><span>[43a]</span></a></p></th>
+<th class="head"><p><strong>CO</strong><sub>2direct</sub> <a class="reference internal" href="#id63" id="id60"><span>[43b]</span></a></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td></td>
+<td><p>[€<sub>2015</sub>/MWh <sub>fuel</sub>]</p></td>
+<td><p>[kgCO <sub>2</sub>-eq/MWh <sub>fuel</sub>]</p></td>
+<td><p>[kgCO <sub>2</sub>-eq/MWh <sub>fuel</sub>]</p></td>
+</tr>
+<tr class="row-odd"><td><p>coal</p></td>
+<td><p>17.7</p></td>
+<td><p>401</p></td>
+<td><p>360</p></td>
+</tr>
+<tr class="row-even"><td><p>natural gas</p></td>
+<td><p>44.3</p></td>
+<td><p>267</p></td>
+<td><p>200</p></td>
+</tr>
+<tr class="row-odd"><td><p>gasoline</p></td>
+<td><p>82.4</p></td>
+<td><p>345</p></td>
+<td><p>250</p></td>
+</tr>
+<tr class="row-even"><td><p>diesel</p></td>
+<td><p>79.7</p></td>
+<td><p>315</p></td>
+<td><p>260 <a class="reference internal" href="#id65" id="id61"><span>[43c]</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>LFO</p></td>
+<td><p>60.2</p></td>
+<td><p>312</p></td>
+<td><p>260</p></td>
+</tr>
+<tr class="row-even"><td><p>bioethanol</p></td>
+<td><p>111.3</p></td>
+<td><p>0</p></td>
+<td><p>250</p></td>
+</tr>
+<tr class="row-odd"><td><p>biodiesel</p></td>
+<td><p>120.1</p></td>
+<td><p>0</p></td>
+<td><p>270</p></td>
+</tr>
+<tr class="row-even"><td><p>uranium</p></td>
+<td><p>3.9</p></td>
+<td><p>4</p></td>
+<td><p>0</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div role="list" class="citation-list">
+<div class="citation" id="id62" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id59">43a</a><span class="fn-bracket">]</span></span>
+<p>GWP100a-IPCC2013 metric: impact associated to extraction, transportation and combustion. Note that this metric accounts for negative
+upstream emissions, hence the null value for the biomass resources.</p>
+</div>
+<div class="citation" id="id63" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id60">43b</a><span class="fn-bracket">]</span></span>
+<p>Direct emissions related to combustion from <span id="id64"><sup><a class="reference internal" href="Bibliography.html#id91" title="Volker Quaschning. Regenerative Energiesysteme: Technologie-Berechnung-Simulation. Carl Hanser Verlag GmbH Co KG, pages 1–12, 2015. doi:10.3139/9783446461147.fm.">43</a></sup></span>, unless specified otherwise. These data are not used in EnergyScope Turkey (since the capacity of technology CCS_industrial is set to zero), but they help us to check that the calibration of EnergyScope to the 2019 Turkish energy system of is correct.</p>
+</div>
+<div class="citation" id="id65" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id61">43c</a><span class="fn-bracket">]</span></span>
+<p>Emission intensity taken from <span id="id66"><sup><a class="reference internal" href="Bibliography.html#id26" title="Turkish Statistical Institute. Turkish greenhouse gas inventory 1990-2018. Technical Report, April 2020.">141</a></sup></span> (year 2018)</p>
+</div>
+</div>
+</section>
+<section id="electricity-imports-and-exports">
+<h3>Electricity imports and exports<a class="headerlink" href="#electricity-imports-and-exports" title="Link to this heading"></a></h3>
+<p>The availability of the cross-border electricity imports and exports, when defined as “resources”, is considered as infinite. Indeed, the real constraint comes from the grid infrastructure for imports and exports, as expressed by eqs. <a class="reference internal" href="Model%20formulation.html#equation-eq-elecimplimited">(42)</a> and <a class="reference internal" href="Model%20formulation.html#equation-eq-elecexplimited">(43)</a>. The values of parameters for these equations are given in <a class="reference internal" href="#tab-elecimpexpparams-tk"><span class="std std-numref">Table 44</span></a>.</p>
+<div class="docutils container">
+<table class="docutils align-default" id="tab-elecimpexpparams-tk">
+<caption><span class="caption-number">Table 44 </span><span class="caption-text">Values of the parameters which constrain cross-border electricity imports and exports.</span><a class="headerlink" href="#tab-elecimpexpparams-tk" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 33.3%" />
+<col style="width: 33.3%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Units</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(elec_{import,max}\)</span></p></td>
+<td><p>1.17 <a class="reference internal" href="#id70" id="id67"><span>[44a]</span></a></p></td>
+<td><p>[GW]</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(elec_{export,max}\)</span></p></td>
+<td><p>1.17 <a class="reference internal" href="#id70" id="id68"><span>[44a]</span></a></p></td>
+<td><p>[GW]</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(f_{max}(HVAC)\)</span></p></td>
+<td><p>9.0 <a class="reference internal" href="#id72" id="id69"><span>[44b]</span></a></p></td>
+<td><p>[GW]</p></td>
+</tr>
+</tbody>
+</table>
+<div role="list" class="citation-list">
+<div class="citation" id="id70" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>44a<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id67">1</a>,<a role="doc-backlink" href="#id68">2</a>)</span>
+<p>Cross-border connection capacities in 2019 indicated in <span id="id71">IEA<sup><a class="reference internal" href="Bibliography.html#id25" title="IEA. Turkey 2021. Technical Report, 2021. License: CC BY 4.0. URL: https://www.iea.org/reports/turkey-2021.">132</a></sup></span>.</p>
+</div>
+<div class="citation" id="id72" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id69">44b</a><span class="fn-bracket">]</span></span>
+<p>Value inspired from the interconnection projects described in <span id="id73">IEA<sup><a class="reference internal" href="Bibliography.html#id25" title="IEA. Turkey 2021. Technical Report, 2021. License: CC BY 4.0. URL: https://www.iea.org/reports/turkey-2021.">132</a></sup></span>.</p>
+</div>
+</div>
+</div>
+<p>Prices and GHG emissions given in <a class="reference internal" href="#tab-prices-elec-import-export-tk"><span class="std std-numref">Table 45</span></a> … source …</p>
+<div class="docutils container">
+<table class="docutils align-default" id="tab-prices-elec-import-export-tk">
+<caption><span class="caption-number">Table 45 </span><span class="caption-text">Price and GHG emissions associated to electricity imports and exports, in 2035. Abbreviations: Electricity (elec.).</span><a class="headerlink" href="#tab-prices-elec-import-export-tk" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Resources</strong></p></th>
+<th class="head"><p><strong>c</strong><sub>op</sub></p></th>
+<th class="head"><p><strong>gwp</strong><sub>op</sub></p></th>
+<th class="head"><p><strong>CO</strong><sub>2direct</sub></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td></td>
+<td><p>[€<sub>2015</sub>/MWh <sub>fuel</sub>]</p></td>
+<td><p>[kgCO <sub>2</sub>-eq/MWh <sub>fuel</sub>]</p></td>
+<td><p>[kgCO <sub>2</sub>-eq/MWh <sub>fuel</sub>]</p></td>
+</tr>
+<tr class="row-odd"><td><p>elec imports</p></td>
+<td><p>84.3</p></td>
+<td><p>413 <a class="reference internal" href="#id76" id="id74"><span>[45a]</span></a></p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><td><p>elec exports</p></td>
+<td><p>75.9 <a class="reference internal" href="#id78" id="id75"><span>[45b]</span></a></p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div role="list" class="citation-list">
+<div class="citation" id="id76" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id74">45a</a><span class="fn-bracket">]</span></span>
+<p>This value is based on the CO <sub>2</sub> intensity of the EU electricity grid. Indeed, <span id="id77">IEA<sup><a class="reference internal" href="Bibliography.html#id25" title="IEA. Turkey 2021. Technical Report, 2021. License: CC BY 4.0. URL: https://www.iea.org/reports/turkey-2021.">132</a></sup></span> indicates
+that in 2019, most of the electricity imports of Turkey came from Bulgaria, which is part of the European grid.</p>
+</div>
+<div class="citation" id="id78" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id75">45b</a><span class="fn-bracket">]</span></span>
+<p>The price of electricity exports is assumed to be equal to 90% of the price of electricity imports, to account for cross-border tariffs.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="energy-demand-and-political-framework">
+<span id="sec-app1-end-uses-tk"></span><h2>Energy demand and political framework<a class="headerlink" href="#energy-demand-and-political-framework" title="Link to this heading"></a></h2>
+<p>Aggregated values for the calibration of the 2019 EUDs are given in <a class="reference internal" href="#tab-eud-2019"><span class="std std-numref">Table 46</span></a>. Details and assumptions for these EUDs are given in the following sub-sections, as well as their yearly profiles.</p>
+<div class="docutils container">
+<table class="docutils align-default" id="tab-eud-2019">
+<caption><span class="caption-number">Table 46 </span><span class="caption-text">EUD in 2019. Abbreviations: end-use type (EUT)</span><a class="headerlink" href="#tab-eud-2019" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 26.1%" />
+<col style="width: 17.4%" />
+<col style="width: 17.4%" />
+<col style="width: 17.4%" />
+<col style="width: 13.0%" />
+<col style="width: 8.7%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>EUT</strong></p></th>
+<th class="head"><p><strong>Households</strong></p></th>
+<th class="head"><p><strong>Services</strong></p></th>
+<th class="head"><p><strong>Industry</strong></p></th>
+<th class="head"><p><strong>Transportation</strong></p></th>
+<th class="head"><p>Units</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>electricity - baseload</p></td>
+<td><p>20535.1</p></td>
+<td><p>27069</p></td>
+<td><p>44803.8</p></td>
+<td><p>933.4</p></td>
+<td><p>[GWh]</p></td>
+</tr>
+<tr class="row-odd"><td><p>electricity - variable</p></td>
+<td><p>16944.5</p></td>
+<td><p>22336</p></td>
+<td><p>36969.9</p></td>
+<td><p>770.2</p></td>
+<td><p>[GWh]</p></td>
+</tr>
+<tr class="row-even"><td><p>space heating</p></td>
+<td><p>205997.3</p></td>
+<td><p>61791.1</p></td>
+<td><p>23670.2</p></td>
+<td><p>0</p></td>
+<td><p>[GWh]</p></td>
+</tr>
+<tr class="row-odd"><td><p>hot water</p></td>
+<td><p>122077</p></td>
+<td><p>34139.4</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>[GWh]</p></td>
+</tr>
+<tr class="row-even"><td><p>process heating</p></td>
+<td><p>0</p></td>
+<td><p>2645.3</p></td>
+<td><p>62440.8</p></td>
+<td><p>0</p></td>
+<td><p>[GWh]</p></td>
+</tr>
+<tr class="row-odd"><td><p>space cooling</p></td>
+<td><p>74275.4</p></td>
+<td><p>126474.1</p></td>
+<td><p>39988.6</p></td>
+<td><p>0</p></td>
+<td><p>[GWh]</p></td>
+</tr>
+<tr class="row-even"><td><p>process cooling</p></td>
+<td><p>0</p></td>
+<td><p>8667.6</p></td>
+<td><p>8447.4</p></td>
+<td><p>0</p></td>
+<td><p>[GWh]</p></td>
+</tr>
+<tr class="row-odd"><td><p>passenger mobility</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>346531.6</p></td>
+<td><p>[Mpkm]</p></td>
+</tr>
+<tr class="row-even"><td><p>freight</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>278728.1</p></td>
+<td><p>[Mtkm]</p></td>
+</tr>
+<tr class="row-odd"><td><p>non-energy demand</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>58996.0</p></td>
+<td><p>2088.0</p></td>
+<td><p>[GWh]</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The aim is to compute the evolution of these EUDs across years with GEMMES, which will then feed them to EnergyScope. However, as a first approximation,
+the 2035 EUDs can simply be computed by multiplying the values of <a class="reference internal" href="Input%20Data%20-%20Colombia.html#tab-eud-2021"><span class="std std-numref">Table 13</span></a> by 1.42. This factor is computed based on the projection
+of final energy consumption given in <span id="id79"><sup><a class="reference internal" href="Bibliography.html#id28" title="Ministry of Energy and Natural Resources. Turkey national energy plan. Technical Report, 2022. URL: https://enerji.gov.tr/Media/Dizin/EIGM/tr/Raporlar/TUEP/T%C3%BCrkiye_Ulusal_Enerji_Plan%C4%B1.pdf.">142</a></sup></span>.</p>
+<section id="electricity">
+<span id="ssec-app1-electricity-end-uses-tk"></span><h3>Electricity<a class="headerlink" href="#electricity" title="Link to this heading"></a></h3>
+<p>Final electricity consumption in 2019 is taken from PFU_DATABASE. The electricity used for heating and cooling in 2019 is subtracted from it, based
+on the values given in PFU_DATABASE. This aggregated electricity EUD is then divided between baseload and variable load according to the proportions
+retrieved from the EPIAS Transparency Portal for the year 2019 (<a class="reference external" href="https://seffaflik.epias.com.tr/transparency/">https://seffaflik.epias.com.tr/transparency/</a>). This gives a share of 55% baseload and
+45% variable load. Finally, the values for baseload and variable load are divided between the different economic sectors by using the proportions given in <span id="id80">IEA<sup><a class="reference internal" href="Bibliography.html#id32" title="IEA. World energy balances - extended energy balances for turkey, 2019. Technical Report, 2023. URL: https://www.iea.org/data-and-statistics/data-product/world-energy-balances.">137</a></sup></span> (and aggregating together industry, agriculture and fishing).</p>
+<p>For <span class="math notranslate nohighlight">\(\%_{elec}\)</span>, we normalize the real electricity demand from the year 2019, available on the EPIAS Transparency Portal
+(<a class="reference external" href="https://seffaflik.epias.com.tr/transparency/">https://seffaflik.epias.com.tr/transparency/</a>).</p>
+</section>
+<section id="heating-and-cooling">
+<span id="ssec-app1-heating-end-uses-tk"></span><h3>Heating and cooling<a class="headerlink" href="#heating-and-cooling" title="Link to this heading"></a></h3>
+<p>The aggregated EUDs for different heating and cooling types were retrieved from PFU_DATABASE. The time series <span class="math notranslate nohighlight">\(\%_{sh}\)</span> and <span class="math notranslate nohighlight">\(\%_{sc}\)</span> are
+based on our own computations, following the method described in <span id="id81"><sup><a class="reference internal" href="Bibliography.html#id81" title="M Borasio and S Moret. Deep decarbonisation of regional energy systems: a novel modelling approach and its application to the italian energy transition. Renewable and Sustainable Energy Reviews, 153:111730, 2022.">23</a></sup></span>.</p>
+<div class="math notranslate nohighlight" id="equation-eq-hdd-tk">
+<span class="eqno">(62)<a class="headerlink" href="#equation-eq-hdd-tk" title="Link to this equation"></a></span>\[\begin{split}HDD = \sum_{t \in \text{T}}(T_{comf}(t) - T_{out}(t))\quad\text{if}\quad T_{out}(t) &lt; 15°C\\
+HDD = 0\quad\text{if}\quad T_{out}(t) \geq 15°C\end{split}\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-cdd-tk">
+<span class="eqno">(63)<a class="headerlink" href="#equation-eq-cdd-tk" title="Link to this equation"></a></span>\[\begin{split}CDD = \sum_{t \in \text{T}}(T_{out}(t) - T_{comf}(t))\quad\text{if}\quad T_{out}(t) &gt; 24°C\\
+CDD = 0\quad\text{if}\quad T_{out}(t) \leq 24°C\end{split}\]</div>
+<p>Hourly outdoor temperature time series were retrieved from <span id="id82"><sup><a class="reference internal" href="Bibliography.html#id12" title="Renewables.ninja. URL: https://www.renewables.ninja/ (visited on 26-12-2023).">55</a></sup></span> for the cities of
+Istanbul, Izmir, Ankara, Ordu, Sanliurfa, Van and Antalya. The HDD and CDD time series for these individual
+cities were then computed following eqs. <a class="reference internal" href="#equation-eq-hdd-tk">(62)</a> and <a class="reference internal" href="#equation-eq-cdd-tk">(63)</a>. The HDD and CDD time series for
+Turkey were computed by taking a weighted average of these 7 time series, with weights
+(0.32, 0.13, 0.15, 0.09, 0.10, 0.08, 0.13). These weights were computed as proportional to the populations of the
+areas surrounding those cities.</p>
+</section>
+<section id="mobility">
+<span id="ssec-app1-demand-mobility-tk"></span><h3>Mobility<a class="headerlink" href="#mobility" title="Link to this heading"></a></h3>
+<p>Aggregated numbers are retrieved from <span id="id83"><sup><a class="reference internal" href="Bibliography.html#id33" title="Traffic Safety Department - Directorate of Transport Studies. Traffic and transportation survey of highways. Technical Report, 2021. URL: https://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=&amp;cad=rja&amp;uact=8&amp;ved=2ahUKEwij_r-H2MGDAxUc0AIHHdFyCFQQFnoECBAQAQ&amp;url=https%3A%2F%2Fwww.kgm.gov.tr%2FSiteCollectionDocuments%2FKGMdocuments%2FIstatistikler%2FTrafikveUlasimBilgileri%2F21TrafikUlasimBilgileri.pdf&amp;usg=AOvVaw152dz8NI2iDc2s_Q8qYOSd&amp;opi=89978449.">143</a></sup></span> for the demand for passenger mobility and freight.
+These numbers are only for road transportation. The demand for passenger mobility is therefore divided by 98% to obtain
+the total EUD for passenger mobility, which includes rail transport but excludes domestic aviation transport. Similarly,
+the demand for freight is divided by 96% to obtain the total EUD for freight, which includes rail transport but excludes
+coastal shipping, aviation and pipeline transport.</p>
+<p>For <span class="math notranslate nohighlight">\(\%_{pass}\)</span>, we assume that the passenger mobility EUD has the same profile for every day of the
+year. This daily profile is taken from data for Switzerland (data from Figure 12 of <span id="id84"><sup><a class="reference internal" href="Bibliography.html#id97" title="U.S. Department Of Transportation. 2009 National Household Travel Survey: Summary of Travel Trends. Technical Report, U.S. Department Of Transportation, 2009. doi:FHWA-PL-ll-022.">56</a></sup></span>).
+For <span class="math notranslate nohighlight">\(\%_{fr}\)</span>, we take a uniform value over the 8760 hours of the year.</p>
+</section>
+<section id="non-energy">
+<h3>Non-energy<a class="headerlink" href="#non-energy" title="Link to this heading"></a></h3>
+<p>Non-energy EUD value in 2019 is taken from <span id="id85">IEA<sup><a class="reference internal" href="Bibliography.html#id32" title="IEA. World energy balances - extended energy balances for turkey, 2019. Technical Report, 2023. URL: https://www.iea.org/data-and-statistics/data-product/world-energy-balances.">137</a></sup></span>. We assume it to be uniformly spread over the
+8760 hours of the year.</p>
+</section>
+<section id="discount-rate-and-interest-rate">
+<span id="app-discount-and-interest-rates-tk"></span><h3>Discount rate and interest rate<a class="headerlink" href="#discount-rate-and-interest-rate" title="Link to this heading"></a></h3>
+</section>
+</section>
+<section id="technologies">
+<span id="app-estd-tk-data-technologies"></span><h2>Technologies<a class="headerlink" href="#technologies" title="Link to this heading"></a></h2>
+<p>The technologies are regrouped by their main output types.</p>
+<section id="electricity-generation">
+<h3>Electricity generation<a class="headerlink" href="#electricity-generation" title="Link to this heading"></a></h3>
+<p>The electricity generation technologies are regrouped into two categories depending
+on the resources used: renewable or not.</p>
+<section id="renewables">
+<span id="ssec-app1-renewables-tk"></span><h4>Renewables<a class="headerlink" href="#renewables" title="Link to this heading"></a></h4>
+<p><a class="reference internal" href="#tab-elec-prod-re-tk"><span class="std std-numref">Table 47</span></a> gives the data for the renewable electricity generation technologies
+modelled in EnergyScope Turkey, together with their sources. The data for <span class="math notranslate nohighlight">\(f_{max}\)</span> were already
+given in <a class="reference internal" href="#tab-renewabletechpotentialin2035-tk"><span class="std std-numref">Table 39</span></a> (“max. potential”). The <span class="math notranslate nohighlight">\(f_{min}\)</span>
+values for renewable electricity technologies in 2035 are equal to their installed capacity in 2019,
+already given in <a class="reference internal" href="#tab-renewabletechpotentialin2035-tk"><span class="std std-numref">Table 39</span></a>. The maximum (<span class="math notranslate nohighlight">\(f_{max,\%}\)</span>) and minimum
+(<span class="math notranslate nohighlight">\(f_{min,\%}\)</span>) shares are imposed to 0 and 100% respectively, i.e. they are not constraining the model.</p>
+<div class="docutils container">
+<table class="docutils align-default" id="tab-elec-prod-re-tk">
+<caption><span class="caption-number">Table 47 </span><span class="caption-text">Renewable electricity production technologies in 2035. Abbreviations: concentrated solar power
+with parabolic trough (CSP PT), concentrated solar power with solar tower (CSP ST).</span><a class="headerlink" href="#tab-elec-prod-re-tk" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 14.7%" />
+<col style="width: 14.0%" />
+<col style="width: 18.6%" />
+<col style="width: 17.8%" />
+<col style="width: 11.6%" />
+<col style="width: 11.6%" />
+<col style="width: 11.6%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Technology</strong></p></th>
+<th class="head"><p><strong>c</strong><sub>inv</sub></p></th>
+<th class="head"><p><strong>c</strong><sub>maint</sub></p></th>
+<th class="head"><p><strong>gwp</strong><sub>constr</sub> <a class="reference internal" href="#id128" id="id86"><span>[47a]</span></a></p></th>
+<th class="head"><p><strong>lifetime</strong></p></th>
+<th class="head"><p><strong>c</strong><sub>p</sub> [2019]</p></th>
+<th class="head"><p><strong>c</strong><sub>p</sub> [2035]</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td></td>
+<td><p>[€ <sub>2015</sub>/kW <sub>e</sub>]</p></td>
+<td><p>[€ <sub>2015</sub>/kW <sub>e</sub>/year]</p></td>
+<td><p>[kgCO <sub>2</sub>-eq./kW <sub>e</sub>]</p></td>
+<td><p>[year]</p></td>
+<td><p>[%]</p></td>
+<td><p>[%]</p></td>
+</tr>
+<tr class="row-odd"><td><p>Hydro dam</p></td>
+<td><p>4201 <a class="reference internal" href="#id130" id="id87"><span>[47b]</span></a></p></td>
+<td><p>21.0 <a class="reference internal" href="#id130" id="id88"><span>[47b]</span></a></p></td>
+<td><p>1693</p></td>
+<td><p>40 <a class="reference internal" href="#id130" id="id89"><span>[47b]</span></a></p></td>
+<td><p>35.6 <a class="reference internal" href="#id132" id="id90"><span>[47c]</span></a></p></td>
+<td><p>35.6 <a class="reference internal" href="#u" id="id91"><span>[47u]</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>Hydro river</p></td>
+<td><p>5045 <a class="reference internal" href="#id130" id="id92"><span>[47b]</span></a></p></td>
+<td><p>50.4 <a class="reference internal" href="#id130" id="id93"><span>[47b]</span></a></p></td>
+<td><p>1263</p></td>
+<td><p>40 <a class="reference internal" href="#id130" id="id94"><span>[47b]</span></a></p></td>
+<td><p>35.6 <a class="reference internal" href="#id132" id="id95"><span>[47c]</span></a></p></td>
+<td><p>44.0 <a class="reference internal" href="#v" id="id96"><span>[47v]</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>Rooftop PV</p></td>
+<td><p>738 <a class="reference internal" href="#id136" id="id97"><span>[47d]</span></a></p></td>
+<td><p>9.7 <a class="reference internal" href="#id136" id="id98"><span>[47d]</span></a></p></td>
+<td><p>2081</p></td>
+<td><p>40 <a class="reference internal" href="#id136" id="id99"><span>[47d]</span></a></p></td>
+<td><p>17.6 <a class="reference internal" href="#id132" id="id100"><span>[47c]</span></a></p></td>
+<td><p>17.0 <a class="reference internal" href="#w" id="id101"><span>[47w]</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>Utility scale PV</p></td>
+<td><p>335 <a class="reference internal" href="#id136" id="id102"><span>[47d]</span></a></p></td>
+<td><p>8.4 <a class="reference internal" href="#id136" id="id103"><span>[47d]</span></a></p></td>
+<td><p>2081</p></td>
+<td><p>40 <a class="reference internal" href="#id136" id="id104"><span>[47d]</span></a></p></td>
+<td><p>17.6 <a class="reference internal" href="#id132" id="id105"><span>[47c]</span></a></p></td>
+<td><p>19.0 <a class="reference internal" href="#w" id="id106"><span>[47w]</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>Onshore wind</p></td>
+<td><p>1010 <a class="reference internal" href="#id136" id="id107"><span>[47d]</span></a></p></td>
+<td><p>16.8 <a class="reference internal" href="#id136" id="id108"><span>[47d]</span></a></p></td>
+<td><p>623</p></td>
+<td><p>30 <a class="reference internal" href="#id139" id="id109"><span>[47f]</span></a></p></td>
+<td><p>33.5 <a class="reference internal" href="#id132" id="id110"><span>[47c]</span></a></p></td>
+<td><p>34.8</p></td>
+</tr>
+<tr class="row-even"><td><p>Offshore wind</p></td>
+<td><p>1255 <a class="reference internal" href="#id136" id="id111"><span>[47d]</span></a></p></td>
+<td><p>50.6 <a class="reference internal" href="#id136" id="id112"><span>[47d]</span></a></p></td>
+<td><p>623</p></td>
+<td><p>30 <a class="reference internal" href="#id139" id="id113"><span>[47f]</span></a></p></td>
+<td><p>41.2</p></td>
+<td><p>41.2</p></td>
+</tr>
+<tr class="row-odd"><td><p>Geothermal</p></td>
+<td><p>7488 <a class="reference internal" href="#id141" id="id114"><span>[47i]</span></a></p></td>
+<td><p>142.3 <a class="reference internal" href="#id141" id="id115"><span>[47i]</span></a></p></td>
+<td><p>24929</p></td>
+<td><p>30</p></td>
+<td><p>86 <a class="reference internal" href="#id143" id="id116"><span>[47j]</span></a></p></td>
+<td><p>86 <a class="reference internal" href="#id143" id="id117"><span>[47j]</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>CSP PT</p></td>
+<td><p>1045 <a class="reference internal" href="#k" id="id118"><span>[47k]</span></a></p></td>
+<td><p>62.7 <a class="reference internal" href="#k" id="id119"><span>[47k]</span></a></p></td>
+<td><p>0 <a class="reference internal" href="#m" id="id120"><span>[47m]</span></a></p></td>
+<td><p>25</p></td>
+<td><p>23.7 <a class="reference internal" href="#l" id="id121"><span>[47l]</span></a></p></td>
+<td><p>23.7 <a class="reference internal" href="#l" id="id122"><span>[47l]</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>CSP ST</p></td>
+<td><p>768 <a class="reference internal" href="#k" id="id123"><span>[47k]</span></a></p></td>
+<td><p>63.0 <a class="reference internal" href="#k" id="id124"><span>[47k]</span></a></p></td>
+<td><p>0 <a class="reference internal" href="#m" id="id125"><span>[47m]</span></a></p></td>
+<td><p>25</p></td>
+<td><p>23.7 <a class="reference internal" href="#l" id="id126"><span>[47l]</span></a></p></td>
+<td><p>23.7 <a class="reference internal" href="#l" id="id127"><span>[47l]</span></a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div role="list" class="citation-list">
+<div class="citation" id="id128" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id86">47a</a><span class="fn-bracket">]</span></span>
+<p>Data from <span id="id129"><sup><a class="reference internal" href="Bibliography.html#id90" title="B.P. Weidema, C. Bauer, R. Hischier, C. Mutel, T. Nemecek, J. Reinhard, C.O. Vadenbo, and G. Wernet. The ecoinvent database: Overview and methodology, Data quality guideline for the ecoinvent database version 3. Technical Report, Eco-invent Database, 2013.">42</a></sup></span></p>
+</div>
+<div class="citation" id="id130" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>47b<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id87">1</a>,<a role="doc-backlink" href="#id88">2</a>,<a role="doc-backlink" href="#id89">3</a>,<a role="doc-backlink" href="#id92">4</a>,<a role="doc-backlink" href="#id93">5</a>,<a role="doc-backlink" href="#id94">6</a>)</span>
+<p>Data taken from <span id="id131"><sup><a class="reference internal" href="Bibliography.html#id101" title="Association des entreprises électriques suisses (AES). Grande hydraulique. Technical Report, Association des entreprises électriques suisses (AES), 2014.">57</a></sup></span></p>
+</div>
+<div class="citation" id="id132" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>47c<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id90">1</a>,<a role="doc-backlink" href="#id95">2</a>,<a role="doc-backlink" href="#id100">3</a>,<a role="doc-backlink" href="#id105">4</a>,<a role="doc-backlink" href="#id110">5</a>)</span>
+<p>Computed using the installed capacity reported in <span id="id133"><sup><a class="reference internal" href="Bibliography.html#id29" title="Ministry of Energy and Natural Resources. Knowledge centre. URL: https://enerji.gov.tr (visited on 03-01-2024).">133</a></sup></span> and the yearly electricity generation given by <span id="id134">IEA<sup><a class="reference internal" href="Bibliography.html#id25" title="IEA. Turkey 2021. Technical Report, 2021. License: CC BY 4.0. URL: https://www.iea.org/reports/turkey-2021.">132</a></sup></span></p>
+</div>
+<div class="citation" id="u" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id91">47u</a><span class="fn-bracket">]</span></span>
+<p>Taken as equal to the value in 2019</p>
+</div>
+<div class="citation" id="v" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id96">47v</a><span class="fn-bracket">]</span></span>
+<p>Value taken from <span id="id135"><sup><a class="reference internal" href="Bibliography.html#id40" title="World Bank Group. Country Climate and Development Report - Türkiye. Technical Report, June 2022. URL: https://www.ifc.org/en/insights-reports/2022/turkiye-country-climate-and-development-report.">144</a></sup></span></p>
+</div>
+<div class="citation" id="id136" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>47d<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id97">1</a>,<a role="doc-backlink" href="#id98">2</a>,<a role="doc-backlink" href="#id99">3</a>,<a role="doc-backlink" href="#id102">4</a>,<a role="doc-backlink" href="#id103">5</a>,<a role="doc-backlink" href="#id104">6</a>,<a role="doc-backlink" href="#id107">7</a>,<a role="doc-backlink" href="#id108">8</a>,<a role="doc-backlink" href="#id111">9</a>,<a role="doc-backlink" href="#id112">10</a>)</span>
+<p>Data from <span id="id137"><sup><a class="reference internal" href="Bibliography.html#id19" title="Danish Energy Agency. Technology data for generation of electricity and district heating. Technical Report, 2023. Version number: 0013. URL: http://www.ens.dk/teknologikatalog.">58</a></sup></span></p>
+</div>
+<div class="citation" id="w" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>47w<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id101">1</a>,<a role="doc-backlink" href="#id106">2</a>)</span>
+<p>Retrieved from the open-source database from <span id="id138"><sup><a class="reference internal" href="Bibliography.html#id11" title="Elise Dupont, Rembrandt Koppelaar, and Hervé Jeanmart. Global available solar energy under physical and energy return on investment constraints. Applied Energy, 257:113968, January 2020. URL: (visited on 2021-01-22), doi:10.1016/j.apenergy.2019.113968.">48</a></sup></span>, available at <a class="reference external" href="https://github.com/EliseDup/WorldEROI">https://github.com/EliseDup/WorldEROI</a></p>
+</div>
+<div class="citation" id="id139" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>47f<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id109">1</a>,<a role="doc-backlink" href="#id113">2</a>)</span>
+<p>Data taken from <span id="id140"><sup><a class="reference internal" href="Bibliography.html#id99" title="Association des entreprises électriques suisses (AES). Energie Éolienne. 2013.">59</a></sup></span></p>
+</div>
+<div class="citation" id="id141" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>47i<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id114">1</a>,<a role="doc-backlink" href="#id115">2</a>)</span>
+<p>ORC cycle at 6 km depth for electricity generation. Based on Table 17 of <span id="id142"><sup><a class="reference internal" href="Bibliography.html#id107" title="Joint Research Center. Energy Technology Reference Indicator 2014 - projection for 2010-2050. Technical Report, Joint Research Center, 2014. doi:10.2790/057687.">60</a></sup></span>. We took the reference case in 2030</p>
+</div>
+<div class="citation" id="id143" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>47j<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id116">1</a>,<a role="doc-backlink" href="#id117">2</a>)</span>
+<p>Data from <span id="id144"><sup><a class="reference internal" href="Bibliography.html#id103" title="Association des entreprises électriques suisses (AES). Electricité géothermique. Technical Report, Association des entreprises électriques suisses (AES), 2012.">61</a></sup></span></p>
+</div>
+<div class="citation" id="k" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>47k<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id118">1</a>,<a role="doc-backlink" href="#id119">2</a>,<a role="doc-backlink" href="#id123">3</a>,<a role="doc-backlink" href="#id124">4</a>)</span>
+<p>The cost and its repartition between <span class="math notranslate nohighlight">\(c_{inv}\)</span> and <span class="math notranslate nohighlight">\(c_{maint}\)</span> is taken from <span id="id145"><sup><a class="reference internal" href="Bibliography.html#id21" title="IEA-ETSAP and IRENA. Concentrating Solar Power. Technology Brief E10. Technical Report, January 2013. URL: https://www.irena.org/publications/2013/Jan/Concentrated-Solar-Power.">62</a></sup></span>. The
+evolution through time is the one from <span id="id146"><sup><a class="reference internal" href="Bibliography.html#id22" title="IEA. Technology roadmap - concentrating solar power. Technical Report, 2010. License: CC BY 4.0. URL: https://www.iea.org/reports/technology-roadmap-concentrating-solar-power.">63</a></sup></span>, assuming an identical evolution as the one of the LCOE.
+These data are cross-checked with the ones of the Figure 4 of <span id="id147"><sup><a class="reference internal" href="Bibliography.html#id23" title="Alberto Boretti and Stefania Castelletto. Techno-economic performances of future concentrating solar power plants in Australia. Humanities and Social Sciences Communications, 8(1):1–10, December 2021. doi:10.1057/s41599-021-01005-3.">64</a></sup></span> and of the
+Figure 2 of <span id="id148"><sup><a class="reference internal" href="Bibliography.html#id24" title="Peter Viebahn, Yolanda Lechon, and Franz Trieb. The potential role of concentrated solar power (CSP) in Africa and Europe—A dynamic assessment of technology development, cost development and life cycle inventories until 2050. Energy Policy, 39(8):4420–4430, August 2011. doi:10.1016/j.enpol.2010.09.026.">65</a></sup></span>.</p>
+</div>
+<div class="citation" id="l" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>47l<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id121">1</a>,<a role="doc-backlink" href="#id122">2</a>,<a role="doc-backlink" href="#id126">3</a>,<a role="doc-backlink" href="#id127">4</a>)</span>
+<p>This value of <span class="math notranslate nohighlight">\(c_{p}\)</span> is the mean value of the <span class="math notranslate nohighlight">\(c_{p,t}\)</span> time series computed below.</p>
+</div>
+<div class="citation" id="m" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>47m<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id120">1</a>,<a role="doc-backlink" href="#id125">2</a>)</span>
+<p>Not computed yet. To be completed in the near future.</p>
+</div>
+</div>
+<p><a class="reference internal" href="#tab-elec-prod-re-tk"><span class="std std-numref">Table 47</span></a> includes the values of the yearly capacity factor (<span class="math notranslate nohighlight">\(c_p\)</span>) of technologies.
+As described in the Model Formulation Section, the values of <span class="math notranslate nohighlight">\(c_p\)</span> for intermittent renewables is in fact equal to one, while
+it is the value of their hourly load factor, <span class="math notranslate nohighlight">\(c_{p,t}\)</span>, which is binding. The value of <span class="math notranslate nohighlight">\(c_p\)</span> given in
+<a class="reference internal" href="#tab-elec-prod-re-tk"><span class="std std-numref">Table 47</span></a> for intermittent renewables is in fact the mean value of <span class="math notranslate nohighlight">\(c_{p,t}\)</span> over the year.
+The yearly profile (which sums up to one) of <span class="math notranslate nohighlight">\(c_{p,t}\)</span> for intermittent renewables is computed as follows.</p>
+<p>Power production profile of PV <a class="footnote-reference brackets" href="#id270" id="id149" role="doc-noteref"><span class="fn-bracket">[</span>10<span class="fn-bracket">]</span></a> were retrieved from <span id="id150"><sup><a class="reference internal" href="Bibliography.html#id12" title="Renewables.ninja. URL: https://www.renewables.ninja/ (visited on 26-12-2023).">55</a></sup></span> for the cities of
+Istanbul, Izmir, Ankara, Ordu, Sanliurfa, Van and Antalya. The yearly profile of <span class="math notranslate nohighlight">\(c_{p,t}\)</span>
+for PV in Turkey was then computed by taking a weighted average of these 7 time series, with weights
+(0.32, 0.13, 0.15, 0.09, 0.10, 0.08, 0.13). These weights were taken proportional to the populations of the
+geographical regions encompassing these cities, given in <span id="id151"><sup><a class="reference internal" href="Bibliography.html#id30" title="Wikipedia. Geographical regions of turkey. URL: https://en.wikipedia.org/wiki/Geographical_regions_of_Turkey (visited on 03-01-2024).">145</a></sup></span>.</p>
+<p>The yearly profile of <span class="math notranslate nohighlight">\(c_{p,t}\)</span> for onshore wind was computed in the same way, retrieving from
+<span id="id152"><sup><a class="reference internal" href="Bibliography.html#id12" title="Renewables.ninja. URL: https://www.renewables.ninja/ (visited on 26-12-2023).">55</a></sup></span> power production profiles of wind turbines <a class="footnote-reference brackets" href="#id271" id="id153" role="doc-noteref"><span class="fn-bracket">[</span>11<span class="fn-bracket">]</span></a> instead of PV.</p>
+<p>The same 7 time series as for onshore wind were used for offshore wind, but the weighted average to obtain the yearly profile of <span class="math notranslate nohighlight">\(c_{p,t}\)</span>
+was computed by using the weights (0.2,0.2,0,0.3,0,0,0.3). These weights are proportional to the length of coastline near each city, according to
+numbers from <span id="id154"><sup><a class="reference internal" href="Bibliography.html#id31" title="Country of Turkey. Coastlines of turkey. URL: http://countryofturkey.com/coastlines-of-turkey/ (visited on 03-01-2024).">146</a></sup></span>.</p>
+<p>Regarding CSP, the (non-normalized) time series for <span class="math notranslate nohighlight">\(c_{p,t}\)</span> is computed with the oemof thermal <span id="id155"><sup><a class="reference internal" href="Bibliography.html#id13" title="Oemof.thermal. URL: https://oemof-thermal.readthedocs.io/en/latest/index.html (visited on 09-01-2024).">66</a></sup></span> and
+pvlib <span id="id156"><sup><a class="reference internal" href="Bibliography.html#id14" title="Pvlib. URL: https://pvlib-python.readthedocs.io/en/stable/reference/generated/pvlib.iotools.get_pvgis_hourly.html#id7 (visited on 09-01-2024).">67</a></sup></span> packages (to extract pvgis data <span id="id157"><sup><a class="reference internal" href="Bibliography.html#id15" title="European Commission. Photovoltaic geographical information system. URL: https://re.jrc.ec.europa.eu/pvg_tools/en/ (visited on 09-01-2024).">68</a></sup></span>). These time series give the thermal GWh of energy produced
+by thermal GW of <em>Collector</em> installed. These time series are computed for the 6 locations of respective (lat,lon):
+(37.72, 27.9), (37.38, 30.75), (37.73, 33.69), (38.45, 36.95), (38.12, 39.62) and (38.25, 43.08). These locations were identified
+as the ones having the highest CSP potential, based on the open-source database from <span id="id158"><sup><a class="reference internal" href="Bibliography.html#id11" title="Elise Dupont, Rembrandt Koppelaar, and Hervé Jeanmart. Global available solar energy under physical and energy return on investment constraints. Applied Energy, 257:113968, January 2020. URL: (visited on 2021-01-22), doi:10.1016/j.apenergy.2019.113968.">48</a></sup></span>. The weighted mean
+of these six time series is then computed, using the weights (0.05, 0.11, 0.3 , 0.13, 0.33, 0.09) which reflect the
+respective potentials of these different locations, according to <span id="id159"><sup><a class="reference internal" href="Bibliography.html#id11" title="Elise Dupont, Rembrandt Koppelaar, and Hervé Jeanmart. Global available solar energy under physical and energy return on investment constraints. Applied Energy, 257:113968, January 2020. URL: (visited on 2021-01-22), doi:10.1016/j.apenergy.2019.113968.">48</a></sup></span>. The obtained mean time series is the
+yearly <span class="math notranslate nohighlight">\(c_{p,t}\)</span> time series for CSP in Turkey in 2035.</p>
+<p>Finally, for hydro dam and hydro river, daily incoming water flow to hydro-electric facilities in Turkey was taken from the Turkish TSO website
+for the 365 days of the year. These data were normalized to give a yearly profile <span class="math notranslate nohighlight">\(c_{p,t}\)</span>, taking the same value for each hour of a same
+day.</p>
+</section>
+<section id="non-renewable">
+<span id="ssec-app1-non-renewable-tk"></span><h4>Non-renewable<a class="headerlink" href="#non-renewable" title="Link to this heading"></a></h4>
+<p><a class="reference internal" href="#tab-elec-prod-nre-tk"><span class="std std-numref">Table 48</span></a> gives the data for the non-renewable electricity generation technologies
+modelled in EnergyScope Turkey, together with their sources. The minimum installed capacity (<span class="math notranslate nohighlight">\(f_{min}\)</span>)
+is zero, while the maximum installed capacity (<span class="math notranslate nohighlight">\(f_{max}\)</span>) is set to a value high enough for each
+technology to potentially cover the entire demand - except for nuclear energy. The maximum (<span class="math notranslate nohighlight">\(f_{max,\%}\)</span>) and minimum
+(<span class="math notranslate nohighlight">\(f_{min,\%}\)</span>) shares are imposed to 0 and 100% respectively, i.e. they are not constraining the model.
+The efficiencies of each technology in 2019 and 2035 are given as well.</p>
+<p>The values of (<span class="math notranslate nohighlight">\(f_{min}\)</span>) and (<span class="math notranslate nohighlight">\(f_{max}\)</span>) of nuclear energy are set differently. Indeed, the choice to build new
+nuclear power plants is not simply based on a cost-benefit analysis. It results from political decisions, often closely linked to
+international relations. We set <span class="math notranslate nohighlight">\(f_{min} = 4.8\)</span> [GW] and <span class="math notranslate nohighlight">\(f_{max} = 7.2\)</span> [GW] for nuclear power in Turkey in 2035.
+Indeed, the Akuyu power plant of capacity 4.8 [GW] should be operational by then <span id="id160"><sup><a class="reference internal" href="Bibliography.html#id40" title="World Bank Group. Country Climate and Development Report - Türkiye. Technical Report, June 2022. URL: https://www.ifc.org/en/insights-reports/2022/turkiye-country-climate-and-development-report.">144</a></sup></span>. The value of 7.2 [GW] corresponds
+to the capacity envisaged in Turkey’s National Energy Plan for 2035 <span id="id161"><sup><a class="reference internal" href="Bibliography.html#id28" title="Ministry of Energy and Natural Resources. Turkey national energy plan. Technical Report, 2022. URL: https://enerji.gov.tr/Media/Dizin/EIGM/tr/Raporlar/TUEP/T%C3%BCrkiye_Ulusal_Enerji_Plan%C4%B1.pdf.">142</a></sup></span>, although no plan to build a new
+nuclear central besides Akuyu has yet been announced. We leave it to the cost optimization of EnergyScope to decide the capacity
+to be installed between those two bounds.</p>
+<div class="docutils container">
+<table class="docutils align-default" id="tab-elec-prod-nre-tk">
+<caption><span class="caption-number">Table 48 </span><span class="caption-text">Non-renewable electricity production technologies in 2035. Abbreviations: combined cycle gas turbine (CCGT), capacity (capa.).</span><a class="headerlink" href="#tab-elec-prod-nre-tk" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 8.9%" />
+<col style="width: 13.7%" />
+<col style="width: 19.4%" />
+<col style="width: 17.7%" />
+<col style="width: 9.7%" />
+<col style="width: 6.5%" />
+<col style="width: 6.5%" />
+<col style="width: 6.5%" />
+<col style="width: 11.3%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Technology</strong></p></th>
+<th class="head"><p><strong>c</strong><sub>inv</sub></p></th>
+<th class="head"><p><strong>c</strong><sub>maint</sub></p></th>
+<th class="head"><p><strong>gwp</strong><sub>constr</sub> <a class="reference internal" href="#id179" id="id162"><span>[48a]</span></a></p></th>
+<th class="head"><p><strong>lifetime</strong> <a class="reference internal" href="#id181" id="id163"><span>[48b]</span></a></p></th>
+<th class="head"><p><strong>c</strong><sub>p</sub></p></th>
+<th class="head"><p><strong>efficiency</strong> (2019)</p></th>
+<th class="head"><p><strong>efficiency</strong> (2035)</p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(CO_{2-direct}\)</span> <a class="reference internal" href="#id183" id="id164"><span>[48c]</span></a></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td></td>
+<td><p>[€ <sub>2015</sub>/kW <sub>e</sub>]</p></td>
+<td><p>[€ <sub>2015</sub>/kW <sub>e</sub>/year]</p></td>
+<td><p>[kgCO <sub>2</sub>-eq./kW <sub>e</sub>]</p></td>
+<td><p>[year]</p></td>
+<td><p>[%]</p></td>
+<td><p>[%]</p></td>
+<td><p>[%]</p></td>
+<td><p>[tCO2/MWh <sub>e</sub>]</p></td>
+</tr>
+<tr class="row-odd"><td><p>CCGT</p></td>
+<td><p>772 <a class="reference internal" href="#id184" id="id165"><span>[48d]</span></a></p></td>
+<td><p>19.7 <a class="reference internal" href="#id184" id="id166"><span>[48d]</span></a></p></td>
+<td><p>184</p></td>
+<td><p>25</p></td>
+<td><p>85</p></td>
+<td><p>53 <a class="reference internal" href="#id186" id="id167"><span>[48e]</span></a></p></td>
+<td><p>53 <a class="reference internal" href="#id186" id="id168"><span>[48e]</span></a></p></td>
+<td><p>0.377</p></td>
+</tr>
+<tr class="row-even"><td><p>CCGT ammonia <a class="reference internal" href="#id188" id="id169"><span>[48f]</span></a></p></td>
+<td><p>772</p></td>
+<td><p>19.6</p></td>
+<td><p>184</p></td>
+<td><p>25</p></td>
+<td><p>59</p></td>
+<td><p>50</p></td>
+<td><p>50</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>Coal central</p></td>
+<td><p>3246 <a class="reference internal" href="#id191" id="id170"><span>[48g]</span></a></p></td>
+<td><p>49.0 <a class="reference internal" href="#id191" id="id171"><span>[48g]</span></a></p></td>
+<td><p>332</p></td>
+<td><p>35</p></td>
+<td><p>86 <a class="reference internal" href="#id181" id="id172"><span>[48b]</span></a></p></td>
+<td><p>32 <a class="reference internal" href="#id193" id="id173"><span>[48h]</span></a></p></td>
+<td><p>40 <a class="reference internal" href="#id186" id="id174"><span>[48e]</span></a></p></td>
+<td><p>0.9</p></td>
+</tr>
+<tr class="row-even"><td><p>Nuclear</p></td>
+<td><p>4846 <a class="reference internal" href="#id195" id="id175"><span>[48i]</span></a></p></td>
+<td><p>103 <span id="id176"><sup><a class="reference internal" href="Bibliography.html#id108" title="IEA - International Energy Agency. IEA World Energy Investment Outlook 2014 - Power Generation in the New Policies and 450 Scenarios. 2014.">70</a></sup></span></p></td>
+<td><p>708</p></td>
+<td><p>60 <span id="id177"><sup><a class="reference internal" href="Bibliography.html#id110" title="Association des enterprises électriques suisses. Energie nucléaire. March 2014.">147</a></sup></span></p></td>
+<td><p>84 <a class="reference internal" href="#id198" id="id178"><span>[48j]</span></a></p></td>
+<td><p>37</p></td>
+<td><p>37</p></td>
+<td><p>0</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div role="list" class="citation-list">
+<div class="citation" id="id179" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id162">48a</a><span class="fn-bracket">]</span></span>
+<p>Data from <span id="id180"><sup><a class="reference internal" href="Bibliography.html#id90" title="B.P. Weidema, C. Bauer, R. Hischier, C. Mutel, T. Nemecek, J. Reinhard, C.O. Vadenbo, and G. Wernet. The ecoinvent database: Overview and methodology, Data quality guideline for the ecoinvent database version 3. Technical Report, Eco-invent Database, 2013.">42</a></sup></span></p>
+</div>
+<div class="citation" id="id181" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>48b<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id163">1</a>,<a role="doc-backlink" href="#id172">2</a>)</span>
+<p>Data from <span id="id182"><sup><a class="reference internal" href="Bibliography.html#id111" title="Christian Bauer, Thomas Heck, Roberto Dones, Oliver Mayer-Spohn, and Markus Blesl. New Energy Externalities Developments for Sustainability (NEEDS) - Deliverable n°7.2 - RS 1a: Final report on technical data, costs, and life cycle inventories of advanced fossil power generation systems. Technical Report, March 2008.">69</a></sup></span></p>
+</div>
+<div class="citation" id="id183" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id164">48c</a><span class="fn-bracket">]</span></span>
+<p>Direct emissions due to combustion. Expressed
+in ton CO<span class="math notranslate nohighlight">\(_2\)</span> per MWh of electricity produced. Emissions computed based
+on resource used and specific emissions given in Table 9.</p>
+</div>
+<div class="citation" id="id184" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>48d<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id165">1</a>,<a role="doc-backlink" href="#id166">2</a>)</span>
+<p>Data from <span id="id185"><sup><a class="reference internal" href="Bibliography.html#id108" title="IEA - International Energy Agency. IEA World Energy Investment Outlook 2014 - Power Generation in the New Policies and 450 Scenarios. 2014.">70</a></sup></span></p>
+</div>
+<div class="citation" id="id186" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>48e<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id167">1</a>,<a role="doc-backlink" href="#id168">2</a>,<a role="doc-backlink" href="#id174">3</a>)</span>
+<p>Computed based on Background Note 4, p. 22 of <span id="id187"><sup><a class="reference internal" href="Bibliography.html#id40" title="World Bank Group. Country Climate and Development Report - Türkiye. Technical Report, June 2022. URL: https://www.ifc.org/en/insights-reports/2022/turkiye-country-climate-and-development-report.">144</a></sup></span></p>
+</div>
+<div class="citation" id="id188" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id169">48f</a><span class="fn-bracket">]</span></span>
+<p>Use of Ammonia in CCGT is at its early stage. Mitsubishi is developping
+a 40 MW turbine and promises similar efficiency as gas CCGT <span id="id189"><sup><a class="reference internal" href="Bibliography.html#id176" title="MASAKAZU NOSE, TOMO KAWAKAMI, SOUSUKE NAKAMURA, HIDETOSHI KUROKI, MASAHITO KATAOKA, and MASANORI YURI. Development of hydrogen/ammonia firing gas turbine for decarbonized society. Mitsubishi Heavy Industries Technical Review, 58(3):1, 2021.">71</a></sup></span>.
+However, the high emissions of NOx requires a removal equipment which will reduce the
+power plant efficiency. As gas and ammonia CCGT will be similar, we expect a similar cost and lifetime.
+The only exception is the efficiency, which is assumed at 50% instead of 63% for a Belgian gas CCGT <span id="id190"><sup><a class="reference internal" href="Bibliography.html#id177" title="Jussi Ikäheimo, Juha Kiviluoma, Robert Weiss, and Hannele Holttinen. Power-to-ammonia in future north european 100% renewable power and heat system. International Journal of Hydrogen Energy, 43(36):17295–17308, 2018.">72</a></sup></span>.</p>
+</div>
+<div class="citation" id="id191" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>48g<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id170">1</a>,<a role="doc-backlink" href="#id171">2</a>)</span>
+<p>1.2 GW<span class="math notranslate nohighlight">\(_{\text{e}}\)</span> IGCC power plant
+<span id="id192"><sup><a class="reference internal" href="Bibliography.html#id113" title="U.S. EIA - Energy Information Administration. Updated Capital Cost Estimates for Utility Scale Electricity Generating Plants. Technical Report, U.S. EIA - Energy Information Administration, Washington, April 2013.">73</a></sup></span>.
+<em>c</em><sub>maint</sub> is fixed cost (48.1 €<sub>2015</sub>/kW<sub>e</sub>/y) +
+variable cost (0.82 €<sub>2015</sub>/kW<sub>e</sub>/y assuming 7500
+h/y).</p>
+</div>
+<div class="citation" id="id193" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id173">48h</a><span class="fn-bracket">]</span></span>
+<p>Computed based on <span id="id194"><sup><a class="reference internal" href="Bibliography.html#id32" title="IEA. World energy balances - extended energy balances for turkey, 2019. Technical Report, 2023. URL: https://www.iea.org/data-and-statistics/data-product/world-energy-balances.">137</a></sup></span>. It is not surprising to obtain such a low efficiency,
+since the coal mined locally in Turkey is low-quality lignite.</p>
+</div>
+<div class="citation" id="id195" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id175">48i</a><span class="fn-bracket">]</span></span>
+<p>Investment cost: 3431 €<sub>2015</sub>/kW<span class="math notranslate nohighlight">\(_{\text{e}}\)</span>
+<span id="id196"><sup><a class="reference internal" href="Bibliography.html#id108" title="IEA - International Energy Agency. IEA World Energy Investment Outlook 2014 - Power Generation in the New Policies and 450 Scenarios. 2014.">70</a></sup></span> +
+dismantling cost in Switzerland: 1415    €<sub>2015</sub>/kW<span class="math notranslate nohighlight">\(_{\text{e}}\)</span>
+<span id="id197"><sup><a class="reference internal" href="Bibliography.html#id120" title="Swissnuclear. Financement - energienucleaire.ch. https://www.kernenergie.ch/fr/financement-_content—1–1306.html.">148</a></sup></span>.</p>
+</div>
+<div class="citation" id="id198" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id178">48j</a><span class="fn-bracket">]</span></span>
+<p>Data for the year 2012 from <span id="id199"><sup><a class="reference internal" href="Bibliography.html#id112" title="Swiss Federal Office of Energy (SFOE). Swiss electricity statistics 2013. Technical Report, Swiss Federal Office of Energy (SFOE), 2014.">149</a></sup></span></p>
+</div>
+</div>
+<p>According to <span id="id200"><sup><a class="reference internal" href="Bibliography.html#id25" title="IEA. Turkey 2021. Technical Report, 2021. License: CC BY 4.0. URL: https://www.iea.org/reports/turkey-2021.">132</a></sup></span>, electricity generation in 2019 in Turkey was of 304.3 [TWh],
+among which 37.2% from coal, 29.2% from hydro, 18.7% from natural gas, 7.2% from wind, 3.5% from solar
+and 4% from geothermal, biomass and waste. This amounts to installing the following capacities in EnergyScope
+for non-renewable electricity technologies:</p>
+<div class="docutils container">
+<table class="docutils align-default" id="tab-intalled-capa-elec-nre-tk">
+<caption><span class="caption-number">Table 49 </span><span class="caption-text">Installed capacities of non-renewable electricity generation technologies in 2019.</span><a class="headerlink" href="#tab-intalled-capa-elec-nre-tk" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Technology</strong></p></th>
+<th class="head"><p><strong>Installed capacity</strong> [GW]</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>CCGT</p></td>
+<td><p>27.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>Coal central</p></td>
+<td><p>16.1</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section id="heating-and-cogeneration">
+<h3>Heating and cogeneration<a class="headerlink" href="#heating-and-cogeneration" title="Link to this heading"></a></h3>
+<p>Tables <a class="reference internal" href="Input%20Data%20-%20Colombia.html#tbl-ind-cogen-boiler"><span class="std std-numref">16</span></a>, <a class="reference internal" href="Input%20Data%20-%20Colombia.html#tbl-dhn-cogen-boiler"><span class="std std-numref">17</span></a> and <a class="reference internal" href="Input%20Data%20-%20Colombia.html#tbl-dec-cogen-boiler"><span class="std std-numref">18</span></a>
+previously gave the characteristics of the heating and cogeneration technologies modelled in EnergyScope. By using the
+data from PFU_DATABASE, we can determine that the following capacities were installed in 2019:</p>
+<div class="docutils container">
+<table class="docutils align-default" id="tab-intalled-capa-heating-tk">
+<caption><span class="caption-number">Table 50 </span><span class="caption-text">Installed capacities of heating and cogeneration technologies in 2019. Abbreviations: Natural Gas (NG), Combined Heat and Power (CHP), Heat Pump (HP).</span><a class="headerlink" href="#tab-intalled-capa-heating-tk" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Technology</strong></p></th>
+<th class="head"><p><strong>Installed capacity in 2019</strong> [GW]</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Industrial boiler NG</p></td>
+<td><p>7.5</p></td>
+</tr>
+<tr class="row-odd"><td><p>Industrial boiler coal</p></td>
+<td><p>3.0</p></td>
+</tr>
+<tr class="row-even"><td><p>DHN CHP NG</p></td>
+<td><p>1.7</p></td>
+</tr>
+<tr class="row-odd"><td><p>DHN boiler wood</p></td>
+<td><p>8.1</p></td>
+</tr>
+<tr class="row-even"><td><p>Decentralized HP</p></td>
+<td><p>5.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>Decentralized boiler NG</p></td>
+<td><p>52.2</p></td>
+</tr>
+<tr class="row-even"><td><p>Decentralized boiler oil</p></td>
+<td><p>17.4</p></td>
+</tr>
+<tr class="row-odd"><td><p>Coal stove</p></td>
+<td><p>15.0</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Similarly to intermittent renewable electricity technologies, the time series for <span class="math notranslate nohighlight">\(c_{p,t}\)</span> for solar thermal facilities must be computed.
+To do so, global horizontal irradiation (GHI) profiles are retrieved from <span id="id201"><sup><a class="reference internal" href="Bibliography.html#id12" title="Renewables.ninja. URL: https://www.renewables.ninja/ (visited on 26-12-2023).">55</a></sup></span> for the cities of Istanbul, Izmir, Ankara, Ordu,
+Sanliurfa, Van and Antalya. A weighted average of these 7 time series is then computed, with weights (0.32, 0.13, 0.15, 0.09, 0.10, 0.08, 0.13). These weights were taken proportional to the populations of the areas surrounding those cities. The <span class="math notranslate nohighlight">\(c_{p,t}\)</span> time series for solar thermal in Turkey is obtained
+by dividing this weighted average time series by 8760 (number of hours in the year) and by 1000 (standard irradiation). The mean capacity factor of solar
+thermal (i.e. the mean of its <span class="math notranslate nohighlight">\(c_{p,t}\)</span> time series) is thus found to be 20.8%.</p>
+</section>
+<section id="cooling">
+<h3>Cooling<a class="headerlink" href="#cooling" title="Link to this heading"></a></h3>
+<p>Based on data from PFU_DATABASE, we could determine the 2019 coefficient of performance of some cooling technnologies:</p>
+<div class="docutils container">
+<table class="docutils align-default" id="tab-intalled-capa-cooling-tk">
+<caption><span class="caption-number">Table 51 </span><span class="caption-text">2019 efficiency of cooling technologies. Abbreviations: Natural Gas (NG), Combined Heat and Power (CHP), Heat Pump (HP).</span><a class="headerlink" href="#tab-intalled-capa-cooling-tk" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Technology</strong></p></th>
+<th class="head"><p><strong>Installed capacity in 2019</strong> [GW]</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Decentralised electricity cooling</p></td>
+<td><p>470</p></td>
+</tr>
+<tr class="row-odd"><td><p>Process cooling</p></td>
+<td><p>92.7</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="transport">
+<span id="sec-app1-vehicles-mobility-tk"></span><h3>Transport<a class="headerlink" href="#transport" title="Link to this heading"></a></h3>
+<section id="passenger-mobility">
+<h4>Passenger mobility<a class="headerlink" href="#passenger-mobility" title="Link to this heading"></a></h4>
+<p><a class="reference internal" href="#tbl-passenger-vehicles-tk"><span class="std std-numref">Table 52</span></a> gives the minimum and maximum shares
+of each vehicle type in 2035. The shares in 2019 are also given.</p>
+<div class="docutils container">
+<table class="docutils align-default" id="tbl-passenger-vehicles-tk">
+<caption><span class="caption-number">Table 52 </span><span class="caption-text">Fuel and electricity consumption for passenger mobility technologies in 2035 <span id="id202"><sup><a class="reference internal" href="Bibliography.html#id137" title="Victor Codina Gironès, Stefano Moret, François Maréchal, and Daniel Favrat. Strategic energy planning for large-scale energy systems: A modelling framework to aid decision-making. Energy, 90, Part 1:173–186, October 2015. doi:10.1016/j.energy.2015.06.008.">98</a></sup></span>, and minimum/maximum shares allowed in the model. Abbreviations: Fuel Cell (FC), Hybrid Electric Vehicle (HEV), Natural Gas (NG), Plug-in Hybrid Electric Vehicle (PHEV), public (pub.).</span><a class="headerlink" href="#tbl-passenger-vehicles-tk" title="Link to this table"></a></caption>
+<tbody>
+<tr class="row-odd"><td><p><strong>Vehicle type</strong></p></td>
+<td><p><strong>f</strong><span class="math notranslate nohighlight">\(_\textbf{min,%}\)</span>
+[%]</p></td>
+<td><p><strong>f</strong><span class="math notranslate nohighlight">\(_\textbf{max,%}\)</span>
+[%]</p></td>
+<td><p><strong>f</strong><span class="math notranslate nohighlight">\(_\textbf{%}\)</span> (2019)
+[%]</p></td>
+</tr>
+<tr class="row-even"><td><p>Gasoline car</p></td>
+<td><p>0</p></td>
+<td><p>100</p></td>
+<td><p>12 <a class="reference internal" href="#id211" id="id203"><span>[52b]</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>Diesel car</p></td>
+<td><p>0</p></td>
+<td><p>100</p></td>
+<td><p>50 <a class="reference internal" href="#id211" id="id204"><span>[52b]</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>NG car</p></td>
+<td><p>0</p></td>
+<td><p>100</p></td>
+<td><p>38 <a class="reference internal" href="#id211" id="id205"><span>[52b]</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>HEV</p></td>
+<td><p>0</p></td>
+<td><p>100</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><td><p>PHEV</p></td>
+<td><p>0</p></td>
+<td><p>100</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>BEV</p></td>
+<td><p>0</p></td>
+<td><p>100</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><td><p>FC car</p></td>
+<td><p>0</p></td>
+<td><p>100</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>Methanol car</p></td>
+<td><p>0</p></td>
+<td><p>100</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><td><p>Tram &amp; Trolley</p></td>
+<td><p>0</p></td>
+<td><p>0 <a class="reference internal" href="#id210" id="id206"><span>[52a]</span></a></p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>Diesel bus</p></td>
+<td><p>0</p></td>
+<td><p>100</p></td>
+<td><p>89 <a class="reference internal" href="#id214" id="id207"><span>[52c]</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>Diesel HEV bus</p></td>
+<td><p>0</p></td>
+<td><p>100</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>NG bus</p></td>
+<td><p>0</p></td>
+<td><p>100</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><td><p>FC bus</p></td>
+<td><p>0</p></td>
+<td><p>100</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>Train pub.</p></td>
+<td><p>0</p></td>
+<td><p>50 <a class="reference internal" href="#id210" id="id208"><span>[52a]</span></a></p></td>
+<td><p>11 <a class="reference internal" href="#id214" id="id209"><span>[52c]</span></a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div role="list" class="citation-list">
+<div class="citation" id="id210" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>52a<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id206">1</a>,<a role="doc-backlink" href="#id208">2</a>)</span>
+<p>Our own expert guesses.</p>
+</div>
+<div class="citation" id="id211" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>52b<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id203">1</a>,<a role="doc-backlink" href="#id204">2</a>,<a role="doc-backlink" href="#id205">3</a>)</span>
+<p>Computed based on the information contained in <span id="id212"><sup><a class="reference internal" href="Bibliography.html#id32" title="IEA. World energy balances - extended energy balances for turkey, 2019. Technical Report, 2023. URL: https://www.iea.org/data-and-statistics/data-product/world-energy-balances.">137</a></sup></span> and the Background Note 2 of <span id="id213"><sup><a class="reference internal" href="Bibliography.html#id40" title="World Bank Group. Country Climate and Development Report - Türkiye. Technical Report, June 2022. URL: https://www.ifc.org/en/insights-reports/2022/turkiye-country-climate-and-development-report.">144</a></sup></span></p>
+</div>
+<div class="citation" id="id214" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>52c<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id207">1</a>,<a role="doc-backlink" href="#id209">2</a>)</span>
+<p>Computed based on data from <span id="id215"><sup><a class="reference internal" href="Bibliography.html#id33" title="Traffic Safety Department - Directorate of Transport Studies. Traffic and transportation survey of highways. Technical Report, 2021. URL: https://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=&amp;cad=rja&amp;uact=8&amp;ved=2ahUKEwij_r-H2MGDAxUc0AIHHdFyCFQQFnoECBAQAQ&amp;url=https%3A%2F%2Fwww.kgm.gov.tr%2FSiteCollectionDocuments%2FKGMdocuments%2FIstatistikler%2FTrafikveUlasimBilgileri%2F21TrafikUlasimBilgileri.pdf&amp;usg=AOvVaw152dz8NI2iDc2s_Q8qYOSd&amp;opi=89978449.">143</a></sup></span></p>
+</div>
+</div>
+<p>Finally, the share of passenger mobility which can be supplied by public mobility is bounded by <span class="math notranslate nohighlight">\(\%_{public,min}\)</span> and <span class="math notranslate nohighlight">\(\%_{public,max}\)</span>. Similarly, the maximum share of private passenger mobility that can be supplied by motorcycles is given by <span class="math notranslate nohighlight">\(\%_{private,motorc,max}\)</span> (see Eq. <a class="reference internal" href="Model%20formulation.html#equation-eq-f-max-perc-motorcycle">(40)</a> in the Model Formulation Section). The values and assumptions for these three parameters are given in <a class="reference internal" href="#tab-passenger-mob-shares-tk"><span class="std std-numref">Table 53</span></a>.</p>
+<div class="docutils container">
+<table class="docutils align-default" id="tab-passenger-mob-shares-tk">
+<caption><span class="caption-number">Table 53 </span><span class="caption-text">Limiting shares for passenger mobility in 2021 and 2035.</span><a class="headerlink" href="#tab-passenger-mob-shares-tk" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 33.3%" />
+<col style="width: 33.3%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Parameter</strong></p></th>
+<th class="head"><p><strong>Value in 2021</strong></p></th>
+<th class="head"><p><strong>Value in 2035</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\%_{public_{min}}\)</span></p></td>
+<td><p>37% <a class="reference internal" href="#id220" id="id216"><span>[53a]</span></a></p></td>
+<td><p>5% <a class="reference internal" href="#id222" id="id217"><span>[53b]</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\%_{public_{max}}\)</span></p></td>
+<td><p>37% <a class="reference internal" href="#id220" id="id218"><span>[53a]</span></a></p></td>
+<td><p>50% <a class="reference internal" href="#id222" id="id219"><span>[53b]</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\%_{private_{motorc_{max}}}\)</span></p></td>
+<td><p>0%</p></td>
+<td><p>0%</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div role="list" class="citation-list">
+<div class="citation" id="id220" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>53a<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id216">1</a>,<a role="doc-backlink" href="#id218">2</a>)</span>
+<p>Computed based on data from <span id="id221"><sup><a class="reference internal" href="Bibliography.html#id33" title="Traffic Safety Department - Directorate of Transport Studies. Traffic and transportation survey of highways. Technical Report, 2021. URL: https://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=&amp;cad=rja&amp;uact=8&amp;ved=2ahUKEwij_r-H2MGDAxUc0AIHHdFyCFQQFnoECBAQAQ&amp;url=https%3A%2F%2Fwww.kgm.gov.tr%2FSiteCollectionDocuments%2FKGMdocuments%2FIstatistikler%2FTrafikveUlasimBilgileri%2F21TrafikUlasimBilgileri.pdf&amp;usg=AOvVaw152dz8NI2iDc2s_Q8qYOSd&amp;opi=89978449.">143</a></sup></span></p>
+</div>
+<div class="citation" id="id222" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>53b<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id217">1</a>,<a role="doc-backlink" href="#id219">2</a>)</span>
+<p>Our own expert guesses.</p>
+</div>
+</div>
+</section>
+<section id="freight">
+<h4>Freight<a class="headerlink" href="#freight" title="Link to this heading"></a></h4>
+<p>The share of freight which can be supplied by different modes are bounded by the values <span class="math notranslate nohighlight">\(\%_{fr,X,min}\)</span> and <span class="math notranslate nohighlight">\(\%_{fr,X,max}\)</span>.
+These values are given in <a class="reference internal" href="#tab-freight-shares-tk"><span class="std std-numref">Table 54</span></a> for 2019 and 2035.</p>
+<div class="docutils container">
+<table class="docutils align-default" id="tab-freight-shares-tk">
+<caption><span class="caption-number">Table 54 </span><span class="caption-text">Limiting shares for freight in 2019 and 2035.</span><a class="headerlink" href="#tab-freight-shares-tk" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 33.3%" />
+<col style="width: 33.3%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Parameter</strong></p></th>
+<th class="head"><p><strong>Value in 2019</strong></p></th>
+<th class="head"><p><strong>Value in 2035</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\%_{fr_{rail_{min}}}\)</span></p></td>
+<td><p>0.04 <a class="reference internal" href="#id228" id="id223"><span>[54a]</span></a></p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\%_{fr_{rail_{max}}}\)</span></p></td>
+<td><p>0.04 <a class="reference internal" href="#id228" id="id224"><span>[54a]</span></a></p></td>
+<td><p>0.25 <a class="reference internal" href="#id230" id="id225"><span>[54b]</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\%_{fr_{boat_{min}}}\)</span></p></td>
+<td><p>0    <a class="reference internal" href="#id231" id="id226"><span>[54c]</span></a></p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\%_{fr_{boat_{max}}}\)</span></p></td>
+<td><p>0    <a class="reference internal" href="#id231" id="id227"><span>[54c]</span></a></p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\%_{fr_{road_{min}}}\)</span></p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\%_{fr_{road_{max}}}\)</span></p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div role="list" class="citation-list">
+<div class="citation" id="id228" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>54a<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id223">1</a>,<a role="doc-backlink" href="#id224">2</a>)</span>
+<p>Background Note 2 of <span id="id229"><sup><a class="reference internal" href="Bibliography.html#id40" title="World Bank Group. Country Climate and Development Report - Türkiye. Technical Report, June 2022. URL: https://www.ifc.org/en/insights-reports/2022/turkiye-country-climate-and-development-report.">144</a></sup></span></p>
+</div>
+<div class="citation" id="id230" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id225">54b</a><span class="fn-bracket">]</span></span>
+<p>Our own expert guess</p>
+</div>
+<div class="citation" id="id231" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>54c<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id226">1</a>,<a role="doc-backlink" href="#id227">2</a>)</span>
+<p>Freight by boat is not included in EnergyScope Turkey because no data could be found</p>
+</div>
+</div>
+</section>
+</section>
+<section id="non-energy-demand">
+<span id="sec-app1-ned-tk"></span><h3>Non-energy demand<a class="headerlink" href="#non-energy-demand" title="Link to this heading"></a></h3>
+<p>Given the important
+petroleum refining activity in Turkey, we assume that all non-energy EUD in 2019 was HVC. We keep
+the same assumption for the year 2035.</p>
+</section>
+<section id="storage">
+<span id="sec-app1-storage-tk"></span><h3>Storage<a class="headerlink" href="#storage" title="Link to this heading"></a></h3>
+<p>The values of <span class="math notranslate nohighlight">\(f_{min/max}(Hydro~Dam)\)</span> and <span class="math notranslate nohighlight">\(f_{min/max}(Dam~Storage)\)</span> are linked.
+The ratio between the two is taken to be 450 [h]. The 2035 values of
+<span class="math notranslate nohighlight">\(f_{min}(Hydro~Dam)=15.7\)</span> [GW] and <span class="math notranslate nohighlight">\(f_{max}(Hydro~Dam)=19.9\)</span> [GW] therefore translate into
+<span class="math notranslate nohighlight">\(f_{min}(Dam~Storage)=7055\)</span> [GWh] and <span class="math notranslate nohighlight">\(f_{max}(Dam~Storage)=8974\)</span> [GWh].</p>
+<p>On top of hydro dams, it is envisaged that pumped hydro storage systems could be developed in Turkey. The main data
+for these potential projects are taken from <span id="id232"><sup><a class="reference internal" href="Bibliography.html#id41" title="Japan International Cooperation Agency (JICA). The Study On Optimal Power Generation For Peak Demand In Turkey. Technical Report, Turkish Electricity Transmission Co. (TEIAS), February 2011.">150</a></sup></span> and summarised in <a class="reference internal" href="#tab-stodatabasic-tk"><span class="std std-numref">Table 55</span></a>.</p>
+<div class="docutils container">
+<table class="docutils align-default" id="tab-stodatabasic-tk">
+<caption><span class="caption-number">Table 55 </span><span class="caption-text">Foreseen Pumped Hydro Storage (PHS) characteristics in 2035 in Turkey.</span><a class="headerlink" href="#tab-stodatabasic-tk" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 12.5%" />
+<col style="width: 12.5%" />
+<col style="width: 12.5%" />
+<col style="width: 20.8%" />
+<col style="width: 8.3%" />
+<col style="width: 8.3%" />
+<col style="width: 8.3%" />
+<col style="width: 8.3%" />
+<col style="width: 8.3%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Technology</strong></p></th>
+<th class="head"><p><strong>c</strong><sub>inv</sub></p></th>
+<th class="head"><p><strong>c</strong><sub>maint</sub></p></th>
+<th class="head"><p><strong>gwp</strong><sub>constr</sub></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(eta_{sto-in}\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(eta_{sto-out}\)</span></p></th>
+<th class="head"><p><strong>t</strong><sub>sto-out</sub></p></th>
+<th class="head"><p><strong>lifetime</strong></p></th>
+<th class="head"><p><strong>f</strong><sub>max</sub></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td></td>
+<td><p>[<span class="math notranslate nohighlight">\(\text{€}_{2015}\)</span>/kWh]</p></td>
+<td><p>[<span class="math notranslate nohighlight">\(\text{€}_{2015}\)</span>/kWh/y]</p></td>
+<td><p>[kgCO <sub>2</sub>-eq/kWh]</p></td>
+<td><p>[%]</p></td>
+<td><p>[%]</p></td>
+<td><p>[h]</p></td>
+<td><p>[y]</p></td>
+<td><p>[GWh]</p></td>
+</tr>
+<tr class="row-odd"><td><p>PHS</p></td>
+<td><p>58.8</p></td>
+<td><p>0 <a class="reference internal" href="#id240" id="id233"><span>[55a]</span></a></p></td>
+<td><p>8.33 <a class="reference internal" href="#id241" id="id234"><span>[55b]</span></a></p></td>
+<td><p>7 <a class="reference internal" href="#id243" id="id235"><span>[55c]</span></a></p></td>
+<td><p>86.6 <a class="reference internal" href="#id245" id="id236"><span>[55d]</span></a></p></td>
+<td><p>86.6 <a class="reference internal" href="#id245" id="id237"><span>[55d]</span></a></p></td>
+<td><p>50 <a class="reference internal" href="#id246" id="id238"><span>[55e]</span></a></p></td>
+<td><p>91 <a class="reference internal" href="#id248" id="id239"><span>[55f]</span></a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div role="list" class="citation-list">
+<div class="citation" id="id240" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id233">55a</a><span class="fn-bracket">]</span></span>
+<p>Neglected.</p>
+</div>
+<div class="citation" id="id241" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id234">55b</a><span class="fn-bracket">]</span></span>
+<p>Own calculation based on Hydro Dams emissions from previous work
+<span id="id242"><sup><a class="reference internal" href="Bibliography.html#id58" title="Gauthier Limpens, Stefano Moret, Hervé Jeanmart, and Francois Maréchal. EnergyScope TD: A novel open-source model for regional energy systems. Applied Energy, 255(March):113729, 2019.">2</a>,<a class="reference internal" href="Bibliography.html#id56" title="Stefano Moret. Strategic energy planning under uncertainty. PhD thesis, École Polytechnique Fédérale de Lausanne, 2017. doi:10.5075/EPFL-THESIS-7961.">5</a></sup></span>.</p>
+</div>
+<div class="citation" id="id243" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id235">55c</a><span class="fn-bracket">]</span></span>
+<p><span id="id244"><sup><a class="reference internal" href="Bibliography.html#id41" title="Japan International Cooperation Agency (JICA). The Study On Optimal Power Generation For Peak Demand In Turkey. Technical Report, Turkish Electricity Transmission Co. (TEIAS), February 2011.">150</a></sup></span></p>
+</div>
+<div class="citation" id="id245" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>55d<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id236">1</a>,<a role="doc-backlink" href="#id237">2</a>)</span>
+<p>A round-trip efficiency of 75% (i.e. <span class="math notranslate nohighlight">\(0.866^2\)</span>) is taken, identical to the one of the Coo-Trois-Ponts hydroelectric power station in Belgium.</p>
+</div>
+<div class="citation" id="id246" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id238">55e</a><span class="fn-bracket">]</span></span>
+<p>Data verified in Table B1 of
+<span id="id247"><sup><a class="reference internal" href="Bibliography.html#id141" title="Behnam Zakeri and Sanna Syri. Electrical energy storage systems: A comparative life cycle cost analysis. Renewable and Sustainable Energy Reviews, 42:569–596, 2015. doi:10.1016/j.rser.2014.10.011.">122</a></sup></span>.</p>
+</div>
+<div class="citation" id="id248" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id239">55f</a><span class="fn-bracket">]</span></span>
+<p>Computed based on potential projects informed in <span id="id249"><sup><a class="reference internal" href="Bibliography.html#id41" title="Japan International Cooperation Agency (JICA). The Study On Optimal Power Generation For Peak Demand In Turkey. Technical Report, Turkish Electricity Transmission Co. (TEIAS), February 2011.">150</a></sup></span></p>
+</div>
+</div>
+</section>
+<section id="others">
+<span id="app-data-otherparam-tk"></span><h3>Others<a class="headerlink" href="#others" title="Link to this heading"></a></h3>
+<section id="electricity-grid">
+<span id="ssec-app1-grid-tk"></span><h4>Electricity grid<a class="headerlink" href="#electricity-grid" title="Link to this heading"></a></h4>
+<p>Several data regarding cross-border interconnections are given in Section
+<em>Electricity imports and exports</em>. The costs of new High-Voltage
+transfer capacity (HVAC Line) with neighbouring countries are computed to be
+<span class="math notranslate nohighlight">\(c_{inv} = 2~\text{€}_{2015}\)</span>/kW/km and
+<span class="math notranslate nohighlight">\(c_{maint} = 0.04~\text{€}_{2015}\)</span>/kW/km/year, based on <span id="id250"><sup><a class="reference internal" href="Bibliography.html#id16" title="IEA. The power of transformation: wind, sun and the economics of flexible power systems. Technical Report, 2014. URL: https://doi.org/10.1787/9789264208032-en.">128</a></sup></span>,
+<span id="id251"><sup><a class="reference internal" href="Bibliography.html#id17" title="T. Brown, D. Schlachtberger, A. Kies, S. Schramm, and M. Greiner. Synergies of sector coupling and transmission reinforcement in a cost-optimised, highly renewable European energy system. Energy, 160:720–739, October 2018. doi:10.1016/j.energy.2018.06.222.">129</a></sup></span> and <span id="id252"><sup><a class="reference internal" href="Bibliography.html#id18" title="Matteo Giacomo Prina, Valeria Casalicchio, Cord Kaldemeyer, Giampaolo Manzolini, David Moser, Alexander Wanitschke, and Wolfram Sparber. Multi-objective investment optimization for energy system models in high temporal and spatial resolution. Applied Energy, 264:114728, April 2020. URL: https://www.sciencedirect.com/science/article/pii/S0306261920302403, doi:10.1016/j.apenergy.2020.114728.">130</a></sup></span>. By multiplying these
+costs by 853 km (i.e. the distance between sofia and Ankara),
+we obtain for the technology HVAC in EnergyScope in 2035:
+<span class="math notranslate nohighlight">\(c_{inv} = 1706~\text{M€}_{2015}\)</span>/GW and
+<span class="math notranslate nohighlight">\(c_{maint} = 34.12~\text{M€}_{2015}\)</span>/GW/year.
+We take the distance from capital city to capital city, and not the
+distance from border to border, to grossly reflect the local grid
+reinforcement costs that such new interconnection projects entail.</p>
+</section>
+<section id="dhn-grid">
+<span id="app-dhn-grid-data-tk"></span><h4>DHN grid<a class="headerlink" href="#dhn-grid" title="Link to this heading"></a></h4>
+<p>The lower (<span class="math notranslate nohighlight">\(\%_{dhn,min}\)</span>) and upper bounds (<span class="math notranslate nohighlight">\(\%_{dhn,max}\)</span>) for the use of
+DHN are chosen as 2% and 50%, respectively. These values are the same as
+the ones from <span id="id253"><sup><a class="reference internal" href="Bibliography.html#id81" title="M Borasio and S Moret. Deep decarbonisation of regional energy systems: a novel modelling approach and its application to the italian energy transition. Renewable and Sustainable Energy Reviews, 153:111730, 2022.">23</a></sup></span> for the case of Italy. Indeed, the population
+density in urban and surburban areas is grossly similar in Italy and in Turkey.</p>
+</section>
+<section id="energy-demand-reduction-cost">
+<h4>Energy demand reduction cost<a class="headerlink" href="#energy-demand-reduction-cost" title="Link to this heading"></a></h4>
+<p>[TO BE COMPLETED]</p>
+</section>
+</section>
+</section>
+<section id="ghg-emissions">
+<span id="app-sec-estd-co-co2-emissions-tk"></span><h2>GHG emissions<a class="headerlink" href="#ghg-emissions" title="Link to this heading"></a></h2>
+<p>As already explicited in <a class="reference internal" href="#tab-prices-imported-resources-tk"><span class="std std-numref">Table 43</span></a>, two CO <sub>2</sub>-eq
+emissions metrics are used: CO <sub>2,direct</sub> and gwp <sub>op</sub>. The first one relates to
+the direct emissions associated with the fuels’ combustion, while the second one is the
+GWP100a-IPCC2013 metric: it covers emissions associated to extraction, transportation and combustion.
+The former is used to complete the calibration of EnergyScope to the 2019 Turkish energy
+system, whereas the second one determines the maximum GHG emissions allowed in 2035.</p>
+<section id="calibration-of-energyscope-to-the-2019-energy-system">
+<h3>Calibration of EnergyScope to the 2019 energy system<a class="headerlink" href="#calibration-of-energyscope-to-the-2019-energy-system" title="Link to this heading"></a></h3>
+<p>After having found values for all parameters of the model, as described in the previous sections, it
+is time to verify that the model’s simulation of the 2019 Turkish energy system is coherent with historical
+data. A practical check is to verify that CO <sub>2</sub>-eq emissions match. The resources’ use and emissions
+simulated by running EnergyScope for the year 2019 are given in <a class="reference internal" href="#tab-2019-co2-check"><span class="std std-numref">Table 56</span></a>.
+They are compared in the table with the historical emissions. To do so, the value of 365.6 CO <sub>2</sub>-eq
+in 2019 is taken from <span id="id254"><sup><a class="reference internal" href="Bibliography.html#id27" title="Turkish Statistical Institute. Greenhouse gas emissions statistics 1990-2021. Technical Report, March 2023. URL: https://data.tuik.gov.tr/Bulten/Index?p=Greenhouse-Gas-Emissions-Statistics-1990-2021-49672&amp;dil=2.">151</a></sup></span>. These emissions are then divided between coal, natural gas and
+oil using the shares (0.43,0.24,0.33) of the year 2018 given in <span id="id255"><sup><a class="reference internal" href="Bibliography.html#id25" title="IEA. Turkey 2021. Technical Report, 2021. License: CC BY 4.0. URL: https://www.iea.org/reports/turkey-2021.">132</a></sup></span>.</p>
+<div class="docutils container">
+<table class="docutils align-default" id="tab-2019-co2-check">
+<caption><span class="caption-number">Table 56 </span><span class="caption-text">Resource use and CO <sub>2</sub>-eq emissions simulated by EnergyScope for the year 2019, compared with historical data. Abbreviations: Liquid Fuel Oil (LFO).</span><a class="headerlink" href="#tab-2019-co2-check" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Resource</strong></p></th>
+<th class="head"><p><strong>Quantity used in 2019</strong> <a class="reference internal" href="#id263" id="id256"><span>[90a]</span></a></p></th>
+<th class="head"><p><strong>CO</strong><sub>2direct</sub> (per MWh of fuel)</p></th>
+<th class="head"><p><strong>CO</strong><sub>2direct</sub> (total) <a class="reference internal" href="#id263" id="id257"><span>[90a]</span></a></p></th>
+<th class="head"><p>historical <strong>CO</strong><sub>2</sub>-eq emissions</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td></td>
+<td><p>[GWh]</p></td>
+<td><p>[tCO <sub>2</sub>-eq/MWh <sub>fuel</sub>]</p></td>
+<td><p>[MtCO <sub>2</sub>-eq]</p></td>
+<td><p>[MtCO <sub>2</sub>-eq]</p></td>
+</tr>
+<tr class="row-odd"><td><p>coal</p></td>
+<td><p>457 078</p></td>
+<td><p>0.36</p></td>
+<td><p>164.5</p></td>
+<td><p>158.5</p></td>
+</tr>
+<tr class="row-even"><td><p>natural gas</p></td>
+<td><p>453 821</p></td>
+<td><p>0.20</p></td>
+<td><p>90.8</p></td>
+<td><p>88.2</p></td>
+</tr>
+<tr class="row-odd"><td><p>gasoline</p></td>
+<td><p>13 015</p></td>
+<td><p>0.25</p></td>
+<td><p>3.3</p></td>
+<td><p>3.6 <a class="reference internal" href="#id264" id="id258"><span>[90b]</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>diesel</p></td>
+<td><p>214 907</p></td>
+<td><p>0.26</p></td>
+<td><p>55.9</p></td>
+<td><p>62.6 <a class="reference internal" href="#id264" id="id259"><span>[90b]</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>LFO</p></td>
+<td><p>180 767</p></td>
+<td><p>0.26</p></td>
+<td><p>47.0</p></td>
+<td><p>52.7 <a class="reference internal" href="#id264" id="id260"><span>[90b]</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>woody biomass</p></td>
+<td><p>40 000</p></td>
+<td><p>0.40</p></td>
+<td><p>16.0</p></td>
+<td><p>~ <a class="reference internal" href="#id265" id="id261"><span>[90c]</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>non-renewable waste</p></td>
+<td><p>121</p></td>
+<td><p>0.26</p></td>
+<td><p>0.03</p></td>
+<td><p>~ <a class="reference internal" href="#id265" id="id262"><span>[90c]</span></a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div role="list" class="citation-list">
+<div class="citation" id="id263" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>90a<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id256">1</a>,<a role="doc-backlink" href="#id257">2</a>)</span>
+<p>Obtained after running EnergyScope with the 2019 data</p>
+</div>
+<div class="citation" id="id264" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>90b<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id258">1</a>,<a role="doc-backlink" href="#id259">2</a>,<a role="doc-backlink" href="#id260">3</a>)</span>
+<p>The historical emissions for gasoline, diesel and LFO are aggregated. We disaggregate them according to the proportions from the EnergyScope simulation for year 2019.</p>
+</div>
+<div class="citation" id="id265" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>90c<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id261">1</a>,<a role="doc-backlink" href="#id262">2</a>)</span>
+<p>Not included in the scope of <span id="id266"><sup><a class="reference internal" href="Bibliography.html#id27" title="Turkish Statistical Institute. Greenhouse gas emissions statistics 1990-2021. Technical Report, March 2023. URL: https://data.tuik.gov.tr/Bulten/Index?p=Greenhouse-Gas-Emissions-Statistics-1990-2021-49672&amp;dil=2.">151</a></sup></span></p>
+</div>
+</div>
+<p>According to <span id="id267"><sup><a class="reference internal" href="Bibliography.html#id27" title="Turkish Statistical Institute. Greenhouse gas emissions statistics 1990-2021. Technical Report, March 2023. URL: https://data.tuik.gov.tr/Bulten/Index?p=Greenhouse-Gas-Emissions-Statistics-1990-2021-49672&amp;dil=2.">151</a></sup></span>, the total CO <sub>2</sub>-eq emissions from fossil fuels in Turkey were of 365.6 MtCO <sub>2</sub>-eq in 2019.
+The sum of the values simulated with EnergyScope for fossil fuels (excluding woody biomass and waste) and given in
+<a class="reference internal" href="#tab-2019-co2-check"><span class="std std-numref">Table 56</span></a> is 379.6 MtCO <sub>2</sub>-eq. The difference between the two is less than 4% and is therefore acceptable.</p>
+</section>
+<section id="setting-a-gwp-limit-for-the-year-2035">
+<h3>Setting a gwp limit for the year 2035<a class="headerlink" href="#setting-a-gwp-limit-for-the-year-2035" title="Link to this heading"></a></h3>
+<p>The gwp <sub>op</sub> computed by EnergyScope for the 2019 Turkish energy system is of 434 MtCO <sub>2</sub>-eq. It is broken down by
+resource type in <a class="reference internal" href="#tab-2019-gwp"><span class="std std-numref">Table 57</span></a>.</p>
+<div class="docutils container">
+<table class="docutils align-default" id="tab-2019-gwp">
+<caption><span class="caption-number">Table 57 </span><span class="caption-text">Resource use and gwp <sub>op</sub> simulated by EnergyScope for the year 2019. Abbreviations: Liquid Fuel Oil (LFO).</span><a class="headerlink" href="#tab-2019-gwp" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Resource</strong></p></th>
+<th class="head"><p><strong>Quantity used in 2019</strong> <a class="reference internal" href="#id269" id="id268"><span>[91a]</span></a></p></th>
+<th class="head"><p><strong>gwp</strong><sub>op</sub> (per MWh of fuel)</p></th>
+<th class="head"><p><strong>gwp</strong><sub>op</sub> (total)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td></td>
+<td><p>[GWh]</p></td>
+<td><p>[tCO <sub>2</sub>-eq/MWh <sub>fuel</sub>]</p></td>
+<td><p>[MtCO <sub>2</sub>-eq]</p></td>
+</tr>
+<tr class="row-odd"><td><p>coal</p></td>
+<td><p>457 078</p></td>
+<td><p>0.40</p></td>
+<td><p>183.5</p></td>
+</tr>
+<tr class="row-even"><td><p>natural gas</p></td>
+<td><p>453 821</p></td>
+<td><p>0.27</p></td>
+<td><p>121.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>gasoline</p></td>
+<td><p>13 015</p></td>
+<td><p>0.34</p></td>
+<td><p>4.5</p></td>
+</tr>
+<tr class="row-even"><td><p>diesel</p></td>
+<td><p>214 907</p></td>
+<td><p>0.31</p></td>
+<td><p>67.7</p></td>
+</tr>
+<tr class="row-odd"><td><p>LFO</p></td>
+<td><p>180 767</p></td>
+<td><p>0.31</p></td>
+<td><p>56.3</p></td>
+</tr>
+<tr class="row-even"><td><p>woody biomass</p></td>
+<td><p>40 000</p></td>
+<td><p>0.01</p></td>
+<td><p>0.5</p></td>
+</tr>
+<tr class="row-odd"><td><p>non-renewable waste</p></td>
+<td><p>121</p></td>
+<td><p>0.15</p></td>
+<td><p>0.02</p></td>
+</tr>
+<tr class="row-even"><td><p>electricity imports</p></td>
+<td><p>2 210</p></td>
+<td><p>0.41</p></td>
+<td><p>0.9</p></td>
+</tr>
+<tr class="row-odd"><td><p>electricity exports</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div role="list" class="citation-list">
+<div class="citation" id="id269" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id268">91a</a><span class="fn-bracket">]</span></span>
+<p>Obtained after running EnergyScope with the 2019 data</p>
+</div>
+</div>
+<p>Decarbonisation of the energy system is enforced in EnergyScope by defining a threshold on the GWP (<span class="math notranslate nohighlight">\(gwp_{limit}\)</span>). The simplest method
+for choosing a value for <span class="math notranslate nohighlight">\(gwp_{limit}\)</span> is to take a certain percentage of the 2019 gwp.</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id270" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id149">10</a><span class="fn-bracket">]</span></span>
+<p>Solar PV with system loss = 0.1, Tilt=35°, Azimut=180°</p>
+</aside>
+<aside class="footnote brackets" id="id271" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id153">11</a><span class="fn-bracket">]</span></span>
+<p>4 MW wind turbine with Hub height=100m, Vestas V150 4000</p>
+</aside>
+</aside>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Input%20Data%20-%20Colombia.html" class="btn btn-neutral float-left" title="Input Data - Colombia" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Bibliography.html" class="btn btn-neutral float-right" title="Bibliography" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, G. Limpens.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
