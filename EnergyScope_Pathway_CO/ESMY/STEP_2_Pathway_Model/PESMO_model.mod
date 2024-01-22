@@ -91,6 +91,7 @@ param efficiency {YEARS} >=0 default 1;
 ## Parameters added to include time series in the model [Table 1]
 param lighting_month {PERIODS} >= 0, <= 1; # %_lighting: factor for sharing lighting across months (adding up to 1)
 param heating_month {PERIODS} >= 0, <= 1; # %_sh: factor for sharing space heating across months (adding up to 1)
+param cooling_month {PERIODS} >= 0, <= 1; # %_sc: factor for sharing space cooling across months (adding up to 1)
 param c_p_t {TECHNOLOGIES, PERIODS} >= 0, <= 1 default 1; # capacity factor of each technology and resource, defined on monthly basis. Different than 1 if F_Mult_t (t) <= c_p_t (t) * F_Mult
 
 ## Parameters added to define scenarios and technologies [Table 2]
@@ -122,7 +123,8 @@ param fmin_perc {YEARS,TECHNOLOGIES} >= 0, <= 1 default 0; # value in [0,1]: thi
 param avail {YEARS,RESOURCES} >= 0 default 0; # Yearly availability of resources [GWh/y]
 param c_op {YEARS,RESOURCES} >= 0 default 0; # cost of resources in the different periods [MCHF/GWh]
 param vehicule_capacity {YEARS,TECHNOLOGIES} >=0, default 0; #  veh_capa [capacity/vehicles] Average capacity (pass-km/h or t-km/h) per vehicle. It makes the link between F and the number of vehicles
-param peak_sh_factor >= 0;   # %_Peak_sh [-]: ratio between highest yearly demand and highest TDs demand
+param peak_sh_factor >= 0;   # %_Peak_sh [-]: ratio between highest yearly heating demand and highest monthly heating demand
+param peak_sc_factor >= 0;   # %_Peak_sc [-]: ratio between highest yearly cooling demand and highest monthly cooling demand
 param layers_in_out {YEARS,RESOURCES union TECHNOLOGIES diff STORAGE_TECH , LAYERS}; # f: input/output Resources/Technologies to Layers. Reference is one unit ([GW] or [Mpkm/h] or [Mtkm/h]) of (main) output of the resource/technology. input to layer (output of technology) > 0.
 param c_inv {YEARS,TECHNOLOGIES} >= 0 default 0; # Specific investment cost [Meuros/GW].[Meuros/GWh] for STORAGE_TECH
 param c_maint {YEARS,TECHNOLOGIES} >= 0 default 0; # O&M cost [MCHF/GW/year]: O&M cost does not include resource (fuel) cost. [MCHF/GWh/year] for STORAGE_TECH

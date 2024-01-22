@@ -16,7 +16,7 @@ Electricity;Electricity;Ultra-supercritical coal power plant;COAL_US;2516.71;29.
 Electricity;Electricity;Intagrated gasification combined cycle with coal;COAL_IGCC;3245.81;48.95;331.6;35;0.856;0;1;0;1.00E+15;
 Electricity;Electricity;Biomass power plant;BIOMASS_TO_POWER;1677.02;69.94;331.6;35;0.868;0;1;0;1.00E+15;
 Electricity;Electricity;Photovoltaic rooftop;PV_ROOFTOP;737.89;9.73;2081.43;40;1;0;1;0.3;9.84E+01;
-Electricity;Electricity;Photovoltaic utility scale;PV_UTILITY;335.4;8.43;2081.43;40;1;0;1;0;7.08E+02;
+Electricity;Electricity;Photovoltaic utility scale;PV_UTILITY;335.4;8.43;2081.43;25;1;0;1;0;7.08E+02;
 Electricity;Electricity;Parabolic trough power block;PT_POWER_BLOCK;1044.57;62.65;0;25;1;0;1;0;1.00E+15;
 Electricity;Electricity;Solar tower power block;ST_POWER_BLOCK;768.19;63;0;25;1;0;1;0;1.00E+15;
 Electricity;Electricity;Wind onshore;WIND_ONSHORE;1010;16.82;622.85;30;1;0;1;0;7.30E+00;
@@ -58,9 +58,9 @@ Heat;Heat low temperature decentralised;Coal stove;COAL_STOVE;462.44;16.18;21.09
 Heat;Heat low temperature decentralised;Boiler oil (decentralised);DEC_BOILER_OIL;142.38;8.54;21.09;17;1;0;1;0;1.00E+15;
 Heat;Heat low temperature decentralised;Solar thermal (decentralised);DEC_SOLAR;719.07;8.09;221.22;20;1;0;1;0;1.00E+15;
 Heat;Heat low temperature decentralised;Direct electrical heaters (decentralised);DEC_DIRECT_ELEC;39.98;0.18;1.47;15;1;0;1;0;1.00E+15;
-Cold;Space cooling;Electrical refrigeration cycle;DEC_ELEC_COLD;474.17;20.26;164.89;20;1;0;1;0;1.00E+15;
+Cold;Space cooling;Electrical refrigeration cycle;DEC_ELEC_COLD;474.17;20.26;164.89;18;1;0;1;0;1.00E+15;
 Cold;Space cooling;Thermal refrigeration cycle gas;DEC_THHP_GAS_COLD;304.24;9.14;381.93;20;1;0;1;0;1.00E+15;
-Cold;Process cooling;Industrial electric cooling;IND_ELEC_COLD;754.29;9.86;174.79;20;0.95;0;1;0;1.00E+15;
+Cold;Process cooling;Industrial electric cooling;IND_ELEC_COLD;617.48;5.01;174.79;20;0.95;0;1;0;1.00E+15;
 Mobility;Passenger public;Tram or metro;TRAMWAY_TROLLEY;625;12.5;0;30;0.342465753;0;0.035;0;1.00E+15;
 Mobility;Passenger public;Bus diesel;BUS_COACH_DIESEL;611.11;30.56;0;15;0.296803653;0;1;0;1.00E+15;
 Mobility;Passenger public;Bus gasoline;BUS_COACH_GASOLINE;611.11;30.56;0;15;0.296803653;0;1;0;1.00E+15;

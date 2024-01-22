@@ -1207,7 +1207,7 @@ technology to potentially cover the entire demand. The maximum (:math:`f_{max,\%
 		  , [€ :sub:`2015`/kW :sub:`e`], [€ :sub:`2015`/kW :sub:`e`/year], [kgCO :sub:`2`-eq./kW :sub:`e`], [year], [%], [%]
 		 Electrical refrigeration cycle, 474, 20.3, 165, 20, 100, 318
 		 Thermal refrigeration cycle, 304, 9.1, 382, 20, 100, 146
-		 Industrial electric cooling, 754, 9.9, 175, 20, 95, 242
+		 Industrial electric cooling, 617, 5.0, 175, 20, 95, 242
 		 
 .. [19a]
    Data taken from :cite:`borasio2022deep`
