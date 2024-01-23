@@ -70,7 +70,8 @@ set STORAGE_DAILY := 	BEV_BATT 	PHEV_BATT 	TS_DEC_HP_ELEC	TS_DEC_THHP_GAS	TS_DEC
 set STORAGE_OF_END_USES_TYPES ["HEAT_LOW_T_DHN"] := 	TS_DHN_DAILY 	TS_DHN_SEASONAL;																												
 set STORAGE_OF_END_USES_TYPES ["HEAT_LOW_T_DECEN"] := 	TS_DEC_HP_ELEC	TS_DEC_THHP_GAS	TS_DEC_COGEN_GAS	TS_DEC_COGEN_OIL	TS_DEC_ADVCOGEN_GAS	TS_DEC_ADVCOGEN_H2	TS_DEC_BOILER_GAS	TS_DEC_BOILER_WOOD	TS_DEC_BOILER_OIL	TS_DEC_DIRECT_ELEC;																				
 set STORAGE_OF_END_USES_TYPES ["ELECTRICITY"] := 	DAM_STORAGE	PHS 	BATT_LI;																												
-set STORAGE_OF_END_USES_TYPES ["HEAT_HIGH_T"] := 	TS_HIGH_TEMP	;																												
+set STORAGE_OF_END_USES_TYPES ["HEAT_HIGH_T"] := 	TS_HIGH_TEMP	;
+set STORAGE_OF_END_USES_TYPES ["SPACE_COOLING"] := 	TS_COLD	;																												
 																														
 # Link between storages & specific technologies																														
 set TS_OF_DEC_TECH ["DEC_HP_ELEC"] := TS_DEC_HP_ELEC;																														

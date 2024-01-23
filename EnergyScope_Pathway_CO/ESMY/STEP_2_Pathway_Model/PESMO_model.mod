@@ -228,7 +228,7 @@ subject to end_uses_t {y in YEARS_WND diff YEAR_ONE, l in LAYERS, t in PERIODS}:
 		else (if l == "HEAT_LOW_T_DHN" then
 			(end_uses_input[y,"HEAT_LOW_T_HW"] / total_time + end_uses_input[y,"HEAT_LOW_T_SH"] * heating_month [t] / t_op [t]) * Share_heat_dhn [y] + Network_losses [y,l,t]
 		else (if l == "HEAT_LOW_T_DECEN" then
-			(end_uses_input[y,"HEAT_LOW_T_HW"] / total_time + end_uses_input[y,"HEAT_LOW_T_SH"] * heating_month [t] / t_op [t]) * (1 - Share_heat_dhn [y])
+			(end_uses_input[y,"HEAT_LOW_T_HW"] / total_time + end_uses_input[y,"HEAT_LOW_T_SH"] * heating_month [t] / t_op [t]) * (1 - Share_heat_dhn [y])	
 		else (if l == "MOB_PUBLIC" then
 			(end_uses_input[y,"MOBILITY_PASSENGER"] / total_time) * Share_mobility_public [y]
 		else (if l == "MOB_PRIVATE" then
@@ -241,6 +241,10 @@ subject to end_uses_t {y in YEARS_WND diff YEAR_ONE, l in LAYERS, t in PERIODS}:
 			(end_uses_input[y,"MOBILITY_FREIGHT"] / total_time) * Share_freight_boat [y]
 		else (if l == "HEAT_HIGH_T" then
 			end_uses_input[y,l] / total_time
+		else (if l == "PROCESS_COOLING" then
+			end_uses_input[y,l] / total_time	
+		else (if l == "SPACE_COOLING" then
+			end_uses_input[y,l] * cooling_month [t] / t_op [t]	
 		else (if l == "HVC" then
 			end_uses_input[y,"NON_ENERGY"] * share_ned [y,"HVC"] / total_time
 		else (if l == "AMMONIA" then
@@ -248,7 +252,7 @@ subject to end_uses_t {y in YEARS_WND diff YEAR_ONE, l in LAYERS, t in PERIODS}:
 		else (if l == "METHANOL" then
 			end_uses_input[y,"NON_ENERGY"] * share_ned [y,"METHANOL"] / total_time
 		else 
-			0 )))))))))))); # For all layers which don't have an end-use demand
+			0 )))))))))))))); # For all layers which don't have an end-use demand
 
 
 ## Cost
