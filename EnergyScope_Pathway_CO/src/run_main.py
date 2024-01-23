@@ -128,12 +128,12 @@ if __name__ == '__main__':
                 
                 ampl.set_params('gwp_limit',{('YEAR_2015'):800000}) # 150000
                 ampl.set_params('gwp_limit',{('YEAR_2020'):800000}) # 150000
-                ampl.set_params('gwp_limit',{('YEAR_2025'):800000})  # 95486
-                ampl.set_params('gwp_limit',{('YEAR_2030'):800000})  # 71615
-                ampl.set_params('gwp_limit',{('YEAR_2035'):800000})  # 47743
-                ampl.set_params('gwp_limit',{('YEAR_2040'):800000})  # 32329
-                ampl.set_params('gwp_limit',{('YEAR_2045'):800000})  # 16915
-                ampl.set_params('gwp_limit',{('YEAR_2050'):800000})   # 1500
+                ampl.set_params('gwp_limit',{('YEAR_2025'):78583})  # 95486
+                ampl.set_params('gwp_limit',{('YEAR_2030'):63167})  # 71615
+                ampl.set_params('gwp_limit',{('YEAR_2035'):47750})  # 47743
+                ampl.set_params('gwp_limit',{('YEAR_2040'):32333})  # 32329
+                ampl.set_params('gwp_limit',{('YEAR_2045'):16917})  # 16915
+                ampl.set_params('gwp_limit',{('YEAR_2050'):1500})   # 1500
 
                 solve_result = ampl.run_ampl()
                 ampl.get_results()
