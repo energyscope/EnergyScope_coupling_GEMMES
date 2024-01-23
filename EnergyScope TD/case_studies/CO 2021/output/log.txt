@@ -1,23 +1,23 @@
 
-Presolve eliminates 1088527 constraints and 687419 variables.
+Presolve eliminates 1088514 constraints and 687119 variables.
 "option presolve 10;" used, but "option presolve 11;" might work better.
 Adjusted problem:
-238567 variables, all linear
-440466 constraints, all linear; 1366571 nonzeros
-	320708 equality constraints
-	119758 inequality constraints
+238867 variables, all linear
+440479 constraints, all linear; 1366895 nonzeros
+	320720 equality constraints
+	119759 inequality constraints
 1 linear objective; 1 nonzero.
 
 Setting $presolve_fixeps >= 4.83e-07 could change presolve results.
 
 presolve results:
-	variables omitted:	687131
-	constraints omitted:	1088527
-	ranges relaxed:		11567
-	bounds improved:	687621
+	variables omitted:	687119
+	constraints omitted:	1088514
+	ranges relaxed:		11566
+	bounds improved:	687609
 	constraint_drop_tol breakpoints: 0, 0, 4.17304347837554
 	nba cycles:		9
-	bound row scans:	273251
+	bound row scans:	273263
 	row-scan updates:	34316
 Gurobi 10.0.3:   pre:dual = -1
   alg:method = 2
@@ -25,28 +25,28 @@ Gurobi 10.0.3:   pre:dual = -1
   pre:passes = 3
   bar:convtol = 1e-06
   pre:solve = -1
-Gurobi 10.0.3: optimal solution; objective 57889.27243
+Gurobi 10.0.3: optimal solution; objective 50348.41998
 0 simplex iterations
-56 barrier iterations
+53 barrier iterations
  
 ------------ WARNINGS ------------
 WARNING:  "Solution Check"
      [ sol:chk:feastol=1e-06, :feastolrel=1e-06, :inttol=1e-05,
        :round='', :prec='' ]
 Algebraic expression violations:
-  - 86 original expression(s) of type ':linrange',
-        up to 1E-04 (abs)
+  - 36 original expression(s) of type ':linrange',
+        up to 9E-04 (abs)
  
  
 solve_result = solved
 
 solve_result_num = 0
 
-_solve_elapsed_time = 17.6666
+_solve_elapsed_time = 19.9348
 
-TotalCost 57889.27243248271
+TotalCost 50348.41998262256
 Carbon_cost 0
-GWP_op 94153.98729230567
+GWP_op 94176.36706221694
 carbon_price 0
 --------------SAVING COSTS -----------
 --------------SAVING RESOURCES -----------

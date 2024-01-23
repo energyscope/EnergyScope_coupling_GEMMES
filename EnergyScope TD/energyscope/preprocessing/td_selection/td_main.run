@@ -8,14 +8,14 @@
 ################################################################################
 
 # Load model
-model "/home/pjacques/Desktop/PhD/EnergyScope/energyscope/preprocessing/td_selection/td_main.mod";
+model "/home/pjacques/Desktop/PhD/EnergyScope_GEMMES_coupling/EnergyScope TD/energyscope/preprocessing/td_selection/td_main.mod";
 
 # Load data
-data "/home/pjacques/Desktop/PhD/EnergyScope/energyscope/preprocessing/td_selection/data.dat";
+data "/home/pjacques/Desktop/PhD/EnergyScope_GEMMES_coupling/EnergyScope TD/energyscope/preprocessing/td_selection/data.dat";
 
 # Run options
 option show_stats "3";
-option log_file "/home/pjacques/Desktop/PhD/EnergyScope/energyscope/preprocessing/td_selection/log.txt";
+option log_file "/home/pjacques/Desktop/PhD/EnergyScope_GEMMES_coupling/EnergyScope TD/energyscope/preprocessing/td_selection/log.txt";
 option times "1";
 option gentimes "1";
 option solver "cplex";
@@ -34,7 +34,7 @@ display _solve_elapsed_time;
 
 
 # Saving sets and parameters to output file
-param PathName symbolic := "/home/pjacques/Desktop/PhD/EnergyScope/energyscope/preprocessing/td_selection";
+param PathName symbolic := "/home/pjacques/Desktop/PhD/EnergyScope_GEMMES_coupling/EnergyScope TD/energyscope/preprocessing/td_selection";
 
 if solve_result = "limit" then { # To avoid post treatment error
     print "TIME OUT";

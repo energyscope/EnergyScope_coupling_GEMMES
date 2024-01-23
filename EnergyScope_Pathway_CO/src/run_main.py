@@ -166,6 +166,7 @@ if __name__ == '__main__':
             z_Cost_breakdown = z_Results['Cost_breakdown'].copy()
             z_Resources = z_Results['Resources'].copy()
             z_Year_balance = z_Results['Year_balance'].copy()
+            z_gwp_breakdown = z_Results['Gwp_breakdown'].copy()
             a_website = "https://www.google.com"
             webbrowser.open_new(a_website)
             ampl_graph.graph_resource()
