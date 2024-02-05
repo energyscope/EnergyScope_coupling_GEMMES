@@ -488,13 +488,13 @@ subject to extra_efficiency {y in YEARS_WND diff YEAR_ONE}:
 
 # [Eq. 38] Limit electricity import capacity
 subject to max_elec_import {y in YEARS_WND diff YEAR_ONE, t in PERIODS}:
-	F_t [y, "ELECTRICITY", t] * t_op [t] <= elec_max_import_capa [y];
+	F_t [y, "ELECTRICITY", t] * t_op [t] <= elec_max_import_capa [y] + F[y,"HVAC_LINE"];
 	
 # [Eq. 39] Limit surface area for rooftop solar
 subject to solar_area_rooftop_limited {y in YEARS_WND diff YEAR_ONE} :
 	( F [y, "DEC_SOLAR"] + F [y, "DHN_SOLAR"] ) / power_density_solar_thermal <= solar_area_rooftop [y];
 	
-# [Eq. 39] Limit surface area for ground solar
+# [Eq. 39bis] Limit surface area for ground solar
 subject to solar_area_ground_limited {y in YEARS_WND diff YEAR_ONE} :
 	F[y, "PV"] / power_density_pv <= solar_area_ground [y];
 	

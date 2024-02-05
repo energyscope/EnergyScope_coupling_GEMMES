@@ -24,7 +24,7 @@ from ampl_collector import AmplCollector
 from ampl_graph import AmplGraph
 
 
-type_of_model = 'MO'
+type_of_model = 'TD'
 nbr_tds = 12
 
 run_opti = True
@@ -46,7 +46,6 @@ if type_of_model == 'MO':
 else:
     mod_1_path = [os.path.join(pth_model,'PESTD_model.mod'),
             os.path.join(pth_model,'PESTD_store_variables.mod'),
-            os.path.join(pth_model,'PESTD_RL/PESTD_RL_v8.mod'),
             os.path.join(pth_model,'PES_store_variables.mod')]
     mod_2_path = [os.path.join(pth_model,'PESTD_initialise_2020.mod'),
               os.path.join(pth_model,'fix.mod')]

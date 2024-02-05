@@ -99,6 +99,7 @@ param efficiency {YEARS} >=0 default 1;
 ## Parameters added to include time series in the model [Table 1]
 param electricity_time_series {HOURS, TYPICAL_DAYS} >= 0, <= 1; # %_elec [-]: factor for sharing lighting across typical days (adding up to 1)
 param heating_time_series {HOURS, TYPICAL_DAYS} >= 0, <= 1; # %_sh [-]: factor for sharing space heating across typical days (adding up to 1)
+param cooling_time_series {HOURS, TYPICAL_DAYS} >= 0, <= 1; # %_sc [-]: factor for sharing space cooling across typical days (adding up to 1)
 param mob_pass_time_series {HOURS, TYPICAL_DAYS} >= 0, <= 1; # %_pass [-]: factor for sharing passenger transportation across Typical days (adding up to 1) based on https://www.fhwa.dot.gov/policy/2013cpr/chap1.cfm
 param mob_freight_time_series {HOURS, TYPICAL_DAYS} >= 0, <= 1; # %_fr [-]: factor for sharing freight transportation across Typical days (adding up to 1)
 param c_p_t {TECHNOLOGIES, HOURS, TYPICAL_DAYS} default 1; #Hourly capacity factor [-]. If = 1 (default value) <=> no impact.
@@ -118,6 +119,7 @@ param share_freight_road_min {YEARS}  >= 0, <= 1 default 0; # % min limit for pe
 param share_freight_road_max {YEARS}  >= 0, <= 1 default 0; # % max limit for penetration of road in freight transportation
 param share_freight_boat_min {YEARS}  >= 0, <= 1 default 0; # % min limit for penetration of boat in freight transportation
 param share_freight_boat_max {YEARS}  >= 0, <= 1 default 0; # % max limit for penetration of boat in freight transportation
+param share_private_motorcycle_max {YEARS}  >= 0, <= 1 default 0; # % max share of motorcycles in private mobility
 
 # share dhn vs decentralized for low-T heating
 param share_heat_dhn_min {YEARS} >= 0, <= 1 default 0; # %_dhn,min [-]: min limit for penetration of dhn in low-T heating
@@ -132,6 +134,7 @@ param avail {YEARS,RESOURCES} >= 0 default 0; # Yearly availability of resources
 param c_op {YEARS,RESOURCES} >= 0 default 0; # cost of resources in the different periods [MCHF/GWh]
 param vehicule_capacity {YEARS,TECHNOLOGIES} >=0, default 0; #  veh_capa [capacity/vehicles] Average capacity (pass-km/h or t-km/h) per vehicle. It makes the link between F and the number of vehicles
 param peak_sh_factor >= 0;   # %_Peak_sh [-]: ratio between highest yearly demand and highest TDs demand
+param peak_sc_factor >= 0;   # %_Peak_sc [-]: ratio between highest yearly demand and highest TDs demand
 param layers_in_out {YEARS,RESOURCES union TECHNOLOGIES diff STORAGE_TECH , LAYERS}; # f: input/output Resources/Technologies to Layers. Reference is one unit ([GW] or [Mpkm/h] or [Mtkm/h]) of (main) output of the resource/technology. input to layer (output of technology) > 0.
 param c_inv {YEARS,TECHNOLOGIES} >= 0 default 0; # Specific investment cost [Meuros/GW].[Meuros/GWh] for STORAGE_TECH
 param c_maint {YEARS,TECHNOLOGIES} >= 0 default 0; # O&M cost [MCHF/GW/year]: O&M cost does not include resource (fuel) cost. [MCHF/GWh/year] for STORAGE_TECH
@@ -151,7 +154,8 @@ param batt_per_car {YEARS, V2G} >= 0 default 0; # ev_Batt_size [GWh]: Battery si
 param state_of_charge_ev {EVs_BATT,HOURS} >= 0, default 0; # Minimum state of charge of the EV during the day. 
 param c_grid_extra >=0; # # Cost to reinforce the grid due to IRE penetration [Meuros/GW of (PV + Wind)].
 param elec_max_import_capa  {YEARS} >=0;
-param solar_area	 {YEARS} >= 0; # Maximum land available for PV deployment [km2]
+param solar_area_ground	 {YEARS} >= 0; # Maximum land available for PV deployment [km2]
+param solar_area_rooftop	 {YEARS} >= 0; # Maximum rooftop available for PV deployment [km2]
 param power_density_pv >=0 default 0;# Maximum power irradiance for PV.
 param power_density_solar_thermal >=0 default 0;# Maximum power irradiance for solar thermal.
 
@@ -245,6 +249,10 @@ subject to end_uses_t {y in YEARS_WND diff YEAR_ONE, l in LAYERS, h in HOURS, td
 			(end_uses_input[y,"MOBILITY_FREIGHT"]   * mob_freight_time_series [h, td] / t_op [h, td] ) *  Share_freight_boat [y]
 		else (if l == "HEAT_HIGH_T" then
 			end_uses_input[y,l] / total_time
+		else (if l == "PROCESS_COOLING" then
+			end_uses_input[y,l] / total_time
+		else (if l == "SPACE_COOLING" then
+			end_uses_input[y,l] * cooling_time_series [h, td] / t_op [h, td]
 		else (if l == "HVC" then
 			end_uses_input[y,"NON_ENERGY"] * share_ned [y,"HVC"] / total_time
 		else (if l == "AMMONIA" then
@@ -252,7 +260,7 @@ subject to end_uses_t {y in YEARS_WND diff YEAR_ONE, l in LAYERS, h in HOURS, td
 		else (if l == "METHANOL" then
 			end_uses_input[y,"NON_ENERGY"] * share_ned [y,"METHANOL"] / total_time
 		else 
-			0 )))))))))))); # For all layers which don't have an end-use demand
+			0 )))))))))))))); # For all layers which don't have an end-use demand
 
 
 ## Cost
@@ -478,17 +486,43 @@ subject to f_max_perc {y in YEARS_WND diff YEAR_ONE, eut in END_USES_TYPES, j in
 subject to f_min_perc {y in YEARS_WND diff YEAR_ONE, eut in END_USES_TYPES, j in TECHNOLOGIES_OF_END_USES_TYPE[eut]}:
 	sum {t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]} (F_t [y,j,h,td] * t_op[h,td]) >= fmin_perc [y,j] * sum {j2 in TECHNOLOGIES_OF_END_USES_TYPE[eut], t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]} (F_t [y,j2, h, td] * t_op[h,td]);
 
+# [Eq. 37] Maximum share of motorcycles in private passenger mobility
+subject to f_max_perc_motorcycle {y in YEARS_WND diff YEAR_ONE}:
+	sum {t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]} (F_t [y,"MOTORCYCLE",h,td] + F_t [y,"MOTORCYCLE_ELECTRIC",h,td]) * t_op[h,td] <= share_private_motorcycle_max [y];
+
+
 # [Eq. 39] Energy efficiency is a fixed cost
 subject to extra_efficiency {y in YEARS_WND diff YEAR_ONE}:
 	F [y,"EFFICIENCY"] = efficiency [y];	
 
 # [Eq. 38] Limit electricity import capacity
 subject to max_elec_import {y in YEARS_WND diff YEAR_ONE, h in HOURS, td in TYPICAL_DAYS}:
-	F_t [y, "ELECTRICITY", h, td] * t_op [h, td] <= elec_max_import_capa [y];
+	F_t [y, "ELECTRICITY", h, td] * t_op [h, td] <= elec_max_import_capa [y] + F[y,"HVAC_LINE"];
 	
-# [Eq. 39] Limit surface area for solar
-subject to solar_area_limited {y in YEARS_WND diff YEAR_ONE} :
-	F[y, "PV"] / power_density_pv + ( F [y, "DEC_SOLAR"] + F [y, "DHN_SOLAR"] ) / power_density_solar_thermal <= solar_area [y];
+# [Eq. 39] Limit surface area for rooftop solar
+subject to solar_area_rooftop_limited {y in YEARS_WND diff YEAR_ONE} :
+	( F [y, "DEC_SOLAR"] + F [y, "DHN_SOLAR"] ) / power_density_solar_thermal <= solar_area_rooftop [y];
+	
+# [Eq. 39bis] Limit surface area for ground solar
+subject to solar_area_ground_limited {y in YEARS_WND diff YEAR_ONE} :
+	F [y, "PV"] / power_density_pv <= solar_area_ground [y];
+	
+## Equations for hydro dams
+# [Eq. 46] Seasonal storage in hydro dams.
+# Capacity of DAM_STORAGE is proportional to capacity of HYDRO_DAM
+subject to storage_level_hydro_dams {y in YEARS_WND diff YEAR_ONE} :
+	F[y,"DAM_STORAGE"] <= f_min [y,"DAM_STORAGE"] + (f_max [y,"DAM_STORAGE"]-f_min [y,"DAM_STORAGE"]) * (F [y,"HYDRO_DAM"] - f_min [y,"HYDRO_DAM"])/(f_max [y,"HYDRO_DAM"]-f_min [y,"HYDRO_DAM"]);
+
+# [Eq. 47] Hydro dams can store the input energy and restore it at any time. Hence, inlet is the input river and outlet is bounded by max capacity
+subject to impose_hydro_dams_inflow {y in YEARS_WND diff YEAR_ONE, t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]}:
+	Storage_in [y,"DAM_STORAGE", "ELECTRICITY", h, td] = F_t [y, "HYDRO_DAM", h, td];
+
+# [Eq. 48] Hydro dams production is lower than installed F capacity:
+subject to limit_hydro_dams_output {y in YEARS_WND diff YEAR_ONE, t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]}:
+	Storage_out [y, "DAM_STORAGE", "ELECTRICITY", h, td] <= F [y, "HYDRO_DAM"];
+
+
+
 
 ## Define technologies change during phases:
 #-------------------------------------------

@@ -1,0 +1,9 @@
+24/02/02 11:17:49 [INFO    ] (import_data): Importing data files from /home/pjacques/Desktop/PhD/EnergyScope_GEMMES_coupling/EnergyScope TD/Data/CO 2050
+24/02/02 11:17:49 [INFO    ] (kmedoid_clustering): Starting kmedoid clustering of typical days based on /home/pjacques/Desktop/PhD/EnergyScope_GEMMES_coupling/EnergyScope TD/energyscope/preprocessing/td_selection/data.dat
+24/02/02 11:17:49 [INFO    ] (kmedoid_clustering): Running kmedoid clustering
+24/02/02 11:17:59 [INFO    ] (kmedoid_clustering): End of kmedoid clustering
+24/02/02 11:17:59 [INFO    ] (print_data): Printing ESTD_data.dat
+24/02/02 11:18:00 [INFO    ] (print_data): Printing ESTD_12TD.dat
+24/02/02 11:18:00 [INFO    ] (run_es): Running EnergyScope
+24/02/02 11:19:29 [INFO    ] (run_es): End of run
+24/02/02 11:19:31 [INFO    ] (read_outputs): Reading outputs from: /home/pjacques/Desktop/PhD/EnergyScope_GEMMES_coupling/EnergyScope TD/case_studies/CO 2050/output
