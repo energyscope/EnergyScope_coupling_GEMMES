@@ -102,7 +102,7 @@
  ##  PARAMETERS  presented  in  Table  2.	 
  param  i_rate  :=  0.064;  #  part  [2.7.4] 
  param  re_share_primary  :=  0;  #  Minimum  RE  share  in  primary  consumption 
- param  gwp_limit  :=  1000000;  #  gwp_limit  [ktCO2-eq./year]:  maximum  GWP  emissions 
+ param  gwp_limit  :=  100000;  #  gwp_limit  [ktCO2-eq./year]:  maximum  GWP  emissions 
  param  solar_area_rooftop  :=  529; 
  param  solar_area_ground  :=  3809; 
  param  solar_area_ground_high_irr  :=  70; 

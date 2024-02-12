@@ -30,9 +30,9 @@ Woody biomass,Boilers,31.00,Woody biomass,#CD853F,TWh
 Woody biomass,Elec,4.06,WOOD,#CD853F,TWh
 Elec,Freight,1.58,Electricity,#00BFFF,TWh
 Elec,Exp & Loss,3.98,Electricity,#00BFFF,TWh
-Elec,Elec demand,67.06,Electricity,#00BFFF,TWh
-Elec,Storage,9.38,Electricity,#00BFFF,TWh
-Storage,Elec demand,8.96,Electricity,#00BFFF,TWh
+Elec,Elec demand,67.07,Electricity,#00BFFF,TWh
+Elec,Storage,9.36,Electricity,#00BFFF,TWh
+Storage,Elec demand,8.94,Electricity,#00BFFF,TWh
 Elec,refrig. cycles,2.03,Electricity,#00BFFF,TWh
 Elec,refrig. cycles,0.14,Electricity,#00BFFF,TWh
 H2 prod,H2 sto.,0.00,H2,#FF00FF,TWh
