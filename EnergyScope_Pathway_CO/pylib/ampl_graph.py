@@ -315,7 +315,7 @@ class AmplGraph:
             
             gwp_op_3 = pd.DataFrame(temp['gwp_op'])
             gwp_op_3.index.names = ['Years','Elements']
-            gwp_op = gwp_op.append(gwp_op_3)
+            gwp_op = pd.concat([gwp_op, gwp_op_3])
         
         mob_freight = gwp_per_layer.loc[gwp_per_layer.index.get_level_values('Layers').isin(mob_freight_layers)]
         mob_freight = mob_freight.groupby(['Years']).sum()
@@ -323,8 +323,7 @@ class AmplGraph:
         mob_freight['Layers'] = 'MOBILITY_FREIGHT'
         mob_freight.set_index(['Years','Layers'],inplace=True)
         others = gwp_per_layer.loc[~gwp_per_layer.index.get_level_values('Layers').isin(mob_freight_layers)]
-        gwp_per_layer = others.append(mob_freight)
-        
+        gwp_per_layer = pd.concat([gwp_per_layer,mob_freight])
         
         year_balance_sto['gwp_op'] = 0
         year_balance_sto['gwp_op'] = -year_balance_sto['Cons'].mul(gwp_op['gwp_op'])
@@ -341,7 +340,7 @@ class AmplGraph:
         year_balance_sto.reset_index(inplace=True)
         year_balance_sto = year_balance_sto.set_index(['Years','Layers'])
         
-        gwp_per_layer = gwp_per_layer.append(year_balance_sto)
+        gwp_per_layer = pd.concat([gwp_per_layer, year_balance_sto])
         gwp_per_layer.reset_index(inplace=True)
         gwp_per_layer['Years'] = gwp_per_layer['Years'].str.replace('YEAR_', '')
         
@@ -472,7 +471,8 @@ class AmplGraph:
         
         df_to_plot = pd.concat([df_to_plot,cost_elec_re],axis=0)
         
-        df_to_plot = df_to_plot.groupby(['Years','Category']).sum()
+        df_to_plot = df_to_plot.groupby(['Years','Category'])['Cost'].sum()
+        df_to_plot = df_to_plot.to_frame()
         df_to_plot.reset_index(inplace=True)
         
         df_to_plot['Cost'] = df_to_plot['Cost']/1000
@@ -498,8 +498,9 @@ class AmplGraph:
         pio.show(fig)
         
         title = "<b>System cost</b><br>[b€<sub>2015</sub>/y]"
-        temp = df_to_plot.groupby(['Years']).sum()
-        yvals = [0,min(round(temp['Cost'],1)),round(temp.loc['2020']['Cost'],1),max(round(temp['Cost'],1))]
+        temp = df_to_plot.groupby(['Years'])['Cost'].sum()
+        temp = temp.to_frame()
+        yvals = [0, round(temp,1).min().values[0], round(temp.loc['2020','Cost'],1), round(temp,1).max().values[0]]
         
         self.custom_fig(fig,title,yvals)
         fig.write_image(self.outdir+"System_cost.pdf", width=1200, height=550)
@@ -532,6 +533,7 @@ class AmplGraph:
         df_to_plot['Category'] = df_to_plot['Technologies']
         
         df_to_plot = df_to_plot.replace({"Category": category})
+        df_to_plot.drop(columns=['Technologies'], inplace=True)
         df_to_plot = df_to_plot.groupby(['Years','Category']).sum()
         
         df_to_plot['C_inv_return'] = df_to_plot['C_inv_return']/1000
@@ -588,7 +590,8 @@ class AmplGraph:
         cost_return_eff = cost_return_eff[~cost_return_eff['Years'].isin(['2020','2025'])]
         cost_return_eff['Category'] = cost_return_eff['Technologies']
         cost_return_eff = cost_return_eff.replace({"Category": category})
-        cost_return_eff = cost_return_eff.groupby(['Years','Category']).sum()
+        cost_return_eff = cost_return_eff.groupby(['Years','Category'])['Cost_return'].sum()
+        cost_return_eff = cost_return_eff.to_frame()
         cost_return_eff['Cost_return'] = cost_return_eff['Cost_return']/1000
         
         
@@ -700,9 +703,10 @@ class AmplGraph:
         df_to_plot_full = df_to_plot_full.replace({"Category": category})
         df_to_plot_full['Phases'] = df_to_plot_full['Phases'].map(lambda x: x[-4:])
         df_to_plot_full.rename(columns={'Phases':'Years'},inplace=True)
-        df_to_plot_full = df_to_plot_full.groupby(['Years','Category']).sum()
         
-        df_to_plot_full.drop(columns=['Technologies'],inplace=True)
+        
+        df_to_plot_full = df_to_plot_full.groupby(['Years','Category'])['C_inv_phase_tech'].sum()
+        df_to_plot_full = df_to_plot_full.to_frame()        
         
         df_to_plot_full.reset_index(inplace=True)
         years = df_to_plot_full['Years'].unique()
@@ -751,8 +755,9 @@ class AmplGraph:
             pio.show(fig)
             
             title = "<b>Investments over transition</b><br>[b€<sub>2015</sub>]"
-            temp = df_to_plot_full.groupby(['Years']).sum()
-            yvals = [0,min(round(temp['cumsum'],1)),max(round(temp['cumsum'],1))]
+            temp = df_to_plot_full.groupby(['Years'])['cumsum'].sum()
+            temp = temp.to_frame()
+            yvals = [0,round(temp,1).min().values[0],round(temp,1).max().values[0]]
             
             self.custom_fig(fig,title,yvals)
             fig.write_image(self.outdir+"C_inv_phase.pdf", width=1200, height=550)
@@ -824,6 +829,7 @@ class AmplGraph:
         df_to_plot = pd.concat([df_to_plot,cost_elec_re],axis=0)
         df_to_plot.sort_values(by=['Years'],inplace=True)
 
+        df_to_plot.drop(columns=['Elements'], inplace=True)
         df_to_plot = df_to_plot.groupby(['Years','Category']).sum()
         
         df_to_plot.reset_index(inplace=True)
@@ -872,7 +878,9 @@ class AmplGraph:
             pio.show(fig)
             
             title = "<b>Operation over transition</b><br>[b€<sub>2015</sub>]"
-            temp = df_to_plot.groupby(['Years']).sum()
+            temp = df_to_plot.copy()
+            temp.drop(columns=['Category'], inplace=True)            
+            temp = temp.groupby(['Years']).sum()
             NRE_2050 = float(df_to_plot.loc[(df_to_plot['Years'] == '2050') & (df_to_plot['Category'] == 'NRE_FUELS')]['cumsum'])
             RE_2050 = float(df_to_plot.loc[(df_to_plot['Years'] == '2050') & (df_to_plot['Category'] == 'RE_FUELS')]['cumsum'])
             yvals = [0,min(round(temp['cumsum'],1)),
@@ -945,7 +953,7 @@ class AmplGraph:
             if len(df_to_plot_full) == 0:
                 df_to_plot_full = df_to_plot
             else:
-                df_to_plot_full = df_to_plot_full.append(df_to_plot)
+                df_to_plot_full = pd.concat([df_to_plot_full, df_to_plot])
             
         return df_to_plot_full
     
@@ -1391,7 +1399,12 @@ class AmplGraph:
             if fig.layout.xaxis.tickvals is None:
                 fig.layout.xaxis.tickvals = [round_repdigit(x, nrepdigit) for x in [xmin, xmax]]
         
-        fig.layout.xaxis.tickvals = sorted(fig.layout.xaxis.tickvals)
+        if(isinstance(fig.layout.xaxis.tickvals, np.ndarray)):
+            if (fig.layout.xaxis.tickvals.dtype != 'O'):
+                fig.layout.xaxis.tickvals = sorted(fig.layout.xaxis.tickvals)
+        else:
+            fig.layout.xaxis.tickvals = sorted(fig.layout.xaxis.tickvals)
+            
         fig.layout.xaxis.range = sorted(fig.layout.xaxis.range)
         
         
@@ -1423,3 +1436,4 @@ class AmplGraph:
                       line=dict(color=color, width=2),opacity=1)
         
         fig.update_layout(margin_b = 10, margin_r = 30, margin_l = 30)#,margin_pad = 20)
+
