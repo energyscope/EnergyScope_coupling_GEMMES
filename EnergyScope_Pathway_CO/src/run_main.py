@@ -38,7 +38,6 @@ pth_model = os.path.join(pth_esmy,'STEP_2_Pathway_Model')
 if type_of_model == 'MO':
     mod_1_path = [os.path.join(pth_model,'PESMO_model.mod'),
                 os.path.join(pth_model,'PESMO_store_variables.mod'),
-                os.path.join(pth_model,'PESMO_RL/PESMO_RL_v7.mod'),
                 os.path.join(pth_model,'PES_store_variables.mod')]
     mod_2_path = [os.path.join(pth_model,'PESMO_initialise_2020.mod'),
                   os.path.join(pth_model,'fix.mod')]
