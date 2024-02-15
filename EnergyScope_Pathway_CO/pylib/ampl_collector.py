@@ -71,7 +71,7 @@ class AmplCollector:
                 index_elem = result.index.get_level_values(2).unique()
                 multi_ind = pd.MultiIndex.from_product([Phases,Phases,index_elem],names = result.index.names)
                 self.results[k] = pd.DataFrame(index=multi_ind,columns=result.columns)
-            elif k in ['C_inv_phase']:
+            elif k in ['C_inv_phase','C_inv_phase_non_annualised']:
                 self.results[k] = pd.DataFrame(index=Phases,columns=result.columns)
             else:
                 index_elem = result.index.get_level_values(1).unique()
@@ -81,7 +81,7 @@ class AmplCollector:
     def update_storage(self, ampl_obj,curr_years_wnd,i):
         for k in self.results:
             results = ampl_obj.results[k]
-            if k in ['New_old_decom','F_decom','C_inv_phase','C_inv_phase_tech','C_op_phase_tech','C_op_phase_res']:
+            if k in ['New_old_decom','F_decom','C_inv_phase','C_inv_phase_non_annualised','C_inv_phase_tech','C_op_phase_tech','C_op_phase_res']:
                 phases_up_to = ['2015_2020'] + self.ampl_pre.phases_up_to[i]
                 temp_res = results.loc[results.index.get_level_values('Phases').isin(phases_up_to),:]
             else:

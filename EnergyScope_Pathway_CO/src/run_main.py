@@ -157,7 +157,8 @@ if __name__ == '__main__':
                     print('Time to solve the whole problem: ',elapsed)
                     ampl_collector.clean_collector()
                     ampl_collector.pkl()
-                    break
+                    break         
+        
         if graph:
             ampl_graph = AmplGraph(output_file, ampl_0, case_study)
             z_Results = ampl_graph.ampl_collector
@@ -166,6 +167,11 @@ if __name__ == '__main__':
             z_Resources = z_Results['Resources'].copy()
             z_Year_balance = z_Results['Year_balance'].copy()
             z_gwp_breakdown = z_Results['Gwp_breakdown'].copy()
+            
+            C_inv_GEMMES = z_Results['C_inv_phase_non_annualised']
+            C_inv_GEMMES = C_inv_GEMMES.round(0)
+            C_inv_GEMMES.to_csv('C_inv_GEMMES.csv')
+            
             a_website = "https://www.google.com"
             webbrowser.open_new(a_website)
             ampl_graph.graph_resource()

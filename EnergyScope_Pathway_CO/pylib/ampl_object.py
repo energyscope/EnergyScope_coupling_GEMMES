@@ -66,8 +66,8 @@ class AmplObject:
         self.type_model = type_model
 
         # create empty dictionary to be filled with main results
-        self.results = dict.fromkeys(['TotalCost', 'C_inv_phase', 'C_inv_phase_tech',
-                                      'C_op_phase_tech','C_op_phase_res',
+        self.results = dict.fromkeys(['TotalCost', 'C_inv_phase', 'C_inv_phase_non_annualised',
+                                      'C_inv_phase_tech', 'C_op_phase_tech','C_op_phase_res',
                                       'Cost_breakdown', 'Cost_return', 
                                       'TotalGwp','Gwp_breakdown', 'Resources',
                                       'Assets', 'New_old_decom',
@@ -436,6 +436,15 @@ class AmplObject:
         c_inv_phase = c_inv_phase.set_index(['Phases'])
         c_inv_phase.sort_index(inplace=True)
         self.results['C_inv_phase'] = c_inv_phase
+        
+        c_inv_phase_non_annualised = self.get_elem('C_inv_phase_non_annualised')
+        c_inv_phase_non_annualised = c_inv_phase_non_annualised.rename_axis(index={c_inv_phase_index[0]:'Phases'},axis=1)
+        c_inv_phase_non_annualised = c_inv_phase_non_annualised.reset_index()
+        c_inv_phase_non_annualised['Phases'] = pd.Categorical(c_inv_phase_non_annualised['Phases'],['2015_2020'] + self.sets['PHASE_UP_TO'])
+        c_inv_phase_non_annualised = c_inv_phase_non_annualised[c_inv_phase_non_annualised['Phases'].notna()]
+        c_inv_phase_non_annualised = c_inv_phase_non_annualised.set_index(['Phases'])
+        c_inv_phase_non_annualised.sort_index(inplace=True)
+        self.results['C_inv_phase_non_annualised'] = c_inv_phase_non_annualised
         
         c_inv_phase_tech = self.get_elem('C_inv_phase_tech')
         c_inv_phase_tech_index = c_inv_phase_tech.index.names
