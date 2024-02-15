@@ -24,7 +24,7 @@ from ampl_collector import AmplCollector
 from ampl_graph import AmplGraph
 
 
-type_of_model = 'TD'
+type_of_model = 'MO'
 nbr_tds = 12
 
 run_opti = True
@@ -175,7 +175,6 @@ if __name__ == '__main__':
             # ampl_graph.graph_cost_return()
             # ampl_graph.graph_cost_op_phase()
         
-            
             # ampl_graph.graph_layer()
             # ampl_graph.graph_gwp()
             # ampl_graph.graph_tech_cap()

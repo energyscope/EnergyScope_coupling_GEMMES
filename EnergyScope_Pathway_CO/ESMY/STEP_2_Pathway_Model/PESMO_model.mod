@@ -166,6 +166,7 @@ var F_new {PHASE union {"2015_2020"}, TECHNOLOGIES} >= 0; #[GW/GWh] Accounts for
 var F_decom {PHASE,PHASE union {"2015_2020"}, TECHNOLOGIES} >= 0; #[GW] Accounts for the decommissioned capacity in a new phase
 var F_old {PHASE,TECHNOLOGIES} >=0, default 0; #[GW] Retired capacity during a phase with respect to the main output
 var C_inv_phase {PHASE} >=0; #[M€/GW] Phase total annualised investment cost
+var C_inv_phase_non_annualised {PHASE} >=0; #[M€/GW] Phase total annualised investment cost
 var C_inv_phase_tech {PHASE,TECHNOLOGIES} >=0; #[M€/GW] Phase total annualised investment cost, per technology
 var C_op_phase_tech {PHASE,TECHNOLOGIES} >= 0;
 var C_op_phase_res {PHASE,RESOURCES} >= 0;
@@ -576,6 +577,10 @@ subject to total_capex: # category: COST_calc
 # [Eq. XX] Compute the total investment cost per phase
 subject to investment_computation {p in PHASE_WND union PHASE_UP_TO union {"2015_2020"}, y_start in PHASE_START[p], y_stop in PHASE_STOP[p]}:
 	 C_inv_phase [p] = sum {i in TECHNOLOGIES} F_new [p,i] * annualised_factor [p] * ( c_inv [y_start,i] + c_inv [y_stop,i] ) / 2; #In bÃ¢â€šÂ¬
+
+# [Eq. XX] Compute the total non-annualised investment cost per phase
+subject to investment_computation_non_annualised {p in PHASE_WND union PHASE_UP_TO union {"2015_2020"}, y_start in PHASE_START[p], y_stop in PHASE_STOP[p]}:
+	 C_inv_phase_non_annualised [p] = sum {i in TECHNOLOGIES} F_new [p,i] * ( c_inv [y_start,i] + c_inv [y_stop,i] ) / 2;
 
 subject to investment_computation_tech {p in PHASE_WND union PHASE_UP_TO union {"2015_2020"}, y_start in PHASE_START[p], y_stop in PHASE_STOP[p], i in TECHNOLOGIES}:
 	 C_inv_phase_tech [p,i] = F_new [p,i] * annualised_factor [p] * ( c_inv [y_start,i] + c_inv [y_stop,i] ) / 2; #In bÃ¢â€šÂ¬

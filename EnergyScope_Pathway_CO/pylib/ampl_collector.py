@@ -121,3 +121,4 @@ class AmplCollector:
         open_file = open(self.output_file,"wb")
         pickle.dump(self.results,open_file)
         open_file.close()
+
