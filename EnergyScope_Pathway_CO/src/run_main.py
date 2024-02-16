@@ -28,6 +28,7 @@ type_of_model = 'MO'
 nbr_tds = 12
 
 run_opti = True
+simulate_TEJ_scenario = True
 graph = True
 graph_comp = False
 
@@ -53,9 +54,14 @@ else:
 
 dat_path += [os.path.join(pth_model,'PES_data_all_years.dat'),
              os.path.join(pth_model,'PES_seq_opti.dat'),
-             os.path.join(pth_model,'PES_data_year_related.dat'),
              os.path.join(pth_model,'PES_data_efficiencies.dat'),
              os.path.join(pth_model,'PES_data_set_AGE_2020.dat')]
+
+if(simulate_TEJ_scenario):
+    dat_path += [os.path.join(pth_model,'PES_data_year_related_TEJ.dat')]
+else:
+    dat_path += [os.path.join(pth_model,'PES_data_year_related.dat')]
+
 dat_path_0 = dat_path + [os.path.join(pth_model,'PES_data_remaining.dat'),
              os.path.join(pth_model,'PES_data_decom_allowed_2020.dat')]
 
@@ -124,21 +130,30 @@ if __name__ == '__main__':
                 
                 ampl = AmplObject(mod_1_path, mod_2_path, dat_path, ampl_options, type_model = type_of_model)
                 
-                ampl.set_params('gwp_limit',{('YEAR_2015'):800000}) # 150000
-                ampl.set_params('gwp_limit',{('YEAR_2020'):800000}) # 150000
-                ampl.set_params('gwp_limit',{('YEAR_2025'):78583})  # 95486
-                ampl.set_params('gwp_limit',{('YEAR_2030'):63167})  # 71615
-                ampl.set_params('gwp_limit',{('YEAR_2035'):47750})  # 47743
-                ampl.set_params('gwp_limit',{('YEAR_2040'):32333})  # 32329
-                ampl.set_params('gwp_limit',{('YEAR_2045'):16917})  # 16915
-                ampl.set_params('gwp_limit',{('YEAR_2050'):1500})   # 1500
+                if(simulate_TEJ_scenario):
+                    ampl.set_params('gwp_limit',{('YEAR_2015'):800000}) 
+                    ampl.set_params('gwp_limit',{('YEAR_2020'):800000}) 
+                    ampl.set_params('gwp_limit',{('YEAR_2025'):800000})  
+                    ampl.set_params('gwp_limit',{('YEAR_2030'):800000})  
+                    ampl.set_params('gwp_limit',{('YEAR_2035'):800000}) 
+                    ampl.set_params('gwp_limit',{('YEAR_2040'):800000}) 
+                    ampl.set_params('gwp_limit',{('YEAR_2045'):800000})  
+                    ampl.set_params('gwp_limit',{('YEAR_2050'):800000}) 
+                else:
+                    ampl.set_params('gwp_limit',{('YEAR_2015'):800000}) # 150000
+                    ampl.set_params('gwp_limit',{('YEAR_2020'):800000}) # 150000
+                    ampl.set_params('gwp_limit',{('YEAR_2025'):78583})  # 95486
+                    ampl.set_params('gwp_limit',{('YEAR_2030'):63167})  # 71615
+                    ampl.set_params('gwp_limit',{('YEAR_2035'):47750})  # 47743
+                    ampl.set_params('gwp_limit',{('YEAR_2040'):32333})  # 32329
+                    ampl.set_params('gwp_limit',{('YEAR_2045'):16917})  # 16915
+                    ampl.set_params('gwp_limit',{('YEAR_2050'):1500})   # 1500
 
                 solve_result = ampl.run_ampl()
                 ampl.get_results()
                 
                 if i==0: 
                     ampl_collector.init_storage(ampl)
-                
                 
                 if i > 0:
                     curr_years_wnd.remove(ampl_pre.year_to_rm)
@@ -177,15 +192,15 @@ if __name__ == '__main__':
             ampl_graph.graph_cost()
             # ampl_graph.graph_gwp_per_sector()
             ampl_graph.graph_cost_inv_phase_tech()
-            ampl_graph.graph_cost_return()
+            # ampl_graph.graph_cost_return()
             ampl_graph.graph_cost_op_phase()
         
-            ampl_graph.graph_layer()
+            # ampl_graph.graph_layer()
             ampl_graph.graph_gwp()
             ampl_graph.graph_tech_cap()
             ampl_graph.graph_total_cost_per_year()
-            ampl_graph.graph_load_factor()
-            df_unused = ampl_graph.graph_load_factor_2()
+            # ampl_graph.graph_load_factor()
+            # df_unused = ampl_graph.graph_load_factor_2()
             ampl_graph.graph_new_old_decom()
             
         if graph_comp:
