@@ -12,6 +12,7 @@ import webbrowser
 import time
 import multiprocessing as mp
 import pickle as pkl
+import pandas as pd
 
 curr_dir = Path(os.path.dirname(__file__))
 
@@ -28,7 +29,7 @@ type_of_model = 'MO'
 nbr_tds = 12
 
 run_opti = True
-simulate_TEJ_scenario = True
+simulate_TEJ_scenario = False
 graph = True
 graph_comp = False
 
@@ -182,26 +183,48 @@ if __name__ == '__main__':
             z_Year_balance = z_Results['Year_balance'].copy()
             z_gwp_breakdown = z_Results['Gwp_breakdown'].copy()
             
-            C_inv_GEMMES = z_Results['C_inv_phase_non_annualised']
-            C_inv_GEMMES = C_inv_GEMMES.round(0)
-            C_inv_GEMMES.to_csv('C_inv_GEMMES.csv')
+            # C_inv_GEMMES = z_Results['C_inv_phase_non_annualised']
+            # C_inv_GEMMES = C_inv_GEMMES.round(0)
+            # C_inv_GEMMES.to_csv('C_inv_GEMMES.csv')
+            
+            C_inv_phase_tech_non_annualised = z_Results['C_inv_phase_tech_non_annualised']
+            C_inv_phase_tech_non_annualised = C_inv_phase_tech_non_annualised.round(0)
+            # C_inv_phase_tech_non_annualised.to_csv('C_inv_phase_tech_non_annualised.csv')
+            
+            C_op_phase_tech_non_annualised = z_Results['C_op_phase_tech_non_annualised']
+            C_op_phase_tech_non_annualised = C_op_phase_tech_non_annualised.round(0)
+            # C_op_phase_tech_non_annualised.to_csv('C_op_phase_tech_non_annualised.csv')
+            
+            annualised_factor = pd.DataFrame(index=z_Results['C_inv_phase'].index, data=z_Results['C_inv_phase'].values / z_Results['C_inv_phase_non_annualised'].values )
+            annualised_factor['merge_index'] = annualised_factor.index
+            
+            C_op_phase_res_non_annualised = z_Results['C_op_phase_res']
+            C_op_phase_res_non_annualised_bis = C_op_phase_res_non_annualised.copy()
+            C_op_phase_res_non_annualised_bis['merge_index'] = C_op_phase_res_non_annualised_bis.index.get_level_values(0)
+            C_op_phase_res_non_annualised_bis = pd.merge(C_op_phase_res_non_annualised_bis, annualised_factor, on='merge_index')
+            C_op_phase_res_non_annualised_bis.index = C_op_phase_res_non_annualised.index
+            C_op_phase_res_non_annualised_bis.drop(columns=['merge_index'], inplace=True)
+            C_op_phase_res_non_annualised['C_op_phase_res'] = C_op_phase_res_non_annualised_bis['C_op_phase_res'].values/C_op_phase_res_non_annualised_bis[0].values
+            # C_op_phase_res_non_annualised.to_csv('C_op_phase_res_non_annualised.csv')
+            C_op_phase_res_non_annualised['Local'] = 0
+            C_op_phase_res_non_annualised.iloc[C_op_phase_res_non_annualised.index.get_level_values('Resources').isin(['GASOLINE','DIESEL','BIOETHANOL','BIODIESEL','LFO','GAS','WOOD','COAL','CO2_EMISSIONS','CO2_CAPTURED','CO2_INDUSTRY','RES_WIND','RES_SOLAR','RES_HYDRO','CO2_ATM','WET_BIOMASS','WASTE','RES_GEO']),1] = 1
             
             a_website = "https://www.google.com"
             webbrowser.open_new(a_website)
             ampl_graph.graph_resource()
-            ampl_graph.graph_cost()
-            # ampl_graph.graph_gwp_per_sector()
-            ampl_graph.graph_cost_inv_phase_tech()
-            # ampl_graph.graph_cost_return()
-            ampl_graph.graph_cost_op_phase()
+            # ampl_graph.graph_cost()
+            # # ampl_graph.graph_gwp_per_sector()
+            # ampl_graph.graph_cost_inv_phase_tech()
+            # # ampl_graph.graph_cost_return()
+            # ampl_graph.graph_cost_op_phase()
         
-            # ampl_graph.graph_layer()
-            ampl_graph.graph_gwp()
-            ampl_graph.graph_tech_cap()
-            ampl_graph.graph_total_cost_per_year()
-            # ampl_graph.graph_load_factor()
-            # df_unused = ampl_graph.graph_load_factor_2()
-            ampl_graph.graph_new_old_decom()
+            # # ampl_graph.graph_layer()
+            # ampl_graph.graph_gwp()
+            # ampl_graph.graph_tech_cap()
+            # ampl_graph.graph_total_cost_per_year()
+            # # ampl_graph.graph_load_factor()
+            # # df_unused = ampl_graph.graph_load_factor_2()
+            # ampl_graph.graph_new_old_decom()
             
         if graph_comp:
             ampl_graph = AmplGraph(output_file, ampl_0,case_study)

@@ -168,8 +168,11 @@ var F_old {PHASE,TECHNOLOGIES} >=0, default 0; #[GW] Retired capacity during a p
 var C_inv_phase {PHASE} >=0; #[M€/GW] Phase total annualised investment cost
 var C_inv_phase_non_annualised {PHASE} >=0; #[M€/GW] Phase total annualised investment cost
 var C_inv_phase_tech {PHASE,TECHNOLOGIES} >=0; #[M€/GW] Phase total annualised investment cost, per technology
+var C_inv_phase_tech_non_annualised {PHASE,TECHNOLOGIES} >=0;
 var C_op_phase_tech {PHASE,TECHNOLOGIES} >= 0;
+var C_op_phase_tech_non_annualised {PHASE,TECHNOLOGIES} >= 0;
 var C_op_phase_res {PHASE,RESOURCES} >= 0;
+var C_op_phase_res_non_annualised {PHASE,RESOURCES};
 var C_inv_return {TECHNOLOGIES} >=0; #[M€] Money given back for existing technologies after 2050 to compute the objective function
 #var Fixed_phase_investment;
 var C_opex {YEARS} >=0;
@@ -585,6 +588,9 @@ subject to investment_computation_non_annualised {p in PHASE_WND union PHASE_UP_
 subject to investment_computation_tech {p in PHASE_WND union PHASE_UP_TO union {"2015_2020"}, y_start in PHASE_START[p], y_stop in PHASE_STOP[p], i in TECHNOLOGIES}:
 	 C_inv_phase_tech [p,i] = F_new [p,i] * annualised_factor [p] * ( c_inv [y_start,i] + c_inv [y_stop,i] ) / 2; #In bÃ¢â€šÂ¬
 
+subject to investment_computation_tech_non_annualised {p in PHASE_WND union PHASE_UP_TO union {"2015_2020"}, y_start in PHASE_START[p], y_stop in PHASE_STOP[p], i in TECHNOLOGIES}:
+	 C_inv_phase_tech_non_annualised [p,i] = F_new [p,i] * ( c_inv [y_start,i] + c_inv [y_stop,i] ) / 2;
+
 subject to investment_return {i in TECHNOLOGIES}:
 	C_inv_return [i] = sum {p in PHASE_WND union PHASE_UP_TO union {"2015_2020"},y_start in PHASE_START [p],y_stop in PHASE_STOP [p]} 
 	( remaining_years [i,p] / lifetime [y_start,i] * (F_new [p,i] - sum {p2 in PHASE_WND union PHASE_UP_TO} (F_decom [p2,p,i]) )  * annualised_factor [p] * ( c_inv [y_start,i] + c_inv [y_stop,i] ) / 2 ) ;
@@ -601,9 +607,15 @@ subject to Opex_cost_calculation{y in YEARS_WND union YEARS_UP_TO} : # category:
 
 subject to operation_computation_tech {p in PHASE_WND union PHASE_UP_TO, y_start in PHASE_START[p], y_stop in PHASE_STOP[p], i in TECHNOLOGIES}:
 	C_op_phase_tech [p,i] = t_phase *   ((C_maint [y_start,i] + C_maint [y_stop,i])/2 *annualised_factor[p] ); #In euros_2015
+	
+subject to operation_computation_tech_non_annualised {p in PHASE_WND union PHASE_UP_TO, y_start in PHASE_START[p], y_stop in PHASE_STOP[p], i in TECHNOLOGIES}:
+	C_op_phase_tech_non_annualised [p,i] = t_phase *   ((C_maint [y_start,i] + C_maint [y_stop,i])/2 );
 
 subject to operation_computation_res {p in PHASE_WND union PHASE_UP_TO, y_start in PHASE_START[p], y_stop in PHASE_STOP[p], i in RESOURCES}:
 	C_op_phase_res [p,i] = t_phase *   ((C_op [y_start,i] + C_op [y_stop,i])/2 *annualised_factor[p] ); #In euros_2015
+
+subject to computation_res_non_annualised {p in PHASE_WND union PHASE_UP_TO, i in RESOURCES}:
+	C_op_phase_res_non_annualised [p,i] = 0;
 
 # [Eq. XX] We could either limit the max investment on a period or fix that these investments must be equals in â‚¬_2015
 subject to maxInvestment {p in PHASE_WND}:

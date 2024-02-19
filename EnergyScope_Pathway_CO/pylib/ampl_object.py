@@ -67,7 +67,9 @@ class AmplObject:
 
         # create empty dictionary to be filled with main results
         self.results = dict.fromkeys(['TotalCost', 'C_inv_phase', 'C_inv_phase_non_annualised',
-                                      'C_inv_phase_tech', 'C_op_phase_tech','C_op_phase_res',
+                                      'C_inv_phase_tech', 'C_inv_phase_tech_non_annualised',
+                                      'C_op_phase_tech', 'C_op_phase_tech_non_annualised',
+                                      'C_op_phase_res', 'C_op_phase_res_non_annualised',
                                       'Cost_breakdown', 'Cost_return', 
                                       'TotalGwp','Gwp_breakdown', 'Resources',
                                       'Assets', 'New_old_decom',
@@ -457,6 +459,17 @@ class AmplObject:
         c_inv_phase_tech.sort_index(inplace=True)
         self.results['C_inv_phase_tech'] = c_inv_phase_tech
         
+        C_inv_phase_tech_non_annualised = self.get_elem('C_inv_phase_tech_non_annualised')
+        C_inv_phase_tech_non_annualised_index = C_inv_phase_tech_non_annualised.index.names
+        C_inv_phase_tech_non_annualised = C_inv_phase_tech_non_annualised.rename_axis(index={C_inv_phase_tech_non_annualised_index[0]:'Phases'},axis=1)
+        C_inv_phase_tech_non_annualised = C_inv_phase_tech_non_annualised.reset_index()
+        phases = sorted(set(['2015_2020'] + self.sets['PHASE_UP_TO'] + self.sets['PHASE_WND']))
+        C_inv_phase_tech_non_annualised['Phases'] = pd.Categorical(C_inv_phase_tech_non_annualised['Phases'],phases)
+        C_inv_phase_tech_non_annualised = C_inv_phase_tech_non_annualised[C_inv_phase_tech_non_annualised['Phases'].notna()]
+        C_inv_phase_tech_non_annualised = C_inv_phase_tech_non_annualised.set_index(['Phases','Technologies'])
+        C_inv_phase_tech_non_annualised.sort_index(inplace=True)
+        self.results['C_inv_phase_tech_non_annualised'] = C_inv_phase_tech_non_annualised
+        
         c_op_phase_tech = self.get_elem('C_op_phase_tech')
         c_op_phase_tech_index = c_op_phase_tech.index.names
         c_op_phase_tech = c_op_phase_tech.rename_axis(index={c_op_phase_tech_index[0]:'Phases'},axis=1)
@@ -466,6 +479,16 @@ class AmplObject:
         c_op_phase_tech = c_op_phase_tech.set_index(['Phases','Technologies'])
         c_op_phase_tech.sort_index(inplace=True)
         self.results['C_op_phase_tech'] = c_op_phase_tech
+        
+        C_op_phase_tech_non_annualised = self.get_elem('C_op_phase_tech_non_annualised')
+        C_op_phase_tech_non_annualised_index = C_op_phase_tech_non_annualised.index.names
+        C_op_phase_tech_non_annualised = C_op_phase_tech_non_annualised.rename_axis(index={C_op_phase_tech_non_annualised_index[0]:'Phases'},axis=1)
+        C_op_phase_tech_non_annualised = C_op_phase_tech_non_annualised.reset_index()
+        C_op_phase_tech_non_annualised['Phases'] = pd.Categorical(C_op_phase_tech_non_annualised['Phases'],self.sets['PHASE_UP_TO'])
+        C_op_phase_tech_non_annualised = C_op_phase_tech_non_annualised[C_op_phase_tech_non_annualised['Phases'].notna()]
+        C_op_phase_tech_non_annualised = C_op_phase_tech_non_annualised.set_index(['Phases','Technologies'])
+        C_op_phase_tech_non_annualised.sort_index(inplace=True)
+        self.results['C_op_phase_tech_non_annualised'] = C_op_phase_tech_non_annualised       
         
         c_op_phase_res = self.get_elem('C_op_phase_res')
         c_op_phase_res_index = c_op_phase_res.index.names
@@ -477,6 +500,15 @@ class AmplObject:
         c_op_phase_res.sort_index(inplace=True)
         self.results['C_op_phase_res'] = c_op_phase_res
         
+        C_op_phase_res_non_annualised = self.get_elem('C_op_phase_res_non_annualised')
+        C_op_phase_res_non_annualised_index = C_op_phase_res_non_annualised.index.names
+        C_op_phase_res_non_annualised = C_op_phase_res_non_annualised.rename_axis(index={C_op_phase_res_non_annualised_index[0]:'Phases'},axis=1)
+        C_op_phase_res_non_annualised = C_op_phase_res_non_annualised.reset_index()
+        C_op_phase_res_non_annualised['Phases'] = pd.Categorical(C_op_phase_res_non_annualised['Phases'],self.sets['PHASE_UP_TO'])
+        C_op_phase_res_non_annualised = C_op_phase_res_non_annualised[C_op_phase_res_non_annualised['Phases'].notna()]
+        C_op_phase_res_non_annualised = C_op_phase_res_non_annualised.set_index(['Phases','Resources'])
+        C_op_phase_res_non_annualised.sort_index(inplace=True)
+        self.results['C_op_phase_res_non_annualised'] = C_op_phase_res_non_annualised
         
         return
     
