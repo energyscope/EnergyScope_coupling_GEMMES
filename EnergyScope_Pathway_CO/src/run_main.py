@@ -177,37 +177,72 @@ if __name__ == '__main__':
         if graph:
             ampl_graph = AmplGraph(output_file, ampl_0, case_study)
             z_Results = ampl_graph.ampl_collector
-            z_Assets = z_Results['Assets'].copy()
-            z_Cost_breakdown = z_Results['Cost_breakdown'].copy()
-            z_Resources = z_Results['Resources'].copy()
-            z_Year_balance = z_Results['Year_balance'].copy()
-            z_gwp_breakdown = z_Results['Gwp_breakdown'].copy()
+            # z_Assets = z_Results['Assets'].copy()
+            # z_Cost_breakdown = z_Results['Cost_breakdown'].copy()
+            # z_Resources = z_Results['Resources'].copy()
+            # z_Year_balance = z_Results['Year_balance'].copy()
+            # z_gwp_breakdown = z_Results['Gwp_breakdown'].copy()
             
-            # C_inv_GEMMES = z_Results['C_inv_phase_non_annualised']
-            # C_inv_GEMMES = C_inv_GEMMES.round(0)
-            # C_inv_GEMMES.to_csv('C_inv_GEMMES.csv')
+            C_inv = z_Results['C_inv_phase_tech_non_annualised']
+            C_inv.rename(columns = {'C_inv_phase_tech_non_annualised':'Value'}, inplace = True)
+            C_inv = C_inv.round(0)
+            C_inv['Local'] = 0
+            C_inv['Imported'] = 1 - C_inv['Local']
+            C_inv['F'] = 1
+            C_inv['B'] = 0
+            C_inv['G'] = 0
+            C_inv['H'] = 0
+            # C_inv.to_csv('C_inv_phase_tech_non_annualised.csv')
             
-            C_inv_phase_tech_non_annualised = z_Results['C_inv_phase_tech_non_annualised']
-            C_inv_phase_tech_non_annualised = C_inv_phase_tech_non_annualised.round(0)
-            # C_inv_phase_tech_non_annualised.to_csv('C_inv_phase_tech_non_annualised.csv')
-            
-            C_op_phase_tech_non_annualised = z_Results['C_op_phase_tech_non_annualised']
-            C_op_phase_tech_non_annualised = C_op_phase_tech_non_annualised.round(0)
-            # C_op_phase_tech_non_annualised.to_csv('C_op_phase_tech_non_annualised.csv')
+            C_maint = z_Results['C_op_phase_tech_non_annualised']
+            C_maint.rename(columns = {'C_op_phase_tech_non_annualised':'Value'}, inplace = True)
+            C_maint = C_maint.round(0)
+            C_maint['Local'] = 1
+            C_maint['Imported'] = 1 - C_maint['Local']
+            C_maint['F'] = 1
+            C_maint['B'] = 0
+            C_maint['G'] = 0
+            C_maint['H'] = 0
+            # C_maint.to_csv('C_op_phase_tech_non_annualised.csv')
             
             annualised_factor = pd.DataFrame(index=z_Results['C_inv_phase'].index, data=z_Results['C_inv_phase'].values / z_Results['C_inv_phase_non_annualised'].values )
             annualised_factor['merge_index'] = annualised_factor.index
             
-            C_op_phase_res_non_annualised = z_Results['C_op_phase_res']
-            C_op_phase_res_non_annualised_bis = C_op_phase_res_non_annualised.copy()
-            C_op_phase_res_non_annualised_bis['merge_index'] = C_op_phase_res_non_annualised_bis.index.get_level_values(0)
-            C_op_phase_res_non_annualised_bis = pd.merge(C_op_phase_res_non_annualised_bis, annualised_factor, on='merge_index')
-            C_op_phase_res_non_annualised_bis.index = C_op_phase_res_non_annualised.index
-            C_op_phase_res_non_annualised_bis.drop(columns=['merge_index'], inplace=True)
-            C_op_phase_res_non_annualised['C_op_phase_res'] = C_op_phase_res_non_annualised_bis['C_op_phase_res'].values/C_op_phase_res_non_annualised_bis[0].values
-            # C_op_phase_res_non_annualised.to_csv('C_op_phase_res_non_annualised.csv')
-            C_op_phase_res_non_annualised['Local'] = 0
-            C_op_phase_res_non_annualised.iloc[C_op_phase_res_non_annualised.index.get_level_values('Resources').isin(['GASOLINE','DIESEL','BIOETHANOL','BIODIESEL','LFO','GAS','WOOD','COAL','CO2_EMISSIONS','CO2_CAPTURED','CO2_INDUSTRY','RES_WIND','RES_SOLAR','RES_HYDRO','CO2_ATM','WET_BIOMASS','WASTE','RES_GEO']),1] = 1
+            C_op = z_Results['C_op_phase_res'].copy()
+            C_op.rename(columns = {'C_op_phase_res':'Value'}, inplace = True)
+            C_op_bis = C_op.copy()
+            C_op_bis['merge_index'] = C_op_bis.index.get_level_values(0)
+            C_op_bis = pd.merge(C_op_bis, annualised_factor, on='merge_index')
+            C_op_bis.index = C_op.index
+            C_op_bis.drop(columns=['merge_index'], inplace=True)
+            C_op['Value'] = C_op_bis['Value'].values/C_op_bis[0].values
+            C_op['Local'] = 0
+            C_op.iloc[C_op.index.get_level_values('Resources').isin(['GASOLINE','DIESEL','BIOETHANOL','BIODIESEL','LFO','GAS','WOOD','COAL','CO2_EMISSIONS','CO2_CAPTURED','CO2_INDUSTRY','RES_WIND','RES_SOLAR','RES_HYDRO','CO2_ATM','WET_BIOMASS','WASTE','RES_GEO']),1] = 1
+            C_op['Imported'] = 1 - C_op['Local']
+            C_op['F'] = 1
+            C_op['B'] = 0
+            C_op['G'] = 0
+            C_op['H'] = 0
+            # C_op.to_csv('C_op_phase_res_non_annualised.csv')
+            
+            output_for_GEMMES = pd.DataFrame(index=annualised_factor.index[1:])
+            output_for_GEMMES['capex_F_COP'] = (C_inv['Value'] * C_inv['Local'] * C_inv['F']).groupby(level=[0]).sum()
+            output_for_GEMMES['capex_F_FX'] = (C_inv['Value'] * C_inv['Imported'] * C_inv['F']).groupby(level=[0]).sum()
+            output_for_GEMMES['opex_F_COP'] = (C_maint['Value'] * C_maint['Local'] * C_maint['F']).groupby(level=[0]).sum() + (C_op['Value'] * C_op['Local'] * C_op['F']).groupby(level=[0]).sum()
+            output_for_GEMMES['opex_F_FX'] = (C_maint['Value'] * C_maint['Imported'] * C_maint['F']).groupby(level=[0]).sum() + (C_op['Value'] * C_op['Imported'] * C_op['F']).groupby(level=[0]).sum()
+            output_for_GEMMES['capex_B_COP'] = (C_inv['Value'] * C_inv['Local'] * C_inv['B']).groupby(level=[0]).sum()
+            output_for_GEMMES['capex_B_FX'] = (C_inv['Value'] * C_inv['Imported'] * C_inv['B']).groupby(level=[0]).sum()
+            output_for_GEMMES['opex_B_COP'] = (C_maint['Value'] * C_maint['Local'] * C_maint['B']).groupby(level=[0]).sum() + (C_op['Value'] * C_op['Local'] * C_op['B']).groupby(level=[0]).sum()
+            output_for_GEMMES['opex_B_FX'] = (C_maint['Value'] * C_maint['Imported'] * C_maint['B']).groupby(level=[0]).sum() + (C_op['Value'] * C_op['Imported'] * C_op['B']).groupby(level=[0]).sum()
+            output_for_GEMMES['capex_G_COP'] = (C_inv['Value'] * C_inv['Local'] * C_inv['G']).groupby(level=[0]).sum()
+            output_for_GEMMES['capex_G_FX'] = (C_inv['Value'] * C_inv['Imported'] * C_inv['G']).groupby(level=[0]).sum()
+            output_for_GEMMES['opex_G_COP'] = (C_maint['Value'] * C_maint['Local'] * C_maint['G']).groupby(level=[0]).sum() + (C_op['Value'] * C_op['Local'] * C_op['G']).groupby(level=[0]).sum()
+            output_for_GEMMES['opex_G_FX'] = (C_maint['Value'] * C_maint['Imported'] * C_maint['G']).groupby(level=[0]).sum() + (C_op['Value'] * C_op['Imported'] * C_op['G']).groupby(level=[0]).sum()
+            output_for_GEMMES['capex_H_COP'] = (C_inv['Value'] * C_inv['Local'] * C_inv['H']).groupby(level=[0]).sum()
+            output_for_GEMMES['capex_H_FX'] = (C_inv['Value'] * C_inv['Imported'] * C_inv['H']).groupby(level=[0]).sum()
+            output_for_GEMMES['opex_H_COP'] = (C_maint['Value'] * C_maint['Local'] * C_maint['H']).groupby(level=[0]).sum() + (C_op['Value'] * C_op['Local'] * C_op['H']).groupby(level=[0]).sum()
+            output_for_GEMMES['opex_H_FX'] = (C_maint['Value'] * C_maint['Imported'] * C_maint['H']).groupby(level=[0]).sum() + (C_op['Value'] * C_op['Imported'] * C_op['H']).groupby(level=[0]).sum()
+            output_for_GEMMES = output_for_GEMMES.round(1)
             
             a_website = "https://www.google.com"
             webbrowser.open_new(a_website)
