@@ -70,7 +70,7 @@ class AmplObject:
                                       'C_inv_phase_tech', 'C_inv_phase_tech_non_annualised',
                                       'C_op_phase_tech', 'C_op_phase_tech_non_annualised',
                                       'C_op_phase_res', 'C_op_phase_res_non_annualised',
-                                      'Cost_breakdown', 'Cost_return', 
+                                      'Cost_breakdown', 'Cost_breakdown_non_annualised', 'Cost_return', 
                                       'TotalGwp','Gwp_breakdown', 'Resources',
                                       'Assets', 'New_old_decom',
                                       'F_decom','Sto_assets', 'Year_balance'])
@@ -406,6 +406,7 @@ class AmplObject:
         logging.info('Getting summary')
         self.get_total_cost()
         self.get_cost_breakdown()
+        self.get_cost_breakdown_non_annualised()
         self.get_cost_return()
         self.get_total_gwp()
         self.get_gwp_breakdown()
@@ -555,6 +556,44 @@ class AmplObject:
         # Store into results
         cost_breakdown.replace(0, np.nan, inplace=True)
         self.results['Cost_breakdown'] = cost_breakdown
+        return
+    
+    
+    def get_cost_breakdown_non_annualised(self):
+        """Gets the non-annualised cost breakdown and stores it into the results"""
+        logging.info('Getting Cost_breakdown_non_annualised')
+
+        # Get the different costs variables
+        c_inv = self.get_elem('C_inv')
+        c_maint = self.get_elem('C_maint')
+        c_op = self.get_elem('C_op')
+
+        # set index names (for later merging)
+        index_names = ['Years', 'Elements']
+        c_inv.index.names = index_names
+        c_maint.index.names = index_names
+        c_op.index.names = index_names
+        
+        # Merge costs into cost breakdown
+        cost_breakdown = c_inv.merge(c_maint, left_index=True, right_index=True, how='outer') \
+            .merge(c_op, left_index=True, right_index=True, how='outer')
+
+        # Set Years and technologies/resources as categorical data for sorting
+        cost_breakdown = cost_breakdown.reset_index()
+        cost_breakdown['Years'] = pd.Categorical(cost_breakdown['Years'], self.sets['YEARS_WND'])
+        cost_breakdown = cost_breakdown[cost_breakdown['Years'].notna()]
+        self.categorical_esmy(df=cost_breakdown, col_name='Elements', el_name='Elements')
+        cost_breakdown.sort_values(by=['Years', 'Elements'], axis=0, ignore_index=True, inplace=True)
+        cost_breakdown.set_index(['Years', 'Elements'], inplace=True)
+
+        # put very small values as nan
+        # threshold = 1e-2
+        threshold = 0
+        cost_breakdown = cost_breakdown.mask((cost_breakdown > -threshold) & (cost_breakdown < threshold), np.nan)
+
+        # Store into results
+        cost_breakdown.replace(0, np.nan, inplace=True)
+        self.results['Cost_breakdown_non_annualised'] = cost_breakdown
         return
         
     
