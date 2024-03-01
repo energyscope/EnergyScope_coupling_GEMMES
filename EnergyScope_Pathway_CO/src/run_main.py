@@ -193,9 +193,11 @@ if __name__ == '__main__':
             C_inv['B'] = 0
             C_inv['G'] = 0
             C_inv['H'] = 0
-            C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(['DHN','GRID','HVAC_LINE']),[3,5]] = [0,1] # Costs supported by the government
+            # C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(['DHN','GRID','HVAC_LINE']),[3,5]] = [0,1] # Costs supported by the PRIVATE SECTOR, actually (not by the state - grid costs for households are quite volatile, according to Santiago)
             list_private_mob_tech = ['MOTORCYCLE','CAR_GASOLINE','CAR_DIESEL','CAR_NG','CAR_METHANOL','CAR_HEV','CAR_PHEV','MOTORCYCLE_ELECTRIC','CAR_BEV','CAR_FUEL_CELL']
             C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(list_private_mob_tech),[3,6]] = [0,1] # Private mobility costs are supported by households
+            list_public_mob_tech = ['TRAMWAY_TROLLEY','BUS_COACH_DIESEL','BUS_COACH_GASOLINE','BUS_COACH_HYDIESEL','BUS_COACH_CNG_STOICH','BUS_COACH_FC_HYBRIDH2','TRAIN_PUB']
+            C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(list_public_mob_tech),[3,5]] = [0,1] # Private mobility costs are supported by the State
             shares_cooling = pd.read_csv(pth_model + '/shares_cooling.csv')
             shares_cooling.set_index('Phase',inplace=True)
             C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(['DEC_ELEC_COLD','DEC_THHP_GAS_COLD']),3] = 0
@@ -274,6 +276,8 @@ if __name__ == '__main__':
             year_balance_private_mob = year_balance_private_mob.divide(year_balance_private_mob.sum(axis=1), axis=0)
             year_balance_private_mob = year_balance_private_mob.round(2)
             ### A continuer une fois que j'aurai une comparaison des coûts elec, essence, bas bois, etc. pour le consommateur en 2021 (après en avoir retiré les taxes) 
+            
+            ### Faire la même chose pour la mobilité publique
             
             output_for_GEMMES = pd.DataFrame(index=annualised_factor.index[1:])
             output_for_GEMMES = pd.DataFrame(index=annualised_factor.index)

@@ -25,30 +25,30 @@ Gurobi 10.0.3:   pre:dual = -1
   pre:passes = 3
   bar:convtol = 1e-06
   pre:solve = -1
-Gurobi 10.0.3: optimal solution; objective 141833.5159
+Gurobi 10.0.3: optimal solution; objective 129964.9108
 0 simplex iterations
-64 barrier iterations
+73 barrier iterations
  
 ------------ WARNINGS ------------
 WARNING:  "Solution Check"
      [ sol:chk:feastol=1e-06, :feastolrel=1e-06, :inttol=1e-05,
        :round='', :prec='' ]
   - 1 original variable(s) violate bounds,
-        up to 8E-06 (abs)
+        up to 2E-05 (abs)
 Algebraic expression violations:
-  - 137 original expression(s) of type ':linrange',
-        up to 4E-04 (abs)
+  - 139 original expression(s) of type ':linrange',
+        up to 7E-04 (abs), up to 2E-06 (rel)
  
  
 solve_result = solved
 
 solve_result_num = 0
 
-_solve_elapsed_time = 31.6881
+_solve_elapsed_time = 33.9598
 
-TotalCost 141833.5158570051
+TotalCost 129964.9107680218
 Carbon_cost 0
-GWP_op 434312.0600963458
+GWP_op 435970.0282508808
 carbon_price 0
 --------------SAVING COSTS -----------
 --------------SAVING RESOURCES -----------
