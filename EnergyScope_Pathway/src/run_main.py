@@ -25,7 +25,7 @@ from ampl_preprocessor import AmplPreProcessor
 from ampl_collector import AmplCollector
 from ampl_graph import AmplGraph
 
-
+country = 'Colombia'
 type_of_model = 'MO'
 nbr_tds = 12
 
@@ -44,7 +44,7 @@ if type_of_model == 'MO':
                 os.path.join(pth_model,'PES_store_variables.mod')]
     mod_2_path = [os.path.join(pth_model,'PESMO_initialise_2020.mod'),
                   os.path.join(pth_model,'fix.mod')]
-    dat_path = [os.path.join(pth_model,'PESMO_data_all_years.dat')]
+    dat_path = [os.path.join(pth_model,country+'/PESMO_data_all_years.dat')]
 else:
     mod_1_path = [os.path.join(pth_model,'PESTD_model.mod'),
             os.path.join(pth_model,'PESTD_store_variables.mod'),
@@ -56,13 +56,13 @@ else:
 
 dat_path += [os.path.join(pth_model,'PES_data_all_years.dat'),
              os.path.join(pth_model,'PES_seq_opti.dat'),
-             os.path.join(pth_model,'PES_data_efficiencies.dat'),
+             os.path.join(pth_model,country+'/PES_data_efficiencies.dat'),
              os.path.join(pth_model,'PES_data_set_AGE_2020.dat')]
 
 if(simulate_TEJ_scenario):
-    dat_path += [os.path.join(pth_model,'PES_data_year_related_TEJ.dat')]
+    dat_path += [os.path.join(pth_model,country+'/PES_data_year_related_TEJ.dat')]
 else:
-    dat_path += [os.path.join(pth_model,'PES_data_year_related.dat')]
+    dat_path += [os.path.join(pth_model,country+'/PES_data_year_related.dat')]
 
 dat_path_0 = dat_path + [os.path.join(pth_model,'PES_data_remaining.dat'),
              os.path.join(pth_model,'PES_data_decom_allowed_2020.dat')]
@@ -212,7 +212,7 @@ if __name__ == '__main__':
             list_LTH_tech = ['DHN_HP_ELEC','DHN_COGEN_GAS','DHN_COGEN_WOOD','DHN_COGEN_WASTE','DHN_COGEN_WET_BIOMASS','DHN_COGEN_BIO_HYDROLYSIS','DHN_BOILER_GAS','DHN_BOILER_WOOD','DHN_BOILER_OIL','DHN_DEEP_GEO','DHN_SOLAR','DEC_HP_ELEC','DEC_THHP_GAS','DEC_COGEN_GAS','DEC_COGEN_OIL','DEC_ADVCOGEN_GAS','DEC_ADVCOGEN_H2','DEC_BOILER_GAS','DEC_BOILER_WOOD','COAL_STOVE','DEC_BOILER_OIL','DEC_SOLAR','DEC_DIRECT_ELEC']
             C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(list_LTH_tech),[3,4,5,6]] = C_inv_bis.iloc[C_inv_bis.index.get_level_values('Technologies').isin(list_LTH_tech),[8,9,10,11]].values
             C_inv.drop(columns=['merge_index'],inplace=True)
-            # C_inv.to_csv('C_inv_phase_tech_non_annualised.csv')
+            # C_inv.to_csv(pth_output_all+'/'+country+'/C_inv_phase_tech_non_annualised.csv')
             
             C_maint = z_Results['C_op_phase_tech_non_annualised']
             C_maint.rename(columns = {'C_op_phase_tech_non_annualised':'Value'}, inplace = True)
@@ -220,7 +220,7 @@ if __name__ == '__main__':
             C_maint['Local'] = 1
             C_maint['Imported'] = 1 - C_maint['Local']
             C_maint[['F','B','G','H']] = C_inv.iloc[~C_inv.index.get_level_values('Phases').isin(['2015_2020']),[3,4,5,6]].values            
-            # C_maint.to_csv('C_op_phase_tech_non_annualised.csv')
+            # C_maint.to_csv(pth_output_all+'/'+country+'/C_op_phase_tech_non_annualised.csv')
             
             annualised_factor = pd.DataFrame(index=z_Results['C_inv_phase'].index, data=z_Results['C_inv_phase'].values / z_Results['C_inv_phase_non_annualised'].values )
             annualised_factor['merge_index'] = annualised_factor.index
@@ -241,7 +241,7 @@ if __name__ == '__main__':
             C_op['B'] = 0
             C_op['G'] = 0
             C_op['H'] = 0
-            # C_op.to_csv('C_op_phase_res_non_annualised.csv')      
+            # C_op.to_csv(pth_output_all+'/'+country+'/C_op_phase_res_non_annualised.csv')      
             
             Cost_breakdown = z_Results['Cost_breakdown']
             year_balance = z_Results['Year_balance']
@@ -298,13 +298,13 @@ if __name__ == '__main__':
             output_for_GEMMES['opex_H_COP'] = (C_maint['Value'] * C_maint['Local'] * C_maint['H']).groupby(level=[0]).sum() + (C_op['Value'] * C_op['Local'] * C_op['H']).groupby(level=[0]).sum()
             output_for_GEMMES['opex_H_FX'] = (C_maint['Value'] * C_maint['Imported'] * C_maint['H']).groupby(level=[0]).sum() + (C_op['Value'] * C_op['Imported'] * C_op['H']).groupby(level=[0]).sum()
             output_for_GEMMES = output_for_GEMMES.round(1)
-            output_for_GEMMES.to_csv('Outputs_for_GEMMES/Costs_per_phase.csv')
+            output_for_GEMMES.to_csv(pth_output_all+'/'+country+'/Outputs_for_GEMMES/Costs_per_phase.csv')
             
             Cost_breakdown_non_annualised = z_Results['Cost_breakdown_non_annualised']
             Cost_breakdown_non_annualised = Cost_breakdown_non_annualised.groupby(level=[0]).sum()
             Cost_breakdown_non_annualised = Cost_breakdown_non_annualised.loc[Cost_breakdown_non_annualised.index=='YEAR_2020']
             Cost_breakdown_non_annualised = Cost_breakdown_non_annualised.round(0)
-            Cost_breakdown_non_annualised.to_csv('Outputs_for_GEMMES/Initial_cost.csv')
+            Cost_breakdown_non_annualised.to_csv(pth_output_all+'/'+country+'/Outputs_for_GEMMES/Initial_cost.csv')
             
             a_website = "https://www.google.com"
             webbrowser.open_new(a_website)

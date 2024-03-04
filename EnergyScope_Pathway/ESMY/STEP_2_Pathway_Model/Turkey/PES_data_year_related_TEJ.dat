@@ -1,0 +1,900 @@
+# -------------------------------------------------------------------------------------------------------------------------																																																																																																																	
+#	EnergyScope TD is an open-source energy model suitable for country scale analysis. It is a simplified representation of an urban or national energy system accounting for the energy flows																																																																																																																
+#	within its boundaries. Based on a hourly resolution, it optimises the design and operation of the energy system while minimizing the cost of the system.																																																																																																																
+#																																																																																																																	
+#	Copyright (C) <2018-2019> <Ecole Polytechnique Fédérale de Lausanne (EPFL), Switzerland and Université catholique de Louvain (UCLouvain), Belgium>																																																																																																																
+#																																																																																																																	
+#																																																																																																																	
+#	Licensed under the Apache License, Version 2.0 (the "License");																																																																																																																
+#	you may not use this file except in compliance with the License.																																																																																																																
+#	You may obtain a copy of the License at																																																																																																																
+#																																																																																																																	
+#	http://www.apache.org/licenses/LICENSE-2.0																																																																																																																
+#																																																																																																																	
+#	Unless required by applicable law or agreed to in writing, software																																																																																																																
+#	distributed under the License is distributed on an "AS IS" BASIS,																																																																																																																
+#	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.																																																																																																																
+#	See the License for the specific language governing permissions and																																																																																																																
+#	limitations under the License.																																																																																																																
+#																																																																																																																	
+#	Description and complete License: see LICENSE file.																																																																																																																
+# -------------------------------------------------------------------------------------------------------------------------																																																																																																																	
+																																																																																																																	
+# Colors meaning :																																																																																																																	
+# Specific to belgium : RED																																																																																																																	
+# NON energy used : Blue																																																																																																																	
+# Freight mobility by boat : GREEN																																																																																																																	
+# Synthetic fuels and storage : Yellow																																																																																																																	
+# Wet biomass, Biomethanation and chp : Purple																																																																																																																	
+																																																																																																																	
+#ADDITIONNAL DATA FROM GG : 																																																																																																																	
+#Layers : CO2_ATM CO2_CIMENT CO2_CAPTURED																																																																																																																	
+#Technologies : CIMENT_CCS ATM_CCS SYN_METHANATION CO2_STORAGE																																																																																																																	
+#Sources : 																																																																																																																	
+# CIMENT_CCS																																																																																																																	
+# ATM_CCS																																																																																																																	
+# SYN_METHANATION																																																																																																																	
+# CO2_CIMENT : https://www.holcim.ch/sites/switzerland/files/atoms/files/donnees_environnementales_2015.pdf page 3 table. 1.5 MTCO2																																																																																																																	
+# CO2_STORAGE : 																																																																																																																	
+# CO2 layers are in Mmol = 1e6 mol. 1 mol of CO2 required per mol of CH4 => 1 GWh of CH4 (<=> 80tCH4) requires 0.22 ktCO2																																																																																																																	
+																																																																																																																	
+# UNIT MEASURES:																																																																																																																	
+# Unless otherwise specified units are:																																																																																																																	
+# Energy [GWh], Power [GW], Cost [MCHF], Time [h], Passenger transport [Mpkm], Freight Transport [Mtkm]																																																																																																																	
+																																																																																																																	
+# References based on Supplementary material																																																																																																																	
+																																																																																																																	
+param re_share_primary := 																																																																																																																	
+YEAR_2015	0																																																																																																																
+YEAR_2020	0																																																																																																																
+YEAR_2025	0																																																																																																																
+YEAR_2030	0																																																																																																																
+YEAR_2035	0																																																																																																																
+YEAR_2040	0																																																																																																																
+YEAR_2045	0																																																																																																																
+YEAR_2050	0																																																																																																																
+;																																																																																																																		
+
+param gwp_limit := 			# [ktCO2-eq./year]																																																																																																													
+YEAR_2015	Infinity #156000																																																																																																																
+YEAR_2020	Infinity #133715																																																																																																																
+YEAR_2025	Infinity #111430																																																																																																																
+YEAR_2030	Infinity #89145																																																																																																											
+YEAR_2035	Infinity #66860																																																																																																																
+YEAR_2040	Infinity #44575																																																																																																																
+YEAR_2045	Infinity #22290																																																																																																																
+YEAR_2050	Infinity #3406.92																																																																																																																
+;
+# Part [2.4]																																																																																																																	
+param batt_per_car : CAR_PHEV  CAR_BEV:= #ev_batt,size [GWh]: Size of batteries per car per technology of EV  																																																																																																																	
+YEAR_2015	10	50																																																																																																															
+YEAR_2020	10	50																																																																																																															
+YEAR_2025	10	50																																																																																																															
+YEAR_2030	10	50																																																																																																															
+YEAR_2035	10	50																																																																																																															
+YEAR_2040	10	50																																																																																																															
+YEAR_2045	10	50																																																																																																															
+YEAR_2050	10	50																																																																																																															
+;																																																																																																																	
+param vehicule_capacity : CAR_PHEV  CAR_BEV:=			# km-pass/h/veh. : Gives the equivalence between capacity and number of vehicles.																																																																																																														
+YEAR_2015	50.4	50.4																																																																																																															
+YEAR_2020	50.4	50.4																																																																																																															
+YEAR_2025	50.4	50.4																																																																																																															
+YEAR_2030	50.4	50.4																																																																																																															
+YEAR_2035	50.4	50.4																																																																																																															
+YEAR_2040	50.4	50.4																																																																																																															
+YEAR_2045	50.4	50.4																																																																																																															
+YEAR_2050	50.4	50.4																																																																																																															
+;																																																																																																																	
+
+param : solar_area_rooftop :=																																																																																																																	
+YEAR_2015	529																																																																																																																
+YEAR_2020	529																																																																																																																
+YEAR_2025	529																																																																																																																
+YEAR_2030	529																																																																																																																
+YEAR_2035	529																																																																																																																
+YEAR_2040	529																																																																																																																
+YEAR_2045	529																																																																																																																
+YEAR_2050	529																																																																																																																	
+;
+																																																																																																																	
+param : solar_area_ground :=																																																																																																																	
+YEAR_2015	3809																																																																																																																
+YEAR_2020	3809																																																																																																																
+YEAR_2025	3809																																																																																																																
+YEAR_2030	3809																																																																																																																
+YEAR_2035	3809																																																																																																																
+YEAR_2040	3809																																																																																																																
+YEAR_2045	3809																																																																																																																
+YEAR_2050	3809																																																																																																																	
+;																																																																																																																	
+																																																																																																																	
+																																																																																																																	
+#param end_uses_demand_year {YEARS, END_USES_INPUT, SECTORS}																																																																																																																	
+param end_uses_demand_year :=																																																																																																																	
+["YEAR_2015",*,*]: 	HOUSEHOLDS	SERVICES	INDUSTRY	TRANSPORTATION	:=																																																																																																												
+ELECTRICITY	7815.0	9973.8	35585.3	0
+LIGHTING	4018.2	7431.2	11193.5	0
+HEAT_HIGH_T	0	0	26473.9	0
+HEAT_LOW_T_SH	13640.0	4033.4	21853.4	0
+HEAT_LOW_T_HW	1136.7	0	10926.7	0
+PROCESS_COOLING	0.0	0.0	277.8	0
+SPACE_COOLING	2556.0	2528.0	0.0	0
+MOBILITY_PASSENGER	0	0	0	347881
+MOBILITY_FREIGHT	0	0	0	97783
+NON_ENERGY	0	0	22423	0                                                
+
+["YEAR_2020",*,*]: 	HOUSEHOLDS	SERVICES	INDUSTRY	TRANSPORTATION	:=																																																																																																												
+ELECTRICITY	7815.0	9973.8	35585.3	0
+LIGHTING	4018.2	7431.2	11193.5	0
+HEAT_HIGH_T	0	0	26473.9	0
+HEAT_LOW_T_SH	13640.0	4033.4	21853.4	0
+HEAT_LOW_T_HW	1136.7	0	10926.7	0
+PROCESS_COOLING	0.0	0.0	277.8	0
+SPACE_COOLING	2556.0	2528.0	0.0	0
+MOBILITY_PASSENGER	0	0	0	347881
+MOBILITY_FREIGHT	0	0	0	97783
+NON_ENERGY	0	0	22423	0
+																																																																																																																	
+["YEAR_2025",*,*]: 	HOUSEHOLDS	SERVICES	INDUSTRY	TRANSPORTATION	:=																																																																																																												
+ELECTRICITY	8596.0	10971.0	39144.0	0
+LIGHTING	4420.0	8174.0	12313.0	0
+HEAT_HIGH_T	0.0	0.0	29121.0	0
+HEAT_LOW_T_SH	15004.0	4437.0	24039.0	0
+HEAT_LOW_T_HW	1250.0	0.0	12019.0	0
+PROCESS_COOLING	0.0	0.0	306.0	0.0
+SPACE_COOLING	2812.0	2781.0	0.0	0.0
+MOBILITY_PASSENGER	0.0	0.0	0.0	382669
+MOBILITY_FREIGHT	0.0	0.0	0.0	107561
+NON_ENERGY	0.0	0.0	24665.0	0
+																																																																																																																	
+["YEAR_2030",*,*]: 	HOUSEHOLDS	SERVICES	INDUSTRY	TRANSPORTATION	:=																																																																																																												
+ELECTRICITY	9691.0	12368.0	44126.0	0.0
+LIGHTING	4983.0	9215.0	13880.0	0.0
+HEAT_HIGH_T	0.0	0.0	32828.0	0.0
+HEAT_LOW_T_SH	16914.0	5001.0	27098.0	0.0
+HEAT_LOW_T_HW	1410.0	0.0	13549.0	0.0
+PROCESS_COOLING	0.0	0.0	344.0	0.0
+SPACE_COOLING	3169.0	3135.0	0.0	0.0
+MOBILITY_PASSENGER	0.0	0.0	0.0	431372.0
+MOBILITY_FREIGHT	0.0	0.0	0.0	121251.0
+NON_ENERGY	0.0	0.0	27805.0	0																																																																																																													
+																																																																																																																	
+["YEAR_2035",*,*]: 	HOUSEHOLDS	SERVICES	INDUSTRY	TRANSPORTATION	:=																																																																																																												
+ELECTRICITY	10941.0	13963.0	49819.0	0.0
+LIGHTING	5625.0	10404.0	15671.0	0.0
+HEAT_HIGH_T	0.0	0.0	37063.0	0.0
+HEAT_LOW_T_SH	19096.0	5647.0	30595.0	0.0
+HEAT_LOW_T_HW	1591.0	0.0	15297.0	0.0
+PROCESS_COOLING	0.0	0.0	389.0	0.0
+SPACE_COOLING	3578.0	3539.0	0.0	0.0
+MOBILITY_PASSENGER	0.0	0.0	0.0	487033.0
+MOBILITY_FREIGHT	0.0	0.0	0.0	136896.0
+NON_ENERGY	0.0	0.0	31392.0	0
+																																																																																																																	
+["YEAR_2040",*,*]: 	HOUSEHOLDS	SERVICES	INDUSTRY	TRANSPORTATION	:=																																																																																																												
+ELECTRICITY	11644.0	14861.0	53022.0	0.0
+LIGHTING	5987.0	11072.0	16678.0	0.0
+HEAT_HIGH_T	0.0	0.0	39446.0	0.0
+HEAT_LOW_T_SH	20324.0	6010.0	32562.0	0.0
+HEAT_LOW_T_HW	1694.0	0.0	16281.0	0.0
+PROCESS_COOLING	0.0	0.0	414.0	0.0
+SPACE_COOLING	3808.0	3767.0	0.0	0.0
+MOBILITY_PASSENGER	0.0	0.0	0.0	518343.0
+MOBILITY_FREIGHT	0.0	0.0	0.0	145697.0
+NON_ENERGY	0.0	0.0	33410.0	0
+
+["YEAR_2045",*,*]: 	HOUSEHOLDS	SERVICES	INDUSTRY	TRANSPORTATION	:=																																																																																																												
+ELECTRICITY	12426.0	15858.0	56581.0	0.0
+LIGHTING	6389.0	11816.0	17798.0	0.0
+HEAT_HIGH_T	0.0	0.0	42094.0	0.0
+HEAT_LOW_T_SH	21688.0	6413.0	34747.0	0.0
+HEAT_LOW_T_HW	1807.0	0.0	17373.0	0.0
+PROCESS_COOLING	0.0	0.0	442.0	0.0
+SPACE_COOLING	4064.0	4020.0	0.0	0.0
+MOBILITY_PASSENGER	0.0	0.0	0.0	553131.0
+MOBILITY_FREIGHT	0.0	0.0	0.0	155475.0
+NON_ENERGY	0.0	0.0	35653.0	0
+
+["YEAR_2050",*,*]: 	HOUSEHOLDS	SERVICES	INDUSTRY	TRANSPORTATION	:=																																																																																																												
+ELECTRICITY	13286.0	16955.0	60495.0	0.0
+LIGHTING	6831.0	12633.0	19029.0	0.0
+HEAT_HIGH_T	0.0	0.0	45006.0	0.0
+HEAT_LOW_T_SH	23188.0	6857.0	37151.0	0.0
+HEAT_LOW_T_HW	1932.0	0.0	18575.0	0.0
+PROCESS_COOLING	0.0	0.0	472.0	0.0
+SPACE_COOLING	4345.0	4298.0	0.0	0.0
+MOBILITY_PASSENGER	0.0	0.0	0.0	591398.0
+MOBILITY_FREIGHT	0.0	0.0	0.0	166231.0
+NON_ENERGY	0.0	0.0	38119.0	0																																																																																																													
+;																																																																																																																	
+																																																																																																																	
+param:	share_mobility_public_min	share_freight_train_min	share_freight_boat_min	share_freight_road_min	share_heat_dhn_min	share_mobility_public_max	share_freight_train_max	share_freight_boat_max	share_freight_road_max	share_private_motorcycle_max	share_heat_dhn_max	:=																																																																																																						
+YEAR_2015	0.70	0.21	0.09	0	0	0.70	0.21	0.09	1	0.52	1																																																																																																							
+YEAR_2020	0.70	0.21	0.09	0	0	0.70	0.21	0.09	1	0.52	1																																																																																																						
+YEAR_2025	0	0	0	0	0	0.70	0.3	0.4	1	0.52	0.5																																																																																																							
+YEAR_2030	0	0	0	0	0	0.70	0.3	0.4	1	0.52	0.5																																																																																																							
+YEAR_2035	0	0	0	0	0	0.70	0.3	0.4	1	0.52	0.5																																																																																																							
+YEAR_2040	0	0	0	0	0	0.70	0.3	0.4	1	0.52	0.5																																																																																																							
+YEAR_2045	0	0	0	0	0	0.70	0.3	0.4	1	0.52	0.5																																																																																																							
+YEAR_2050	0	0	0	0	0	0.70	0.3	0.4	1	0.52	0.5																																																																																																							
+;																																																																																																																	
+																																																																																																																	
+param share_ned :	HVC	METHANOL	AMMONIA	:=																																																																																																													
+YEAR_2015	1.0	0	0																																																																																																														
+YEAR_2020	1.0	0	0																																																																																																														
+YEAR_2025	1.0	0	0																																																																																																														
+YEAR_2030	1.0	0	0																																																																																																														
+YEAR_2035	1.0	0	0																																																																																																														
+YEAR_2040	1.0	0	0																																																																																																														
+YEAR_2045	1.0	0	0																																																																																																														
+YEAR_2050	1.0	0	0																																																																																																													
+;																																																																																																																	
+																																																																																																																	
+param c_inv :	NUCLEAR	CCGT	CCGT_AMMONIA	COAL_US	COAL_IGCC	PV	WIND_ONSHORE	WIND_OFFSHORE	HYDRO_DAM	HYDRO_RIVER	GEOTHERMAL	IND_COGEN_GAS	IND_COGEN_WOOD	IND_COGEN_WASTE	IND_BOILER_GAS	IND_BOILER_WOOD	IND_BOILER_OIL	IND_BOILER_COAL	IND_BOILER_WASTE	IND_DIRECT_ELEC	DHN_HP_ELEC	DHN_COGEN_GAS	DHN_COGEN_WOOD	DHN_COGEN_WASTE	DHN_COGEN_WET_BIOMASS	DHN_COGEN_BIO_HYDROLYSIS	DHN_BOILER_GAS	DHN_BOILER_WOOD	DHN_BOILER_OIL	DHN_DEEP_GEO	DHN_SOLAR	DEC_HP_ELEC	DEC_THHP_GAS	DEC_COGEN_GAS	DEC_COGEN_OIL	DEC_ADVCOGEN_GAS	DEC_ADVCOGEN_H2	DEC_BOILER_GAS	DEC_BOILER_WOOD	DEC_BOILER_OIL	DEC_SOLAR	DEC_DIRECT_ELEC	IND_ELEC_COLD	DEC_THHP_GAS_COLD	DEC_ELEC_COLD	TRAMWAY_TROLLEY	BUS_COACH_DIESEL	BUS_COACH_GASOLINE	BUS_COACH_HYDIESEL	BUS_COACH_CNG_STOICH	BUS_COACH_FC_HYBRIDH2	TRAIN_PUB	MOTORCYCLE	CAR_GASOLINE	CAR_DIESEL	CAR_NG	CAR_METHANOL	CAR_HEV	CAR_PHEV	CAR_BEV	MOTORCYCLE_ELECTRIC	CAR_FUEL_CELL	TRAIN_FREIGHT	BOAT_FREIGHT_DIESEL	BOAT_FREIGHT_NG	BOAT_FREIGHT_METHANOL	TRUCK_DIESEL	TRUCK_GASOLINE	TRUCK_METHANOL	TRUCK_FUEL_CELL	TRUCK_ELEC	TRUCK_NG	EFFICIENCY	DHN	GRID 	HVAC_LINE	H2_ELECTROLYSIS	SMR	H2_BIOMASS	GASIFICATION_SNG	SYN_METHANATION	BIOMETHANATION	BIO_HYDROLYSIS	PYROLYSIS_TO_LFO	PYROLYSIS_TO_FUELS	ATM_CCS	INDUSTRY_CCS	SYN_METHANOLATION	METHANE_TO_METHANOL	BIOMASS_TO_METHANOL	HABER_BOSCH	AMMONIA_TO_H2	OIL_TO_HVC	GAS_TO_HVC	BIOMASS_TO_HVC	METHANOL_TO_HVC	BATT_LI	BEV_BATT	PHEV_BATT	DAM_STORAGE	PHS	TS_DEC_DIRECT_ELEC 	TS_DEC_HP_ELEC 	TS_DEC_THHP_GAS 	TS_DEC_COGEN_GAS 	TS_DEC_COGEN_OIL 	TS_DEC_ADVCOGEN_GAS 	TS_DEC_ADVCOGEN_H2 	TS_DEC_BOILER_GAS 	TS_DEC_BOILER_WOOD 	TS_DEC_BOILER_OIL 	TS_DHN_DAILY	TS_DHN_SEASONAL	TS_HIGH_TEMP	GAS_STORAGE	H2_STORAGE	DIESEL_STORAGE	GASOLINE_STORAGE	LFO_STORAGE	TS_COLD	AMMONIA_STORAGE	METHANOL_STORAGE	CO2_STORAGE	:=
+YEAR_2015	4845.73	844.73	844.73	2639.81	3404.57	1485.36	3264520	1629.1	4200.6993	5044.92	10721.45	1528.1	1172.95	3264.52	70.67	138.22	65.83	138.22	138.22	387.73	419.71	1361.46	1172.95	3264.52	1491.64	4923.77	70.67	138.22	65.83	1611.94	393.61	599.01	384.31	1528.1	1416.89	13424.71	13424.71	190.24	554.93	170.86	781.87	43.61	664.97	339.33	528.88	625	567.54	567.54	838.23	577.99	1185.73	1506.02	19.9531584	390.32	403.48	406.1	390.32	431.94	491.88	873.02	70.04	1091.27	104.42	70.94	72.25	70.94	344.65	344.65	344.65	457.85	981.55	350.99	0	825.88	74919.06	1532	10000	820.67	6060.93	6412.7	418.75	1187.85	1917.71	3226.12	3276	5743	2871.5	2877.58	1642.24	6048	1020.35	820.67	475.84	960.83	4183.2	839.89	821.58	0	0	0	58.8	18.97	18.97	18.97	18.97	18.97	18.97	18.97	18.97	18.97	18.97	3	0.59	28.03	0.05	6.19	0.01	0.01	0.01	25	0.01	0.01	49.5	
+YEAR_2020	4845.73	825.96	825.96	2598.77	3351.65	536.64	3182910	1629.1	4200.6993	5044.92	8764.36	1528.1	1172.95	3182.91	70.67	138.22	65.83	138.22	138.22	387.73	395.73	1361.46	1172.95	3182.91	1491.64	4923.77	70.67	138.22	65.83	1611.94	381.37	564.78	362.35	1528.1	1416.89	9185.33	9185.33	190.24	554.93	170.86	757.56	43.61	664.97	339.33	528.88	625	577.94	577.94	822.56	585.04	1114.04	1506.02	20.3186664	397.47	410.87	411.06	397.47	423.86	473.46	613.66	49.23	1062.1	104.42	72.24	73.13	72.24	350.97	350.97	350.97	430.17	878.38	355.28	0	825.88	74919.06	1532	2784.81	775.33	4798.23	4007.94	349.6	1122.22	1811.76	2554.01	2593.5	5342.73	2671.37	2647.88	1511.16	4788	963.97	775.33	449.55	907.75	3311.7	793.49	501.3	0	0	0	58.8	18.97	18.97	18.97	18.97	18.97	18.97	18.97	18.97	18.97	18.97	3	0.59	28.03	0.05	6.19	0.01	0.01	0.01	25	0.01	0.01	49.5	
+YEAR_2025	4845.73	802.5	802.5	2571.42	3316.37	450.4	3101295	1427.86	4200.6993	5044.92	8211.27	1484.44	1139.44	3101.3	64.78	126.7	60.34	126.7	126.7	360.04	374.74	1322.56	1139.44	3101.3	1449.03	4783.09	64.78	126.7	60.34	1567.16	374.24	534.83	343.14	1484.44	1376.41	8478.77	8478.77	174.39	508.68	156.62	743.38	42.16	649.14	327.63	510.64	625	590.74	590.74	823.29	595.94	1081.47	1506.02	20.7690336	406.28	419.97	418.72	406.28	424.24	464.97	529.56	42.49	900.62	104.42	73.84	74.49	73.84	358.74	358.74	358.74	417.59	835.89	361.9	0	825.88	74919.06	1532	1772.15	736.79	3788.08	3286.51	320.78	1066.44	1721.7	2016.33	2047.5	5281.82	2640.91	2284.2	1303.6	3780	916.06	736.79	427.2	862.63	2614.5	754.04	425.88	0	0	0	58.8	18.97	18.97	18.97	18.97	18.97	18.97	18.97	18.97	18.97	18.97	3	0.57	28.03	0.05	6.19	0.01	0.01	0.01	25	0.01	0.01	49.5	
+YEAR_2030	4845.73	779.03	779.03	2544.06	3281.09	364.15	2040661.67	1322.45	4200.6993	5044.92	7658.18	1440.78	1105.93	3019.68	58.89	115.18	54.86	115.18	115.18	332.34	353.75	1283.66	1105.93	3019.68	1406.41	4642.41	58.89	115.18	54.86	1522.39	367.1	504.88	323.92	1440.78	1335.92	7772.2	7772.2	158.54	462.44	142.38	729.2	40.7	633.31	315.93	492.4	625	605.98	605.98	829.15	606.83	1048.92	1506.02	21.3047712	416.76	430.81	426.37	416.76	427.25	459.26	445.47	35.74	739.14	104.42	75.75	75.85	75.75	368	368	368	405.02	791.68	368.51	0	825.88	74919.06	1532	759.49	698.25	2777.92	2565.08	291.97	1010.66	1631.64	1478.64	1501.5	5220.91	2610.46	1920.51	1096.04	2772	868.14	698.25	404.86	817.51	1917.3	714.6	350.45	0	0	0	58.8	18.97	18.97	18.97	18.97	18.97	18.97	18.97	18.97	18.97	18.97	3	0.55	28.03	0.05	6.19	0.01	0.01	0.01	25	0.01	0.01	49.5	
+YEAR_2035	4845.73	771.99	771.99	2516.71	3245.81	335.4	1010	1255.37	4200.6993	5044.92	7488	1408.03	1080.79	2927.87	58.89	115.18	54.86	115.18	115.18	332.34	344.76	1254.49	1080.79	2927.87	1374.44	4536.9	58.89	115.18	54.86	1500	362	492.04	315.68	1408.03	1305.56	7242.28	7242.28	158.54	462.44	142.38	719.07	39.98	617.48	304.24	474.17	625	611.11	611.11	833.33	611.11	1041.67	1506.02	21.4852248	420.29	434.45	429.38	420.29	429.41	456.37	433.83	34.81	672.41	104.42	76.39	76.39	76.39	371.11	371.11	371.11	402.22	771.11	371.11	0	825.88	74919.06	1532	696.2	681.24	2525.39	2525	262.2	986.05	1591.91	1344.22	1365	5160	2580	1679.65	958.58	2520	847	681.24	395	797.6	1743	697.2	302	0	0	0	58.8	18.97	18.97	18.97	18.97	18.97	18.97	18.97	18.97	18.97	18.97	3	0.54	28.03	0.05	6.19	0.01	0.01	0.01	25	0.01	0.01	49.5	
+YEAR_2040	4845.73	764.95	764.95	2489.35	3210.53	306.65	2836050	1188.29	4200.6993	5044.92	7317.82	1375.29	1055.66	2836.05	58.89	115.18	54.86	115.18	115.18	332.34	335.77	1225.32	1055.66	2836.05	1342.48	4431.39	58.89	115.18	54.86	1477.61	356.9	479.2	307.45	1375.29	1275.2	6712.36	6712.36	158.54	462.44	142.38	708.95	39.25	601.66	301.37	469.71	625	617.16	617.16	841.42	615.38	1034.41	1506.02	21.697884	424.45	438.75	432.38	424.45	433.58	456.57	422.18	33.87	605.68	104.42	77.15	76.92	77.15	374.79	374.79	374.79	399.42	755.65	373.7	0	825.88	74919.06	1532	632.91	664.24	2272.85	2484.92	232.42	961.44	1552.18	1209.8	1228.5	5099.09	2549.54	1438.79	821.12	2268	825.86	664.24	385.14	777.69	1568.7	679.8	253.55	0	0	0	58.8	18.97	18.97	18.97	18.97	18.97	18.97	18.97	18.97	18.97	18.97	3	0.53	28.03	0.05	6.19	0.01	0.01	0.01	25	0.01	0.01	49.5	
+YEAR_2045	4845.73	757.91	757.91	2461.99	3175.25	292.28	2744235	1164.33	4200.6993	5044.92	7147.64	1342.54	1030.52	2744.24	58.89	115.18	54.86	115.18	115.18	332.34	326.77	1196.14	1030.52	2744.24	1310.52	4325.88	58.89	115.18	54.86	1455.22	351.8	466.37	299.21	1342.54	1244.84	6182.43	6182.43	158.54	462.44	142.38	698.82	38.52	585.83	298.51	465.25	625	624.12	624.12	850.07	621.67	1034.21	1506.02	21.9422376	429.23	443.7	436.8	429.23	438.04	458.59	418.42	33.57	590.94	104.42	78.01	77.71	78.01	379.01	379.01	379.01	399.34	748.86	377.52	0	825.88	74919.06	1532	569.62	647.24	2020.31	2444.84	202.65	936.83	1512.45	1075.37	1092	5038.18	2519.09	1197.93	683.66	2016	804.72	647.24	375.28	757.79	1394.4	662.4	205.1	0	0	0	58.8	18.97	18.97	18.97	18.97	18.97	18.97	18.97	18.97	18.97	18.97	3	0.52	28.03	0.05	6.19	0.01	0.01	0.01	25	0.01	0.01	49.5	
+YEAR_2050	4845.73	750.87	750.87	2434.64	3139.97	277.91	960	1140.37	4200.6993	5044.92	6977.45	1309.8	1005.39	2652.42	58.89	115.18	54.86	115.18	115.18	332.34	317.78	1166.97	1005.39	2652.42	1278.55	4220.37	58.89	115.18	54.86	1432.84	346.7	453.53	290.98	1309.8	1214.48	5652.51	5652.51	158.54	462.44	142.38	688.69	37.8	570	295.64	460.79	625	631.97	631.97	861.1	627.96	1048.43	1506.02	22.2182856	434.63	449.28	441.22	434.63	443.72	461.55	414.67	33.27	576.21	104.42	79	78.5	79	383.78	383.78	383.78	404.83	744.16	381.34	0	825.88	74919.06	1532	506.33	630.24	1767.77	2404.76	172.88	912.22	1472.71	940.95	955.5	4977.27	2488.63	957.07	546.2	1764	783.58	630.24	365.42	737.88	1220.1	645	156.66	0	0	0	58.8	18.97	18.97	18.97	18.97	18.97	18.97	18.97	18.97	18.97	18.97	3	0.52	28.03	0.05	6.19	0.01	0.01	0.01	25	0.01	0.01	49.5	
+;																																																																																																																	
+param c_maint :	NUCLEAR	CCGT	CCGT_AMMONIA	COAL_US	COAL_IGCC	PV	WIND_ONSHORE	WIND_OFFSHORE	HYDRO_DAM	HYDRO_RIVER	GEOTHERMAL	IND_COGEN_GAS	IND_COGEN_WOOD	IND_COGEN_WASTE	IND_BOILER_GAS	IND_BOILER_WOOD	IND_BOILER_OIL	IND_BOILER_COAL	IND_BOILER_WASTE	IND_DIRECT_ELEC	DHN_HP_ELEC	DHN_COGEN_GAS	DHN_COGEN_WOOD	DHN_COGEN_WASTE	DHN_COGEN_WET_BIOMASS	DHN_COGEN_BIO_HYDROLYSIS	DHN_BOILER_GAS	DHN_BOILER_WOOD	DHN_BOILER_OIL	DHN_DEEP_GEO	DHN_SOLAR	DEC_HP_ELEC	DEC_THHP_GAS	DEC_COGEN_GAS	DEC_COGEN_OIL	DEC_ADVCOGEN_GAS	DEC_ADVCOGEN_H2	DEC_BOILER_GAS	DEC_BOILER_WOOD	DEC_BOILER_OIL	DEC_SOLAR	DEC_DIRECT_ELEC	IND_ELEC_COLD	DEC_THHP_GAS_COLD	DEC_ELEC_COLD	TRAMWAY_TROLLEY	BUS_COACH_DIESEL	BUS_COACH_GASOLINE	BUS_COACH_HYDIESEL	BUS_COACH_CNG_STOICH	BUS_COACH_FC_HYBRIDH2	TRAIN_PUB	MOTORCYCLE	CAR_GASOLINE	CAR_DIESEL	CAR_NG	CAR_METHANOL	CAR_HEV	CAR_PHEV	CAR_BEV	MOTORCYCLE_ELECTRIC	CAR_FUEL_CELL	TRAIN_FREIGHT	BOAT_FREIGHT_DIESEL	BOAT_FREIGHT_NG	BOAT_FREIGHT_METHANOL	TRUCK_DIESEL	TRUCK_GASOLINE	TRUCK_METHANOL	TRUCK_FUEL_CELL	TRUCK_ELEC	TRUCK_NG	EFFICIENCY	DHN	GRID 	HVAC_LINE	H2_ELECTROLYSIS	SMR	H2_BIOMASS	GASIFICATION_SNG	SYN_METHANATION	BIOMETHANATION	BIO_HYDROLYSIS	PYROLYSIS_TO_LFO	PYROLYSIS_TO_FUELS	ATM_CCS	INDUSTRY_CCS	SYN_METHANOLATION	METHANE_TO_METHANOL	BIOMASS_TO_METHANOL	HABER_BOSCH	AMMONIA_TO_H2	OIL_TO_HVC	GAS_TO_HVC	BIOMASS_TO_HVC	METHANOL_TO_HVC	BATT_LI	BEV_BATT	PHEV_BATT	DAM_STORAGE	PHS	TS_DEC_DIRECT_ELEC 	TS_DEC_HP_ELEC 	TS_DEC_THHP_GAS 	TS_DEC_COGEN_GAS 	TS_DEC_COGEN_OIL 	TS_DEC_ADVCOGEN_GAS 	TS_DEC_ADVCOGEN_H2 	TS_DEC_BOILER_GAS 	TS_DEC_BOILER_WOOD 	TS_DEC_BOILER_OIL 	TS_DHN_DAILY	TS_DHN_SEASONAL	TS_HIGH_TEMP	GAS_STORAGE	H2_STORAGE	DIESEL_STORAGE	GASOLINE_STORAGE	LFO_STORAGE	TS_COLD	AMMONIA_STORAGE	METHANOL_STORAGE	CO2_STORAGE	:=
+YEAR_2015	102.930986	21.39431403	21.39431403	30.82101643	50.78860431	13.03	34.28	67.56	21.0018	50.4447982	199.1808	98.22449611	42.94466341	120.3473349	1.415862909	2.764303774	1.415862909	2.764303774	2.764303774	1.758903768	14.23195532	39.80624675	42.94466341	120.3473349	121.3965436	240.5931676	1.415862909	2.764303774	1.415862909	60.39529412	0.464272222	24.97535953	11.23224577	98.22449611	86.93215515	250.1868578	250.1868578	5.708399663	19.41754846	10.24815058	8.674969566	0.190627801	5.4	9.9	22.1	12.5	30.55555556	30.55555556	33.33333333	30.55555556	31.25	54.35274934	1.2270888	24	24	24	24	34	34	10	0.8023126	10	2.088311688	3.819444444	3.819444444	3.819444444	18.55555556	18.55555556	18.55555556	12.06666667	23.13333333	18.55555556	0	0	0	30.64	27500000	75.73189522	426.9858431	452.0634921	106.9921053	16.45454545	130.7506053	146.6327286	91.2	142.56	71.28	81.65946844	71.80914261	92.4	19.94915141	75.73189522	2.529783694	24.02087245	124.8	75.58993677	1.270180132	0	0	0	0	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.0086	0.003222222	0.3	0.001309164	0.39	0.000397	0.000397	0.000397	0.3	0.000397	0.000397	0.495	
+YEAR_2020	102.930986	20.91888483	20.91888483	30.34193327	49.99914413	10.83	19.1	67.56	21.0018	50.4447982	162.8224	98.22449611	42.94466341	117.3386515	1.415862909	2.764303774	1.415862909	2.764303774	2.764303774	1.758903768	13.41870073	39.80624675	42.94466341	117.3386515	121.3965436	240.5931676	1.415862909	2.764303774	1.415862909	60.39529412	0.449838889	23.54819613	10.59040315	98.22449611	86.93215515	171.1804817	171.1804817	5.708399663	19.41754846	10.24815058	8.405281393	0.190627801	5.4	9.9	22.1	12.5	30.55555556	30.55555556	33.33333333	30.55555556	31.25	54.35274934	1.2270888	24	24	24	24	34	34	10	0.8023126	10	2.088311688	3.819444444	3.819444444	3.819444444	18.55555556	18.55555556	18.55555556	12.06666667	23.13333333	18.55555556	0	0	0	30.64	76.58227848	71.54781261	338.0304591	282.5396825	89.32368421	15.54545455	123.526815	116.0842435	72.2	132.624	66.312	75.14119601	66.07714896	73.15	18.84698835	71.54781261	2.390016639	22.69375242	98.8	71.41369717	0.775025166	0	0	0	0	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.0086	0.003222222	0.3	0.001309164	0.39	0.000397	0.000397	0.000397	0.3	0.000397	0.000397	0.495	
+YEAR_2025	102.930986	20.32459833	20.32459833	30.0225445	49.47283735	9.97	18.29	57.53	21.0018	50.4447982	152.5472	95.41808193	41.71767303	114.3299681	1.297874333	2.533945126	1.297874333	2.533945126	2.533945126	1.633267784	12.70710296	38.66892542	41.71767303	114.3299681	117.9280709	233.7190771	1.297874333	2.533945126	1.297874333	58.71764706	0.441419444	22.29942815	10.02879086	95.41808193	84.44837929	158.0127523	158.0127523	5.232699691	17.79941942	9.394138028	8.247963292	0.184273541	5.27	9.65	21.49	12.5	30.55555556	30.55555556	33.33333333	30.55555556	31.25	54.35274934	1.2270888	24	24	24	24	34	34	10	0.8023126	10	2.088311688	3.819444444	3.819444444	3.819444444	18.55555556	18.55555556	18.55555556	12.06666667	23.13333333	18.55555556	0	0	0	30.64	48.73417722	67.9913424	266.8661519	231.6825397	81.96184211	14.77272727	117.3865932	91.6454554	57	131.112	65.556	64.82059801	57.00149236	57.75	17.91014975	67.9913424	2.271214642	21.5657004	78	67.86389351	0.658412583	0	0	0	0	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.0086	0.003111111	0.3	0.001309164	0.39	0.000397	0.000397	0.000397	0.3	0.000397	0.000397	0.495	
+YEAR_2030	102.930986	19.73031183	19.73031183	29.70315573	48.94653057	9.1	17.46	53.96	21.0018	50.4447982	142.272	92.61166776	40.49068265	111.3212848	1.179885757	2.303586478	1.179885757	2.303586478	2.303586478	1.507631801	11.9955052	37.53160408	40.49068265	111.3212848	114.4595982	226.8449866	1.179885757	2.303586478	1.179885757	57.04	0.433	21.05066017	9.467178575	92.61166776	81.96460343	144.8450229	144.8450229	4.756999719	16.18129038	8.54012548	8.090645191	0.177919281	5.14	9.39	20.88	12.5	30.55555556	30.55555556	33.33333333	30.55555556	31.25	54.35274934	1.2270888	24	24	24	24	34	34	10	0.8023126	10	2.088311688	3.819444444	3.819444444	3.819444444	18.55555556	18.55555556	18.55555556	12.06666667	23.13333333	18.55555556	0	0	0	30.64	20.88607595	64.43487218	195.7018447	180.8253968	74.6	14	111.2463714	67.20666729	41.8	129.6	64.8	54.5	47.92583575	42.35	16.97331115	64.43487218	2.152412646	20.43764838	57.2	64.31408985	0.5418	0	0	0	0	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.0086	0.003	0.3	0.001309164	0.39	0.000397	0.000397	0.000397	0.3	0.000397	0.000397	0.495	
+YEAR_2035	102.930986	19.55202588	19.55202588	29.38376695	48.42022379	8.43	16.82	50.56	21.0018	50.4447982	139.1104	90.50685713	39.57043986	107.936516	1.179885757	2.303586478	1.179885757	2.303586478	2.303586478	1.507631801	11.69053473	36.67861308	39.57043986	107.936516	111.8582437	221.6894187	1.179885757	2.303586478	1.179885757	56.20117647	0.426986111	20.5154739	9.226487594	90.50685713	80.10177153	134.9692259	134.9692259	4.756999719	16.18129038	8.54012548	7.978275119	0.174742151	5.01	9.14	20.26	12.5	30.55555556	30.55555556	33.33333333	30.55555556	31.25	54.35274934	1.2270888	24	24	24	24	34	34	10	0.8023126	10	2.088311688	3.819444444	3.819444444	3.819444444	18.55555556	18.55555556	18.55555556	12.06666667	23.13333333	18.55555556	0	0	0	30.64	19.14556962	62.8658412	177.9107679	178	66.99276316	13.65909091	108.53745	61.09697026	38	128.088	64.044	47.66486711	41.91520353	38.5	16.56	62.8658412	2.1	19.93997837	52	62.748	0.466898841	0	0	0	0	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.0086	0.002958333	0.3	0.001309164	0.39	0.000397	0.000397	0.000397	0.3	0.000397	0.000397	0.495	
+YEAR_2040	102.930986	19.37373993	19.37373993	29.06437818	47.89391701	7.76	16.18	47.17	21.0018	50.4447982	135.9488	88.4020465	38.65019707	104.5517472	1.179885757	2.303586478	1.179885757	2.303586478	2.303586478	1.507631801	11.38556425	35.82562208	38.65019707	104.5517472	109.2568892	216.5338508	1.179885757	2.303586478	1.179885757	55.36235294	0.420972222	19.98028762	8.985796613	88.4020465	78.23893964	125.0934289	125.0934289	4.756999719	16.18129038	8.54012548	7.865905047	0.171565021	4.87	9.05	20.08	12.5	30.55555556	30.55555556	33.33333333	30.55555556	31.25	54.35274934	1.2270888	24	24	24	24	34	34	10	0.8023126	10	2.088311688	3.819444444	3.819444444	3.819444444	18.55555556	18.55555556	18.55555556	12.06666667	23.13333333	18.55555556	0	0	0	30.64	17.40506329	61.29681022	160.1196912	175.1746032	59.38552632	13.31818182	105.8285286	54.98727324	34.2	126.576	63.288	40.82973422	35.9045713	34.65	16.14668885	61.29681022	2.047587354	19.44230836	46.8	61.18191015	0.391997682	0	0	0	0	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.0086	0.002916667	0.3	0.001309164	0.39	0.000397	0.000397	0.000397	0.3	0.000397	0.000397	0.495	
+YEAR_2045	102.930986	19.19545398	19.19545398	28.74498941	47.36761023	7.43	16.08	46.32	21.0018	50.4447982	132.7872	86.29723587	37.72995429	101.1669784	1.179885757	2.303586478	1.179885757	2.303586478	2.303586478	1.507631801	11.08059378	34.97263108	37.72995429	101.1669784	106.6555347	211.3782829	1.179885757	2.303586478	1.179885757	54.52352941	0.414958333	19.44510135	8.745105633	86.29723587	76.37610774	115.2176319	115.2176319	4.756999719	16.18129038	8.54012548	7.753534975	0.168387891	4.74	8.96	19.89	12.5	30.55555556	30.55555556	33.33333333	30.55555556	31.25	54.35274934	1.2270888	24	24	24	24	34	34	10	0.8023126	10	2.088311688	3.819444444	3.819444444	3.819444444	18.55555556	18.55555556	18.55555556	12.06666667	23.13333333	18.55555556	0	0	0	30.64	15.66455696	59.72777924	142.3286144	172.3492063	51.77828947	12.97727273	103.1196072	48.87757621	30.4	125.064	62.532	33.99460133	29.89393908	30.8	15.7333777	59.72777924	1.995174709	18.94463835	41.6	59.6158203	0.317096523	0	0	0	0	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.0086	0.002875	0.3	0.001309164	0.39	0.000397	0.000397	0.000397	0.3	0.000397	0.000397	0.495	
+YEAR_2050	102.930986	19.01716803	19.01716803	28.42560064	46.84130345	7.09	15.98	45.48	21.0018	50.4447982	129.6256	84.19242524	36.8097115	97.78220959	1.179885757	2.303586478	1.179885757	2.303586478	2.303586478	1.507631801	10.77562331	34.11964008	36.8097115	97.78220959	104.0541802	206.2227151	1.179885757	2.303586478	1.179885757	53.68470588	0.408944444	18.90991507	8.504414652	84.19242524	74.51327584	105.3418349	105.3418349	4.756999719	16.18129038	8.54012548	7.641164903	0.165210761	4.61	8.87	19.71	12.5	30.55555556	30.55555556	33.33333333	30.55555556	31.25	54.35274934	1.2270888	24	24	24	24	34	34	10	0.8023126	10	2.088311688	3.819444444	3.819444444	3.819444444	18.55555556	18.55555556	18.55555556	12.06666667	23.13333333	18.55555556	0	0	0	30.64	13.92405063	58.15874827	124.5375376	169.5238095	44.17105263	12.63636364	100.4106859	42.76787919	26.6	123.552	61.776	27.15946844	23.88330685	26.95	15.32006656	58.15874827	1.942762063	18.44696834	36.4	58.04973045	0.242195364	0	0	0	0	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.132802697	0.0086	0.002833333	0.3	0.001309164	0.39	0.000397	0.000397	0.000397	0.3	0.000397	0.000397	0.495	
+;																																																																																																																	
+param gwp_constr :	NUCLEAR	CCGT	CCGT_AMMONIA	COAL_US	COAL_IGCC	PV	WIND_ONSHORE	WIND_OFFSHORE	HYDRO_DAM	HYDRO_RIVER	GEOTHERMAL	IND_COGEN_GAS	IND_COGEN_WOOD	IND_COGEN_WASTE	IND_BOILER_GAS	IND_BOILER_WOOD	IND_BOILER_OIL	IND_BOILER_COAL	IND_BOILER_WASTE	IND_DIRECT_ELEC	DHN_HP_ELEC	DHN_COGEN_GAS	DHN_COGEN_WOOD	DHN_COGEN_WASTE	DHN_COGEN_WET_BIOMASS	DHN_COGEN_BIO_HYDROLYSIS	DHN_BOILER_GAS	DHN_BOILER_WOOD	DHN_BOILER_OIL	DHN_DEEP_GEO	DHN_SOLAR	DEC_HP_ELEC	DEC_THHP_GAS	DEC_COGEN_GAS	DEC_COGEN_OIL	DEC_ADVCOGEN_GAS	DEC_ADVCOGEN_H2	DEC_BOILER_GAS	DEC_BOILER_WOOD	DEC_BOILER_OIL	DEC_SOLAR	DEC_DIRECT_ELEC	IND_ELEC_COLD	DEC_THHP_GAS_COLD	DEC_ELEC_COLD	TRAMWAY_TROLLEY	BUS_COACH_DIESEL	BUS_COACH_GASOLINE	BUS_COACH_HYDIESEL	BUS_COACH_CNG_STOICH	BUS_COACH_FC_HYBRIDH2	TRAIN_PUB	MOTORCYCLE	CAR_GASOLINE	CAR_DIESEL	CAR_NG	CAR_METHANOL	CAR_HEV	CAR_PHEV	CAR_BEV	MOTORCYCLE_ELECTRIC	CAR_FUEL_CELL	TRAIN_FREIGHT	BOAT_FREIGHT_DIESEL	BOAT_FREIGHT_NG	BOAT_FREIGHT_METHANOL	TRUCK_DIESEL	TRUCK_GASOLINE	TRUCK_METHANOL	TRUCK_FUEL_CELL	TRUCK_ELEC	TRUCK_NG	EFFICIENCY	DHN	GRID 	HVAC_LINE	H2_ELECTROLYSIS	SMR	H2_BIOMASS	GASIFICATION_SNG	SYN_METHANATION	BIOMETHANATION	BIO_HYDROLYSIS	PYROLYSIS_TO_LFO	PYROLYSIS_TO_FUELS	ATM_CCS	INDUSTRY_CCS	SYN_METHANOLATION	METHANE_TO_METHANOL	BIOMASS_TO_METHANOL	HABER_BOSCH	AMMONIA_TO_H2	OIL_TO_HVC	GAS_TO_HVC	BIOMASS_TO_HVC	METHANOL_TO_HVC	BATT_LI	BEV_BATT	PHEV_BATT	DAM_STORAGE	PHS	TS_DEC_DIRECT_ELEC 	TS_DEC_HP_ELEC 	TS_DEC_THHP_GAS 	TS_DEC_COGEN_GAS 	TS_DEC_COGEN_OIL 	TS_DEC_ADVCOGEN_GAS 	TS_DEC_ADVCOGEN_H2 	TS_DEC_BOILER_GAS 	TS_DEC_BOILER_WOOD 	TS_DEC_BOILER_OIL 	TS_DHN_DAILY	TS_DHN_SEASONAL	TS_HIGH_TEMP	GAS_STORAGE	H2_STORAGE	DIESEL_STORAGE	GASOLINE_STORAGE	LFO_STORAGE	TS_COLD	AMMONIA_STORAGE	METHANOL_STORAGE	CO2_STORAGE	:=
+YEAR_2015	707.88	183.79	183.79	331.6	331.6	2081.43	622.85	622.85	1692.88	1262.82	24929.09	1024.32	165.33	647.82	12.32	28.87	12.32	48.18	28.87	1.47	174.79	490.88	165.33	647.82	1024	647.8	12.32	28.87	12.32	808.76	221.22	164.89	381.93	1024.32	1024.32	2193.45	2193.45	21.09	21.09	21.09	221.22	1.47	174.79	381.93	164.89	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	61.3	0	0	0	8.33	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+YEAR_2020	707.88	183.79	183.79	331.6	331.6	2081.43	622.85	622.85	1692.88	1262.82	24929.09	1024.32	165.33	647.82	12.32	28.87	12.32	48.18	28.87	1.47	174.79	490.88	165.33	647.82	1024	647.8	12.32	28.87	12.32	808.76	221.22	164.89	381.93	1024.32	1024.32	2193.45	2193.45	21.09	21.09	21.09	221.22	1.47	174.79	381.93	164.89	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	61.3	0	0	0	8.33	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+YEAR_2025	707.88	183.79	183.79	331.6	331.6	2081.43	622.85	622.85	1692.88	1262.82	24929.09	1024.32	165.33	647.82	12.32	28.87	12.32	48.18	28.87	1.47	174.79	490.88	165.33	647.82	1024	647.8	12.32	28.87	12.32	808.76	221.22	164.89	381.93	1024.32	1024.32	2193.45	2193.45	21.09	21.09	21.09	221.22	1.47	174.79	381.93	164.89	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	61.3	0	0	0	8.33	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+YEAR_2030	707.88	183.79	183.79	331.6	331.6	2081.43	622.85	622.85	1692.88	1262.82	24929.09	1024.32	165.33	647.82	12.32	28.87	12.32	48.18	28.87	1.47	174.79	490.88	165.33	647.82	1024	647.8	12.32	28.87	12.32	808.76	221.22	164.89	381.93	1024.32	1024.32	2193.45	2193.45	21.09	21.09	21.09	221.22	1.47	174.79	381.93	164.89	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	61.3	0	0	0	8.33	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+YEAR_2035	707.88	183.79	183.79	331.6	331.6	2081.43	622.85	622.85	1692.88	1262.82	24929.09	1024.32	165.33	647.82	12.32	28.87	12.32	48.18	28.87	1.47	174.79	490.88	165.33	647.82	1024	647.8	12.32	28.87	12.32	808.76	221.22	164.89	381.93	1024.32	1024.32	2193.45	2193.45	21.09	21.09	21.09	221.22	1.47	174.79	381.93	164.89	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	61.3	0	0	0	8.33	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+YEAR_2040	707.88	183.79	183.79	331.6	331.6	2081.43	622.85	622.85	1692.88	1262.82	24929.09	1024.32	165.33	647.82	12.32	28.87	12.32	48.18	28.87	1.47	174.79	490.88	165.33	647.82	1024	647.8	12.32	28.87	12.32	808.76	221.22	164.89	381.93	1024.32	1024.32	2193.45	2193.45	21.09	21.09	21.09	221.22	1.47	174.79	381.93	164.89	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	61.3	0	0	0	8.33	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+YEAR_2045	707.88	183.79	183.79	331.6	331.6	2081.43	622.85	622.85	1692.88	1262.82	24929.09	1024.32	165.33	647.82	12.32	28.87	12.32	48.18	28.87	1.47	174.79	490.88	165.33	647.82	1024	647.8	12.32	28.87	12.32	808.76	221.22	164.89	381.93	1024.32	1024.32	2193.45	2193.45	21.09	21.09	21.09	221.22	1.47	174.79	381.93	164.89	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	61.3	0	0	0	8.33	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+YEAR_2050	707.88	183.79	183.79	331.6	331.6	2081.43	622.85	622.85	1692.88	1262.82	24929.09	1024.32	165.33	647.82	12.32	28.87	12.32	48.18	28.87	1.47	174.79	490.88	165.33	647.82	1024	647.8	12.32	28.87	12.32	808.76	221.22	164.89	381.93	1024.32	1024.32	2193.45	2193.45	21.09	21.09	21.09	221.22	1.47	174.79	381.93	164.89	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	61.3	0	0	0	8.33	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+;																																																																																																																	
+param lifetime :	NUCLEAR	CCGT	CCGT_AMMONIA	COAL_US	COAL_IGCC	PV	WIND_ONSHORE	WIND_OFFSHORE	HYDRO_DAM	HYDRO_RIVER	GEOTHERMAL	IND_COGEN_GAS	IND_COGEN_WOOD	IND_COGEN_WASTE	IND_BOILER_GAS	IND_BOILER_WOOD	IND_BOILER_OIL	IND_BOILER_COAL	IND_BOILER_WASTE	IND_DIRECT_ELEC	DHN_HP_ELEC	DHN_COGEN_GAS	DHN_COGEN_WOOD	DHN_COGEN_WASTE	DHN_COGEN_WET_BIOMASS	DHN_COGEN_BIO_HYDROLYSIS	DHN_BOILER_GAS	DHN_BOILER_WOOD	DHN_BOILER_OIL	DHN_DEEP_GEO	DHN_SOLAR	DEC_HP_ELEC	DEC_THHP_GAS	DEC_COGEN_GAS	DEC_COGEN_OIL	DEC_ADVCOGEN_GAS	DEC_ADVCOGEN_H2	DEC_BOILER_GAS	DEC_BOILER_WOOD	DEC_BOILER_OIL	DEC_SOLAR	DEC_DIRECT_ELEC	IND_ELEC_COLD	DEC_THHP_GAS_COLD	DEC_ELEC_COLD	TRAMWAY_TROLLEY	BUS_COACH_DIESEL	BUS_COACH_GASOLINE	BUS_COACH_HYDIESEL	BUS_COACH_CNG_STOICH	BUS_COACH_FC_HYBRIDH2	TRAIN_PUB	MOTORCYCLE	CAR_GASOLINE	CAR_DIESEL	CAR_NG	CAR_METHANOL	CAR_HEV	CAR_PHEV	CAR_BEV	MOTORCYCLE_ELECTRIC	CAR_FUEL_CELL	TRAIN_FREIGHT	BOAT_FREIGHT_DIESEL	BOAT_FREIGHT_NG	BOAT_FREIGHT_METHANOL	TRUCK_DIESEL	TRUCK_GASOLINE	TRUCK_METHANOL	TRUCK_FUEL_CELL	TRUCK_ELEC	TRUCK_NG	EFFICIENCY	DHN	GRID 	HVAC_LINE	H2_ELECTROLYSIS	SMR	H2_BIOMASS	GASIFICATION_SNG	SYN_METHANATION	BIOMETHANATION	BIO_HYDROLYSIS	PYROLYSIS_TO_LFO	PYROLYSIS_TO_FUELS	ATM_CCS	INDUSTRY_CCS	SYN_METHANOLATION	METHANE_TO_METHANOL	BIOMASS_TO_METHANOL	HABER_BOSCH	AMMONIA_TO_H2	OIL_TO_HVC	GAS_TO_HVC	BIOMASS_TO_HVC	METHANOL_TO_HVC	BATT_LI	BEV_BATT	PHEV_BATT	DAM_STORAGE	PHS	TS_DEC_DIRECT_ELEC 	TS_DEC_HP_ELEC 	TS_DEC_THHP_GAS 	TS_DEC_COGEN_GAS 	TS_DEC_COGEN_OIL 	TS_DEC_ADVCOGEN_GAS 	TS_DEC_ADVCOGEN_H2 	TS_DEC_BOILER_GAS 	TS_DEC_BOILER_WOOD 	TS_DEC_BOILER_OIL 	TS_DHN_DAILY	TS_DHN_SEASONAL	TS_HIGH_TEMP	GAS_STORAGE	H2_STORAGE	DIESEL_STORAGE	GASOLINE_STORAGE	LFO_STORAGE	TS_COLD	AMMONIA_STORAGE	METHANOL_STORAGE	CO2_STORAGE	:=
+YEAR_2015	60	25	25	35	35	25	30	30	40	40	30	25	25	25	17	17	17	17	17	15	25	25	25	25	25	15	17	17	17	30	30	18	20	20	20	20	20	17	17	17	20	15	20	20	18	30	15	15	15	15	15	40	10	10	10	10	10	10	10	10	10	10	40	40	40	40	15	15	15	15	15	15	1	60	80	40	15	25	25	25	40	20	15	25	25	40	40	20	25	20	20	25	15	25	20	20	15	1	1	40	50	20	20	20	20	20	20	20	20	20	20	40	25	25	50	20	20	20	20	20	20	20	30	
+YEAR_2020	60	25	25	35	35	25	30	30	40	40	30	25	25	25	17	17	17	17	17	15	25	25	25	25	25	15	17	17	17	30	30	18	20	20	20	20	20	17	17	17	20	15	20	20	18	30	15	15	15	15	15	40	10	10	10	10	10	10	10	10	10	10	40	40	40	40	15	15	15	15	15	15	1	60	80	40	15	25	25	25	40	20	15	25	25	40	40	20	25	20	20	25	15	25	20	20	15	1	1	40	50	20	20	20	20	20	20	20	20	20	20	40	25	25	50	20	20	20	20	20	20	20	30	
+YEAR_2025	60	25	25	35	35	25	30	30	40	40	30	25	25	25	17	17	17	17	17	15	25	25	25	25	25	15	17	17	17	30	30	18	20	20	20	20	20	17	17	17	20	15	20	20	18	30	15	15	15	15	15	40	10	10	10	10	10	10	10	10	10	10	40	40	40	40	15	15	15	15	15	15	1	60	80	40	15	25	25	25	40	20	15	25	25	40	40	20	25	20	20	25	15	25	20	20	15	1	1	40	50	20	20	20	20	20	20	20	20	20	20	40	25	25	50	20	20	20	20	20	20	20	30	
+YEAR_2030	60	25	25	35	35	25	30	30	40	40	30	25	25	25	17	17	17	17	17	15	25	25	25	25	25	15	17	17	17	30	30	18	20	20	20	20	20	17	17	17	20	15	20	20	18	30	15	15	15	15	15	40	10	10	10	10	10	10	10	10	10	10	40	40	40	40	15	15	15	15	15	15	1	60	80	40	15	25	25	25	40	20	15	25	25	40	40	20	25	20	20	25	15	25	20	20	15	1	1	40	50	20	20	20	20	20	20	20	20	20	20	40	25	25	50	20	20	20	20	20	20	20	30	
+YEAR_2035	60	25	25	35	35	25	30	30	40	40	30	25	25	25	17	17	17	17	17	15	25	25	25	25	25	15	17	17	17	30	30	18	20	20	20	20	20	17	17	17	20	15	20	20	18	30	15	15	15	15	15	40	10	10	10	10	10	10	10	10	10	10	40	40	40	40	15	15	15	15	15	15	1	60	80	40	15	25	25	25	40	20	15	25	25	40	40	20	25	20	20	25	15	25	20	20	15	1	1	40	50	20	20	20	20	20	20	20	20	20	20	40	25	25	50	20	20	20	20	20	20	20	30	
+YEAR_2040	60	25	25	35	35	25	30	30	40	40	30	25	25	25	17	17	17	17	17	15	25	25	25	25	25	15	17	17	17	30	30	18	20	20	20	20	20	17	17	17	20	15	20	20	18	30	15	15	15	15	15	40	10	10	10	10	10	10	10	10	10	10	40	40	40	40	15	15	15	15	15	15	1	60	80	40	15	25	25	25	40	20	15	25	25	40	40	20	25	20	20	25	15	25	20	20	15	1	1	40	50	20	20	20	20	20	20	20	20	20	20	40	25	25	50	20	20	20	20	20	20	20	30	
+YEAR_2045	60	25	25	35	35	25	30	30	40	40	30	25	25	25	17	17	17	17	17	15	25	25	25	25	25	15	17	17	17	30	30	18	20	20	20	20	20	17	17	17	20	15	20	20	18	30	15	15	15	15	15	40	10	10	10	10	10	10	10	10	10	10	40	40	40	40	15	15	15	15	15	15	1	60	80	40	15	25	25	25	40	20	15	25	25	40	40	20	25	20	20	25	15	25	20	20	15	1	1	40	50	20	20	20	20	20	20	20	20	20	20	40	25	25	50	20	20	20	20	20	20	20	30	
+YEAR_2050	60	25	25	35	35	25	30	30	40	40	30	25	25	25	17	17	17	17	17	15	25	25	25	25	25	15	17	17	17	30	30	18	20	20	20	20	20	17	17	17	20	15	20	20	18	30	15	15	15	15	15	40	10	10	10	10	10	10	10	10	10	10	40	40	40	40	15	15	15	15	15	15	1	60	80	40	15	25	25	25	40	20	15	25	25	40	40	20	25	20	20	25	15	25	20	20	15	1	1	40	50	20	20	20	20	20	20	20	20	20	20	40	25	25	50	20	20	20	20	20	20	20	30	
+;																																																																																																																	
+param c_p :	NUCLEAR	CCGT	CCGT_AMMONIA	COAL_US	COAL_IGCC	PV	WIND_ONSHORE	WIND_OFFSHORE	HYDRO_DAM	HYDRO_RIVER	GEOTHERMAL	IND_COGEN_GAS	IND_COGEN_WOOD	IND_COGEN_WASTE	IND_BOILER_GAS	IND_BOILER_WOOD	IND_BOILER_OIL	IND_BOILER_COAL	IND_BOILER_WASTE	IND_DIRECT_ELEC	DHN_HP_ELEC	DHN_COGEN_GAS	DHN_COGEN_WOOD	DHN_COGEN_WASTE	DHN_COGEN_WET_BIOMASS	DHN_COGEN_BIO_HYDROLYSIS	DHN_BOILER_GAS	DHN_BOILER_WOOD	DHN_BOILER_OIL	DHN_DEEP_GEO	DHN_SOLAR	DEC_HP_ELEC	DEC_THHP_GAS	DEC_COGEN_GAS	DEC_COGEN_OIL	DEC_ADVCOGEN_GAS	DEC_ADVCOGEN_H2	DEC_BOILER_GAS	DEC_BOILER_WOOD	DEC_BOILER_OIL	DEC_SOLAR	DEC_DIRECT_ELEC	IND_ELEC_COLD	DEC_THHP_GAS_COLD	DEC_ELEC_COLD	TRAMWAY_TROLLEY	BUS_COACH_DIESEL	BUS_COACH_GASOLINE	BUS_COACH_HYDIESEL	BUS_COACH_CNG_STOICH	BUS_COACH_FC_HYBRIDH2	TRAIN_PUB	MOTORCYCLE	CAR_GASOLINE	CAR_DIESEL	CAR_NG	CAR_METHANOL	CAR_HEV	CAR_PHEV	CAR_BEV	MOTORCYCLE_ELECTRIC	CAR_FUEL_CELL	TRAIN_FREIGHT	BOAT_FREIGHT_DIESEL	BOAT_FREIGHT_NG	BOAT_FREIGHT_METHANOL	TRUCK_DIESEL	TRUCK_GASOLINE	TRUCK_METHANOL	TRUCK_FUEL_CELL	TRUCK_ELEC	TRUCK_NG	EFFICIENCY	DHN	GRID 	HVAC_LINE	H2_ELECTROLYSIS	SMR	H2_BIOMASS	GASIFICATION_SNG	SYN_METHANATION	BIOMETHANATION	BIO_HYDROLYSIS	PYROLYSIS_TO_LFO	PYROLYSIS_TO_FUELS	ATM_CCS	INDUSTRY_CCS	SYN_METHANOLATION	METHANE_TO_METHANOL	BIOMASS_TO_METHANOL	HABER_BOSCH	AMMONIA_TO_H2	OIL_TO_HVC	GAS_TO_HVC	BIOMASS_TO_HVC	METHANOL_TO_HVC	BATT_LI	BEV_BATT	PHEV_BATT	DAM_STORAGE	PHS	TS_DEC_DIRECT_ELEC 	TS_DEC_HP_ELEC 	TS_DEC_THHP_GAS 	TS_DEC_COGEN_GAS 	TS_DEC_COGEN_OIL 	TS_DEC_ADVCOGEN_GAS 	TS_DEC_ADVCOGEN_H2 	TS_DEC_BOILER_GAS 	TS_DEC_BOILER_WOOD 	TS_DEC_BOILER_OIL 	TS_DHN_DAILY	TS_DHN_SEASONAL	TS_HIGH_TEMP	GAS_STORAGE	H2_STORAGE	DIESEL_STORAGE	GASOLINE_STORAGE	LFO_STORAGE	TS_COLD	AMMONIA_STORAGE	METHANOL_STORAGE	CO2_STORAGE	:=
+YEAR_2015	0.84051	0.951923077	0.58	0.85932	0.84744	1	1	1	1	1	0.85	0.8415	0.8415	0.8415	0.9405	0.891	0.9405	0.891	0.891	0.9405	0.9405	0.8415	0.8415	0.8415	0.7425	0.8415	0.9405	0.891	0.9405	0.8415	1	1	1	1	1	1	1	1	1	1	1	1	0.95	1	1	0.342465753	0.296803653	0.296803653	0.296803653	0.296803653	0.296803653	0.275072894	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.342465753	0.114155251	0.114155251	0.114155251	0.092592593	0.092592593	0.092592593	0.092592593	0.092592593	0.092592593	1	1	1	1	0.891	0.8514	0.8514	0.8415	1	0.8415	0.8415	0.8415	0.8415	1	1	0.9405	0.8415	0.99	0.99	0.8514	0.99	0.99	0.99	0.99	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	
+YEAR_2020	0.843906	0.955769231	0.59	0.862792	0.850864	1	1	1	1	1	0.85	0.8449	0.8449	0.8449	0.9443	0.8946	0.9443	0.8946	0.8946	0.9443	0.9443	0.8449	0.8449	0.8449	0.7455	0.8449	0.9443	0.8946	0.9443	0.8449	1	1	1	1	1	1	1	1	1	1	1	1	0.95	1	1	0.342465753	0.296803653	0.296803653	0.296803653	0.296803653	0.296803653	0.275072894	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.342465753	0.114155251	0.114155251	0.114155251	0.092592593	0.092592593	0.092592593	0.092592593	0.092592593	0.092592593	1	1	1	1	0.8946	0.85484	0.85484	0.8449	1	0.8449	0.8449	0.8449	0.8449	1	1	0.9443	0.8449	0.994	0.994	0.85484	0.994	0.994	0.994	0.994	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	
+YEAR_2025	0.846453	0.958653846	0.6	0.865396	0.853432	1	1	1	1	1	0.85	0.84745	0.84745	0.84745	0.94715	0.8973	0.94715	0.8973	0.8973	0.94715	0.94715	0.84745	0.84745	0.84745	0.74775	0.84745	0.94715	0.8973	0.94715	0.84745	1	1	1	1	1	1	1	1	1	1	1	1	0.95	1	1	0.342465753	0.296803653	0.296803653	0.296803653	0.296803653	0.296803653	0.275072894	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.342465753	0.114155251	0.114155251	0.114155251	0.092592593	0.092592593	0.092592593	0.092592593	0.092592593	0.092592593	1	1	1	1	0.8973	0.85742	0.85742	0.84745	1	0.84745	0.84745	0.84745	0.84745	1	1	0.94715	0.84745	0.997	0.997	0.85742	0.997	0.997	0.997	0.997	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	
+YEAR_2030	0.849	0.961538462	0.61	0.868	0.856	1	1	1	1	1	0.95	0.85	0.85	0.85	0.95	0.9	0.95	0.9	0.9	0.95	0.95	0.85	0.85	0.85	0.75	0.85	0.95	0.9	0.95	0.85	1	1	1	1	1	1	1	1	1	1	1	1	0.95	1	1	0.342465753	0.296803653	0.296803653	0.296803653	0.296803653	0.296803653	0.275072894	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.342465753	0.114155251	0.114155251	0.114155251	0.092592593	0.092592593	0.092592593	0.092592593	0.092592593	0.092592593	1	1	1	1	0.9	0.86	0.86	0.85	1	0.85	0.85	0.85	0.85	1	1	0.95	0.85	1	1	0.86	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	
+YEAR_2035	0.849	0.961538462	0.961538462	0.868	0.856	1	1	1	1	1	0.95	0.85	0.85	0.85	0.95	0.9	0.95	0.9	0.9	0.95	0.95	0.85	0.85	0.85	0.75	0.85	0.95	0.9	0.95	0.85	1	1	1	1	1	1	1	1	1	1	1	1	0.95	1	1	0.342465753	0.296803653	0.296803653	0.296803653	0.296803653	0.296803653	0.275072894	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.342465753	0.114155251	0.114155251	0.114155251	0.092592593	0.092592593	0.092592593	0.092592593	0.092592593	0.092592593	1	1	1	1	0.9	0.86	0.86	0.85	1	0.85	0.85	0.85	0.85	1	1	0.95	0.85	1	1	0.86	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	
+YEAR_2040	0.849	0.961538462	0.62	0.868	0.856	1	1	1	1	1	0.95	0.85	0.85	0.85	0.95	0.9	0.95	0.9	0.9	0.95	0.95	0.85	0.85	0.85	0.75	0.85	0.95	0.9	0.95	0.85	1	1	1	1	1	1	1	1	1	1	1	1	0.95	1	1	0.342465753	0.296803653	0.296803653	0.296803653	0.296803653	0.296803653	0.275072894	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.342465753	0.114155251	0.114155251	0.114155251	0.092592593	0.092592593	0.092592593	0.092592593	0.092592593	0.092592593	1	1	1	1	0.9	0.86	0.86	0.85	1	0.85	0.85	0.85	0.85	1	1	0.95	0.85	1	1	0.86	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	
+YEAR_2045	0.849	0.961538462	0.625	0.868	0.856	1	1	1	1	1	0.95	0.85	0.85	0.85	0.95	0.9	0.95	0.9	0.9	0.95	0.95	0.85	0.85	0.85	0.75	0.85	0.95	0.9	0.95	0.85	1	1	1	1	1	1	1	1	1	1	1	1	0.95	1	1	0.342465753	0.296803653	0.296803653	0.296803653	0.296803653	0.296803653	0.275072894	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.342465753	0.114155251	0.114155251	0.114155251	0.092592593	0.092592593	0.092592593	0.092592593	0.092592593	0.092592593	1	1	1	1	0.9	0.86	0.86	0.85	1	0.85	0.85	0.85	0.85	1	1	0.95	0.85	1	1	0.86	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	
+YEAR_2050	0.849	0.961538462	0.63	0.868	0.856	1	1	1	1	1	0.95	0.85	0.85	0.85	0.95	0.9	0.95	0.9	0.9	0.95	0.95	0.85	0.85	0.85	0.75	0.85	0.95	0.9	0.95	0.85	1	1	1	1	1	1	1	1	1	1	1	1	0.95	1	1	0.342465753	0.296803653	0.296803653	0.296803653	0.296803653	0.296803653	0.275072894	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.051369863	0.342465753	0.114155251	0.114155251	0.114155251	0.092592593	0.092592593	0.092592593	0.092592593	0.092592593	0.092592593	1	1	1	1	0.9	0.86	0.86	0.85	1	0.85	0.85	0.85	0.85	1	1	0.95	0.85	1	1	0.86	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	
+;																																																																																																																	
+param fmin_perc :	NUCLEAR	CCGT	CCGT_AMMONIA	COAL_US	COAL_IGCC	PV	WIND_ONSHORE	WIND_OFFSHORE	HYDRO_DAM	HYDRO_RIVER	GEOTHERMAL	IND_COGEN_GAS	IND_COGEN_WOOD	IND_COGEN_WASTE	IND_BOILER_GAS	IND_BOILER_WOOD	IND_BOILER_OIL	IND_BOILER_COAL	IND_BOILER_WASTE	IND_DIRECT_ELEC	DHN_HP_ELEC	DHN_COGEN_GAS	DHN_COGEN_WOOD	DHN_COGEN_WASTE	DHN_COGEN_WET_BIOMASS	DHN_COGEN_BIO_HYDROLYSIS	DHN_BOILER_GAS	DHN_BOILER_WOOD	DHN_BOILER_OIL	DHN_DEEP_GEO	DHN_SOLAR	DEC_HP_ELEC	DEC_THHP_GAS	DEC_COGEN_GAS	DEC_COGEN_OIL	DEC_ADVCOGEN_GAS	DEC_ADVCOGEN_H2	DEC_BOILER_GAS	DEC_BOILER_WOOD	DEC_BOILER_OIL	DEC_SOLAR	DEC_DIRECT_ELEC	IND_ELEC_COLD	DEC_THHP_GAS_COLD	DEC_ELEC_COLD	TRAMWAY_TROLLEY	BUS_COACH_DIESEL	BUS_COACH_GASOLINE	BUS_COACH_HYDIESEL	BUS_COACH_CNG_STOICH	BUS_COACH_FC_HYBRIDH2	TRAIN_PUB	MOTORCYCLE	CAR_GASOLINE	CAR_DIESEL	CAR_NG	CAR_METHANOL	CAR_HEV	CAR_PHEV	CAR_BEV	MOTORCYCLE_ELECTRIC	CAR_FUEL_CELL	TRAIN_FREIGHT	BOAT_FREIGHT_DIESEL	BOAT_FREIGHT_NG	BOAT_FREIGHT_METHANOL	TRUCK_DIESEL	TRUCK_GASOLINE	TRUCK_METHANOL	TRUCK_FUEL_CELL	TRUCK_ELEC	TRUCK_NG	EFFICIENCY	DHN	GRID 	HVAC_LINE	H2_ELECTROLYSIS	SMR	H2_BIOMASS	GASIFICATION_SNG	SYN_METHANATION	BIOMETHANATION	BIO_HYDROLYSIS	PYROLYSIS_TO_LFO	PYROLYSIS_TO_FUELS	ATM_CCS	INDUSTRY_CCS	SYN_METHANOLATION	METHANE_TO_METHANOL	BIOMASS_TO_METHANOL	HABER_BOSCH	AMMONIA_TO_H2	OIL_TO_HVC	GAS_TO_HVC	BIOMASS_TO_HVC	METHANOL_TO_HVC	BATT_LI	BEV_BATT	PHEV_BATT	DAM_STORAGE	PHS	TS_DEC_DIRECT_ELEC 	TS_DEC_HP_ELEC 	TS_DEC_THHP_GAS 	TS_DEC_COGEN_GAS 	TS_DEC_COGEN_OIL 	TS_DEC_ADVCOGEN_GAS 	TS_DEC_ADVCOGEN_H2 	TS_DEC_BOILER_GAS 	TS_DEC_BOILER_WOOD 	TS_DEC_BOILER_OIL 	TS_DHN_DAILY	TS_DHN_SEASONAL	TS_HIGH_TEMP	GAS_STORAGE	H2_STORAGE	DIESEL_STORAGE	GASOLINE_STORAGE	LFO_STORAGE	TS_COLD	AMMONIA_STORAGE	METHANOL_STORAGE	CO2_STORAGE	:=
+YEAR_2015	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.75	0.25	0	0	0	0	0.52	0.33	0	0.15	0	0	0	0	0	0	0	0	0	0	0.5	0.5	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+YEAR_2020	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.33	0	0.15	0	0	0	0	0	0	0	0	0	0	0.5	0.5	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+YEAR_2025	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+YEAR_2030	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+YEAR_2035	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+YEAR_2040	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+YEAR_2045	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+YEAR_2050	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+;																																																																																																																	
+param fmax_perc :	NUCLEAR	CCGT	CCGT_AMMONIA	COAL_US	COAL_IGCC	PV	WIND_ONSHORE	WIND_OFFSHORE	HYDRO_DAM	HYDRO_RIVER	GEOTHERMAL	IND_COGEN_GAS	IND_COGEN_WOOD	IND_COGEN_WASTE	IND_BOILER_GAS	IND_BOILER_WOOD	IND_BOILER_OIL	IND_BOILER_COAL	IND_BOILER_WASTE	IND_DIRECT_ELEC	DHN_HP_ELEC	DHN_COGEN_GAS	DHN_COGEN_WOOD	DHN_COGEN_WASTE	DHN_COGEN_WET_BIOMASS	DHN_COGEN_BIO_HYDROLYSIS	DHN_BOILER_GAS	DHN_BOILER_WOOD	DHN_BOILER_OIL	DHN_DEEP_GEO	DHN_SOLAR	DEC_HP_ELEC	DEC_THHP_GAS	DEC_COGEN_GAS	DEC_COGEN_OIL	DEC_ADVCOGEN_GAS	DEC_ADVCOGEN_H2	DEC_BOILER_GAS	DEC_BOILER_WOOD	DEC_BOILER_OIL	DEC_SOLAR	DEC_DIRECT_ELEC	IND_ELEC_COLD	DEC_THHP_GAS_COLD	DEC_ELEC_COLD	TRAMWAY_TROLLEY	BUS_COACH_DIESEL	BUS_COACH_GASOLINE	BUS_COACH_HYDIESEL	BUS_COACH_CNG_STOICH	BUS_COACH_FC_HYBRIDH2	TRAIN_PUB	MOTORCYCLE	CAR_GASOLINE	CAR_DIESEL	CAR_NG	CAR_METHANOL	CAR_HEV	CAR_PHEV	CAR_BEV	MOTORCYCLE_ELECTRIC	CAR_FUEL_CELL	TRAIN_FREIGHT	BOAT_FREIGHT_DIESEL	BOAT_FREIGHT_NG	BOAT_FREIGHT_METHANOL	TRUCK_DIESEL	TRUCK_GASOLINE	TRUCK_METHANOL	TRUCK_FUEL_CELL	TRUCK_ELEC	TRUCK_NG	EFFICIENCY	DHN	GRID 	HVAC_LINE	H2_ELECTROLYSIS	SMR	H2_BIOMASS	GASIFICATION_SNG	SYN_METHANATION	BIOMETHANATION	BIO_HYDROLYSIS	PYROLYSIS_TO_LFO	PYROLYSIS_TO_FUELS	ATM_CCS	INDUSTRY_CCS	SYN_METHANOLATION	METHANE_TO_METHANOL	BIOMASS_TO_METHANOL	HABER_BOSCH	AMMONIA_TO_H2	OIL_TO_HVC	GAS_TO_HVC	BIOMASS_TO_HVC	METHANOL_TO_HVC	BATT_LI	BEV_BATT	PHEV_BATT	DAM_STORAGE	PHS	TS_DEC_DIRECT_ELEC 	TS_DEC_HP_ELEC 	TS_DEC_THHP_GAS 	TS_DEC_COGEN_GAS 	TS_DEC_COGEN_OIL 	TS_DEC_ADVCOGEN_GAS 	TS_DEC_ADVCOGEN_H2 	TS_DEC_BOILER_GAS 	TS_DEC_BOILER_WOOD 	TS_DEC_BOILER_OIL 	TS_DHN_DAILY	TS_DHN_SEASONAL	TS_HIGH_TEMP	GAS_STORAGE	H2_STORAGE	DIESEL_STORAGE	GASOLINE_STORAGE	LFO_STORAGE	TS_COLD	AMMONIA_STORAGE	METHANOL_STORAGE	CO2_STORAGE	:=
+YEAR_2015	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	0	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	
+YEAR_2020	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	
+YEAR_2025	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	0.035	1	1	1	1	1	0.21	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	
+YEAR_2030	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	0.035	1	1	1	1	1	0.21	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	
+YEAR_2035	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	0.035	1	1	1	1	1	0.21	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	
+YEAR_2040	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	0.035	1	1	1	1	1	0.21	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	
+YEAR_2045	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	0.035	1	1	1	1	1	0.21	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	
+YEAR_2050	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	0.035	1	1	1	1	1	0.21	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	
+;																																																																																																																	
+param f_min :	NUCLEAR	CCGT	CCGT_AMMONIA	COAL_US	COAL_IGCC	PV	WIND_ONSHORE	WIND_OFFSHORE	HYDRO_DAM	HYDRO_RIVER	GEOTHERMAL	IND_COGEN_GAS	IND_COGEN_WOOD	IND_COGEN_WASTE	IND_BOILER_GAS	IND_BOILER_WOOD	IND_BOILER_OIL	IND_BOILER_COAL	IND_BOILER_WASTE	IND_DIRECT_ELEC	DHN_HP_ELEC	DHN_COGEN_GAS	DHN_COGEN_WOOD	DHN_COGEN_WASTE	DHN_COGEN_WET_BIOMASS	DHN_COGEN_BIO_HYDROLYSIS	DHN_BOILER_GAS	DHN_BOILER_WOOD	DHN_BOILER_OIL	DHN_DEEP_GEO	DHN_SOLAR	DEC_HP_ELEC	DEC_THHP_GAS	DEC_COGEN_GAS	DEC_COGEN_OIL	DEC_ADVCOGEN_GAS	DEC_ADVCOGEN_H2	DEC_BOILER_GAS	DEC_BOILER_WOOD	DEC_BOILER_OIL	DEC_SOLAR	DEC_DIRECT_ELEC	IND_ELEC_COLD	DEC_THHP_GAS_COLD	DEC_ELEC_COLD	TRAMWAY_TROLLEY	BUS_COACH_DIESEL	BUS_COACH_GASOLINE	BUS_COACH_HYDIESEL	BUS_COACH_CNG_STOICH	BUS_COACH_FC_HYBRIDH2	TRAIN_PUB	MOTORCYCLE	CAR_GASOLINE	CAR_DIESEL	CAR_NG	CAR_METHANOL	CAR_HEV	CAR_PHEV	CAR_BEV	MOTORCYCLE_ELECTRIC	CAR_FUEL_CELL	TRAIN_FREIGHT	BOAT_FREIGHT_DIESEL	BOAT_FREIGHT_NG	BOAT_FREIGHT_METHANOL	TRUCK_DIESEL	TRUCK_GASOLINE	TRUCK_METHANOL	TRUCK_FUEL_CELL	TRUCK_ELEC	TRUCK_NG	EFFICIENCY	DHN	GRID 	HVAC_LINE	H2_ELECTROLYSIS	SMR	H2_BIOMASS	GASIFICATION_SNG	SYN_METHANATION	BIOMETHANATION	BIO_HYDROLYSIS	PYROLYSIS_TO_LFO	PYROLYSIS_TO_FUELS	ATM_CCS	INDUSTRY_CCS	SYN_METHANOLATION	METHANE_TO_METHANOL	BIOMASS_TO_METHANOL	HABER_BOSCH	AMMONIA_TO_H2	OIL_TO_HVC	GAS_TO_HVC	BIOMASS_TO_HVC	METHANOL_TO_HVC	BATT_LI	BEV_BATT	PHEV_BATT	DAM_STORAGE	PHS	TS_DEC_DIRECT_ELEC 	TS_DEC_HP_ELEC 	TS_DEC_THHP_GAS 	TS_DEC_COGEN_GAS 	TS_DEC_COGEN_OIL 	TS_DEC_ADVCOGEN_GAS 	TS_DEC_ADVCOGEN_H2 	TS_DEC_BOILER_GAS 	TS_DEC_BOILER_WOOD 	TS_DEC_BOILER_OIL 	TS_DHN_DAILY	TS_DHN_SEASONAL	TS_HIGH_TEMP	GAS_STORAGE	H2_STORAGE	DIESEL_STORAGE	GASOLINE_STORAGE	LFO_STORAGE	TS_COLD	AMMONIA_STORAGE	METHANOL_STORAGE	CO2_STORAGE	:=
+YEAR_2015	0	2.64	0	0	0.611	0.12	0.001	0	8.136	3.777	0	0.4	0	0	0	0	0	2.9	0	0	0	0	1.12	0	0	0	0	0	0	0	0	0	0	0	0.312	0	0	11.576387	8.415242	0	0	0	0	0	0	0	70.244355	23.414785	0	0	0	0	120.597293	76.532897	0	34.787681	0	0	0	0	0	0	6.844795	8.800451	0	0	42.193941	42.193941	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	2.575154	0	0	0	0	0	0	18181	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+YEAR_2020	0	2.64	0	0	0.611	0.12	0.001	0	8.136	3.777	0	0.4	0	0	0	0	0	2.9	0	0	0	0	1.12	0	0	0	0	0	0	0	0	0	0	0	0.312	0	0	11.576387	8.415242	0	0	0	0	0	0	0	70.244355	23.414785	0	0	0	0	120.597293	76.532897	0	34.787681	0	0	0	0	0	0	6.844795	8.800451	0	0	42.193941	42.193941	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	2.575154	0	0	0	0	0	0	18181	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+YEAR_2025	0	0	0	0	0	0	0	0	9.336	3.777	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	20868.86	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+YEAR_2030	0	0	0	0	0	0	0	0	9.336	3.777	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	20868.86	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+YEAR_2035	0	0	0	0	0	0	0	0	9.336	3.777	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	20868.86	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+YEAR_2040	0	0	0	0	0	0	0	0	9.336	3.777	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	20868.86	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+YEAR_2045	0	0	0	0	0	0	0	0	9.336	3.777	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	20868.86	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+YEAR_2050	0	0	0	0	0	0	0	0	9.336	3.777	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	20868.86	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+;																																																																																																																	
+param f_max :	NUCLEAR	CCGT	CCGT_AMMONIA	COAL_US	COAL_IGCC	PV	WIND_ONSHORE	WIND_OFFSHORE	HYDRO_DAM	HYDRO_RIVER	GEOTHERMAL	IND_COGEN_GAS	IND_COGEN_WOOD	IND_COGEN_WASTE	IND_BOILER_GAS	IND_BOILER_WOOD	IND_BOILER_OIL	IND_BOILER_COAL	IND_BOILER_WASTE	IND_DIRECT_ELEC	DHN_HP_ELEC	DHN_COGEN_GAS	DHN_COGEN_WOOD	DHN_COGEN_WASTE	DHN_COGEN_WET_BIOMASS	DHN_COGEN_BIO_HYDROLYSIS	DHN_BOILER_GAS	DHN_BOILER_WOOD	DHN_BOILER_OIL	DHN_DEEP_GEO	DHN_SOLAR	DEC_HP_ELEC	DEC_THHP_GAS	DEC_COGEN_GAS	DEC_COGEN_OIL	DEC_ADVCOGEN_GAS	DEC_ADVCOGEN_H2	DEC_BOILER_GAS	DEC_BOILER_WOOD	DEC_BOILER_OIL	DEC_SOLAR	DEC_DIRECT_ELEC	IND_ELEC_COLD	DEC_THHP_GAS_COLD	DEC_ELEC_COLD	TRAMWAY_TROLLEY	BUS_COACH_DIESEL	BUS_COACH_GASOLINE	BUS_COACH_HYDIESEL	BUS_COACH_CNG_STOICH	BUS_COACH_FC_HYBRIDH2	TRAIN_PUB	MOTORCYCLE	CAR_GASOLINE	CAR_DIESEL	CAR_NG	CAR_METHANOL	CAR_HEV	CAR_PHEV	CAR_BEV	MOTORCYCLE_ELECTRIC	CAR_FUEL_CELL	TRAIN_FREIGHT	BOAT_FREIGHT_DIESEL	BOAT_FREIGHT_NG	BOAT_FREIGHT_METHANOL	TRUCK_DIESEL	TRUCK_GASOLINE	TRUCK_METHANOL	TRUCK_FUEL_CELL	TRUCK_ELEC	TRUCK_NG	EFFICIENCY	DHN	GRID 	HVAC_LINE	H2_ELECTROLYSIS	SMR	H2_BIOMASS	GASIFICATION_SNG	SYN_METHANATION	BIOMETHANATION	BIO_HYDROLYSIS	PYROLYSIS_TO_LFO	PYROLYSIS_TO_FUELS	ATM_CCS	INDUSTRY_CCS	SYN_METHANOLATION	METHANE_TO_METHANOL	BIOMASS_TO_METHANOL	HABER_BOSCH	AMMONIA_TO_H2	OIL_TO_HVC	GAS_TO_HVC	BIOMASS_TO_HVC	METHANOL_TO_HVC	BATT_LI	BEV_BATT	PHEV_BATT	DAM_STORAGE	PHS	TS_DEC_DIRECT_ELEC 	TS_DEC_HP_ELEC 	TS_DEC_THHP_GAS 	TS_DEC_COGEN_GAS 	TS_DEC_COGEN_OIL 	TS_DEC_ADVCOGEN_GAS 	TS_DEC_ADVCOGEN_H2 	TS_DEC_BOILER_GAS 	TS_DEC_BOILER_WOOD 	TS_DEC_BOILER_OIL 	TS_DHN_DAILY	TS_DHN_SEASONAL	TS_HIGH_TEMP	GAS_STORAGE	H2_STORAGE	DIESEL_STORAGE	GASOLINE_STORAGE	LFO_STORAGE	TS_COLD	AMMONIA_STORAGE	METHANOL_STORAGE	CO2_STORAGE	:=
+YEAR_2015	0	2.64	0	0	0.611	0.12	0.001	0	8.14	3.78	0	0.4	0	0	Infinity	0	0	2.9	0	Infinity	0	0	1.12	0	0	0	0	0	0	0	0	0	Infinity	0	0.312	0	0	Infinity	Infinity	0	0	Infinity	Infinity	0	Infinity	0	Infinity	Infinity	0	0	0	0	Infinity	Infinity	0	Infinity	0	0	0	0	0	0	Infinity	Infinity	0	0	Infinity	Infinity	0	0	0	0	Infinity	Infinity	Infinity	0	Infinity	Infinity	Infinity	0	Infinity	0	0	0	0	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	0	0	0	Infinity	Infinity	Infinity	18189.93854	0	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	0	0	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	
+YEAR_2020	0.00001	2.64	0	0	0.611	0.12	0.001	0	8.14	3.78	0	0.4	0	0	Infinity	0	0	2.9	0	Infinity	0	0	1.12	0	0	0	0	0	0	0	0	0	Infinity	0	0.312	0	0	Infinity	Infinity	0	0	Infinity	Infinity	0	Infinity	0	Infinity	Infinity	0	0	0	0.001	Infinity	Infinity	0.001	Infinity	0	0	0	0	0	0	Infinity	Infinity	0	0	Infinity	Infinity	0	0	0	0	Infinity	Infinity	Infinity	0	Infinity	Infinity	Infinity	0	Infinity	0	0	0	0	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	0	0	0	Infinity	Infinity	Infinity	18189.93854	0	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	0	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	
+YEAR_2025	0	Infinity	Infinity	0	Infinity	16.61	1.12	0	51.2	27.8	1.2	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	0	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	1.5	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	114447.877	0	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	
+YEAR_2030	0	Infinity	Infinity	0	Infinity	16.61	4	1.5	51.2	27.8	1.2	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	0	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	1.5	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	114447.877	0	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	
+YEAR_2035	0	Infinity	Infinity	0	Infinity	16.66	4	4.5	51.2	27.8	1.2	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	0	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	1.5	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	114447.877	0	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	
+YEAR_2040	0	Infinity	Infinity	0	Infinity	 16.66 	4	7	51.2	27.8	1.2	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	0	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	1.5	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	114447.877	0	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	
+YEAR_2045	0	Infinity	Infinity	0	Infinity	20	4.54	7	51.2	27.8	1.2	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	0	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	1.5	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	114447.877	0	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	
+YEAR_2050	0	Infinity	Infinity	0	Infinity	20	7	13	51.2	27.8	1.2	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	0	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	1.5	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	114447.877	0	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	
+;																																																																																																																																																																																																																																		
+																																																																																																																	
+param avail :	ELECTRICITY	GASOLINE	DIESEL	BIOETHANOL	BIODIESEL	LFO	GAS	GAS_RE	WOOD	WET_BIOMASS	COAL	URANIUM	WASTE	H2	H2_RE	AMMONIA	METHANOL	AMMONIA_RE	METHANOL_RE	ELEC_EXPORT	CO2_EMISSIONS	RES_WIND	RES_SOLAR	RES_HYDRO	RES_GEO	CO2_ATM 	CO2_INDUSTRY 	CO2_CAPTURED	:=
+YEAR_2015	Infinity	63438	70949	Infinity	Infinity	40769	Infinity	0	34294	Infinity	Infinity	Infinity	10347	0	0	0	0	0	0	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	0	0	
+YEAR_2020	Infinity	63438	70949	Infinity	Infinity	40769	Infinity	0	34294	Infinity	Infinity	Infinity	10347	0	0	0	0	0	0	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	0	0	
+YEAR_2025	Infinity	65305	103565	100000	100000	48636	118149	Infinity	26901	9623	35488	Infinity	10347	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	0	0	
+YEAR_2030	Infinity	56777	82280	100000	100000	49734	137543	Infinity	13984	11460	15794	Infinity	10347	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	0	0	
+YEAR_2035	Infinity	44181	55153	100000	100000	49901	145644	Infinity	11084	13202	24	Infinity	10347	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	0	0	
+YEAR_2040	Infinity	40000	37914	100000	100000	50531	143313	Infinity	10938	14727	30	Infinity	10347	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	0	0	
+YEAR_2045	Infinity	34614	27991	100000	100000	55385	145338	Infinity	11266	16215	30	Infinity	10347	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	0	0	
+YEAR_2050	Infinity	24048	24468	100000	100000	57250	131785	Infinity	12786	17887	36	Infinity	10347	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	Infinity	0	0																																																																																					
+;
+																																																																																																																	
+param c_op :	ELECTRICITY	GASOLINE	DIESEL	BIOETHANOL	BIODIESEL	LFO	GAS	GAS_RE	WOOD	WET_BIOMASS	COAL	URANIUM	WASTE	H2	H2_RE	AMMONIA	METHANOL	AMMONIA_RE	METHANOL_RE	ELEC_EXPORT	CO2_EMISSIONS	RES_WIND	RES_SOLAR	RES_HYDRO	RES_GEO	CO2_ATM 	CO2_INDUSTRY 	CO2_CAPTURED	:=																																																																																				
+YEAR_2015	0.056866	0.058881227	0.057006647	0.126229051	0.135167338	0.043	0.03	0.137018848	0.028508853	0.005001899	0.0145	0.003876456	0.020052021	0.073701999	0.144058419	0.064208462	0.072906869	0.09639402	0.126229051	0	0	0	0	0	0	0	0	0	
+YEAR_2020	0.063732	0.065566486	0.063479071	0.122502774	0.131394244	0.047882136	0.033636659	0.132345636	0.030123691	0.005285223	0.015545445	0.003876456	0.021187834	0.077642645	0.137854413	0.071991938	0.081184572	0.092751343	0.122502774	0	0	0	0	0	0	0	0	0	
+YEAR_2025	0.070598	0.0531293026505283	0.0534637746811757	0.118776497	0.12762115	0.0373188855566665	0.0301464925347052	0.127672424	0.031020822	0.005442625	0.0148421397940993	0.003876456	0.021818842	0.081905721	0.131650407	0.080396794	0.089220376	0.089108665	0.118776497	0	0	0	0	0	0	0	0	0	
+YEAR_2030	0.077464	0.0495983801581799	0.0533353073207224	0.115050221	0.123848056	0.0343270181428629	0.0282292741192424	0.122999212	0.031917954	0.005600028	0.0119500722946488	0.003876456	0.02244985	0.08517782	0.125446402	0.08880165	0.097256179	0.085465988	0.115050221	0	0	0	0	0	0	0	0	0	
+YEAR_2035	0.08433	0.0498824535416561	0.0533353073207224	0.111323944	0.120074962	0.0340034858514781	0.0285233945917562	0.118326	0.032815086	0.00575743	0.0122083095274231	0.003876456	0.023080857	0.088003981	0.119242396	0.094714031	0.101985823	0.081823311	0.111323944	0	0	0	0	0	0	0	0	0	
+YEAR_2040	0.091196	0.0482707215854368	0.0533353073207224	0.107597667	0.116301868	0.032632927994489	0.0276808180391896	0.113652788	0.033712218	0.005914833	0.012801211812526	0.003876456	0.023711865	0.090447437	0.11303839	0.100626412	0.106715467	0.078180634	0.107597667	0	0	0	0	0	0	0	0	0	
+YEAR_2045	0.098062	0.0458096928475157	0.0533353073207224	0.10387139	0.112528774	0.0308307990871875	0.0264004642802739	0.108979576	0.034609349	0.006072235	0.0121228923936708	0.003876456	0.024342872	0.093203627	0.106834384	0.107350297	0.111582868	0.074537957	0.10387139	0	0	0	0	0	0	0	0	0	
+YEAR_2050	0.104928	0.0405520429302902	0.0533353073207224	0.100145113	0.10875568	0.027320958985131	0.0236050452907719	0.104306364	0.035506481	0.006229637	0.0131226500044715	0.003876456	0.02497388	0.095506697	0.100630378	0.114074182	0.116450269	0.070895279	0.100145113	0	0	0	0	0	0	0	0	0																																																																																					
+;																																																																																																																	
+																																																																																																																	
+param gwp_op :	ELECTRICITY	GASOLINE	DIESEL	BIOETHANOL	BIODIESEL	LFO	GAS	GAS_RE	WOOD	WET_BIOMASS	COAL	URANIUM	WASTE	H2	H2_RE	AMMONIA	METHANOL	AMMONIA_RE	METHANOL_RE	ELEC_EXPORT	CO2_EMISSIONS	RES_WIND	RES_SOLAR	RES_HYDRO	RES_GEO	CO2_ATM	CO2_INDUSTRY	CO2_CAPTURED	:=
+YEAR_2015	0.4818	0.3448	0.3148	0	0	0.3115	0.2666	0	0.0118	0.0118	0.4014	0.0039	0.1501	0.438257751	0	0.285	0.35	0	0	0	0	0	0	0	0	0	0	0	
+YEAR_2020	0.412971429	0.3448	0.3148	0	0	0.3115	0.2666	0	0.0118	0.0118	0.4014	0.0039	0.1501	0.414044616	0	0.285	0.35	0	0	0	0	0	0	0	0	0	0	0	
+YEAR_2025	0.344142857	0.3448	0.3148	0	0	0.3115	0.2666	0	0.0118	0.0118	0.4014	0.0039	0.1501	0.393463451	0	0.285	0.35	0	0	0	0	0	0	0	0	0	0	0	
+YEAR_2030	0.275314286	0.3448	0.3148	0	0	0.3115	0.2666	0	0.0118	0.0118	0.4014	0.0039	0.1501	0.372882286	0	0.285	0.35	0	0	0	0	0	0	0	0	0	0	0	
+YEAR_2035	0.206485714	0.3448	0.3148	0	0	0.3115	0.2666	0	0.0118	0.0118	0.4014	0.0039	0.1501	0.36380236	0	0.285	0.35	0	0	0	0	0	0	0	0	0	0	0	
+YEAR_2040	0.137657143	0.3448	0.3148	0	0	0.3115	0.2666	0	0.0118	0.0118	0.4014	0.0039	0.1501	0.354722434	0	0.285	0.35	0	0	0	0	0	0	0	0	0	0	0	
+YEAR_2045	0.068828571	0.3448	0.3148	0	0	0.3115	0.2666	0	0.0118	0.0118	0.4014	0.0039	0.1501	0.345642508	0	0.285	0.35	0	0	0	0	0	0	0	0	0	0	0	
+YEAR_2050	0	0.3448	0.3148	0	0	0.3115	0.2666	0	0.0118	0.0118	0.4014	0.0039	0.1501	0.336562583	0	0.285	0.35	0	0	0	0	0	0	0	0	0	0	0
+;																																																																																																																		
+																																																																																																																	
+param storage_eff_in:=																																																																																																																	
+["YEAR_2015",*,*]: 	ELECTRICITY	GASOLINE	DIESEL	LFO	GAS	WOOD	WET_BIOMASS	COAL	URANIUM	WASTE	H2	AMMONIA	METHANOL	HVC	HEAT_HIGH_T	HEAT_LOW_T_DHN	HEAT_LOW_T_DECEN	PROCESS_COOLING	SPACE_COOLING	MOB_PUBLIC	MOB_PRIVATE	MOB_FREIGHT_RAIL	MOB_FREIGHT_ROAD	MOB_FREIGHT_BOAT	RES_WIND	RES_SOLAR	RES_HYDRO	RES_GEO 	CO2_ATM 	CO2_INDUSTRY	CO2_CAPTURED	:=
+DAM_STORAGE	0.999	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+PHS	0.866	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+BATT_LI	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+BEV_BATT	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+PHEV_BATT	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_DIRECT_ELEC 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_HP_ELEC 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_THHP_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_COGEN_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_COGEN_OIL 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_ADVCOGEN_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_ADVCOGEN_H2 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_WOOD	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_OIL	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DHN_DAILY	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DHN_SEASONAL	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_HIGH_TEMP	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+GAS_STORAGE	0	0	0	0	0.99	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+H2_STORAGE	0	0	0	0	0	0	0	0	0	0	0.9	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+DIESEL_STORAGE	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+GASOLINE_STORAGE	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+LFO_STORAGE	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_COLD	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.99	0	0	0	0	0	0	0	0	0	0	0	0	
+AMMONIA_STORAGE	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+METHANOL_STORAGE	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+CO2_STORAGE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1																																																																																				
+																																																																																																																	
+["YEAR_2020",*,*]: 	ELECTRICITY	GASOLINE	DIESEL	LFO	GAS	WOOD	WET_BIOMASS	COAL	URANIUM	WASTE	H2	AMMONIA	METHANOL	HVC	HEAT_HIGH_T	HEAT_LOW_T_DHN	HEAT_LOW_T_DECEN	PROCESS_COOLING	SPACE_COOLING	MOB_PUBLIC	MOB_PRIVATE	MOB_FREIGHT_RAIL	MOB_FREIGHT_ROAD	MOB_FREIGHT_BOAT	RES_WIND	RES_SOLAR	RES_HYDRO	RES_GEO 	CO2_ATM 	CO2_INDUSTRY	CO2_CAPTURED	:=
+DAM_STORAGE	0.999	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+PHS	0.866	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+BATT_LI	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+BEV_BATT	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+PHEV_BATT	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_DIRECT_ELEC 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_HP_ELEC 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_THHP_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_COGEN_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_COGEN_OIL 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_ADVCOGEN_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_ADVCOGEN_H2 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_WOOD	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_OIL	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DHN_DAILY	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DHN_SEASONAL	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_HIGH_TEMP	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+GAS_STORAGE	0	0	0	0	0.99	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+H2_STORAGE	0	0	0	0	0	0	0	0	0	0	0.9	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+DIESEL_STORAGE	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+GASOLINE_STORAGE	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+LFO_STORAGE	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_COLD	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.99	0	0	0	0	0	0	0	0	0	0	0	0	
+AMMONIA_STORAGE	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+METHANOL_STORAGE	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+CO2_STORAGE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1																																																																																				
+																																																																																																																	
+["YEAR_2025",*,*]: 	ELECTRICITY	GASOLINE	DIESEL	LFO	GAS	WOOD	WET_BIOMASS	COAL	URANIUM	WASTE	H2	AMMONIA	METHANOL	HVC	HEAT_HIGH_T	HEAT_LOW_T_DHN	HEAT_LOW_T_DECEN	PROCESS_COOLING	SPACE_COOLING	MOB_PUBLIC	MOB_PRIVATE	MOB_FREIGHT_RAIL	MOB_FREIGHT_ROAD	MOB_FREIGHT_BOAT	RES_WIND	RES_SOLAR	RES_HYDRO	RES_GEO 	CO2_ATM 	CO2_INDUSTRY	CO2_CAPTURED	:=
+DAM_STORAGE	0.999	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+PHS	0.866	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+BATT_LI	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+BEV_BATT	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+PHEV_BATT	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_DIRECT_ELEC 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_HP_ELEC 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_THHP_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_COGEN_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_COGEN_OIL 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_ADVCOGEN_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_ADVCOGEN_H2 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_WOOD	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_OIL	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DHN_DAILY	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DHN_SEASONAL	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_HIGH_TEMP	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+GAS_STORAGE	0	0	0	0	0.99	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+H2_STORAGE	0	0	0	0	0	0	0	0	0	0	0.9	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+DIESEL_STORAGE	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+GASOLINE_STORAGE	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+LFO_STORAGE	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_COLD	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.99	0	0	0	0	0	0	0	0	0	0	0	0	
+AMMONIA_STORAGE	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+METHANOL_STORAGE	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+CO2_STORAGE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1																																																																																				
+																																																																																																																	
+["YEAR_2030",*,*]: 	ELECTRICITY	GASOLINE	DIESEL	LFO	GAS	WOOD	WET_BIOMASS	COAL	URANIUM	WASTE	H2	AMMONIA	METHANOL	HVC	HEAT_HIGH_T	HEAT_LOW_T_DHN	HEAT_LOW_T_DECEN	PROCESS_COOLING	SPACE_COOLING	MOB_PUBLIC	MOB_PRIVATE	MOB_FREIGHT_RAIL	MOB_FREIGHT_ROAD	MOB_FREIGHT_BOAT	RES_WIND	RES_SOLAR	RES_HYDRO	RES_GEO 	CO2_ATM 	CO2_INDUSTRY	CO2_CAPTURED	:=
+DAM_STORAGE	0.999	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+PHS	0.866	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+BATT_LI	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+BEV_BATT	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+PHEV_BATT	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_DIRECT_ELEC 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_HP_ELEC 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_THHP_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_COGEN_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_COGEN_OIL 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_ADVCOGEN_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_ADVCOGEN_H2 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_WOOD	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_OIL	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DHN_DAILY	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DHN_SEASONAL	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_HIGH_TEMP	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+GAS_STORAGE	0	0	0	0	0.99	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+H2_STORAGE	0	0	0	0	0	0	0	0	0	0	0.9	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+DIESEL_STORAGE	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+GASOLINE_STORAGE	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+LFO_STORAGE	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_COLD	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.99	0	0	0	0	0	0	0	0	0	0	0	0	
+AMMONIA_STORAGE	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+METHANOL_STORAGE	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+CO2_STORAGE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1																																																																																				
+																																																																																																																	
+["YEAR_2035",*,*]: 	ELECTRICITY	GASOLINE	DIESEL	LFO	GAS	WOOD	WET_BIOMASS	COAL	URANIUM	WASTE	H2	AMMONIA	METHANOL	HVC	HEAT_HIGH_T	HEAT_LOW_T_DHN	HEAT_LOW_T_DECEN	PROCESS_COOLING	SPACE_COOLING	MOB_PUBLIC	MOB_PRIVATE	MOB_FREIGHT_RAIL	MOB_FREIGHT_ROAD	MOB_FREIGHT_BOAT	RES_WIND	RES_SOLAR	RES_HYDRO	RES_GEO 	CO2_ATM 	CO2_INDUSTRY	CO2_CAPTURED	:=
+DAM_STORAGE	0.999	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+PHS	0.866	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+BATT_LI	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+BEV_BATT	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+PHEV_BATT	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_DIRECT_ELEC 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_HP_ELEC 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_THHP_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_COGEN_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_COGEN_OIL 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_ADVCOGEN_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_ADVCOGEN_H2 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_WOOD	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_OIL	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DHN_DAILY	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DHN_SEASONAL	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_HIGH_TEMP	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+GAS_STORAGE	0	0	0	0	0.99	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+H2_STORAGE	0	0	0	0	0	0	0	0	0	0	0.9	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+DIESEL_STORAGE	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+GASOLINE_STORAGE	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+LFO_STORAGE	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_COLD	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.99	0	0	0	0	0	0	0	0	0	0	0	0	
+AMMONIA_STORAGE	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+METHANOL_STORAGE	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+CO2_STORAGE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1																																																																																				
+																																																																																																																	
+["YEAR_2040",*,*]: 	ELECTRICITY	GASOLINE	DIESEL	LFO	GAS	WOOD	WET_BIOMASS	COAL	URANIUM	WASTE	H2	AMMONIA	METHANOL	HVC	HEAT_HIGH_T	HEAT_LOW_T_DHN	HEAT_LOW_T_DECEN	PROCESS_COOLING	SPACE_COOLING	MOB_PUBLIC	MOB_PRIVATE	MOB_FREIGHT_RAIL	MOB_FREIGHT_ROAD	MOB_FREIGHT_BOAT	RES_WIND	RES_SOLAR	RES_HYDRO	RES_GEO 	CO2_ATM 	CO2_INDUSTRY	CO2_CAPTURED	:=
+DAM_STORAGE	0.999	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+PHS	0.866	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+BATT_LI	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+BEV_BATT	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+PHEV_BATT	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_DIRECT_ELEC 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_HP_ELEC 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_THHP_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_COGEN_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_COGEN_OIL 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_ADVCOGEN_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_ADVCOGEN_H2 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_WOOD	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_OIL	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DHN_DAILY	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DHN_SEASONAL	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_HIGH_TEMP	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+GAS_STORAGE	0	0	0	0	0.99	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+H2_STORAGE	0	0	0	0	0	0	0	0	0	0	0.9	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+DIESEL_STORAGE	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+GASOLINE_STORAGE	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+LFO_STORAGE	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_COLD	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.99	0	0	0	0	0	0	0	0	0	0	0	0	
+AMMONIA_STORAGE	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+METHANOL_STORAGE	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+CO2_STORAGE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1																																																																																				
+																																																																																																																	
+["YEAR_2045",*,*]: 	ELECTRICITY	GASOLINE	DIESEL	LFO	GAS	WOOD	WET_BIOMASS	COAL	URANIUM	WASTE	H2	AMMONIA	METHANOL	HVC	HEAT_HIGH_T	HEAT_LOW_T_DHN	HEAT_LOW_T_DECEN	PROCESS_COOLING	SPACE_COOLING	MOB_PUBLIC	MOB_PRIVATE	MOB_FREIGHT_RAIL	MOB_FREIGHT_ROAD	MOB_FREIGHT_BOAT	RES_WIND	RES_SOLAR	RES_HYDRO	RES_GEO 	CO2_ATM 	CO2_INDUSTRY	CO2_CAPTURED	:=
+DAM_STORAGE	0.999	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+PHS	0.866	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+BATT_LI	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+BEV_BATT	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+PHEV_BATT	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_DIRECT_ELEC 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_HP_ELEC 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_THHP_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_COGEN_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_COGEN_OIL 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_ADVCOGEN_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_ADVCOGEN_H2 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_WOOD	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_OIL	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DHN_DAILY	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DHN_SEASONAL	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_HIGH_TEMP	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+GAS_STORAGE	0	0	0	0	0.99	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+H2_STORAGE	0	0	0	0	0	0	0	0	0	0	0.9	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+DIESEL_STORAGE	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+GASOLINE_STORAGE	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+LFO_STORAGE	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_COLD	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.99	0	0	0	0	0	0	0	0	0	0	0	0	
+AMMONIA_STORAGE	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+METHANOL_STORAGE	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+CO2_STORAGE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1																																																																																				
+																																																																																																																	
+["YEAR_2050",*,*]: 	ELECTRICITY	GASOLINE	DIESEL	LFO	GAS	WOOD	WET_BIOMASS	COAL	URANIUM	WASTE	H2	AMMONIA	METHANOL	HVC	HEAT_HIGH_T	HEAT_LOW_T_DHN	HEAT_LOW_T_DECEN	PROCESS_COOLING	SPACE_COOLING	MOB_PUBLIC	MOB_PRIVATE	MOB_FREIGHT_RAIL	MOB_FREIGHT_ROAD	MOB_FREIGHT_BOAT	RES_WIND	RES_SOLAR	RES_HYDRO	RES_GEO 	CO2_ATM 	CO2_INDUSTRY	CO2_CAPTURED	:=
+DAM_STORAGE	0.999	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+PHS	0.866	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+BATT_LI	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+BEV_BATT	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+PHEV_BATT	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_DIRECT_ELEC 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_HP_ELEC 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_THHP_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_COGEN_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_COGEN_OIL 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_ADVCOGEN_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_ADVCOGEN_H2 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_WOOD	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_OIL	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DHN_DAILY	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DHN_SEASONAL	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_HIGH_TEMP	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+GAS_STORAGE	0	0	0	0	0.99	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+H2_STORAGE	0	0	0	0	0	0	0	0	0	0	0.9	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+DIESEL_STORAGE	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+GASOLINE_STORAGE	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+LFO_STORAGE	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_COLD	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.99	0	0	0	0	0	0	0	0	0	0	0	0	
+AMMONIA_STORAGE	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+METHANOL_STORAGE	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+CO2_STORAGE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1																																																																																				
+;																																																																																																																	
+param storage_eff_out :=																																																																																																																	
+["YEAR_2015",*,*]: 	ELECTRICITY	GASOLINE	DIESEL	LFO	GAS	WOOD	WET_BIOMASS	COAL	URANIUM	WASTE	H2	AMMONIA	METHANOL	HVC	HEAT_HIGH_T	HEAT_LOW_T_DHN	HEAT_LOW_T_DECEN	PROCESS_COOLING	SPACE_COOLING	MOB_PUBLIC	MOB_PRIVATE	MOB_FREIGHT_RAIL	MOB_FREIGHT_ROAD	MOB_FREIGHT_BOAT	RES_WIND	RES_SOLAR	RES_HYDRO	RES_GEO 	CO2_ATM 	CO2_INDUSTRY	CO2_CAPTURED	:=
+DAM_STORAGE	0.999	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+PHS	0.866	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+BATT_LI	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+BEV_BATT	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+PHEV_BATT	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_DIRECT_ELEC 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_HP_ELEC 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_THHP_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_COGEN_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_COGEN_OIL 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_ADVCOGEN_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_ADVCOGEN_H2 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_WOOD	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_OIL	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DHN_DAILY	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DHN_SEASONAL	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_HIGH_TEMP	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+GAS_STORAGE	0	0	0	0	0.995	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+H2_STORAGE	0	0	0	0	0	0	0	0	0	0	0.98	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+DIESEL_STORAGE	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+GASOLINE_STORAGE	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+LFO_STORAGE	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_COLD	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.99	0	0	0	0	0	0	0	0	0	0	0	0	
+AMMONIA_STORAGE	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+METHANOL_STORAGE	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+CO2_STORAGE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1																																																																																				
+																																																																																																																	
+["YEAR_2020",*,*]: 	ELECTRICITY	GASOLINE	DIESEL	LFO	GAS	WOOD	WET_BIOMASS	COAL	URANIUM	WASTE	H2	AMMONIA	METHANOL	HVC	HEAT_HIGH_T	HEAT_LOW_T_DHN	HEAT_LOW_T_DECEN	PROCESS_COOLING	SPACE_COOLING	MOB_PUBLIC	MOB_PRIVATE	MOB_FREIGHT_RAIL	MOB_FREIGHT_ROAD	MOB_FREIGHT_BOAT	RES_WIND	RES_SOLAR	RES_HYDRO	RES_GEO 	CO2_ATM 	CO2_INDUSTRY	CO2_CAPTURED	:=
+DAM_STORAGE	0.999	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+PHS	0.866	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+BATT_LI	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+BEV_BATT	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+PHEV_BATT	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_DIRECT_ELEC 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_HP_ELEC 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_THHP_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_COGEN_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_COGEN_OIL 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_ADVCOGEN_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_ADVCOGEN_H2 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_WOOD	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_OIL	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DHN_DAILY	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DHN_SEASONAL	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_HIGH_TEMP	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+GAS_STORAGE	0	0	0	0	0.995	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+H2_STORAGE	0	0	0	0	0	0	0	0	0	0	0.98	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+DIESEL_STORAGE	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+GASOLINE_STORAGE	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+LFO_STORAGE	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_COLD	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.99	0	0	0	0	0	0	0	0	0	0	0	0	
+AMMONIA_STORAGE	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+METHANOL_STORAGE	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+CO2_STORAGE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1																																																																																				
+																																																																																																																	
+["YEAR_2025",*,*]: 	ELECTRICITY	GASOLINE	DIESEL	LFO	GAS	WOOD	WET_BIOMASS	COAL	URANIUM	WASTE	H2	AMMONIA	METHANOL	HVC	HEAT_HIGH_T	HEAT_LOW_T_DHN	HEAT_LOW_T_DECEN	PROCESS_COOLING	SPACE_COOLING	MOB_PUBLIC	MOB_PRIVATE	MOB_FREIGHT_RAIL	MOB_FREIGHT_ROAD	MOB_FREIGHT_BOAT	RES_WIND	RES_SOLAR	RES_HYDRO	RES_GEO 	CO2_ATM 	CO2_INDUSTRY	CO2_CAPTURED	:=
+DAM_STORAGE	0.999	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+PHS	0.866	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+BATT_LI	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+BEV_BATT	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+PHEV_BATT	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_DIRECT_ELEC 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_HP_ELEC 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_THHP_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_COGEN_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_COGEN_OIL 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_ADVCOGEN_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_ADVCOGEN_H2 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_WOOD	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_OIL	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DHN_DAILY	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DHN_SEASONAL	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_HIGH_TEMP	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+GAS_STORAGE	0	0	0	0	0.995	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+H2_STORAGE	0	0	0	0	0	0	0	0	0	0	0.98	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+DIESEL_STORAGE	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+GASOLINE_STORAGE	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+LFO_STORAGE	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_COLD	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.99	0	0	0	0	0	0	0	0	0	0	0	0	
+AMMONIA_STORAGE	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+METHANOL_STORAGE	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+CO2_STORAGE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1																																																																																				
+																																																																																																																	
+["YEAR_2030",*,*]: 	ELECTRICITY	GASOLINE	DIESEL	LFO	GAS	WOOD	WET_BIOMASS	COAL	URANIUM	WASTE	H2	AMMONIA	METHANOL	HVC	HEAT_HIGH_T	HEAT_LOW_T_DHN	HEAT_LOW_T_DECEN	PROCESS_COOLING	SPACE_COOLING	MOB_PUBLIC	MOB_PRIVATE	MOB_FREIGHT_RAIL	MOB_FREIGHT_ROAD	MOB_FREIGHT_BOAT	RES_WIND	RES_SOLAR	RES_HYDRO	RES_GEO 	CO2_ATM 	CO2_INDUSTRY	CO2_CAPTURED	:=
+DAM_STORAGE	0.999	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+PHS	0.866	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+BATT_LI	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+BEV_BATT	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+PHEV_BATT	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_DIRECT_ELEC 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_HP_ELEC 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_THHP_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_COGEN_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_COGEN_OIL 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_ADVCOGEN_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_ADVCOGEN_H2 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_WOOD	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_OIL	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DHN_DAILY	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DHN_SEASONAL	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_HIGH_TEMP	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+GAS_STORAGE	0	0	0	0	0.995	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+H2_STORAGE	0	0	0	0	0	0	0	0	0	0	0.98	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+DIESEL_STORAGE	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+GASOLINE_STORAGE	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+LFO_STORAGE	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_COLD	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.99	0	0	0	0	0	0	0	0	0	0	0	0	
+AMMONIA_STORAGE	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+METHANOL_STORAGE	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+CO2_STORAGE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1																																																																																				
+																																																																																																																	
+["YEAR_2035",*,*]: 	ELECTRICITY	GASOLINE	DIESEL	LFO	GAS	WOOD	WET_BIOMASS	COAL	URANIUM	WASTE	H2	AMMONIA	METHANOL	HVC	HEAT_HIGH_T	HEAT_LOW_T_DHN	HEAT_LOW_T_DECEN	PROCESS_COOLING	SPACE_COOLING	MOB_PUBLIC	MOB_PRIVATE	MOB_FREIGHT_RAIL	MOB_FREIGHT_ROAD	MOB_FREIGHT_BOAT	RES_WIND	RES_SOLAR	RES_HYDRO	RES_GEO 	CO2_ATM 	CO2_INDUSTRY	CO2_CAPTURED	:=
+DAM_STORAGE	0.999	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+PHS	0.866	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+BATT_LI	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+BEV_BATT	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+PHEV_BATT	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_DIRECT_ELEC 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_HP_ELEC 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_THHP_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_COGEN_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_COGEN_OIL 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_ADVCOGEN_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_ADVCOGEN_H2 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_WOOD	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_OIL	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DHN_DAILY	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DHN_SEASONAL	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_HIGH_TEMP	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+GAS_STORAGE	0	0	0	0	0.995	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+H2_STORAGE	0	0	0	0	0	0	0	0	0	0	0.98	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+DIESEL_STORAGE	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+GASOLINE_STORAGE	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+LFO_STORAGE	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_COLD	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.99	0	0	0	0	0	0	0	0	0	0	0	0	
+AMMONIA_STORAGE	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+METHANOL_STORAGE	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+CO2_STORAGE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1																																																																																				
+																																																																																																																	
+["YEAR_2040",*,*]: 	ELECTRICITY	GASOLINE	DIESEL	LFO	GAS	WOOD	WET_BIOMASS	COAL	URANIUM	WASTE	H2	AMMONIA	METHANOL	HVC	HEAT_HIGH_T	HEAT_LOW_T_DHN	HEAT_LOW_T_DECEN	PROCESS_COOLING	SPACE_COOLING	MOB_PUBLIC	MOB_PRIVATE	MOB_FREIGHT_RAIL	MOB_FREIGHT_ROAD	MOB_FREIGHT_BOAT	RES_WIND	RES_SOLAR	RES_HYDRO	RES_GEO 	CO2_ATM 	CO2_INDUSTRY	CO2_CAPTURED	:=
+DAM_STORAGE	0.999	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+PHS	0.866	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+BATT_LI	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+BEV_BATT	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+PHEV_BATT	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_DIRECT_ELEC 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_HP_ELEC 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_THHP_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_COGEN_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_COGEN_OIL 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_ADVCOGEN_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_ADVCOGEN_H2 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_WOOD	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_OIL	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DHN_DAILY	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DHN_SEASONAL	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_HIGH_TEMP	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+GAS_STORAGE	0	0	0	0	0.995	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+H2_STORAGE	0	0	0	0	0	0	0	0	0	0	0.98	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+DIESEL_STORAGE	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+GASOLINE_STORAGE	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+LFO_STORAGE	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_COLD	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.99	0	0	0	0	0	0	0	0	0	0	0	0	
+AMMONIA_STORAGE	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+METHANOL_STORAGE	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+CO2_STORAGE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1																																																																																				
+																																																																																																																	
+["YEAR_2045",*,*]: 	ELECTRICITY	GASOLINE	DIESEL	LFO	GAS	WOOD	WET_BIOMASS	COAL	URANIUM	WASTE	H2	AMMONIA	METHANOL	HVC	HEAT_HIGH_T	HEAT_LOW_T_DHN	HEAT_LOW_T_DECEN	PROCESS_COOLING	SPACE_COOLING	MOB_PUBLIC	MOB_PRIVATE	MOB_FREIGHT_RAIL	MOB_FREIGHT_ROAD	MOB_FREIGHT_BOAT	RES_WIND	RES_SOLAR	RES_HYDRO	RES_GEO 	CO2_ATM 	CO2_INDUSTRY	CO2_CAPTURED	:=
+DAM_STORAGE	0.999	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+PHS	0.866	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+BATT_LI	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+BEV_BATT	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+PHEV_BATT	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_DIRECT_ELEC 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_HP_ELEC 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_THHP_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_COGEN_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_COGEN_OIL 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_ADVCOGEN_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_ADVCOGEN_H2 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_WOOD	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_OIL	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DHN_DAILY	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DHN_SEASONAL	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_HIGH_TEMP	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+GAS_STORAGE	0	0	0	0	0.995	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+H2_STORAGE	0	0	0	0	0	0	0	0	0	0	0.98	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+DIESEL_STORAGE	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+GASOLINE_STORAGE	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+LFO_STORAGE	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_COLD	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.99	0	0	0	0	0	0	0	0	0	0	0	0	
+AMMONIA_STORAGE	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+METHANOL_STORAGE	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+CO2_STORAGE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1																																																																																				
+																																																																																																																	
+["YEAR_2050",*,*]: 	ELECTRICITY	GASOLINE	DIESEL	LFO	GAS	WOOD	WET_BIOMASS	COAL	URANIUM	WASTE	H2	AMMONIA	METHANOL	HVC	HEAT_HIGH_T	HEAT_LOW_T_DHN	HEAT_LOW_T_DECEN	PROCESS_COOLING	SPACE_COOLING	MOB_PUBLIC	MOB_PRIVATE	MOB_FREIGHT_RAIL	MOB_FREIGHT_ROAD	MOB_FREIGHT_BOAT	RES_WIND	RES_SOLAR	RES_HYDRO	RES_GEO 	CO2_ATM 	CO2_INDUSTRY	CO2_CAPTURED	:=
+DAM_STORAGE	0.999	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+PHS	0.866	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+BATT_LI	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+BEV_BATT	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+PHEV_BATT	0.95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_DIRECT_ELEC 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_HP_ELEC 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_THHP_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_COGEN_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_COGEN_OIL 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_ADVCOGEN_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_ADVCOGEN_H2 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_GAS 	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_WOOD	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DEC_BOILER_OIL	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DHN_DAILY	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_DHN_SEASONAL	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_HIGH_TEMP	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+GAS_STORAGE	0	0	0	0	0.995	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+H2_STORAGE	0	0	0	0	0	0	0	0	0	0	0.98	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+DIESEL_STORAGE	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+GASOLINE_STORAGE	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+LFO_STORAGE	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+TS_COLD	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.99	0	0	0	0	0	0	0	0	0	0	0	0	
+AMMONIA_STORAGE	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+METHANOL_STORAGE	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+CO2_STORAGE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1																																																																																				
+;																																																																																																																	
+																																																																																																																	
+param  storage_charge_time :	DAM_STORAGE	PHS	BATT_LI	BEV_BATT	PHEV_BATT	TS_DEC_DIRECT_ELEC 	TS_DEC_HP_ELEC 	TS_DEC_THHP_GAS 	TS_DEC_COGEN_GAS 	TS_DEC_COGEN_OIL 	TS_DEC_ADVCOGEN_GAS 	TS_DEC_ADVCOGEN_H2 	TS_DEC_BOILER_GAS 	TS_DEC_BOILER_WOOD	TS_DEC_BOILER_OIL	TS_DHN_DAILY	TS_DHN_SEASONAL	TS_HIGH_TEMP	GAS_STORAGE	H2_STORAGE	DIESEL_STORAGE	GASOLINE_STORAGE	LFO_STORAGE	TS_COLD	AMMONIA_STORAGE	METHANOL_STORAGE	CO2_STORAGE	:=
+YEAR_2015	1	7.8	4	8.33	8.33	4	4	4	4	4	4	4	4	4	4	60.3	150	2	2256	4	168	168	168	4	168	168	1	
+YEAR_2020	1	7.8	4	8.33	8.33	4	4	4	4	4	4	4	4	4	4	60.3	150	2	2256	4	168	168	168	4	168	168	1	
+YEAR_2025	1	7.8	4	8.33	8.33	4	4	4	4	4	4	4	4	4	4	60.3	150	2	2256	4	168	168	168	4	168	168	1	
+YEAR_2030	1	7.8	4	8.33	8.33	4	4	4	4	4	4	4	4	4	4	60.3	150	2	2256	4	168	168	168	4	168	168	1	
+YEAR_2035	1	7.8	4	8.33	8.33	4	4	4	4	4	4	4	4	4	4	60.3	150	2	2256	4	168	168	168	4	168	168	1	
+YEAR_2040	1	7.8	4	8.33	8.33	4	4	4	4	4	4	4	4	4	4	60.3	150	2	2256	4	168	168	168	4	168	168	1	
+YEAR_2045	1	7.8	4	8.33	8.33	4	4	4	4	4	4	4	4	4	4	60.3	150	2	2256	4	168	168	168	4	168	168	1	
+YEAR_2050	1	7.8	4	8.33	8.33	4	4	4	4	4	4	4	4	4	4	60.3	150	2	2256	4	168	168	168	4	168	168	1																																																																																								
+;																																																																																																																	
+param  storage_discharge_time :	DAM_STORAGE	PHS	BATT_LI	BEV_BATT	PHEV_BATT	TS_DEC_DIRECT_ELEC 	TS_DEC_HP_ELEC 	TS_DEC_THHP_GAS 	TS_DEC_COGEN_GAS 	TS_DEC_COGEN_OIL 	TS_DEC_ADVCOGEN_GAS 	TS_DEC_ADVCOGEN_H2 	TS_DEC_BOILER_GAS 	TS_DEC_BOILER_WOOD	TS_DEC_BOILER_OIL	TS_DHN_DAILY	TS_DHN_SEASONAL	TS_HIGH_TEMP	GAS_STORAGE	H2_STORAGE	DIESEL_STORAGE	GASOLINE_STORAGE	LFO_STORAGE	TS_COLD	AMMONIA_STORAGE	METHANOL_STORAGE	CO2_STORAGE	:=
+YEAR_2015	1	7	4	8.33	8.33	4	4	4	4	4	4	4	4	4	4	60.3	150	2	752	4	168	168	168	4	168	168	1	
+YEAR_2020	1	7	4	8.33	8.33	4	4	4	4	4	4	4	4	4	4	60.3	150	2	752	4	168	168	168	4	168	168	1	
+YEAR_2025	1	7	4	8.33	8.33	4	4	4	4	4	4	4	4	4	4	60.3	150	2	752	4	168	168	168	4	168	168	1	
+YEAR_2030	1	7	4	8.33	8.33	4	4	4	4	4	4	4	4	4	4	60.3	150	2	752	4	168	168	168	4	168	168	1	
+YEAR_2035	1	7	4	8.33	8.33	4	4	4	4	4	4	4	4	4	4	60.3	150	2	752	4	168	168	168	4	168	168	1	
+YEAR_2040	1	7	4	8.33	8.33	4	4	4	4	4	4	4	4	4	4	60.3	150	2	752	4	168	168	168	4	168	168	1	
+YEAR_2045	1	7	4	8.33	8.33	4	4	4	4	4	4	4	4	4	4	60.3	150	2	752	4	168	168	168	4	168	168	1	
+YEAR_2050	1	7	4	8.33	8.33	4	4	4	4	4	4	4	4	4	4	60.3	150	2	752	4	168	168	168	4	168	168	1																																																																																								
+;																																																																																																																	
+param  storage_availability :	DAM_STORAGE	PHS	BATT_LI	BEV_BATT	PHEV_BATT	TS_DEC_DIRECT_ELEC 	TS_DEC_HP_ELEC 	TS_DEC_THHP_GAS 	TS_DEC_COGEN_GAS 	TS_DEC_COGEN_OIL 	TS_DEC_ADVCOGEN_GAS 	TS_DEC_ADVCOGEN_H2 	TS_DEC_BOILER_GAS 	TS_DEC_BOILER_WOOD	TS_DEC_BOILER_OIL	TS_DHN_DAILY	TS_DHN_SEASONAL	TS_HIGH_TEMP	GAS_STORAGE	H2_STORAGE	DIESEL_STORAGE	GASOLINE_STORAGE	LFO_STORAGE	TS_COLD	AMMONIA_STORAGE	METHANOL_STORAGE	CO2_STORAGE	:=
+YEAR_2015	1	1	1	0.2	0.2	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	
+YEAR_2020	1	1	1	0.2	0.2	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	
+YEAR_2025	1	1	1	0.2	0.2	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	
+YEAR_2030	1	1	1	0.2	0.2	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	
+YEAR_2035	1	1	1	0.2	0.2	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	
+YEAR_2040	1	1	1	0.2	0.2	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	
+YEAR_2045	1	1	1	0.2	0.2	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	
+YEAR_2050	1	1	1	0.2	0.2	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1																																																																																								
+;																																																																																																																	
+param  storage_losses :	DAM_STORAGE	PHS	BATT_LI	BEV_BATT	PHEV_BATT	TS_DEC_DIRECT_ELEC 	TS_DEC_HP_ELEC 	TS_DEC_THHP_GAS 	TS_DEC_COGEN_GAS 	TS_DEC_COGEN_OIL 	TS_DEC_ADVCOGEN_GAS 	TS_DEC_ADVCOGEN_H2 	TS_DEC_BOILER_GAS 	TS_DEC_BOILER_WOOD	TS_DEC_BOILER_OIL	TS_DHN_DAILY	TS_DHN_SEASONAL	TS_HIGH_TEMP	GAS_STORAGE	H2_STORAGE	DIESEL_STORAGE	GASOLINE_STORAGE	LFO_STORAGE	TS_COLD	AMMONIA_STORAGE	METHANOL_STORAGE	CO2_STORAGE	:=
+YEAR_2015	0	0	0.0002	0.0002	0.0002	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00833	0.0000606	0.000355	0	0	0	0	0	0.00824	0	0	0	
+YEAR_2020	0	0	0.0002	0.0002	0.0002	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00833	0.0000606	0.000355	0	0	0	0	0	0.00824	0	0	0	
+YEAR_2025	0	0	0.0002	0.0002	0.0002	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00833	0.0000606	0.000355	0	0	0	0	0	0.00824	0	0	0	
+YEAR_2030	0	0	0.0002	0.0002	0.0002	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00833	0.0000606	0.000355	0	0	0	0	0	0.00824	0	0	0	
+YEAR_2035	0	0	0.0002	0.0002	0.0002	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00833	0.0000606	0.000355	0	0	0	0	0	0.00824	0	0	0	
+YEAR_2040	0	0	0.0002	0.0002	0.0002	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00833	0.0000606	0.000355	0	0	0	0	0	0.00824	0	0	0	
+YEAR_2045	0	0	0.0002	0.0002	0.0002	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00833	0.0000606	0.000355	0	0	0	0	0	0.00824	0	0	0	
+YEAR_2050	0	0	0.0002	0.0002	0.0002	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00824	0.00833	0.0000606	0.000355	0	0	0	0	0	0.00824	0	0	0																																																																																								
+;																																																																																																																	
+																																																																																																																	
+																																																																																																																	
+																																																																																																																	
+# part [2.7.4]																																																																																																																	
+param loss_network :	ELECTRICITY	HEAT_LOW_T_DHN	:=																																																																																																														
+YEAR_2015	0.047	0.05																																																																																																															
+YEAR_2020	0.047	0.05																																																																																																															
+YEAR_2025	0.047	0.05																																																																																																															
+YEAR_2030	0.047	0.05																																																																																																															
+YEAR_2035	0.047	0.05																																																																																																															
+YEAR_2040	0.047	0.05																																																																																																															
+YEAR_2045	0.047	0.05																																																																																																															
+YEAR_2050	0.047	0.05																																																																																																															
+;
+
+# elec_max_import_capa [GW]
+param 	elec_max_import_capa	:=																																																																																																															
+YEAR_2015	0.395																																																																																																																
+YEAR_2020	0.395																																																																																																																
+YEAR_2025	0.395																																																																																																																
+YEAR_2030	0.395																																																																																																																
+YEAR_2035	0.395																																																																																																																
+YEAR_2040	0.395																																																																																																																
+YEAR_2045	0.395																																																																																																																
+YEAR_2050	0.395																																																																																																																
+;																																																																																																																	
+param 	efficiency  	:=																																																																																																															
+YEAR_2015	0																																																																																																																
+YEAR_2020	0.142857143																																																																																																																
+YEAR_2025	0.285714286																																																																																																																
+YEAR_2030	0.428571429																																																																																																																
+YEAR_2035	0.571428571																																																																																																																
+YEAR_2040	0.714285714																																																																																																																
+YEAR_2045	0.857142857																																																																																																																
+YEAR_2050	1																																																																																																																
+;																																																																																																																	
