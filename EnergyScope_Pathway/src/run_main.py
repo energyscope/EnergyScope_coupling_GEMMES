@@ -25,7 +25,7 @@ from ampl_preprocessor import AmplPreProcessor
 from ampl_collector import AmplCollector
 from ampl_graph import AmplGraph
 
-country = 'Colombia'
+country = 'Turkey'
 type_of_model = 'MO'
 nbr_tds = 12
 
@@ -131,25 +131,6 @@ if __name__ == '__main__':
                 ampl_pre.remaining_update(i)
                 
                 ampl = AmplObject(mod_1_path, mod_2_path, dat_path, ampl_options, type_model = type_of_model)
-                
-                if(simulate_TEJ_scenario):
-                    ampl.set_params('gwp_limit',{('YEAR_2015'):800000}) 
-                    ampl.set_params('gwp_limit',{('YEAR_2020'):800000}) 
-                    ampl.set_params('gwp_limit',{('YEAR_2025'):800000})  
-                    ampl.set_params('gwp_limit',{('YEAR_2030'):800000})  
-                    ampl.set_params('gwp_limit',{('YEAR_2035'):800000}) 
-                    ampl.set_params('gwp_limit',{('YEAR_2040'):800000}) 
-                    ampl.set_params('gwp_limit',{('YEAR_2045'):800000})  
-                    ampl.set_params('gwp_limit',{('YEAR_2050'):800000}) 
-                else:
-                    ampl.set_params('gwp_limit',{('YEAR_2015'):800000}) # 150000
-                    ampl.set_params('gwp_limit',{('YEAR_2020'):800000}) # 150000
-                    ampl.set_params('gwp_limit',{('YEAR_2025'):78583})  # 95486
-                    ampl.set_params('gwp_limit',{('YEAR_2030'):63167})  # 71615
-                    ampl.set_params('gwp_limit',{('YEAR_2035'):47750})  # 47743
-                    ampl.set_params('gwp_limit',{('YEAR_2040'):32333})  # 32329
-                    ampl.set_params('gwp_limit',{('YEAR_2045'):16917})  # 16915
-                    ampl.set_params('gwp_limit',{('YEAR_2050'):1500})   # 1500
 
                 solve_result = ampl.run_ampl()
                 ampl.get_results()
@@ -258,7 +239,7 @@ if __name__ == '__main__':
             Cost_elec_approx = Cost_elec_approx.sum(axis=1)
             Cost_elec_approx = Cost_elec_approx / Cost_elec_approx.loc['YEAR_2020']
             Cost_elec_approx = Cost_elec_approx.round(2)
-            Cost_elec_approx.to_csv('Outputs_for_GEMMES/Elec_price_evolution.csv')
+            Cost_elec_approx.to_csv(pth_output_all+'/'+country+'/Outputs_for_GEMMES/Elec_price_evolution.csv')
             
             ### Cooling se comporte comme Cost_elec_approx
 
