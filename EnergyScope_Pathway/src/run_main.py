@@ -25,7 +25,7 @@ from ampl_preprocessor import AmplPreProcessor
 from ampl_collector import AmplCollector
 from ampl_graph import AmplGraph
 
-country = 'Turkey'
+country = 'Colombia'
 type_of_model = 'MO'
 nbr_tds = 12
 
