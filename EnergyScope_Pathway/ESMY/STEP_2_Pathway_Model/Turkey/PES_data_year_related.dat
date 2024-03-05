@@ -88,14 +88,14 @@ YEAR_2050	50.4	50.4
 ;																																																																																																																	
 
 param : solar_area_rooftop :=																																																																																																																	
-YEAR_2015	529																																																																																																																
-YEAR_2020	529																																																																																																																
-YEAR_2025	529																																																																																																																
-YEAR_2030	529																																																																																																																
-YEAR_2035	529																																																																																																																
-YEAR_2040	529																																																																																																																
-YEAR_2045	529																																																																																																																
-YEAR_2050	529																																																																																																																	
+YEAR_2015	632.6																																																																																																																
+YEAR_2020	632.6																																																																																																																
+YEAR_2025	632.6																																																																																																																
+YEAR_2030	632.6																																																																																																																
+YEAR_2035	632.6																																																																																																																
+YEAR_2040	632.6																																																																																																																
+YEAR_2045	632.6																																																																																																																
+YEAR_2050	632.6																																																																																																																	
 ;
 																																																																																																																	
 param : solar_area_ground :=																																																																																																																	
@@ -210,14 +210,14 @@ NON_ENERGY	0.0	0.0	101886.0	3606.0
 ;																																																																																																																	
 																																																																																																																	
 param:	share_mobility_public_min	share_freight_train_min	share_freight_boat_min	share_freight_road_min	share_heat_dhn_min	share_mobility_public_max	share_freight_train_max	share_freight_boat_max	share_freight_road_max	share_private_motorcycle_max	share_heat_dhn_max	:=																																																																																																						
-YEAR_2015	0.389	0.04	0	0	0.02	0.39	0.109	0	1	0.52	0.02																																																																																																							
-YEAR_2020	0.389	0.04	0	0	0.02	0.39	0.109	0	1	0.52	0.02																																																																																																						
-YEAR_2025	0.389	0.04	0	0	0.02	0.5	0.25	0	1	0.52	0.37																																																																																																							
-YEAR_2030	0.389	0.04	0	0	0.02	0.5	0.25	0	1	0.52	0.37																																																																																																							
-YEAR_2035	0.389	0.04	0	0	0.02	0.5	0.25	0	1	0.52	0.37																																																																																																							
-YEAR_2040	0.389	0.04	0	0	0.02	0.5	0.25	0	1	0.52	0.37																																																																																																							
-YEAR_2045	0.389	0.04	0	0	0.02	0.5	0.25	0	1	0.52	0.37																																																																																																							
-YEAR_2050	0.389	0.04	0	0	0.02	0.5	0.25	0	1	0.52	0.37																																																																																																								
+YEAR_2015	0.37	0.04	0	0	0.02	0.37	0.04	0	1	0	0.02																																																																																																							
+YEAR_2020	0.37	0.04	0	0	0.02	0.37	0.04	0	1	0	0.02																																																																																																						
+YEAR_2025	0.05	0	0	0	0.02	0.5	0.25	0	1	0	0.5																																																																																																							
+YEAR_2030	0.05	0	0	0	0.02	0.5	0.25	0	1	0	0.5																																																																																																							
+YEAR_2035	0.05	0	0	0	0.02	0.5	0.25	0	1	0	0.5																																																																																																							
+YEAR_2040	0.05	0	0	0	0.02	0.5	0.25	0	1	0	0.5																																																																																																							
+YEAR_2045	0.05	0	0	0	0.02	0.5	0.25	0	1	0	0.5																																																																																																							
+YEAR_2050	0.05	0	0	0	0.02	0.5	0.25	0	1	0	0.5																																																																																																								
 ;																																																																																																																	
 																																																																																																																	
 param share_ned :	HVC	METHANOL	AMMONIA	:=																																																																																																													
