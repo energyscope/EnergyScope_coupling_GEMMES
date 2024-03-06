@@ -56,7 +56,7 @@ YEAR_2050	0
 ;																																																																																																																		
 
 param gwp_limit := 			# [ktCO2-eq./year]																																																																																																													
-YEAR_2015	500000  # 600000 																																																																																																																
+YEAR_2015	500000																																																																																																																
 YEAR_2020	500000 																																																																																																																
 YEAR_2025	363559 																																																																																																																
 YEAR_2030	291147 																																																																																																											
