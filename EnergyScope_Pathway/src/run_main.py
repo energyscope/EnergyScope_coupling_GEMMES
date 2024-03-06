@@ -165,26 +165,28 @@ if __name__ == '__main__':
             # z_Year_balance = z_Results['Year_balance'].copy()
             # z_gwp_breakdown = z_Results['Gwp_breakdown'].copy()
             
-            C_inv = z_Results['C_inv_phase_tech_non_annualised']
+            C_inv = z_Results['C_inv_phase_tech_non_annualised'].copy()
             C_inv.rename(columns = {'C_inv_phase_tech_non_annualised':'Value'}, inplace = True)
             C_inv = C_inv.round(0)
             C_inv['Local'] = 0
             C_inv['Imported'] = 1 - C_inv['Local']
-            C_inv['F'] = 1
-            C_inv['B'] = 0
-            C_inv['G'] = 0
-            C_inv['H'] = 0
+            C_inv[['F','B','G','H']] = [1,0,0,0]
+
             # C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(['DHN','GRID','HVAC_LINE']),[3,5]] = [0,1] # Costs supported by the PRIVATE SECTOR, actually (not by the state - grid costs for households are quite volatile, according to Santiago)
+            
             list_private_mob_tech = ['MOTORCYCLE','CAR_GASOLINE','CAR_DIESEL','CAR_NG','CAR_METHANOL','CAR_HEV','CAR_PHEV','MOTORCYCLE_ELECTRIC','CAR_BEV','CAR_FUEL_CELL']
             C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(list_private_mob_tech),[3,6]] = [0,1] # Private mobility costs are supported by households
+            
             list_public_mob_tech = ['TRAMWAY_TROLLEY','BUS_COACH_DIESEL','BUS_COACH_GASOLINE','BUS_COACH_HYDIESEL','BUS_COACH_CNG_STOICH','BUS_COACH_FC_HYBRIDH2','TRAIN_PUB']
             C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(list_public_mob_tech),[3,5]] = [0,1] # Private mobility costs are supported by the State
+            
             shares_cooling = pd.read_csv(pth_model + '/shares_cooling.csv')
             shares_cooling.set_index('Phase',inplace=True)
             list_cooling_tech = ['DEC_ELEC_COLD','DEC_THHP_GAS_COLD']
             C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(list_cooling_tech),3] = 0
             C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(['DEC_ELEC_COLD']),[4,5,6]] = shares_cooling.values
             C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(['DEC_THHP_GAS_COLD']),[4,5,6]] = shares_cooling.values
+            
             C_inv['merge_index'] = C_inv.index.get_level_values('Phases')
             shares_LTH = pd.read_csv(pth_model + '/shares_LTH.csv')
             shares_LTH.set_index('Phase',inplace=True)
@@ -196,6 +198,7 @@ if __name__ == '__main__':
             C_inv.drop(columns=['merge_index'],inplace=True)
             # C_inv.to_csv(pth_output_all+'/'+country+'/C_inv_phase_tech_non_annualised.csv')
             
+            
             C_maint = z_Results['C_op_phase_tech_non_annualised']
             C_maint.rename(columns = {'C_op_phase_tech_non_annualised':'Value'}, inplace = True)
             C_maint = C_maint.round(0)
@@ -206,6 +209,7 @@ if __name__ == '__main__':
             
             annualised_factor = pd.DataFrame(index=z_Results['C_inv_phase'].index, data=z_Results['C_inv_phase'].values / z_Results['C_inv_phase_non_annualised'].values )
             annualised_factor['merge_index'] = annualised_factor.index
+            
             
             C_op = z_Results['C_op_phase_res'].copy()
             C_op.rename(columns = {'C_op_phase_res':'Value'}, inplace = True)
@@ -219,30 +223,56 @@ if __name__ == '__main__':
             Local_resources = ['GASOLINE','DIESEL','BIOETHANOL','BIODIESEL','LFO','GAS','WOOD','COAL','CO2_EMISSIONS','CO2_CAPTURED','CO2_INDUSTRY','RES_WIND','RES_SOLAR','RES_HYDRO','CO2_ATM','WET_BIOMASS','WASTE','RES_GEO']
             C_op.iloc[C_op.index.get_level_values('Resources').isin(Local_resources),1] = 1
             C_op['Imported'] = 1 - C_op['Local']
-            C_op['F'] = 1
-            C_op['B'] = 0
-            C_op['G'] = 0
-            C_op['H'] = 0
+            C_op[['F','B','G','H']] = [1,0,0,0]
                  
-            year_balance = z_Results['Year_balance']
+            
+            year_balance = z_Results['Year_balance'].copy()
+            
+            year_balance[['F','B','G','H']] = [1,0,0,0]
+            year_balance.iloc[year_balance.index.get_level_values('Elements').isin(list_private_mob_tech),[31,34]] = [0,1]
+            year_balance.iloc[year_balance.index.get_level_values('Elements').isin(list_public_mob_tech),[31,33]] = [0,1]
+            year_balance.iloc[year_balance.index.get_level_values('Elements').isin(list_cooling_tech),[31]] = 0
+            year_balance.iloc[year_balance.index.get_level_values('Elements').isin(['DEC_ELEC_COLD']),[32,33,34]] = shares_cooling.values
+            year_balance.iloc[year_balance.index.get_level_values('Elements').isin(['DEC_THHP_GAS_COLD']),[32,33,34]] = shares_cooling.iloc[1:,:].values
+            
+            year_balance['merge_index_2'] = year_balance.index.get_level_values('Years')
+            shares_LTH['merge_index_2'] = year_balance['merge_index_2'].unique()
+            year_balance_bis = pd.merge(year_balance, shares_LTH, on='merge_index_2')
+            year_balance_bis.index = year_balance.index
+            year_balance.iloc[year_balance.index.get_level_values('Elements').isin(list_LTH_tech),[31,32,33,34]] = year_balance_bis.iloc[year_balance_bis.index.get_level_values('Elements').isin(list_LTH_tech),[36,37,38,39]].values
+            
+            year_balance = year_balance[year_balance['F']<0.999]
+            year_balance = year_balance.loc[:, year_balance.columns.isin(['ELECTRICITY','GAS','WASTE','WET_BIOMASS','WOOD','DIESEL','GASOLINE','H2','METHANOL','B','G','H'])]
+            year_balance.loc[year_balance['ELECTRICITY']>0,'ELECTRICITY'] = np.nan
+            year_balance = year_balance.abs()
+            year_balance.drop(columns=['H2','METHANOL'], inplace=True) #### Negligible amount
             
             
+            # Reconstruct prices of resources
             
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+            year_balance_tot = z_Results['Year_balance'].copy()
+            list_resources = ['GAS','WASTE','WET_BIOMASS','WOOD','DIESEL','GASOLINE']
+            year_balance_tot = year_balance_tot.loc[:, year_balance_tot.columns.isin(list_resources)]
+            year_balance_tot.loc[year_balance_tot['GAS']>0,'GAS'] = np.nan
+            year_balance_tot.loc[year_balance_tot['WASTE']>0,'WASTE'] = np.nan
+            year_balance_tot.loc[year_balance_tot['WET_BIOMASS']>0,'WET_BIOMASS'] = np.nan
+            year_balance_tot.loc[year_balance_tot['WOOD']>0,'WOOD'] = np.nan
+            year_balance_tot.loc[year_balance_tot['DIESEL']>0,'DIESEL'] = np.nan
+            year_balance_tot.loc[year_balance_tot['GASOLINE']>0,'GASOLINE'] = np.nan
+            year_balance_tot = year_balance_tot.groupby(level=[0]).sum()
+            year_balance_tot = year_balance_tot.abs() ################################# Double-check values with graph
             
             Cost_breakdown = z_Results['Cost_breakdown']
-            year_balance = z_Results['Year_balance']
-            prices_resources = pd.read_csv(pth_model+'/'+country+'/Prices_resources.csv')
-            prices_resources.set_index('Unnamed: 0', inplace=True)
+
+# year_balance_LTH = year_balance.iloc[year_balance.index.get_level_values('Elements').isin(list_LTH_tech)]            
+      # list_resources
+            
+            
+            year_balance.drop(columns=['merge_index_2'],inplace=True)
+            
+            
+            
+            
             
             technos_res_elec = ['CCGT','COAL_IGCC','PV','WIND_ONSHORE','WIND_OFFSHORE','HYDRO_DAM','HYDRO_RIVER','GEOTHERMAL','GRID','HVAC_LINE','GAS','COAL']
             Cost_elec_approx = Cost_breakdown.iloc[Cost_breakdown.index.get_level_values('Elements').isin(technos_res_elec)]
@@ -268,7 +298,7 @@ if __name__ == '__main__':
             
             year_balance_private_mob = year_balance.iloc[year_balance.index.get_level_values('Elements').isin(list_private_mob_tech)]
             year_balance_private_mob = year_balance_private_mob[['DIESEL','ELECTRICITY','GAS','GASOLINE','H2','METHANOL']]
-            year_balance_private_mob.drop(columns=['DIESEL','H2','METHANOL'], inplace=True) # Negligible amount
+            
             year_balance_private_mob = year_balance_private_mob.abs()
             # year_balance_private_mob = year_balance_private_mob.groupby(level=[0]).sum()
             
@@ -307,7 +337,7 @@ if __name__ == '__main__':
             year_balance_LTH.to_csv(pth_output_all+'/'+country+'/Outputs_for_GEMMES/Quantities_for_heating_evolution.csv')
             
             # C_op.to_csv(pth_output_all+'/'+country+'/C_op_phase_res_non_annualised.csv')        
-            
+            """
             
             output_for_GEMMES = pd.DataFrame(index=annualised_factor.index[1:])
             output_for_GEMMES = pd.DataFrame(index=annualised_factor.index)

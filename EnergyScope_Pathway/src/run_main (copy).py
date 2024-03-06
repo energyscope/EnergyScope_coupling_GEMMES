@@ -57,3 +57,25 @@ year_balance_public_mob.to_csv(pth_output_all+'/'+country+'/Outputs_for_GEMMES/Q
 year_balance_LTH = year_balance_LTH / year_balance_LTH.loc['YEAR_2020']
 year_balance_LTH = year_balance_LTH.round(2)
 year_balance_LTH.to_csv(pth_output_all+'/'+country+'/Outputs_for_GEMMES/Quantities_for_heating_evolution.csv')
+
+
+year_balance_boum = z_Results['Year_balance'].copy()
+year_balance_boum.loc[year_balance_boum['GASOLINE']<0,'GASOLINE'] = np.nan
+year_balance_boum = year_balance_boum.groupby(level=[0]).sum()
+# year_balance_boum.drop(index=['YEAR_2015'],inplace=True)
+
+prices_resources = pd.read_csv(pth_model+'/'+country+'/Prices_resources.csv')
+prices_resources.set_index('Unnamed: 0', inplace=True)
+prices_resources = prices_resources.iloc[1: , :]
+
+bidul = year_balance_boum['GASOLINE'].values * prices_resources['GASOLINE'].values
+
+Cost_breakdown = Cost_breakdown.iloc[Cost_breakdown.index.get_level_values('Elements').isin(['GASOLINE'])]
+Cost_breakdown *= 5
+Cost_breakdown['C_op_shifted'] = Cost_breakdown['C_op'].shift(1)
+Cost_breakdown['mean'] = (Cost_breakdown['C_op_shifted'] + Cost_breakdown['C_op']) / 2
+C_op_gasoline = C_op.iloc[C_op.index.get_level_values('Resources').isin(['GASOLINE'])]
+
+
+
+
