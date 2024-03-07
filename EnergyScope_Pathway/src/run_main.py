@@ -252,92 +252,48 @@ if __name__ == '__main__':
             
             year_balance_tot = z_Results['Year_balance'].copy()
             list_resources = ['GAS','WASTE','WET_BIOMASS','WOOD','DIESEL','GASOLINE']
+            n_resources = len(list_resources) + 1 # include also electricity
             year_balance_tot = year_balance_tot.loc[:, year_balance_tot.columns.isin(list_resources)]
-            year_balance_tot.loc[year_balance_tot['GAS']>0,'GAS'] = np.nan
-            year_balance_tot.loc[year_balance_tot['WASTE']>0,'WASTE'] = np.nan
-            year_balance_tot.loc[year_balance_tot['WET_BIOMASS']>0,'WET_BIOMASS'] = np.nan
-            year_balance_tot.loc[year_balance_tot['WOOD']>0,'WOOD'] = np.nan
-            year_balance_tot.loc[year_balance_tot['DIESEL']>0,'DIESEL'] = np.nan
-            year_balance_tot.loc[year_balance_tot['GASOLINE']>0,'GASOLINE'] = np.nan
+            year_balance_tot = year_balance_tot.iloc[year_balance_tot.index.get_level_values('Elements').isin(list_resources)]
             year_balance_tot = year_balance_tot.groupby(level=[0]).sum()
-            year_balance_tot = year_balance_tot.abs() ################################# Double-check values with graph
             
-            Cost_breakdown = z_Results['Cost_breakdown']
+            Cost_breakdown = z_Results['Cost_breakdown'].copy()
+            Cost_breakdown = Cost_breakdown.iloc[Cost_breakdown.index.get_level_values('Elements').isin(list_resources)]
+            Cost_breakdown = pd.pivot_table(Cost_breakdown, values='C_op', index=['Years'], columns=['Elements'])
 
-# year_balance_LTH = year_balance.iloc[year_balance.index.get_level_values('Elements').isin(list_LTH_tech)]            
-      # list_resources
+            prices_resources = Cost_breakdown.div(year_balance_tot)
+            prices_resources = prices_resources.round(3)
+
             
+            # Construct a price for locally produced electricity
+
+
+
+
+
+technos_res_elec = ['CCGT','COAL_IGCC','PV','WIND_ONSHORE','WIND_OFFSHORE','HYDRO_DAM','HYDRO_RIVER','GEOTHERMAL','GRID','HVAC_LINE','GAS','COAL']
+Cost_elec_approx = Cost_breakdown.iloc[Cost_breakdown.index.get_level_values('Elements').isin(technos_res_elec)]
+year_balance_elec = year_balance[['COAL','GAS']]
+Cost_elec_approx['perc_for_elec'] = np.nan
+Cost_elec_approx.iloc[Cost_elec_approx.index.get_level_values('Elements').isin(['COAL']),3] = year_balance_elec.iloc[year_balance_elec.index.get_level_values('Elements').isin(['COAL_IGCC']),0].values / year_balance_elec.iloc[year_balance_elec.index.get_level_values('Elements').isin(['COAL']),0].values
+Cost_elec_approx.iloc[Cost_elec_approx.index.get_level_values('Elements').isin(['GAS']),3] = year_balance_elec.iloc[year_balance_elec.index.get_level_values('Elements').isin(['CCGT']),1].values / year_balance_elec.iloc[year_balance_elec.index.get_level_values('Elements').isin(['GAS']),1].values
+Cost_elec_approx.loc[:,'C_op'] = Cost_elec_approx['C_op'] * Cost_elec_approx['perc_for_elec']
+Cost_elec_approx.loc[:,'C_op'] = Cost_elec_approx.loc[:,'C_op'].abs()
+Cost_elec_approx.drop(columns=['perc_for_elec'],inplace=True)
+Cost_elec_approx = Cost_elec_approx.groupby(level=[0]).sum()
+Cost_elec_approx = Cost_elec_approx.sum(axis=1)
+
+
+      
+            # Compute the cost of each resource use for each techno
             
-            year_balance.drop(columns=['merge_index_2'],inplace=True)
-            
-            
-            
-            
-            
-            technos_res_elec = ['CCGT','COAL_IGCC','PV','WIND_ONSHORE','WIND_OFFSHORE','HYDRO_DAM','HYDRO_RIVER','GEOTHERMAL','GRID','HVAC_LINE','GAS','COAL']
-            Cost_elec_approx = Cost_breakdown.iloc[Cost_breakdown.index.get_level_values('Elements').isin(technos_res_elec)]
-            year_balance_elec = year_balance[['COAL','GAS']]
-            Cost_elec_approx['perc_for_elec'] = np.nan
-            Cost_elec_approx.iloc[Cost_elec_approx.index.get_level_values('Elements').isin(['COAL']),3] = year_balance_elec.iloc[year_balance_elec.index.get_level_values('Elements').isin(['COAL_IGCC']),0].values / year_balance_elec.iloc[year_balance_elec.index.get_level_values('Elements').isin(['COAL']),0].values
-            Cost_elec_approx.iloc[Cost_elec_approx.index.get_level_values('Elements').isin(['GAS']),3] = year_balance_elec.iloc[year_balance_elec.index.get_level_values('Elements').isin(['CCGT']),1].values / year_balance_elec.iloc[year_balance_elec.index.get_level_values('Elements').isin(['GAS']),1].values
-            Cost_elec_approx.loc[:,'C_op'] = Cost_elec_approx['C_op'] * Cost_elec_approx['perc_for_elec']
-            Cost_elec_approx.loc[:,'C_op'] = Cost_elec_approx.loc[:,'C_op'].abs()
-            Cost_elec_approx.drop(columns=['perc_for_elec'],inplace=True)
-            Cost_elec_approx = Cost_elec_approx.groupby(level=[0]).sum()
-            Cost_elec_approx = Cost_elec_approx.sum(axis=1)
-            
-            year_balance_cooling = year_balance.iloc[year_balance.index.get_level_values('Elements').isin(list_cooling_tech)]
-            year_balance_cooling = year_balance_cooling[['ELECTRICITY','GAS']]  
-            year_balance_cooling = year_balance_cooling.abs()
-           
-            year_balance_LTH = year_balance.iloc[year_balance.index.get_level_values('Elements').isin(list_LTH_tech)]
-            year_balance_LTH = year_balance_LTH[['ELECTRICITY','GAS','WASTE','WET_BIOMASS','WOOD']]
-            year_balance_LTH.loc[year_balance_LTH['ELECTRICITY']>0,'ELECTRICITY'] = np.nan
-            year_balance_LTH = year_balance_LTH.abs()
-            # year_balance_LTH = year_balance_LTH.groupby(level=[0]).sum()
-            
-            year_balance_private_mob = year_balance.iloc[year_balance.index.get_level_values('Elements').isin(list_private_mob_tech)]
-            year_balance_private_mob = year_balance_private_mob[['DIESEL','ELECTRICITY','GAS','GASOLINE','H2','METHANOL']]
-            
-            year_balance_private_mob = year_balance_private_mob.abs()
-            # year_balance_private_mob = year_balance_private_mob.groupby(level=[0]).sum()
-            
-            year_balance_public_mob = year_balance.iloc[year_balance.index.get_level_values('Elements').isin(list_public_mob_tech)]
-            year_balance_public_mob = year_balance_public_mob[['DIESEL','ELECTRICITY','GAS','GASOLINE','H2']]
-            year_balance_public_mob.drop(columns=['H2'], inplace=True) # Negligible amount
-            year_balance_public_mob = year_balance_public_mob.abs()
-            # year_balance_public_mob = year_balance_public_mob.groupby(level=[0]).sum()
-            
-            
-            
-            
+            year_balance = pd.merge(year_balance, prices_resources, on='Years')
+            year_balance.iloc[:,0:n_resources] = year_balance.iloc[:,0:n_resources].values * year_balance.iloc[:,n_resources+3:].values
             
             
 
-            
-            
-            
-            
-            
-            
-            
-            
-            year_balance_private_mob['ELECTRICITY'] = year_balance_private_mob['ELECTRICITY'] / year_balance_LTH.loc['YEAR_2020','ELECTRICITY'] ##### Careful #####
-            year_balance_private_mob[['GAS','GASOLINE']] = year_balance_private_mob[['GAS','GASOLINE']] / year_balance_private_mob.loc['YEAR_2020',['GAS','GASOLINE']]
-            year_balance_private_mob = year_balance_private_mob.round(2)
-            year_balance_private_mob.to_csv(pth_output_all+'/'+country+'/Outputs_for_GEMMES/Quantities_for_private_mob_evolution.csv')
-            
-            year_balance_public_mob[['GAS','ELECTRICITY']] = year_balance_public_mob[['GAS','ELECTRICITY']] / year_balance_LTH.loc['YEAR_2020',['GAS','ELECTRICITY']] ##### Careful #####
-            year_balance_public_mob[['DIESEL','GASOLINE']] = year_balance_public_mob[['DIESEL','GASOLINE']] / year_balance_public_mob.loc['YEAR_2020',['DIESEL','GASOLINE']]
-            year_balance_public_mob = year_balance_public_mob.round(2)
-            year_balance_public_mob.to_csv(pth_output_all+'/'+country+'/Outputs_for_GEMMES/Quantities_for_public_mob_evolution.csv')
-            
-            year_balance_LTH = year_balance_LTH / year_balance_LTH.loc['YEAR_2020']
-            year_balance_LTH = year_balance_LTH.round(2)
-            year_balance_LTH.to_csv(pth_output_all+'/'+country+'/Outputs_for_GEMMES/Quantities_for_heating_evolution.csv')
-            
             # C_op.to_csv(pth_output_all+'/'+country+'/C_op_phase_res_non_annualised.csv')        
-            """
+
             
             output_for_GEMMES = pd.DataFrame(index=annualised_factor.index[1:])
             output_for_GEMMES = pd.DataFrame(index=annualised_factor.index)
@@ -366,8 +322,8 @@ if __name__ == '__main__':
             Cost_breakdown_non_annualised = Cost_breakdown_non_annualised.round(0)
             Cost_breakdown_non_annualised.to_csv(pth_output_all+'/'+country+'/Outputs_for_GEMMES/Initial_cost.csv')
             
-            a_website = "https://www.google.com"
-            webbrowser.open_new(a_website)
+            # a_website = "https://www.google.com"
+            # webbrowser.open_new(a_website)
             ampl_graph.graph_resource()
             # ampl_graph.graph_cost()
             # # ampl_graph.graph_gwp_per_sector()
