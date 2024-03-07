@@ -78,4 +78,40 @@ C_op_gasoline = C_op.iloc[C_op.index.get_level_values('Resources').isin(['GASOLI
 
 
 
+#################
+year_balance_cooling = year_balance.iloc[year_balance.index.get_level_values('Elements').isin(list_cooling_tech)]
+year_balance_cooling = year_balance_cooling[['ELECTRICITY','GAS']]  
+year_balance_cooling = year_balance_cooling.abs()
 
+year_balance_LTH = year_balance.iloc[year_balance.index.get_level_values('Elements').isin(list_LTH_tech)]
+year_balance_LTH = year_balance_LTH[['ELECTRICITY','GAS','WASTE','WET_BIOMASS','WOOD']]
+year_balance_LTH.loc[year_balance_LTH['ELECTRICITY']>0,'ELECTRICITY'] = np.nan
+year_balance_LTH = year_balance_LTH.abs()
+# year_balance_LTH = year_balance_LTH.groupby(level=[0]).sum()
+
+year_balance_private_mob = year_balance.iloc[year_balance.index.get_level_values('Elements').isin(list_private_mob_tech)]
+year_balance_private_mob = year_balance_private_mob[['DIESEL','ELECTRICITY','GAS','GASOLINE','H2','METHANOL']]
+
+year_balance_private_mob = year_balance_private_mob.abs()
+# year_balance_private_mob = year_balance_private_mob.groupby(level=[0]).sum()
+
+year_balance_public_mob = year_balance.iloc[year_balance.index.get_level_values('Elements').isin(list_public_mob_tech)]
+year_balance_public_mob = year_balance_public_mob[['DIESEL','ELECTRICITY','GAS','GASOLINE','H2']]
+year_balance_public_mob.drop(columns=['H2'], inplace=True) # Negligible amount
+year_balance_public_mob = year_balance_public_mob.abs()
+# year_balance_public_mob = year_balance_public_mob.groupby(level=[0]).sum()
+
+
+year_balance_private_mob['ELECTRICITY'] = year_balance_private_mob['ELECTRICITY'] / year_balance_LTH.loc['YEAR_2020','ELECTRICITY'] ##### Careful #####
+year_balance_private_mob[['GAS','GASOLINE']] = year_balance_private_mob[['GAS','GASOLINE']] / year_balance_private_mob.loc['YEAR_2020',['GAS','GASOLINE']]
+year_balance_private_mob = year_balance_private_mob.round(2)
+year_balance_private_mob.to_csv(pth_output_all+'/'+country+'/Outputs_for_GEMMES/Quantities_for_private_mob_evolution.csv')
+
+year_balance_public_mob[['GAS','ELECTRICITY']] = year_balance_public_mob[['GAS','ELECTRICITY']] / year_balance_LTH.loc['YEAR_2020',['GAS','ELECTRICITY']] ##### Careful #####
+year_balance_public_mob[['DIESEL','GASOLINE']] = year_balance_public_mob[['DIESEL','GASOLINE']] / year_balance_public_mob.loc['YEAR_2020',['DIESEL','GASOLINE']]
+year_balance_public_mob = year_balance_public_mob.round(2)
+year_balance_public_mob.to_csv(pth_output_all+'/'+country+'/Outputs_for_GEMMES/Quantities_for_public_mob_evolution.csv')
+
+year_balance_LTH = year_balance_LTH / year_balance_LTH.loc['YEAR_2020']
+year_balance_LTH = year_balance_LTH.round(2)
+year_balance_LTH.to_csv(pth_output_all+'/'+country+'/Outputs_for_GEMMES/Quantities_for_heating_evolution.csv')
