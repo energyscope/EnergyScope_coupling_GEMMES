@@ -30,7 +30,7 @@ type_of_model = 'MO'
 nbr_tds = 12
 
 run_opti = True
-simulate_TEJ_scenario = True
+simulate_TEJ_scenario = False
 graph = True
 graph_comp = False
 
@@ -110,8 +110,8 @@ if __name__ == '__main__':
         n_year_overlap = N_year_overlap[m]
         
       
-        case_study = '{}_{}_{}_gwp_limit_all_the_way'.format(type_of_model,n_year_opti,n_year_overlap)
-        expl_text = 'GWP limit all the way up to 2050, to reach carbon neutrality with {} years of time window and {} years of overlap'.format(n_year_opti,n_year_overlap)
+        case_study = 'TEJ'.format(type_of_model,n_year_opti,n_year_overlap)
+        expl_text = 'Transición Energetica Justa'.format(n_year_opti,n_year_overlap)
         
         output_folder = os.path.join(pth_output_all,case_study)
         output_file = os.path.join(output_folder,'_Results.pkl')
@@ -178,7 +178,7 @@ if __name__ == '__main__':
             C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(list_private_mob_tech),[3,6]] = [0,1] # Private mobility costs are supported by households
             
             list_public_mob_tech = ['TRAMWAY_TROLLEY','BUS_COACH_DIESEL','BUS_COACH_GASOLINE','BUS_COACH_HYDIESEL','BUS_COACH_CNG_STOICH','BUS_COACH_FC_HYBRIDH2','TRAIN_PUB']
-            C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(list_public_mob_tech),[3,5]] = [0,1] # Private mobility costs are supported by the State
+            C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(list_public_mob_tech),[3,5]] = [0,1] # Public mobility costs are supported by the State
             
             shares_cooling = pd.read_csv(pth_model + '/shares_cooling.csv')
             shares_cooling.set_index('Phase',inplace=True)
@@ -207,10 +207,11 @@ if __name__ == '__main__':
             C_maint[['F','B','G','H']] = C_inv.iloc[~C_inv.index.get_level_values('Phases').isin(['2015_2020']),[3,4,5,6]].values            
             # C_maint.to_csv(pth_output_all+'/'+country+'/C_op_phase_tech_non_annualised.csv')
             
+            
+            # C_op is annualised - we need to get a non-annualised version of it
             annualised_factor = pd.DataFrame(index=z_Results['C_inv_phase'].index, data=z_Results['C_inv_phase'].values / z_Results['C_inv_phase_non_annualised'].values )
             annualised_factor['merge_index'] = annualised_factor.index
-            
-            
+     
             C_op = z_Results['C_op_phase_res'].copy()
             C_op.rename(columns = {'C_op_phase_res':'Value'}, inplace = True)
             C_op_bis = C_op.copy()
@@ -349,15 +350,15 @@ if __name__ == '__main__':
             # a_website = "https://www.google.com"
             # webbrowser.open_new(a_website)
             ampl_graph.graph_resource()
-            # ampl_graph.graph_cost()
+            ampl_graph.graph_cost()
             # # ampl_graph.graph_gwp_per_sector()
             # ampl_graph.graph_cost_inv_phase_tech()
             # # ampl_graph.graph_cost_return()
             # ampl_graph.graph_cost_op_phase()
         
-            # ampl_graph.graph_layer()1
-            # ampl_graph.graph_gwp()
-            # ampl_graph.graph_tech_cap()
+            # ampl_graph.graph_layer()
+            ampl_graph.graph_gwp()
+            ampl_graph.graph_tech_cap()
             # ampl_graph.graph_total_cost_per_year()
             # # ampl_graph.graph_load_factor()
             # # df_unused = ampl_graph.graph_load_factor_2()

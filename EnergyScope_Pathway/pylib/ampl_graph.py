@@ -167,7 +167,8 @@ class AmplGraph:
         # yvals = [0,min(round(temp['Res'])),max(round(temp['Res']))]
         
         # self.custom_fig(fig,title,yvals)
-        fig.write_image(self.outdir+"Resources.pdf", width=1200, height=550)
+        # fig.write_image(self.outdir+"Resources.pdf", width=1200, height=550)
+        fig.write_html(self.outdir+"Resources.html")
         plt.close()
     
     def graph_gwp(self):
@@ -193,7 +194,8 @@ class AmplGraph:
         fig.update_xaxes(categoryorder='array', categoryarray= sorted(df_to_plot['Years'].unique()))
         plt.legend(bbox_to_anchor=(1.04, 1), loc="upper left")
         pio.show(fig)
-        fig.write_image(self.outdir+"Gwp_breakdown.pdf", width=1200, height=550)
+        # fig.write_image(self.outdir+"Gwp_breakdown.pdf", width=1200, height=550)
+        fig.write_html(self.outdir+"Gwp_breakdown.html")
         plt.close()
     
     def graph_gwp_per_sector(self):
@@ -437,7 +439,8 @@ class AmplGraph:
         plt.legend(bbox_to_anchor=(1.04, 1), loc="upper left")
         pio.show(fig)
         
-        fig.write_image(self.outdir+"Cost_breakdown_per_year.pdf", width=1200, height=550)
+        # fig.write_image(self.outdir+"Cost_breakdown_per_year.pdf", width=1200, height=550)
+        fig.write_html(self.outdir+"Cost_breakdown_per_year.html")
         plt.close()
         
         re_share_elec = self.re_share_elec
@@ -501,9 +504,10 @@ class AmplGraph:
         temp = df_to_plot.groupby(['Years'])['Cost'].sum()
         temp = temp.to_frame()
         yvals = [0, round(temp,1).min().values[0], round(temp.loc['2020','Cost'],1), round(temp,1).max().values[0]]
+        fig.write_html(self.outdir+"System_cost.html")
         
-        self.custom_fig(fig,title,yvals)
-        fig.write_image(self.outdir+"System_cost.pdf", width=1200, height=550)
+        # self.custom_fig(fig,title,yvals)
+        # fig.write_image(self.outdir+"System_cost.pdf", width=1200, height=550)
         plt.close()
     
     def graph_cost_return(self):
@@ -947,7 +951,8 @@ class AmplGraph:
                     pio.show(fig)
                     if not os.path.exists(Path(self.outdir+"Tech_Cap/")):
                         Path(self.outdir+"Tech_Cap").mkdir(parents=True,exist_ok=True)
-                    fig.write_image(self.outdir+"Tech_Cap/"+sector+".pdf", width=1200, height=550)
+                    # fig.write_image(self.outdir+"Tech_Cap/"+sector+".pdf", width=1200, height=550)
+                    fig.write_html(self.outdir+"Tech_Cap/"+sector+".html")
                 plt.close()
             
             if len(df_to_plot_full) == 0:
