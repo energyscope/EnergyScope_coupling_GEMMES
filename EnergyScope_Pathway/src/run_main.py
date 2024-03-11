@@ -30,7 +30,7 @@ type_of_model = 'MO'
 nbr_tds = 12
 
 run_opti = True
-simulate_TEJ_scenario = False
+simulate_TEJ_scenario = True
 graph = True
 graph_comp = False
 
