@@ -329,8 +329,8 @@ Aggregated values for the calibration of the 2021 EUDs are given in :numref:`Tab
       :widths: 30 20 20 20 15 10
       :name: tab:eud_2021
 		
-		electricity - baseload , 7815.0,9973.8,35585.3,0,[GWh]
-		electricity - variable , 4018.2,7431.2,11193.5,0,[GWh]
+		electricity - baseload , 9049, 13309, 35771,0,[GWh]
+		electricity - variable , 2785, 4096, 11008,0,[GWh]
 		space heating , 13640.0 ,4033.4,21853.4 ,0,[GWh]
 		hot water , 1136.7 ,0,10926.7 ,0,[GWh]
 		process heating , 0,0,26473.9 ,0,[GWh]
@@ -352,9 +352,11 @@ Electricity
 
 The aggregated electricity consumed in Colombia in 2021 was 84.4 [TWh] :cite:`IEA_2023`. The electricity used for supplying cooling, mobility and non-energy demand is subtracted from it to give an electricity EUD of 76.0 [TWh]. This corresponds to the difference between the FEC and the EUD as they are defined
 in EnergyScope (see the section on the `Conceptual modelling framework <#app:sec:conceptual_modelling_framework>`__). A part of the electricity is assumed 
-to be fixed through time (e.g. electricity for industrial processes). The other part is varying, such as electricity used for lighting. To split the electricity EUD between baseload and variable load, as well as between households, services and industry, we use shares retrieved from the National energy plan 2022.
+to be fixed through time (e.g. electricity for industrial processes). The other part is varying, such as electricity used for lighting. To split the electricity EUD between households, services and industry, we use shares retrieved from the National energy plan 2022.
 
-Electricity EUD is spread over the year according to :math:`\%_{elec}`, **which is still the one from Turkey**. The :math:`\%_{elec}` time series is the normalised value of the difference between the real time series and its minimum value.
+The daily profile of electricity generation across the year (nearly identical to the one of electricity consumption) is retrieved from the Sinergox XM website :cite:`SIN_genration_per_source`. Based on this profile, the electricity EUD can be split between baseload and variable load. The daily profile is then complemented with an estimated typical hourly profile for each weekday :cite:`elec_hourly_weekday` in order to get an hourly profile across the year. This profile is then used to produce the :math:`\%_{elec}` time series, which is the normalised profile of the variable electricity load.
+
+
 
 .. _ssec:app1_heating_end_uses:
 

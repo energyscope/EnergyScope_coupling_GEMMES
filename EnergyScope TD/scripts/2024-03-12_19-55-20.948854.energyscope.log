@@ -1,0 +1,34 @@
+24/03/12 19:55:20 [INFO    ] (import_data): Importing data files from /home/pjacques/Desktop/PhD/EnergyScope_GEMMES_coupling/EnergyScope TD/Data/CO 2021
+24/03/12 19:55:21 [INFO    ] (kmedoid_clustering): Starting kmedoid clustering of typical days based on /home/pjacques/Desktop/PhD/EnergyScope_GEMMES_coupling/EnergyScope TD/energyscope/preprocessing/td_selection/data.dat
+24/03/12 19:55:21 [INFO    ] (kmedoid_clustering): Running kmedoid clustering
+24/03/12 19:55:31 [INFO    ] (kmedoid_clustering): End of kmedoid clustering
+24/03/12 19:55:31 [INFO    ] (print_data): Printing ESTD_data.dat
+24/03/12 19:55:31 [INFO    ] (print_data): Printing ESTD_12TD.dat
+24/03/12 19:55:31 [INFO    ] (run_es): Running EnergyScope
+24/03/12 19:56:17 [INFO    ] (run_es): End of run
+24/03/12 19:56:18 [INFO    ] (read_outputs): Reading outputs from: /home/pjacques/Desktop/PhD/EnergyScope_GEMMES_coupling/EnergyScope TD/case_studies/CO 2021/output
+24/03/12 20:39:05 [INFO    ] (get_results): Getting summary
+24/03/12 20:39:05 [INFO    ] (get_total_cost): Getting TotalCost
+24/03/12 20:39:05 [INFO    ] (get_cost_breakdown): Getting Cost_breakdown
+24/03/12 20:39:05 [INFO    ] (get_cost_breakdown_non_annualised): Getting Cost_breakdown_non_annualised
+24/03/12 20:39:05 [INFO    ] (get_cost_return): Getting Cost_return
+24/03/12 20:39:05 [INFO    ] (get_total_gwp): Getting TotalGwp
+24/03/12 20:39:05 [INFO    ] (get_gwp_breakdown): Getting Gwp_breakdown
+24/03/12 20:39:05 [INFO    ] (get_resources): Getting Yearly resources and exchanges
+24/03/12 20:39:05 [INFO    ] (get_assets): Getting Assets and Storage assets
+24/03/12 20:39:06 [INFO    ] (get_year_balance): Getting Year_balance
+24/03/12 20:39:07 [WARNING ] (_parse_legend_args): No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+24/03/12 20:39:09 [WARNING ] (_parse_legend_args): No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+24/03/12 20:39:10 [WARNING ] (_parse_legend_args): No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+24/03/12 20:39:10 [WARNING ] (_parse_legend_args): No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+24/03/12 20:39:11 [WARNING ] (_parse_legend_args): No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+24/03/12 20:39:11 [WARNING ] (_parse_legend_args): No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+24/03/12 20:39:12 [WARNING ] (_parse_legend_args): No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+24/03/12 20:39:13 [WARNING ] (_parse_legend_args): No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+24/03/12 20:39:13 [WARNING ] (_parse_legend_args): No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+24/03/12 20:39:14 [WARNING ] (_parse_legend_args): No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+24/03/12 20:39:14 [WARNING ] (_parse_legend_args): No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+24/03/12 20:39:15 [WARNING ] (_parse_legend_args): No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+24/03/12 20:39:16 [WARNING ] (_parse_legend_args): No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+24/03/12 20:39:16 [WARNING ] (_parse_legend_args): No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+24/03/12 20:39:17 [WARNING ] (_parse_legend_args): No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.

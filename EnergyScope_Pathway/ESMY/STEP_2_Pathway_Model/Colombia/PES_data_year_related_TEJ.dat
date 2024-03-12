@@ -113,44 +113,44 @@ YEAR_2050	3809
 #param end_uses_demand_year {YEARS, END_USES_INPUT, SECTORS}																																																																																																																	
 param end_uses_demand_year :=																																																																																																																	
 ["YEAR_2015",*,*]: 	HOUSEHOLDS	SERVICES	INDUSTRY	TRANSPORTATION	:=																																																																																																												
-ELECTRICITY	7815.0	9973.8	35585.3	0
-LIGHTING	4018.2	7431.2	11193.5	0
-HEAT_HIGH_T	0	0	26473.9	0
+ELECTRICITY	9049.0	13309.0	35771.0	0
+LIGHTING	2785.0	4096.0	11008.0	0
+HEAT_HIGH_T	0.0	0.0	26473.9	0
 HEAT_LOW_T_SH	13640.0	4033.4	21853.4	0
-HEAT_LOW_T_HW	1136.7	0	10926.7	0
+HEAT_LOW_T_HW	1136.7	0.0	10926.7	0
 PROCESS_COOLING	0.0	0.0	277.8	0
 SPACE_COOLING	2556.0	2528.0	0.0	0
-MOBILITY_PASSENGER	0	0	0	347881
-MOBILITY_FREIGHT	0	0	0	97783
-NON_ENERGY	0	0	22423	0                                                
+MOBILITY_PASSENGER	0.0	0.0	0.0	347881
+MOBILITY_FREIGHT	0.0	0.0	0.0	97783
+NON_ENERGY	0.0	0.0	22423.0	0                                                
 
 ["YEAR_2020",*,*]: 	HOUSEHOLDS	SERVICES	INDUSTRY	TRANSPORTATION	:=																																																																																																												
-ELECTRICITY	7815.0	9973.8	35585.3	0
-LIGHTING	4018.2	7431.2	11193.5	0
-HEAT_HIGH_T	0	0	26473.9	0
+ELECTRICITY	9049.0	13309.0	35771.0	0
+LIGHTING	2785.0	4096.0	11008.0	0
+HEAT_HIGH_T	0.0	0.0	26473.9	0
 HEAT_LOW_T_SH	13640.0	4033.4	21853.4	0
-HEAT_LOW_T_HW	1136.7	0	10926.7	0
+HEAT_LOW_T_HW	1136.7	0.0	10926.7	0
 PROCESS_COOLING	0.0	0.0	277.8	0
 SPACE_COOLING	2556.0	2528.0	0.0	0
-MOBILITY_PASSENGER	0	0	0	347881
-MOBILITY_FREIGHT	0	0	0	97783
-NON_ENERGY	0	0	22423	0
+MOBILITY_PASSENGER	0.0	0.0	0.0	347881
+MOBILITY_FREIGHT	0.0	0.0	0.0	97783
+NON_ENERGY	0.0	0.0	22423.0	0
 																																																																																																																	
 ["YEAR_2025",*,*]: 	HOUSEHOLDS	SERVICES	INDUSTRY	TRANSPORTATION	:=																																																																																																												
-ELECTRICITY	8596.0	10971.0	39144.0	0
-LIGHTING	4420.0	8174.0	12313.0	0
-HEAT_HIGH_T	0.0	0.0	29121.0	0
-HEAT_LOW_T_SH	15004.0	4437.0	24039.0	0
-HEAT_LOW_T_HW	1250.0	0.0	12019.0	0
+ELECTRICITY	9954.0	14640.0	39348.0	0.0
+LIGHTING	3064.0	4506.0	12109.0	0.0
+HEAT_HIGH_T	0.0	0.0	29121.0	0.0
+HEAT_LOW_T_SH	15004.0	4437.0	24039.0	0.0
+HEAT_LOW_T_HW	1250.0	0.0	12019.0	0.0
 PROCESS_COOLING	0.0	0.0	306.0	0.0
 SPACE_COOLING	2812.0	2781.0	0.0	0.0
-MOBILITY_PASSENGER	0.0	0.0	0.0	382669
-MOBILITY_FREIGHT	0.0	0.0	0.0	107561
-NON_ENERGY	0.0	0.0	24665.0	0
+MOBILITY_PASSENGER	0.0	0.0	0.0	382669.0
+MOBILITY_FREIGHT	0.0	0.0	0.0	107561.0
+NON_ENERGY	0.0	0.0	24665.0	0.0
 																																																																																																																	
 ["YEAR_2030",*,*]: 	HOUSEHOLDS	SERVICES	INDUSTRY	TRANSPORTATION	:=																																																																																																												
-ELECTRICITY	9691.0	12368.0	44126.0	0.0
-LIGHTING	4983.0	9215.0	13880.0	0.0
+ELECTRICITY	11221.0	16503.0	44356.0	0.0
+LIGHTING	3453.0	5079.0	13650.0	0.0
 HEAT_HIGH_T	0.0	0.0	32828.0	0.0
 HEAT_LOW_T_SH	16914.0	5001.0	27098.0	0.0
 HEAT_LOW_T_HW	1410.0	0.0	13549.0	0.0
@@ -158,11 +158,11 @@ PROCESS_COOLING	0.0	0.0	344.0	0.0
 SPACE_COOLING	3169.0	3135.0	0.0	0.0
 MOBILITY_PASSENGER	0.0	0.0	0.0	431372.0
 MOBILITY_FREIGHT	0.0	0.0	0.0	121251.0
-NON_ENERGY	0.0	0.0	27805.0	0																																																																																																													
+NON_ENERGY	0.0	0.0	27805.0	0.0																																																																																																													
 																																																																																																																	
 ["YEAR_2035",*,*]: 	HOUSEHOLDS	SERVICES	INDUSTRY	TRANSPORTATION	:=																																																																																																												
-ELECTRICITY	10941.0	13963.0	49819.0	0.0
-LIGHTING	5625.0	10404.0	15671.0	0.0
+ELECTRICITY	12669.0	18633.0	50079.0	0.0
+LIGHTING	3899.0	5734.0	15411.0	0.0
 HEAT_HIGH_T	0.0	0.0	37063.0	0.0
 HEAT_LOW_T_SH	19096.0	5647.0	30595.0	0.0
 HEAT_LOW_T_HW	1591.0	0.0	15297.0	0.0
@@ -170,11 +170,11 @@ PROCESS_COOLING	0.0	0.0	389.0	0.0
 SPACE_COOLING	3578.0	3539.0	0.0	0.0
 MOBILITY_PASSENGER	0.0	0.0	0.0	487033.0
 MOBILITY_FREIGHT	0.0	0.0	0.0	136896.0
-NON_ENERGY	0.0	0.0	31392.0	0
+NON_ENERGY	0.0	0.0	31392.0	0.0
 																																																																																																																	
 ["YEAR_2040",*,*]: 	HOUSEHOLDS	SERVICES	INDUSTRY	TRANSPORTATION	:=																																																																																																												
-ELECTRICITY	11644.0	14861.0	53022.0	0.0
-LIGHTING	5987.0	11072.0	16678.0	0.0
+ELECTRICITY	13483.0	19830.0	53299.0	0.0
+LIGHTING	4150.0	6103.0	16402.0	0.0
 HEAT_HIGH_T	0.0	0.0	39446.0	0.0
 HEAT_LOW_T_SH	20324.0	6010.0	32562.0	0.0
 HEAT_LOW_T_HW	1694.0	0.0	16281.0	0.0
@@ -182,11 +182,11 @@ PROCESS_COOLING	0.0	0.0	414.0	0.0
 SPACE_COOLING	3808.0	3767.0	0.0	0.0
 MOBILITY_PASSENGER	0.0	0.0	0.0	518343.0
 MOBILITY_FREIGHT	0.0	0.0	0.0	145697.0
-NON_ENERGY	0.0	0.0	33410.0	0
+NON_ENERGY	0.0	0.0	33410.0	0.0
 
 ["YEAR_2045",*,*]: 	HOUSEHOLDS	SERVICES	INDUSTRY	TRANSPORTATION	:=																																																																																																												
-ELECTRICITY	12426.0	15858.0	56581.0	0.0
-LIGHTING	6389.0	11816.0	17798.0	0.0
+ELECTRICITY	14388.0	21161.0	56876.0	0.0
+LIGHTING	4428.0	6513.0	17503.0	0.0
 HEAT_HIGH_T	0.0	0.0	42094.0	0.0
 HEAT_LOW_T_SH	21688.0	6413.0	34747.0	0.0
 HEAT_LOW_T_HW	1807.0	0.0	17373.0	0.0
@@ -194,11 +194,11 @@ PROCESS_COOLING	0.0	0.0	442.0	0.0
 SPACE_COOLING	4064.0	4020.0	0.0	0.0
 MOBILITY_PASSENGER	0.0	0.0	0.0	553131.0
 MOBILITY_FREIGHT	0.0	0.0	0.0	155475.0
-NON_ENERGY	0.0	0.0	35653.0	0
+NON_ENERGY	0.0	0.0	35653.0	0.0
 
 ["YEAR_2050",*,*]: 	HOUSEHOLDS	SERVICES	INDUSTRY	TRANSPORTATION	:=																																																																																																												
-ELECTRICITY	13286.0	16955.0	60495.0	0.0
-LIGHTING	6831.0	12633.0	19029.0	0.0
+ELECTRICITY	15383.0	22625.0	60811.0	0.0
+LIGHTING	4734.0	6963.0	18714.0	0.0
 HEAT_HIGH_T	0.0	0.0	45006.0	0.0
 HEAT_LOW_T_SH	23188.0	6857.0	37151.0	0.0
 HEAT_LOW_T_HW	1932.0	0.0	18575.0	0.0
@@ -206,7 +206,7 @@ PROCESS_COOLING	0.0	0.0	472.0	0.0
 SPACE_COOLING	4345.0	4298.0	0.0	0.0
 MOBILITY_PASSENGER	0.0	0.0	0.0	591398.0
 MOBILITY_FREIGHT	0.0	0.0	0.0	166231.0
-NON_ENERGY	0.0	0.0	38119.0	0																																																																																																													
+NON_ENERGY	0.0	0.0	38119.0	0.0																																																																																																																																																																																																																										
 ;																																																																																																																	
 																																																																																																																	
 param:	share_mobility_public_min	share_freight_train_min	share_freight_boat_min	share_freight_road_min	share_heat_dhn_min	share_mobility_public_max	share_freight_train_max	share_freight_boat_max	share_freight_road_max	share_private_motorcycle_max	share_heat_dhn_max	:=																																																																																																						

@@ -8,7 +8,7 @@ Adjusted problem:
 	119759 inequality constraints
 1 linear objective; 1 nonzero.
 
-Setting $presolve_fixeps >= 5.33e-07 could change presolve results.
+Setting $presolve_fixeps >= 5.06e-07 could change presolve results.
 
 presolve results:
 	variables omitted:	687119
@@ -17,24 +17,24 @@ presolve results:
 	bounds improved:	687609
 	constraint_drop_tol breakpoints: 0, 0, 4.173043478375539
 	nba cycles:		9
-	bound row scans:	273258
-	row-scan updates:	34360
+	bound row scans:	273301
+	row-scan updates:	34366
 Gurobi 10.0.3:   pre:dual = -1
   alg:method = 2
   bar:crossover = 0
   pre:passes = 3
   bar:convtol = 1e-06
   pre:solve = -1
-Gurobi 10.0.3: optimal solution; objective 50299.30547
+Gurobi 10.0.3: optimal solution; objective 50271.60416
 0 simplex iterations
-53 barrier iterations
+62 barrier iterations
  
 ------------ WARNINGS ------------
 WARNING:  "Solution Check"
      [ sol:chk:feastol=1e-06, :feastolrel=1e-06, :inttol=1e-05,
        :round='', :prec='' ]
 Algebraic expression violations:
-  - 74 original expression(s) of type ':linrange',
+  - 78 original expression(s) of type ':linrange',
         up to 2E-04 (abs)
  
  
@@ -42,11 +42,11 @@ solve_result = solved
 
 solve_result_num = 0
 
-_solve_elapsed_time = 25.4868
+_solve_elapsed_time = 21.5202
 
-TotalCost 50299.30546880218
+TotalCost 50271.60416439452
 Carbon_cost 0
-GWP_op 94133.36478269182
+GWP_op 94107.22334751776
 carbon_price 0
 --------------SAVING COSTS -----------
 --------------SAVING RESOURCES -----------
