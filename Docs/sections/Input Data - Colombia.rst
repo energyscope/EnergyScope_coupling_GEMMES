@@ -354,7 +354,7 @@ The aggregated electricity consumed in Colombia in 2021 was 84.4 [TWh] :cite:`IE
 in EnergyScope (see the section on the `Conceptual modelling framework <#app:sec:conceptual_modelling_framework>`__). A part of the electricity is assumed 
 to be fixed through time (e.g. electricity for industrial processes). The other part is varying, such as electricity used for lighting. To split the electricity EUD between households, services and industry, we use shares retrieved from the National energy plan 2022.
 
-The daily profile of electricity generation across the year (nearly identical to the one of electricity consumption) is retrieved from the Sinergox XM website :cite:`SIN_genration_per_source`. Based on this profile, the electricity EUD can be split between baseload and variable load. The daily profile is then complemented with an estimated typical hourly profile for each weekday :cite:`elec_hourly_weekday` in order to get an hourly profile across the year. This profile is then used to produce the :math:`\%_{elec}` time series, which is the normalised profile of the variable electricity load.
+The daily profile of electricity generation across the year (nearly identical to the one of electricity consumption) is retrieved from the Sinergox XM website :cite:`SIN_genration_per_source`. We choose to take the average between the profiles of 2021 and 2022. Based on this average profile, the electricity EUD can be split between baseload and variable load. The daily profile is then complemented with an estimated typical hourly profile for each weekday :cite:`elec_hourly_weekday` in order to get an hourly profile across the year. This profile is then used to produce the :math:`\%_{elec}` time series, which is the normalised profile of the variable electricity load.
 
 
 
@@ -543,7 +543,9 @@ for locations of (lat,lon)=(12,-72) and (lat,lon)=(12,-71.25). These locations w
 CSP potential, based on the open-source database from :cite:`dupont_2020`. The mean of the two time series is then computed
 to give the yearly :math:`c_{p,t}` time series for Colombia in 2035.
 
-For hydro dam and hydro river, ...
+Finally, for hydro dam and hydro river, daily incoming water flow to hydro-electric facilities in Colombia was taken from the Sinergox XM 
+website :cite:`hydro_ts`. The daily data for years 2018 to 2022 were normalized and their average was computed to give a yearly profile
+:math:`c_{p,t}`. This profile was given an hourly (instead of a daily) granularity by assuming a constant value for each hour of a same day.
 
 .. _ssec:app1_non-renewable:
 
