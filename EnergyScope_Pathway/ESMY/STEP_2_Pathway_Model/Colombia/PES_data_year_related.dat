@@ -114,7 +114,7 @@ YEAR_2050	3809
 param end_uses_demand_year :=																																																																																																																	
 ["YEAR_2015",*,*]: 	HOUSEHOLDS	SERVICES	INDUSTRY	TRANSPORTATION	:=																																																																																																												
 ELECTRICITY	9049.0	13309.0	35771.0	0
-LIGHTING	2785.0	4096.0	11008.0	0
+ELECTRICITY_VAR	2785.0	4096.0	11008.0	0
 HEAT_HIGH_T	0.0	0.0	26473.9	0
 HEAT_LOW_T_SH	13640.0	4033.4	21853.4	0
 HEAT_LOW_T_HW	1136.7	0.0	10926.7	0
@@ -126,7 +126,7 @@ NON_ENERGY	0.0	0.0	22423.0	0
 
 ["YEAR_2020",*,*]: 	HOUSEHOLDS	SERVICES	INDUSTRY	TRANSPORTATION	:=																																																																																																												
 ELECTRICITY	9049.0	13309.0	35771.0	0
-LIGHTING	2785.0	4096.0	11008.0	0
+ELECTRICITY_VAR	2785.0	4096.0	11008.0	0
 HEAT_HIGH_T	0.0	0.0	26473.9	0
 HEAT_LOW_T_SH	13640.0	4033.4	21853.4	0
 HEAT_LOW_T_HW	1136.7	0.0	10926.7	0
@@ -138,7 +138,7 @@ NON_ENERGY	0.0	0.0	22423.0	0
 																																																																																																																	
 ["YEAR_2025",*,*]: 	HOUSEHOLDS	SERVICES	INDUSTRY	TRANSPORTATION	:=																																																																																																												
 ELECTRICITY	9954.0	14640.0	39348.0	0.0
-LIGHTING	3064.0	4506.0	12109.0	0.0
+ELECTRICITY_VAR	3064.0	4506.0	12109.0	0.0
 HEAT_HIGH_T	0.0	0.0	29121.0	0.0
 HEAT_LOW_T_SH	15004.0	4437.0	24039.0	0.0
 HEAT_LOW_T_HW	1250.0	0.0	12019.0	0.0
@@ -150,7 +150,7 @@ NON_ENERGY	0.0	0.0	24665.0	0.0
 																																																																																																																	
 ["YEAR_2030",*,*]: 	HOUSEHOLDS	SERVICES	INDUSTRY	TRANSPORTATION	:=																																																																																																												
 ELECTRICITY	11221.0	16503.0	44356.0	0.0
-LIGHTING	3453.0	5079.0	13650.0	0.0
+ELECTRICITY_VAR	3453.0	5079.0	13650.0	0.0
 HEAT_HIGH_T	0.0	0.0	32828.0	0.0
 HEAT_LOW_T_SH	16914.0	5001.0	27098.0	0.0
 HEAT_LOW_T_HW	1410.0	0.0	13549.0	0.0
@@ -162,7 +162,7 @@ NON_ENERGY	0.0	0.0	27805.0	0.0
 																																																																																																																	
 ["YEAR_2035",*,*]: 	HOUSEHOLDS	SERVICES	INDUSTRY	TRANSPORTATION	:=																																																																																																												
 ELECTRICITY	12669.0	18633.0	50079.0	0.0
-LIGHTING	3899.0	5734.0	15411.0	0.0
+ELECTRICITY_VAR	3899.0	5734.0	15411.0	0.0
 HEAT_HIGH_T	0.0	0.0	37063.0	0.0
 HEAT_LOW_T_SH	19096.0	5647.0	30595.0	0.0
 HEAT_LOW_T_HW	1591.0	0.0	15297.0	0.0
@@ -174,7 +174,7 @@ NON_ENERGY	0.0	0.0	31392.0	0.0
 																																																																																																																	
 ["YEAR_2040",*,*]: 	HOUSEHOLDS	SERVICES	INDUSTRY	TRANSPORTATION	:=																																																																																																												
 ELECTRICITY	13483.0	19830.0	53299.0	0.0
-LIGHTING	4150.0	6103.0	16402.0	0.0
+ELECTRICITY_VAR	4150.0	6103.0	16402.0	0.0
 HEAT_HIGH_T	0.0	0.0	39446.0	0.0
 HEAT_LOW_T_SH	20324.0	6010.0	32562.0	0.0
 HEAT_LOW_T_HW	1694.0	0.0	16281.0	0.0
@@ -186,7 +186,7 @@ NON_ENERGY	0.0	0.0	33410.0	0.0
 
 ["YEAR_2045",*,*]: 	HOUSEHOLDS	SERVICES	INDUSTRY	TRANSPORTATION	:=																																																																																																												
 ELECTRICITY	14388.0	21161.0	56876.0	0.0
-LIGHTING	4428.0	6513.0	17503.0	0.0
+ELECTRICITY_VAR	4428.0	6513.0	17503.0	0.0
 HEAT_HIGH_T	0.0	0.0	42094.0	0.0
 HEAT_LOW_T_SH	21688.0	6413.0	34747.0	0.0
 HEAT_LOW_T_HW	1807.0	0.0	17373.0	0.0
@@ -198,7 +198,7 @@ NON_ENERGY	0.0	0.0	35653.0	0.0
 
 ["YEAR_2050",*,*]: 	HOUSEHOLDS	SERVICES	INDUSTRY	TRANSPORTATION	:=																																																																																																												
 ELECTRICITY	15383.0	22625.0	60811.0	0.0
-LIGHTING	4734.0	6963.0	18714.0	0.0
+ELECTRICITY_VAR	4734.0	6963.0	18714.0	0.0
 HEAT_HIGH_T	0.0	0.0	45006.0	0.0
 HEAT_LOW_T_SH	23188.0	6857.0	37151.0	0.0
 HEAT_LOW_T_HW	1932.0	0.0	18575.0	0.0

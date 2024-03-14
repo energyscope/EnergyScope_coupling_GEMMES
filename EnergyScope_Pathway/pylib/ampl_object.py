@@ -170,6 +170,11 @@ class AmplObject:
         else:
             self.ampl.get_parameter(name).setValues(value)
     
+    def get_param(self, name):
+            return self.ampl.get_parameter(name).get_values()
+    
+    def get_ampl(self):
+        return self.ampl
 
     def clean_history(self):
         open(os.path.join(self.dir,'fix.mod'), 'w').close()

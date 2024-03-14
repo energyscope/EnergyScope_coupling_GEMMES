@@ -114,7 +114,7 @@ YEAR_2050	7272
 param end_uses_demand_year :=																																																																																																																	
 ["YEAR_2015",*,*]: 	HOUSEHOLDS	SERVICES	INDUSTRY	TRANSPORTATION	:=																																																																																																												
 ELECTRICITY	20535.1	27069.0	44803.8	933.4
-LIGHTING	16944.5	22336.0	36969.9	770.2
+ELECTRICITY_VAR	16944.5	22336.0	36969.9	770.2
 HEAT_HIGH_T	0.0	2645.3	62440.8	0.0
 HEAT_LOW_T_SH	205997.3	61791.1	23670.2	0.0
 HEAT_LOW_T_HW	122077.0	34139.4	0.0	0.0
@@ -126,7 +126,7 @@ NON_ENERGY	0.0	0.0	58996.0	2088.0
 
 ["YEAR_2020",*,*]: 	HOUSEHOLDS	SERVICES	INDUSTRY	TRANSPORTATION	:=																																																																																																												
 ELECTRICITY	20535.1	27069.0	44803.8	933.4
-LIGHTING	16944.5	22336.0	36969.9	770.2
+ELECTRICITY_VAR	16944.5	22336.0	36969.9	770.2
 HEAT_HIGH_T	0.0	2645.3	62440.8	0.0
 HEAT_LOW_T_SH	205997.3	61791.1	23670.2	0.0
 HEAT_LOW_T_HW	122077.0	34139.4	0.0	0.0
@@ -138,7 +138,7 @@ NON_ENERGY	0.0	0.0	58996.0	2088.0
 																																																																																																																	
 ["YEAR_2025",*,*]: 	HOUSEHOLDS	SERVICES	INDUSTRY	TRANSPORTATION	:=																																																																																																												
 ELECTRICITY	23266.0	30669.0	50763.0	1058.0
-LIGHTING	19198.0	25307.0	41887.0	873.0
+ELECTRICITY_VAR	19198.0	25307.0	41887.0	873.0
 HEAT_HIGH_T	0.0	2997.0	70745.0	0.0
 HEAT_LOW_T_SH	233395.0	70009.0	26818.0	0.0
 HEAT_LOW_T_HW	138313.0	38680.0	0.0	0.0
@@ -150,7 +150,7 @@ NON_ENERGY	0.0	0.0	66842.0	2366.0
 																																																																																																																	
 ["YEAR_2030",*,*]: 	HOUSEHOLDS	SERVICES	INDUSTRY	TRANSPORTATION	:=																																																																																																												
 ELECTRICITY	26059.0	34351.0	56856.0	1184.0
-LIGHTING	21503.0	28344.0	46915.0	977.0
+ELECTRICITY_VAR	21503.0	28344.0	46915.0	977.0
 HEAT_HIGH_T	0.0	3357.0	79237.0	0.0
 HEAT_LOW_T_SH	261411.0	78413.0	30037.0	0.0
 HEAT_LOW_T_HW	154916.0	43323.0	0.0	0.0
@@ -162,7 +162,7 @@ NON_ENERGY	0.0	0.0	74866.0	2650.0
 																																																																																																																	
 ["YEAR_2035",*,*]: 	HOUSEHOLDS	SERVICES	INDUSTRY	TRANSPORTATION	:=																																																																																																												
 ELECTRICITY	29201.0	38492.0	63711.0	1327.0
-LIGHTING	24095.0	31762.0	52571.0	1095.0
+ELECTRICITY_VAR	24095.0	31762.0	52571.0	1095.0
 HEAT_HIGH_T	0.0	3762.0	88791.0	0.0
 HEAT_LOW_T_SH	292928.0	87867.0	33659.0	0.0
 HEAT_LOW_T_HW	173593.0	48546.0	0.0	0.0
@@ -174,7 +174,7 @@ NON_ENERGY	0.0	0.0	83892.0	2969.0
 																																																																																																																	
 ["YEAR_2040",*,*]: 	HOUSEHOLDS	SERVICES	INDUSTRY	TRANSPORTATION	:=																																																																																																												
 ELECTRICITY	31152.0	41064.0	67967.0	1416.0
-LIGHTING	25705.0	33884.0	56083.0	1168.0
+ELECTRICITY_VAR	25705.0	33884.0	56083.0	1168.0
 HEAT_HIGH_T	0.0	4013.0	94723.0	0.0
 HEAT_LOW_T_SH	312498.0	93737.0	35908.0	0.0
 HEAT_LOW_T_HW	185191.0	51789.0	0.0	0.0
@@ -186,7 +186,7 @@ NON_ENERGY	0.0	0.0	89497.0	3167.0
 
 ["YEAR_2045",*,*]: 	HOUSEHOLDS	SERVICES	INDUSTRY	TRANSPORTATION	:=																																																																																																												
 ELECTRICITY	33246.0	43825.0	72537.0	1511.0
-LIGHTING	27433.0	36162.0	59854.0	1247.0
+ELECTRICITY_VAR	27433.0	36162.0	59854.0	1247.0
 HEAT_HIGH_T	0.0	4283.0	101092.0	0.0
 HEAT_LOW_T_SH	333510.0	100040.0	38322.0	0.0
 HEAT_LOW_T_HW	197643.0	55272.0	0.0	0.0
@@ -198,7 +198,7 @@ NON_ENERGY	0.0	0.0	95515.0	3380.0
 
 ["YEAR_2050",*,*]: 	HOUSEHOLDS	SERVICES	INDUSTRY	TRANSPORTATION	:=																																																																																																												
 ELECTRICITY	35464.0	46748.0	77376.0	1612.0
-LIGHTING	29263.0	38574.0	63847.0	1330.0
+ELECTRICITY_VAR	29263.0	38574.0	63847.0	1330.0
 HEAT_HIGH_T	0.0	4568.0	107835.0	0.0
 HEAT_LOW_T_SH	355757.0	106713.0	40878.0	0.0
 HEAT_LOW_T_HW	210827.0	58959.0	0.0	0.0

@@ -1,0 +1,267 @@
+24/03/14 10:13:24 [INFO    ] (import_data): Importing data files from /home/pjacques/Desktop/PhD/EnergyScope_GEMMES_coupling/EnergyScope TD/Data/CO 2050
+24/03/14 10:13:24 [INFO    ] (kmedoid_clustering): Starting kmedoid clustering of typical days based on /home/pjacques/Desktop/PhD/EnergyScope_GEMMES_coupling/EnergyScope TD/energyscope/preprocessing/td_selection/data.dat
+24/03/14 10:13:24 [INFO    ] (kmedoid_clustering): Running kmedoid clustering
+24/03/14 10:13:35 [INFO    ] (kmedoid_clustering): End of kmedoid clustering
+24/03/14 10:13:35 [INFO    ] (print_data): Printing ESTD_data.dat
+24/03/14 10:13:35 [INFO    ] (print_data): Printing ESTD_12TD.dat
+24/03/14 10:13:35 [INFO    ] (run_es): Running EnergyScope
+24/03/14 10:14:53 [INFO    ] (run_es): End of run
+24/03/14 10:14:55 [INFO    ] (read_outputs): Reading outputs from: /home/pjacques/Desktop/PhD/EnergyScope_GEMMES_coupling/EnergyScope TD/case_studies/CO 2050 - net zero/output
+24/03/14 10:22:27 [INFO    ] (get_results): Getting summary
+24/03/14 10:22:27 [INFO    ] (get_total_cost): Getting TotalCost
+24/03/14 10:22:27 [INFO    ] (get_cost_breakdown): Getting Cost_breakdown
+24/03/14 10:22:27 [INFO    ] (get_cost_breakdown_non_annualised): Getting Cost_breakdown_non_annualised
+24/03/14 10:22:27 [INFO    ] (get_cost_return): Getting Cost_return
+24/03/14 10:22:28 [INFO    ] (get_total_gwp): Getting TotalGwp
+24/03/14 10:22:28 [INFO    ] (get_gwp_breakdown): Getting Gwp_breakdown
+24/03/14 10:22:28 [INFO    ] (get_resources): Getting Yearly resources and exchanges
+24/03/14 10:22:28 [INFO    ] (get_assets): Getting Assets and Storage assets
+24/03/14 10:22:28 [INFO    ] (get_year_balance): Getting Year_balance
+24/03/14 10:22:30 [WARNING ] (_parse_legend_args): No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+24/03/14 10:28:17 [INFO    ] (get_results): Getting summary
+24/03/14 10:28:17 [INFO    ] (get_total_cost): Getting TotalCost
+24/03/14 10:28:17 [INFO    ] (get_cost_breakdown): Getting Cost_breakdown
+24/03/14 10:28:17 [INFO    ] (get_cost_breakdown_non_annualised): Getting Cost_breakdown_non_annualised
+24/03/14 10:28:17 [INFO    ] (get_cost_return): Getting Cost_return
+24/03/14 10:28:18 [INFO    ] (get_total_gwp): Getting TotalGwp
+24/03/14 10:28:18 [INFO    ] (get_gwp_breakdown): Getting Gwp_breakdown
+24/03/14 10:28:18 [INFO    ] (get_resources): Getting Yearly resources and exchanges
+24/03/14 10:28:18 [INFO    ] (get_assets): Getting Assets and Storage assets
+24/03/14 10:28:18 [INFO    ] (get_year_balance): Getting Year_balance
+24/03/14 10:28:19 [WARNING ] (_parse_legend_args): No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+24/03/14 10:28:54 [INFO    ] (get_results): Getting summary
+24/03/14 10:28:54 [INFO    ] (get_total_cost): Getting TotalCost
+24/03/14 10:28:54 [INFO    ] (get_cost_breakdown): Getting Cost_breakdown
+24/03/14 10:28:54 [INFO    ] (get_cost_breakdown_non_annualised): Getting Cost_breakdown_non_annualised
+24/03/14 10:28:54 [INFO    ] (get_cost_return): Getting Cost_return
+24/03/14 10:28:54 [INFO    ] (get_total_gwp): Getting TotalGwp
+24/03/14 10:28:54 [INFO    ] (get_gwp_breakdown): Getting Gwp_breakdown
+24/03/14 10:28:54 [INFO    ] (get_resources): Getting Yearly resources and exchanges
+24/03/14 10:28:54 [INFO    ] (get_assets): Getting Assets and Storage assets
+24/03/14 10:28:55 [INFO    ] (get_year_balance): Getting Year_balance
+24/03/14 10:28:56 [WARNING ] (_parse_legend_args): No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+24/03/14 10:46:18 [INFO    ] (get_results): Getting summary
+24/03/14 10:46:18 [INFO    ] (get_total_cost): Getting TotalCost
+24/03/14 10:46:18 [INFO    ] (get_cost_breakdown): Getting Cost_breakdown
+24/03/14 10:46:18 [INFO    ] (get_cost_breakdown_non_annualised): Getting Cost_breakdown_non_annualised
+24/03/14 10:46:18 [INFO    ] (get_cost_return): Getting Cost_return
+24/03/14 10:46:18 [INFO    ] (get_total_gwp): Getting TotalGwp
+24/03/14 10:46:18 [INFO    ] (get_gwp_breakdown): Getting Gwp_breakdown
+24/03/14 10:46:18 [INFO    ] (get_resources): Getting Yearly resources and exchanges
+24/03/14 10:46:18 [INFO    ] (get_assets): Getting Assets and Storage assets
+24/03/14 10:46:19 [INFO    ] (get_year_balance): Getting Year_balance
+24/03/14 10:46:20 [WARNING ] (_parse_legend_args): No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+24/03/14 10:48:26 [INFO    ] (get_results): Getting summary
+24/03/14 10:48:26 [INFO    ] (get_total_cost): Getting TotalCost
+24/03/14 10:48:26 [INFO    ] (get_cost_breakdown): Getting Cost_breakdown
+24/03/14 10:48:26 [INFO    ] (get_cost_breakdown_non_annualised): Getting Cost_breakdown_non_annualised
+24/03/14 10:48:26 [INFO    ] (get_cost_return): Getting Cost_return
+24/03/14 10:48:26 [INFO    ] (get_total_gwp): Getting TotalGwp
+24/03/14 10:48:26 [INFO    ] (get_gwp_breakdown): Getting Gwp_breakdown
+24/03/14 10:48:26 [INFO    ] (get_resources): Getting Yearly resources and exchanges
+24/03/14 10:48:26 [INFO    ] (get_assets): Getting Assets and Storage assets
+24/03/14 10:48:27 [INFO    ] (get_year_balance): Getting Year_balance
+24/03/14 10:48:28 [WARNING ] (_parse_legend_args): No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+24/03/14 10:49:16 [INFO    ] (get_results): Getting summary
+24/03/14 10:49:16 [INFO    ] (get_total_cost): Getting TotalCost
+24/03/14 10:49:16 [INFO    ] (get_cost_breakdown): Getting Cost_breakdown
+24/03/14 10:49:16 [INFO    ] (get_cost_breakdown_non_annualised): Getting Cost_breakdown_non_annualised
+24/03/14 10:49:16 [INFO    ] (get_cost_return): Getting Cost_return
+24/03/14 10:49:16 [INFO    ] (get_total_gwp): Getting TotalGwp
+24/03/14 10:49:16 [INFO    ] (get_gwp_breakdown): Getting Gwp_breakdown
+24/03/14 10:49:16 [INFO    ] (get_resources): Getting Yearly resources and exchanges
+24/03/14 10:49:16 [INFO    ] (get_assets): Getting Assets and Storage assets
+24/03/14 10:49:17 [INFO    ] (get_year_balance): Getting Year_balance
+24/03/14 10:49:18 [WARNING ] (_parse_legend_args): No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+24/03/14 10:50:21 [INFO    ] (get_results): Getting summary
+24/03/14 10:50:21 [INFO    ] (get_total_cost): Getting TotalCost
+24/03/14 10:50:21 [INFO    ] (get_cost_breakdown): Getting Cost_breakdown
+24/03/14 10:50:21 [INFO    ] (get_cost_breakdown_non_annualised): Getting Cost_breakdown_non_annualised
+24/03/14 10:50:21 [INFO    ] (get_cost_return): Getting Cost_return
+24/03/14 10:50:21 [INFO    ] (get_total_gwp): Getting TotalGwp
+24/03/14 10:50:21 [INFO    ] (get_gwp_breakdown): Getting Gwp_breakdown
+24/03/14 10:50:21 [INFO    ] (get_resources): Getting Yearly resources and exchanges
+24/03/14 10:50:21 [INFO    ] (get_assets): Getting Assets and Storage assets
+24/03/14 10:50:22 [INFO    ] (get_year_balance): Getting Year_balance
+24/03/14 10:50:23 [WARNING ] (_parse_legend_args): No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+24/03/14 10:52:48 [INFO    ] (get_results): Getting summary
+24/03/14 10:52:48 [INFO    ] (get_total_cost): Getting TotalCost
+24/03/14 10:52:48 [INFO    ] (get_cost_breakdown): Getting Cost_breakdown
+24/03/14 10:52:48 [INFO    ] (get_cost_breakdown_non_annualised): Getting Cost_breakdown_non_annualised
+24/03/14 10:52:48 [INFO    ] (get_cost_return): Getting Cost_return
+24/03/14 10:52:48 [INFO    ] (get_total_gwp): Getting TotalGwp
+24/03/14 10:52:48 [INFO    ] (get_gwp_breakdown): Getting Gwp_breakdown
+24/03/14 10:52:48 [INFO    ] (get_resources): Getting Yearly resources and exchanges
+24/03/14 10:52:48 [INFO    ] (get_assets): Getting Assets and Storage assets
+24/03/14 10:52:49 [INFO    ] (get_year_balance): Getting Year_balance
+24/03/14 10:52:50 [WARNING ] (_parse_legend_args): No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+24/03/14 12:00:58 [INFO    ] (get_results): Getting summary
+24/03/14 12:00:58 [INFO    ] (get_total_cost): Getting TotalCost
+24/03/14 12:00:58 [INFO    ] (get_cost_breakdown): Getting Cost_breakdown
+24/03/14 12:00:58 [INFO    ] (get_cost_breakdown_non_annualised): Getting Cost_breakdown_non_annualised
+24/03/14 12:00:58 [INFO    ] (get_cost_return): Getting Cost_return
+24/03/14 12:00:58 [INFO    ] (get_total_gwp): Getting TotalGwp
+24/03/14 12:00:58 [INFO    ] (get_gwp_breakdown): Getting Gwp_breakdown
+24/03/14 12:00:58 [INFO    ] (get_resources): Getting Yearly resources and exchanges
+24/03/14 12:00:58 [INFO    ] (get_assets): Getting Assets and Storage assets
+24/03/14 12:00:59 [INFO    ] (get_year_balance): Getting Year_balance
+24/03/14 12:01:00 [WARNING ] (_parse_legend_args): No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+24/03/14 12:07:12 [INFO    ] (get_results): Getting summary
+24/03/14 12:07:12 [INFO    ] (get_total_cost): Getting TotalCost
+24/03/14 12:07:12 [INFO    ] (get_cost_breakdown): Getting Cost_breakdown
+24/03/14 12:07:12 [INFO    ] (get_cost_breakdown_non_annualised): Getting Cost_breakdown_non_annualised
+24/03/14 12:07:12 [INFO    ] (get_cost_return): Getting Cost_return
+24/03/14 12:07:12 [INFO    ] (get_total_gwp): Getting TotalGwp
+24/03/14 12:07:12 [INFO    ] (get_gwp_breakdown): Getting Gwp_breakdown
+24/03/14 12:07:12 [INFO    ] (get_resources): Getting Yearly resources and exchanges
+24/03/14 12:07:12 [INFO    ] (get_assets): Getting Assets and Storage assets
+24/03/14 12:07:13 [INFO    ] (get_year_balance): Getting Year_balance
+24/03/14 12:07:14 [WARNING ] (_parse_legend_args): No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+24/03/14 12:10:03 [INFO    ] (get_results): Getting summary
+24/03/14 12:10:03 [INFO    ] (get_total_cost): Getting TotalCost
+24/03/14 12:10:03 [INFO    ] (get_cost_breakdown): Getting Cost_breakdown
+24/03/14 12:10:03 [INFO    ] (get_cost_breakdown_non_annualised): Getting Cost_breakdown_non_annualised
+24/03/14 12:10:03 [INFO    ] (get_cost_return): Getting Cost_return
+24/03/14 12:10:03 [INFO    ] (get_total_gwp): Getting TotalGwp
+24/03/14 12:10:03 [INFO    ] (get_gwp_breakdown): Getting Gwp_breakdown
+24/03/14 12:10:03 [INFO    ] (get_resources): Getting Yearly resources and exchanges
+24/03/14 12:10:03 [INFO    ] (get_assets): Getting Assets and Storage assets
+24/03/14 12:10:04 [INFO    ] (get_year_balance): Getting Year_balance
+24/03/14 12:10:05 [WARNING ] (_parse_legend_args): No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+24/03/14 12:14:54 [INFO    ] (get_results): Getting summary
+24/03/14 12:14:54 [INFO    ] (get_total_cost): Getting TotalCost
+24/03/14 12:14:54 [INFO    ] (get_cost_breakdown): Getting Cost_breakdown
+24/03/14 12:14:54 [INFO    ] (get_cost_breakdown_non_annualised): Getting Cost_breakdown_non_annualised
+24/03/14 12:14:54 [INFO    ] (get_cost_return): Getting Cost_return
+24/03/14 12:14:54 [INFO    ] (get_total_gwp): Getting TotalGwp
+24/03/14 12:14:54 [INFO    ] (get_gwp_breakdown): Getting Gwp_breakdown
+24/03/14 12:14:54 [INFO    ] (get_resources): Getting Yearly resources and exchanges
+24/03/14 12:14:54 [INFO    ] (get_assets): Getting Assets and Storage assets
+24/03/14 12:14:55 [INFO    ] (get_year_balance): Getting Year_balance
+24/03/14 12:14:56 [WARNING ] (_parse_legend_args): No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+24/03/14 12:25:02 [INFO    ] (get_results): Getting summary
+24/03/14 12:25:02 [INFO    ] (get_total_cost): Getting TotalCost
+24/03/14 12:25:02 [INFO    ] (get_cost_breakdown): Getting Cost_breakdown
+24/03/14 12:25:02 [INFO    ] (get_cost_breakdown_non_annualised): Getting Cost_breakdown_non_annualised
+24/03/14 12:25:02 [INFO    ] (get_cost_return): Getting Cost_return
+24/03/14 12:25:02 [INFO    ] (get_total_gwp): Getting TotalGwp
+24/03/14 12:25:02 [INFO    ] (get_gwp_breakdown): Getting Gwp_breakdown
+24/03/14 12:25:02 [INFO    ] (get_resources): Getting Yearly resources and exchanges
+24/03/14 12:25:02 [INFO    ] (get_assets): Getting Assets and Storage assets
+24/03/14 12:25:03 [INFO    ] (get_year_balance): Getting Year_balance
+24/03/14 12:25:04 [WARNING ] (_parse_legend_args): No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+24/03/14 12:29:07 [INFO    ] (get_results): Getting summary
+24/03/14 12:29:07 [INFO    ] (get_total_cost): Getting TotalCost
+24/03/14 12:29:07 [INFO    ] (get_cost_breakdown): Getting Cost_breakdown
+24/03/14 12:29:07 [INFO    ] (get_cost_breakdown_non_annualised): Getting Cost_breakdown_non_annualised
+24/03/14 12:29:07 [INFO    ] (get_cost_return): Getting Cost_return
+24/03/14 12:29:07 [INFO    ] (get_total_gwp): Getting TotalGwp
+24/03/14 12:29:07 [INFO    ] (get_gwp_breakdown): Getting Gwp_breakdown
+24/03/14 12:29:07 [INFO    ] (get_resources): Getting Yearly resources and exchanges
+24/03/14 12:29:07 [INFO    ] (get_assets): Getting Assets and Storage assets
+24/03/14 12:29:08 [INFO    ] (get_year_balance): Getting Year_balance
+24/03/14 12:29:09 [WARNING ] (_parse_legend_args): No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+24/03/14 12:29:36 [INFO    ] (get_results): Getting summary
+24/03/14 12:29:36 [INFO    ] (get_total_cost): Getting TotalCost
+24/03/14 12:29:36 [INFO    ] (get_cost_breakdown): Getting Cost_breakdown
+24/03/14 12:29:36 [INFO    ] (get_cost_breakdown_non_annualised): Getting Cost_breakdown_non_annualised
+24/03/14 12:29:36 [INFO    ] (get_cost_return): Getting Cost_return
+24/03/14 12:29:37 [INFO    ] (get_total_gwp): Getting TotalGwp
+24/03/14 12:29:37 [INFO    ] (get_gwp_breakdown): Getting Gwp_breakdown
+24/03/14 12:29:37 [INFO    ] (get_resources): Getting Yearly resources and exchanges
+24/03/14 12:29:37 [INFO    ] (get_assets): Getting Assets and Storage assets
+24/03/14 12:29:37 [INFO    ] (get_year_balance): Getting Year_balance
+24/03/14 12:29:38 [WARNING ] (_parse_legend_args): No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+24/03/14 12:30:02 [INFO    ] (get_results): Getting summary
+24/03/14 12:30:02 [INFO    ] (get_total_cost): Getting TotalCost
+24/03/14 12:30:02 [INFO    ] (get_cost_breakdown): Getting Cost_breakdown
+24/03/14 12:30:02 [INFO    ] (get_cost_breakdown_non_annualised): Getting Cost_breakdown_non_annualised
+24/03/14 12:30:02 [INFO    ] (get_cost_return): Getting Cost_return
+24/03/14 12:30:02 [INFO    ] (get_total_gwp): Getting TotalGwp
+24/03/14 12:30:02 [INFO    ] (get_gwp_breakdown): Getting Gwp_breakdown
+24/03/14 12:30:02 [INFO    ] (get_resources): Getting Yearly resources and exchanges
+24/03/14 12:30:02 [INFO    ] (get_assets): Getting Assets and Storage assets
+24/03/14 12:30:03 [INFO    ] (get_year_balance): Getting Year_balance
+24/03/14 12:30:04 [WARNING ] (_parse_legend_args): No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+24/03/14 12:43:37 [INFO    ] (get_results): Getting summary
+24/03/14 12:43:37 [INFO    ] (get_total_cost): Getting TotalCost
+24/03/14 12:43:37 [INFO    ] (get_cost_breakdown): Getting Cost_breakdown
+24/03/14 12:43:37 [INFO    ] (get_cost_breakdown_non_annualised): Getting Cost_breakdown_non_annualised
+24/03/14 12:43:37 [INFO    ] (get_cost_return): Getting Cost_return
+24/03/14 12:43:37 [INFO    ] (get_total_gwp): Getting TotalGwp
+24/03/14 12:43:37 [INFO    ] (get_gwp_breakdown): Getting Gwp_breakdown
+24/03/14 12:43:37 [INFO    ] (get_resources): Getting Yearly resources and exchanges
+24/03/14 12:43:37 [INFO    ] (get_assets): Getting Assets and Storage assets
+24/03/14 12:43:38 [INFO    ] (get_year_balance): Getting Year_balance
+24/03/14 12:43:39 [WARNING ] (_parse_legend_args): No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+24/03/14 15:01:14 [INFO    ] (get_results): Getting summary
+24/03/14 15:01:14 [INFO    ] (get_total_cost): Getting TotalCost
+24/03/14 15:01:14 [INFO    ] (get_cost_breakdown): Getting Cost_breakdown
+24/03/14 15:01:14 [INFO    ] (get_cost_breakdown_non_annualised): Getting Cost_breakdown_non_annualised
+24/03/14 15:01:14 [INFO    ] (get_cost_return): Getting Cost_return
+24/03/14 15:01:14 [INFO    ] (get_total_gwp): Getting TotalGwp
+24/03/14 15:01:14 [INFO    ] (get_gwp_breakdown): Getting Gwp_breakdown
+24/03/14 15:01:14 [INFO    ] (get_resources): Getting Yearly resources and exchanges
+24/03/14 15:01:14 [INFO    ] (get_assets): Getting Assets and Storage assets
+24/03/14 15:01:16 [INFO    ] (get_year_balance): Getting Year_balance
+24/03/14 15:01:17 [WARNING ] (_parse_legend_args): No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+24/03/14 15:03:37 [INFO    ] (get_results): Getting summary
+24/03/14 15:03:37 [INFO    ] (get_total_cost): Getting TotalCost
+24/03/14 15:03:37 [INFO    ] (get_cost_breakdown): Getting Cost_breakdown
+24/03/14 15:03:37 [INFO    ] (get_cost_breakdown_non_annualised): Getting Cost_breakdown_non_annualised
+24/03/14 15:03:37 [INFO    ] (get_cost_return): Getting Cost_return
+24/03/14 15:03:37 [INFO    ] (get_total_gwp): Getting TotalGwp
+24/03/14 15:03:37 [INFO    ] (get_gwp_breakdown): Getting Gwp_breakdown
+24/03/14 15:03:37 [INFO    ] (get_resources): Getting Yearly resources and exchanges
+24/03/14 15:03:37 [INFO    ] (get_assets): Getting Assets and Storage assets
+24/03/14 15:03:38 [INFO    ] (get_year_balance): Getting Year_balance
+24/03/14 15:04:09 [INFO    ] (get_results): Getting summary
+24/03/14 15:04:09 [INFO    ] (get_total_cost): Getting TotalCost
+24/03/14 15:04:09 [INFO    ] (get_cost_breakdown): Getting Cost_breakdown
+24/03/14 15:04:09 [INFO    ] (get_cost_breakdown_non_annualised): Getting Cost_breakdown_non_annualised
+24/03/14 15:04:09 [INFO    ] (get_cost_return): Getting Cost_return
+24/03/14 15:04:09 [INFO    ] (get_total_gwp): Getting TotalGwp
+24/03/14 15:04:09 [INFO    ] (get_gwp_breakdown): Getting Gwp_breakdown
+24/03/14 15:04:09 [INFO    ] (get_resources): Getting Yearly resources and exchanges
+24/03/14 15:04:09 [INFO    ] (get_assets): Getting Assets and Storage assets
+24/03/14 15:04:10 [INFO    ] (get_year_balance): Getting Year_balance
+24/03/14 15:04:44 [INFO    ] (get_results): Getting summary
+24/03/14 15:04:44 [INFO    ] (get_total_cost): Getting TotalCost
+24/03/14 15:04:44 [INFO    ] (get_cost_breakdown): Getting Cost_breakdown
+24/03/14 15:04:44 [INFO    ] (get_cost_breakdown_non_annualised): Getting Cost_breakdown_non_annualised
+24/03/14 15:04:44 [INFO    ] (get_cost_return): Getting Cost_return
+24/03/14 15:04:45 [INFO    ] (get_total_gwp): Getting TotalGwp
+24/03/14 15:04:45 [INFO    ] (get_gwp_breakdown): Getting Gwp_breakdown
+24/03/14 15:04:45 [INFO    ] (get_resources): Getting Yearly resources and exchanges
+24/03/14 15:04:45 [INFO    ] (get_assets): Getting Assets and Storage assets
+24/03/14 15:04:46 [INFO    ] (get_year_balance): Getting Year_balance
+24/03/14 15:05:58 [INFO    ] (get_results): Getting summary
+24/03/14 15:05:58 [INFO    ] (get_total_cost): Getting TotalCost
+24/03/14 15:05:58 [INFO    ] (get_cost_breakdown): Getting Cost_breakdown
+24/03/14 15:05:58 [INFO    ] (get_cost_breakdown_non_annualised): Getting Cost_breakdown_non_annualised
+24/03/14 15:05:58 [INFO    ] (get_cost_return): Getting Cost_return
+24/03/14 15:05:58 [INFO    ] (get_total_gwp): Getting TotalGwp
+24/03/14 15:05:58 [INFO    ] (get_gwp_breakdown): Getting Gwp_breakdown
+24/03/14 15:05:58 [INFO    ] (get_resources): Getting Yearly resources and exchanges
+24/03/14 15:05:58 [INFO    ] (get_assets): Getting Assets and Storage assets
+24/03/14 15:05:59 [INFO    ] (get_year_balance): Getting Year_balance
+24/03/14 15:08:05 [INFO    ] (get_results): Getting summary
+24/03/14 15:08:05 [INFO    ] (get_total_cost): Getting TotalCost
+24/03/14 15:08:05 [INFO    ] (get_cost_breakdown): Getting Cost_breakdown
+24/03/14 15:08:05 [INFO    ] (get_cost_breakdown_non_annualised): Getting Cost_breakdown_non_annualised
+24/03/14 15:08:05 [INFO    ] (get_cost_return): Getting Cost_return
+24/03/14 15:08:05 [INFO    ] (get_total_gwp): Getting TotalGwp
+24/03/14 15:08:05 [INFO    ] (get_gwp_breakdown): Getting Gwp_breakdown
+24/03/14 15:08:05 [INFO    ] (get_resources): Getting Yearly resources and exchanges
+24/03/14 15:08:05 [INFO    ] (get_assets): Getting Assets and Storage assets
+24/03/14 15:08:06 [INFO    ] (get_year_balance): Getting Year_balance
+24/03/14 15:11:02 [INFO    ] (get_results): Getting summary
+24/03/14 15:11:02 [INFO    ] (get_total_cost): Getting TotalCost
+24/03/14 15:11:02 [INFO    ] (get_cost_breakdown): Getting Cost_breakdown
+24/03/14 15:11:02 [INFO    ] (get_cost_breakdown_non_annualised): Getting Cost_breakdown_non_annualised
+24/03/14 15:11:02 [INFO    ] (get_cost_return): Getting Cost_return
+24/03/14 15:11:02 [INFO    ] (get_total_gwp): Getting TotalGwp
+24/03/14 15:11:02 [INFO    ] (get_gwp_breakdown): Getting Gwp_breakdown
+24/03/14 15:11:02 [INFO    ] (get_resources): Getting Yearly resources and exchanges
+24/03/14 15:11:02 [INFO    ] (get_assets): Getting Assets and Storage assets
+24/03/14 15:11:03 [INFO    ] (get_year_balance): Getting Year_balance

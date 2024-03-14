@@ -231,7 +231,7 @@ var Storage_level {YEARS, STORAGE_TECH, PERIODS} >= 0; # Sto_level [GWh]: Energy
 subject to end_uses_t {y in YEARS_WND diff YEAR_ONE, l in LAYERS, t in PERIODS}:
 	End_uses [y,l, t] = (if l == "ELECTRICITY" 
 		then
-			(end_uses_input[y,l] / total_time + end_uses_input[y,"LIGHTING"] * lighting_month [t] / t_op [t]) + Network_losses [y,l,t]
+			(end_uses_input[y,l] / total_time + end_uses_input[y,"ELECTRICITY_VAR"] * lighting_month [t] / t_op [t]) + Network_losses [y,l,t]
 		else (if l == "HEAT_LOW_T_DHN" then
 			(end_uses_input[y,"HEAT_LOW_T_HW"] / total_time + end_uses_input[y,"HEAT_LOW_T_SH"] * heating_month [t] / t_op [t]) * Share_heat_dhn [y] + Network_losses [y,l,t]
 		else (if l == "HEAT_LOW_T_DECEN" then
