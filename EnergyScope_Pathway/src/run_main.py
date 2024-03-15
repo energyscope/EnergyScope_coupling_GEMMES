@@ -34,7 +34,7 @@ nbr_tds = 12
 
 run_opti = True
 simulate_TEJ_scenario = False
-get_inputs_from_GEMMES = True
+get_inputs_from_GEMMES = False
 graph = True
 graph_comp = False
 
