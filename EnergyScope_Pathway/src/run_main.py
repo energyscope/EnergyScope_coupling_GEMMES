@@ -105,7 +105,7 @@ if __name__ == '__main__':
     N_year_opti = [30]
     N_year_overlap = [0]
 
-
+    
     for m in range(len(N_year_opti)):
         
         # TO DO ONCE AT INITIALISATION OF THE ENVIRONMENT
@@ -143,23 +143,33 @@ if __name__ == '__main__':
                     i_rate = pd.read_csv(GEMMES_path + 'i_rate.csv')
                     i_rate.set_index('Phase', inplace=True)
                     phases_ES = ['2015_2020', '2020_2025', '2025_2030', '2030_2035', '2035_2040', '2040_2045', '2045_2050']
-                    for i in range(len(phases_ES)):
-                        ampl.set_params('i_rate',{(phases_ES[i]):i_rate.iloc[i,0]})
+                    # for j in range(len(phases_ES)):
+                        # ampl.set_params('i_rate',{(phases_ES[j]):i_rate.iloc[j,0]})
                     
-                    # EUD_2051 = pd.read_csv(GEMMES_path + 'EUD_2051.csv')
-                    # EUD_2051.set_index('parameter_name', inplace=True)
-                    # EUD_2051.drop(columns=['Category','Subcategory','Units'], inplace=True)
-                    # m = EUD_2051.shape[0]
-                    # n = EUD_2051.shape[1]
-                    # index0 = np.array(['YEAR_2050'] * m * n)
-                    # index1 = np.array(np.repeat(EUD_2051.index.to_list(), n))
-                    # index2 = np.array(EUD_2051.columns.to_list() * m)
-                    
-                    # EUD_2051_new = pd.Series(EUD_2051.values.flatten(), index=[index0, index1, index2])
-                    # eud_ampl = apy.DataFrame.from_pandas(EUD_2051_new)
-                    # ampl_0.set_params('end_uses_demand_year', eud_ampl)
-           
-                    # print(ampl_0.get_param('end_uses_demand_year'))
+                    EUD_2021 = pd.read_csv(GEMMES_path + 'EUD_2021.csv')
+                    EUD_2026 = pd.read_csv(GEMMES_path + 'EUD_2026.csv')
+                    EUD_2031 = pd.read_csv(GEMMES_path + 'EUD_2031.csv')
+                    EUD_2036 = pd.read_csv(GEMMES_path + 'EUD_2036.csv')
+                    EUD_2041 = pd.read_csv(GEMMES_path + 'EUD_2041.csv')
+                    EUD_2046 = pd.read_csv(GEMMES_path + 'EUD_2046.csv')
+                    EUD_2051 = pd.read_csv(GEMMES_path + 'EUD_2051.csv')
+                    EUD_2015 = EUD_2021.copy()
+                    EUD_dict = {0:EUD_2015, 1:EUD_2021, 2:EUD_2026, 3:EUD_2031, 4:EUD_2036, 5:EUD_2041, 6:EUD_2046, 7:EUD_2051}
+                    year_list = ['YEAR_2015', 'YEAR_2020', 'YEAR_2025', 'YEAR_2030', 'YEAR_2035', 'YEAR_2040', 'YEAR_2045', 'YEAR_2050']                  
+                    series_list = []
+                    for j in np.arange(2,len(EUD_dict)):
+                        EUD_dict[j].set_index('parameter_name', inplace=True)
+                        EUD_dict[j].drop(columns=['Category','Subcategory','Units'], inplace=True) 
+                        m = EUD_dict[j].shape[0]
+                        n = EUD_dict[j].shape[1] 
+                        index0 = np.array([year_list[j]] * m * n)
+                        index1 = np.array(np.repeat(EUD_dict[j].index.to_list(), n))
+                        index2 = np.array(EUD_dict[j].columns.to_list() * m)
+                        series_list.append(pd.Series(EUD_dict[j].values.flatten(), index=[index0, index1, index2]))   
+                    eud_series_full = pd.concat(series_list)
+                    eud_ampl = apy.DataFrame.from_pandas(eud_series_full)
+                    ampl.set_params('end_uses_demand_year', eud_ampl)                  
+                    # print(ampl.get_param('end_uses_demand_year'))
 
                 solve_result = ampl.run_ampl()
                 ampl.get_results()
@@ -184,7 +194,7 @@ if __name__ == '__main__':
                     ampl_collector.clean_collector()
                     ampl_collector.pkl()
                     break         
-        """
+        
         if graph:
             ampl_graph = AmplGraph(output_file, ampl_0, case_study)
             z_Results = ampl_graph.ampl_collector
@@ -367,13 +377,17 @@ if __name__ == '__main__':
             output_for_GEMMES['opex_B_COP'] += C_op_to_add['B']
             output_for_GEMMES['opex_G_COP'] += C_op_to_add['G']
             output_for_GEMMES['opex_H_COP'] += C_op_to_add['H']
-            output_for_GEMMES = output_for_GEMMES.round(1)
+            first_line = pd.read_csv(GEMMES_path + 'Costs_per_phase_first_line.csv')
+            first_line.set_index('Unnamed: 0', inplace=True)           
+            output_for_GEMMES = output_for_GEMMES * first_line.loc['2015_2020',:].sum() / output_for_GEMMES.iloc[0,:].sum()
+            output_for_GEMMES = output_for_GEMMES.round(3)
             output_for_GEMMES = output_for_GEMMES.iloc[1:,:]
+            output_for_GEMMES = pd.concat([first_line, output_for_GEMMES])
             output_for_GEMMES.to_csv(pth_output_all+'/'+country+'/Outputs_for_GEMMES/Costs_per_phase.csv')
             
             Cost_breakdown_non_annualised = z_Results['Cost_breakdown_non_annualised']
             Cost_breakdown_non_annualised = Cost_breakdown_non_annualised.groupby(level=[0]).sum()
-            Cost_breakdown_non_annualised = Cost_breakdown_non_annualised.loc[Cost_breakdown_non_annualised.index=='YEAR_2020']
+            # Cost_breakdown_non_annualised = Cost_breakdown_non_annualised.loc[Cost_breakdown_non_annualised.index=='YEAR_2020']
             Cost_breakdown_non_annualised = Cost_breakdown_non_annualised.round(0)
             Cost_breakdown_non_annualised.to_csv(pth_output_all+'/'+country+'/Outputs_for_GEMMES/Initial_cost.csv')
             
@@ -411,7 +425,7 @@ if __name__ == '__main__':
             # ampl_graph.graph_comparison(output_files,'C_inv_phase_tech')
             ampl_graph.graph_comparison(output_files,'C_op_phase')
             # ampl_graph.graph_comparison(output_files,'Tech_cap')
-            """
+            
 
             
         ###############################################################################

@@ -152,10 +152,13 @@ class AmplGraph:
         df_to_plot = df_to_plot.loc[df_to_plot['Resources'] != 'CO2_EMISSIONS']
         df_to_plot.dropna(inplace=True)
         df_to_plot['Res'] = df_to_plot['Res']/1000
-        fig = px.area(df_to_plot, x='Years', y = 'Res',color='Resources',
-                      title=self.case_study + ' - Resources',text='Resources',
+        df_to_plot.loc[len(df_to_plot.index)] = ['2020','URANIUM',0.00000000001]
+        
+        fig = px.area(df_to_plot, x='Years', y = 'Res', color='Resources',
+                      title=self.case_study + ' - Resources', text='Resources',
                       color_discrete_map=self.dict_color('Resources'))
                       #,pattern_shape="Resources", pattern_shape_map=self.pattern_shape_map_res)
+        
         fig.for_each_trace(lambda trace: trace.update(fillcolor = trace.line.color))
         fig.update_traces(mode='none')
         fig.update_xaxes(categoryorder='array', categoryarray= sorted(df_to_plot['Years'].unique()))
@@ -163,6 +166,7 @@ class AmplGraph:
         pio.show(fig)
         
         title = "<b>Primary energy supply</b><br>[TWh]"
+        
         # temp = df_to_plot.groupby(['Years']).sum()
         # yvals = [0,min(round(temp['Res'])),max(round(temp['Res']))]
         
