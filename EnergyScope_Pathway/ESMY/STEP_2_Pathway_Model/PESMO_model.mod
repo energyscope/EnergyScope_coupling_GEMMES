@@ -459,6 +459,10 @@ subject to EV_storage_for_V2G_demand {y in YEARS_WND diff YEAR_ONE, j in V2G, i 
 subject to peak_lowT_dec {y in YEARS_WND diff YEAR_ONE, j in TECHNOLOGIES_OF_END_USES_TYPE["HEAT_LOW_T_DECEN"] diff {"DEC_SOLAR"}, t in PERIODS}:
 	F [y, j] >= peak_sh_factor * F_t [y, j, t] ;
 
+# [Eq. 34bis] Peak in space cooling
+subject to peak_sc {y in YEARS_WND diff YEAR_ONE, j in TECHNOLOGIES_OF_END_USES_TYPE["SPACE_COOLING"], t in PERIODS}:
+	F [y, j] >= peak_sc_factor * F_t [y, j, t] ;
+
 # [Eq. 35] Calculation of max heat demand in DHN (1st constrain required to linearised the max function)
 var Max_Heat_Demand {YEARS} >= 0;
 subject to max_dhn_heat_demand {y in YEARS_WND diff YEAR_ONE, t in PERIODS}:

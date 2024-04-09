@@ -22,7 +22,7 @@
 ## NEW SETS FOR PATHWAY:
 
 set YEARS ;#..  2050 by 25;
-set PHASE ;
+set PHASE ordered;
 set PHASE_START {PHASE} within YEARS;
 set PHASE_STOP  {PHASE} within YEARS;
 set YEARS_WND within YEARS;
@@ -87,6 +87,7 @@ set AGE {TECHNOLOGIES,PHASE} within PHASE union {"2015_2020"} union {"STILL_IN_U
 ## NEW PARAMETERS FOR PATHWAY:
 param max_inv_phase {PHASE} default Infinity;#Unlimited
 param t_phase ;
+param PHASE_NUMBER {PHASE};
 param diff_2015_phase {PHASE};
 param gwp_limit_transition >=0 default Infinity; #To limit CO2 emissions over the transition
 param decom_allowed {PHASE,PHASE union {"2015_2020"},TECHNOLOGIES} default 0;
@@ -102,12 +103,12 @@ param heating_time_series {HOURS, TYPICAL_DAYS} >= 0, <= 1; # %_sh [-]: factor f
 param cooling_time_series {HOURS, TYPICAL_DAYS} >= 0, <= 1; # %_sc [-]: factor for sharing space cooling across typical days (adding up to 1)
 param mob_pass_time_series {HOURS, TYPICAL_DAYS} >= 0, <= 1; # %_pass [-]: factor for sharing passenger transportation across Typical days (adding up to 1) based on https://www.fhwa.dot.gov/policy/2013cpr/chap1.cfm
 param mob_freight_time_series {HOURS, TYPICAL_DAYS} >= 0, <= 1; # %_fr [-]: factor for sharing freight transportation across Typical days (adding up to 1)
-param c_p_t {TECHNOLOGIES, HOURS, TYPICAL_DAYS} default 1; #Hourly capacity factor [-]. If = 1 (default value) <=> no impact.
+param c_p_t {YEARS, TECHNOLOGIES, HOURS, TYPICAL_DAYS} default 1; #Hourly capacity factor [-]. If = 1 (default value) <=> no impact.
 
 ## Parameters added to define scenarios and technologies [Table 2]
 param end_uses_demand_year {YEARS, END_USES_INPUT, SECTORS} >= 0 default 0; # end_uses_year [GWh]: table end-uses demand vs sectors (input to the model). Yearly values. [Mpkm] or [Mtkm] for passenger or freight mobility.
 param end_uses_input {y in YEARS, i in END_USES_INPUT} := sum {s in SECTORS} (end_uses_demand_year [y,i,s]); # end_uses_input (Figure 1.4) [GWh]: total demand for each type of end-uses across sectors (yearly energy) as input from the demand-side model. [Mpkm] or [Mtkm] for passenger or freight mobility.
-param i_rate > 0 default 0.015; # discount rate [-]: real discount rate
+param i_rate {PHASE} > 0 default 0.015; # discount rate [-]: real discount rate
 param re_share_primary {YEARS} >= 0 default 0; # re_share [-]: minimum share of primary energy coming from RE
 param gwp_limit {YEARS} >= 0 default 0;    # [ktCO2-eq./year] maximum gwp emissions allowed.
 param share_mobility_public_min {YEARS} >= 0, <= 1 default 0; # %_public,min [-]: min limit for penetration of public mobility over total mobility 
@@ -139,7 +140,8 @@ param layers_in_out {YEARS,RESOURCES union TECHNOLOGIES diff STORAGE_TECH , LAYE
 param c_inv {YEARS,TECHNOLOGIES} >= 0 default 0; # Specific investment cost [Meuros/GW].[Meuros/GWh] for STORAGE_TECH
 param c_maint {YEARS,TECHNOLOGIES} >= 0 default 0; # O&M cost [MCHF/GW/year]: O&M cost does not include resource (fuel) cost. [MCHF/GWh/year] for STORAGE_TECH
 param lifetime {YEARS,TECHNOLOGIES} >= 0 default 0; # n: lifetime [years]
-param tau {y in YEARS, i in TECHNOLOGIES} := i_rate * (1 + i_rate)^lifetime [y,i] / (((1 + i_rate)^lifetime [y,i]) - 1); # Annualisation factor ([-]) for each different technology [Eq. 2]
+param i_rate_mean := ( i_rate["2015_2020"] + i_rate["2020_2025"] + i_rate["2025_2030"] + i_rate["2030_2035"] + i_rate["2035_2040"] + i_rate["2040_2045"] + i_rate["2045_2050"] ) / 7;
+param tau {y in YEARS, i in TECHNOLOGIES} := i_rate_mean * (1 + i_rate_mean)^lifetime [y,i] / (((1 + i_rate_mean)^lifetime [y,i]) - 1); # Annualisation factor ([-]) for each different technology [Eq. 2]
 param gwp_constr {YEARS, TECHNOLOGIES} >= 0 default 0; # GWP emissions associated to the construction of technologies [ktCO2-eq./GW]. Refers to [GW] of main output
 param gwp_op {YEARS, RESOURCES} >= 0 default 0; # GWP emissions associated to the use of resources [ktCO2-eq./GWh]. Includes extraction/production/transportation and combustion
 param c_p {YEARS, TECHNOLOGIES} >= 0, <= 1 default 1; # yearly capacity factor of each technology [-], defined on annual basis. Different than 1 if sum {t in PERIODS} F_t (t) <= c_p * F
@@ -165,7 +167,7 @@ param gwp_cost {YEARS} >=0 default 0; #Cost related to the gwp emissions
 param total_time := sum {t in PERIODS, h in HOUR_OF_PERIOD [t], td in TYPICAL_DAY_OF_PERIOD [t]} (t_op [h, td]); # [h]. added just to simplify equations
 
 # NEW : PARAM DEPEN?DENT:
-param annualised_factor {p in PHASE} := 1 / ((1 + i_rate)^diff_2015_phase[p] ); # Annualisation factor for each different technology
+param annualised_factor {p in PHASE} := if p="2015_2020" then 1/((1 + i_rate[p])^2.5) else annualised_factor[member(PHASE_NUMBER[p]-1,PHASE)] * 1/((1 +i_rate[member(PHASE_NUMBER[p]-1,PHASE)])^2.5) * 1/((1 + i_rate[p])^2.5); # Annualisation factor for each different technology
 
 #################################
 ###  VARIABLES [Tables 3-4]   ###
@@ -176,9 +178,13 @@ var F_new {PHASE union {"2015_2020"}, TECHNOLOGIES} >= 0; #[GW/GWh] Accounts for
 var F_decom {PHASE,PHASE union {"2015_2020"}, TECHNOLOGIES} >= 0; #[GW] Accounts for the decommissioned capacity in a new phase
 var F_old {PHASE,TECHNOLOGIES} >=0, default 0; #[GW] Retired capacity during a phase with respect to the main output
 var C_inv_phase {PHASE} >=0; #[M€/GW] Phase total annualised investment cost
+var C_inv_phase_non_annualised {PHASE} >=0; #[M€/GW] Phase total annualised investment cost
 var C_inv_phase_tech {PHASE,TECHNOLOGIES} >= 0;
+var C_inv_phase_tech_non_annualised {PHASE,TECHNOLOGIES} >=0;
 var C_op_phase_tech {PHASE,TECHNOLOGIES} >= 0;
+var C_op_phase_tech_non_annualised {PHASE,TECHNOLOGIES} >= 0;
 var C_op_phase_res {PHASE,RESOURCES} >= 0;
+var C_op_phase_res_non_annualised {PHASE,RESOURCES};
 var C_inv_return {TECHNOLOGIES} >=0; #[M€] Money given back for existing technologies after 2050 to compute the objective function
 #var Fixed_phase_investment;
 var C_opex {YEARS} >=0;
@@ -232,7 +238,7 @@ var Storage_level {YEARS, STORAGE_TECH, PERIODS} >= 0; # Sto_level [GWh]: Energy
 subject to end_uses_t {y in YEARS_WND diff YEAR_ONE, l in LAYERS, h in HOURS, td in TYPICAL_DAYS}:
 	End_uses [y,l, h, td] = (if l == "ELECTRICITY" 
 		then
-			(end_uses_input[y,l] / total_time + end_uses_input[y,"LIGHTING"] * electricity_time_series [h, td] / t_op [h, td] ) + Network_losses [y,l,h,td]
+			(end_uses_input[y,l] / total_time + end_uses_input[y,"ELECTRICITY_VAR"] * electricity_time_series [h, td] / t_op [h, td] ) + Network_losses [y,l,h,td]
 		else (if l == "HEAT_LOW_T_DHN" then
 			(end_uses_input[y,"HEAT_LOW_T_HW"] / total_time + end_uses_input[y,"HEAT_LOW_T_SH"] * heating_time_series [h, td] / t_op [h, td] ) * Share_heat_dhn [y] + Network_losses [y,l,h,td]
 		else (if l == "HEAT_LOW_T_DECEN" then
@@ -315,7 +321,7 @@ subject to size_limit {y in YEARS_WND diff YEAR_ONE, j in TECHNOLOGIES}:
 	
 # [Eq. 10] relation between power and capacity via period capacity factor. This forces max hourly output (e.g. renewables)
 subject to capacity_factor_t {y in YEARS_WND diff YEAR_ONE, j in TECHNOLOGIES, h in HOURS, td in TYPICAL_DAYS}:
-	F_t [y,j, h, td] <= F [y,j] * c_p_t [j, h, td];
+	F_t [y,j, h, td] <= F [y,j] * c_p_t [y, j, h, td];
 	
 # [Eq. 11] relation between mult_t and mult via yearly capacity factor. This one forces total annual output
 subject to capacity_factor {y in YEARS_WND diff YEAR_ONE, j in TECHNOLOGIES}:
@@ -428,7 +434,7 @@ subject to Freight_shares {y in YEARS_WND diff YEAR_ONE} :
 
 # [Eq. 26] relation between decentralised thermal solar power and capacity via period capacity factor.
 subject to thermal_solar_capacity_factor {y in YEARS_WND diff YEAR_ONE, j in TECHNOLOGIES_OF_END_USES_TYPE["HEAT_LOW_T_DECEN"] diff {"DEC_SOLAR"}, h in HOURS, td in TYPICAL_DAYS}:
-	F_t_solar [y, j, h, td] <= F_solar[y, j] * c_p_t["DEC_SOLAR", h, td];
+	F_t_solar [y, j, h, td] <= F_solar[y, j] * c_p_t[y, "DEC_SOLAR", h, td];
 	
 # [Eq. 27] Overall thermal solar is the sum of specific thermal solar 	
 subject to thermal_solar_total_capacity {y in YEARS_WND diff YEAR_ONE}:
@@ -459,6 +465,10 @@ subject to ev_minimum_state_of_charge {j in V2G, i in EVs_BATT_OF_V2G[j], y in Y
 # [Eq. 34] Peak in decentralized heating
 subject to peak_lowT_dec {y in YEARS_WND diff YEAR_ONE, j in TECHNOLOGIES_OF_END_USES_TYPE["HEAT_LOW_T_DECEN"] diff {"DEC_SOLAR"}, h in HOURS, td in TYPICAL_DAYS}:
 	F [y, j] >= peak_sh_factor * F_t [y, j, h, td] ;
+	
+# [Eq. 34bis] Peak in space cooling
+subject to peak_sc {y in YEARS_WND diff YEAR_ONE, j in TECHNOLOGIES_OF_END_USES_TYPE["SPACE_COOLING"], h in HOURS, td in TYPICAL_DAYS}:
+	F [y, j] >= peak_sc_factor * F_t [y, j, h, td] ;
 
 # [Eq. 35] Calculation of max heat demand in DHN (1st constrain required to linearised the max function)
 var Max_Heat_Demand {YEARS} >= 0;
@@ -488,8 +498,7 @@ subject to f_min_perc {y in YEARS_WND diff YEAR_ONE, eut in END_USES_TYPES, j in
 
 # [Eq. 37] Maximum share of motorcycles in private passenger mobility
 subject to f_max_perc_motorcycle {y in YEARS_WND diff YEAR_ONE}:
-	sum {t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]} (F_t [y,"MOTORCYCLE",h,td] + F_t [y,"MOTORCYCLE_ELECTRIC",h,td]) * t_op[h,td] <= share_private_motorcycle_max [y];
-
+	sum {t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]} (F_t [y,"MOTORCYCLE",h,td] + F_t [y,"MOTORCYCLE_ELECTRIC",h,td]) * t_op[h,td] <= share_private_motorcycle_max [y] * sum {j2 in TECHNOLOGIES_OF_END_USES_TYPE["MOB_PRIVATE"], t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]} (F_t [y,j2,h,td] * t_op[h,td]);
 
 # [Eq. 39] Energy efficiency is a fixed cost
 subject to extra_efficiency {y in YEARS_WND diff YEAR_ONE}:
@@ -520,8 +529,6 @@ subject to impose_hydro_dams_inflow {y in YEARS_WND diff YEAR_ONE, t in PERIODS,
 # [Eq. 48] Hydro dams production is lower than installed F capacity:
 subject to limit_hydro_dams_output {y in YEARS_WND diff YEAR_ONE, t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]}:
 	Storage_out [y, "DAM_STORAGE", "ELECTRICITY", h, td] <= F [y, "HYDRO_DAM"];
-
-
 
 
 ## Define technologies change during phases:
@@ -588,10 +595,16 @@ subject to total_capex: # category: COST_calc
 subject to investment_computation {p in PHASE_WND union PHASE_UP_TO union {"2015_2020"}, y_start in PHASE_START[p], y_stop in PHASE_STOP[p]}:
 	 C_inv_phase [p] = sum {i in TECHNOLOGIES} F_new [p,i] * annualised_factor [p] * ( c_inv [y_start,i] + c_inv [y_stop,i] ) / 2; #In bÃ¢â€šÂ¬
 
+# [Eq. XX] Compute the total non-annualised investment cost per phase
+subject to investment_computation_non_annualised {p in PHASE_WND union PHASE_UP_TO union {"2015_2020"}, y_start in PHASE_START[p], y_stop in PHASE_STOP[p]}:
+	 C_inv_phase_non_annualised [p] = sum {i in TECHNOLOGIES} F_new [p,i] * ( c_inv [y_start,i] + c_inv [y_stop,i] ) / 2;
+
 subject to investment_computation_tech {p in PHASE_WND union PHASE_UP_TO union {"2015_2020"}, y_start in PHASE_START[p], y_stop in PHASE_STOP[p], i in TECHNOLOGIES}:
 	 C_inv_phase_tech [p,i] = F_new [p,i] * annualised_factor [p] * ( c_inv [y_start,i] + c_inv [y_stop,i] ) / 2; #In bÃ¢â€šÂ¬
+	 
+subject to investment_computation_tech_non_annualised {p in PHASE_WND union PHASE_UP_TO union {"2015_2020"}, y_start in PHASE_START[p], y_stop in PHASE_STOP[p], i in TECHNOLOGIES}:
+	 C_inv_phase_tech_non_annualised [p,i] = F_new [p,i] * ( c_inv [y_start,i] + c_inv [y_stop,i] ) / 2;
 
-# [Eq. XX] 
 subject to investment_return {i in TECHNOLOGIES}:
 	C_inv_return [i] = sum {p in PHASE_WND union PHASE_UP_TO union {"2015_2020"},y_start in PHASE_START [p],y_stop in PHASE_STOP [p]} 
 	( remaining_years [i,p] / lifetime [y_start,i] * (F_new [p,i] - sum {p2 in PHASE_WND union PHASE_UP_TO} F_decom [p2,p,i])  * annualised_factor [p] * ( c_inv [y_start,i] + c_inv [y_stop,i] ) / 2 ) ;
@@ -608,9 +621,15 @@ subject to Opex_cost_calculation{y in YEARS_WND  union YEARS_UP_TO} : # category
 
 subject to operation_computation_tech {p in PHASE_WND union PHASE_UP_TO, y_start in PHASE_START[p], y_stop in PHASE_STOP[p], i in TECHNOLOGIES}:
 	C_op_phase_tech [p,i] = t_phase *   ((C_maint [y_start,i] + C_maint [y_stop,i])/2 *annualised_factor[p] ); #In euros_2015
+	
+subject to operation_computation_tech_non_annualised {p in PHASE_WND union PHASE_UP_TO, y_start in PHASE_START[p], y_stop in PHASE_STOP[p], i in TECHNOLOGIES}:
+	C_op_phase_tech_non_annualised [p,i] = t_phase *   ((C_maint [y_start,i] + C_maint [y_stop,i])/2 );
 
 subject to operation_computation_res {p in PHASE_WND union PHASE_UP_TO, y_start in PHASE_START[p], y_stop in PHASE_STOP[p], i in RESOURCES}:
 	C_op_phase_res [p,i] = t_phase *   ((C_op [y_start,i] + C_op [y_stop,i])/2 *annualised_factor[p] ); #In euros_2015
+	
+subject to computation_res_non_annualised {p in PHASE_WND union PHASE_UP_TO, i in RESOURCES}:
+	C_op_phase_res_non_annualised [p,i] = 0;
 
 # [Eq. XX] We could either limit the max investment on a period or fix that these investments must be equals in â‚¬_2015
 subject to maxInvestment {p in PHASE_WND}:
