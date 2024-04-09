@@ -55,9 +55,9 @@ class AmplGraph:
         self.category = self._group_sets()
         self.cost_return_eff = self._get_cost_return_for_each_year()
         self.pattern_shape_map_res={
-            "ELECTRICITY" : "", "GASOLINE" : "", "DIESEL" : "", "BIOETHANOL" : "/", "BIODIESEL" : "/", "LFO" : "", "GAS" : "", "GAS_RE" : "/",
-            "WOOD" : "", "WET_BIOMASS" : "", "COAL" : "", "URANIUM" : "", "WASTE" : "", "H2" : "", "H2_RE" : "/", "AMMONIA" : "slateblue",
-            "AMMONIA_RE" : "/", "METHANOL" : "", "METHANOL_RE" : "/", "CO2_EMISSIONS" : "", "RES_WIND" : "", "RES_SOLAR" : "",
+            "ELECTRICITY" : "", "GASOLINE" : "", "DIESEL" : "", "BIOETHANOL" : "", "BIODIESEL" : "", "LFO" : "", "GAS" : "", "GAS_RE" : "",
+            "WOOD" : "", "WET_BIOMASS" : "", "IMPORTED_COAL" : "", "LOCAL_COAL" : "", "URANIUM" : "", "WASTE" : "", "H2" : "", "H2_RE" : "", "AMMONIA" : "slateblue",
+            "AMMONIA_RE" : "", "METHANOL" : "", "METHANOL_RE" : "", "CO2_EMISSIONS" : "", "RES_WIND" : "", "RES_SOLAR" : "",
             "RES_HYDRO" : "", "RES_GEO" : "", "ELEC_EXPORT" : "","CO2_ATM": "", "CO2_INDUSTRY": "", "CO2_CAPTURED": ""}
 
     @staticmethod
@@ -125,7 +125,7 @@ class AmplGraph:
         
     def graph_resource(self):
         
-        order_entry = ['ELECTRICITY','GASOLINE','DIESEL','LFO','COAL',
+        order_entry = ['ELECTRICITY','GASOLINE','DIESEL','LFO','IMPORTED_COAL', 'LOCAL_COAL',
                        'GAS','URANIUM','WOOD','WET_BIOMASS','WASTE',
                        'RES_SOLAR','RES_WIND',
                        'AMMONIA_RE','METHANOL_RE','H2_RE','GAS_RE']
@@ -1294,7 +1294,7 @@ class AmplGraph:
         color_dict = {}
         
         if category == 'Electricity':
-            color_dict = {"NUCLEAR":"deeppink", "CCGT":"darkorange", "CCGT_AMMONIA":"slateblue", "COAL_US" : "black", "COAL_IGCC" : "dimgray", "PV" : "yellow", "WIND_ONSHORE" : "lawngreen", "WIND_OFFSHORE" : "green", "HYDRO_RIVER" : "blue", "GEOTHERMAL" : "firebrick", "ELECTRICITY" : "dodgerblue"}
+            color_dict = {"NUCLEAR":"deeppink", "CCGT":"darkorange", "CCGT_AMMONIA":"slateblue", "IMPORTED_COAL_CENTRAL" : "black", "LOCAL_COAL_CENTRAL" : "dimgray", "PV" : "yellow", "WIND_ONSHORE" : "lawngreen", "WIND_OFFSHORE" : "green", "HYDRO_RIVER" : "blue", "GEOTHERMAL" : "firebrick", "ELECTRICITY" : "dodgerblue"}
         elif category == 'Heat_low_T':
             color_dict = {"DHN_HP_ELEC" : "blue", "DHN_COGEN_GAS" : "orange", "DHN_COGEN_WOOD" : "sandybrown", "DHN_COGEN_WASTE" : "olive", "DHN_COGEN_WET_BIOMASS" : "seagreen", "DHN_COGEN_BIO_HYDROLYSIS" : "springgreen", "DHN_BOILER_GAS" : "darkorange", "DHN_BOILER_WOOD" : "sienna", "DHN_BOILER_OIL" : "blueviolet", "DHN_DEEP_GEO" : "firebrick", "DHN_SOLAR" : "gold", "DEC_HP_ELEC" : "cornflowerblue", "DEC_THHP_GAS" : "lightsalmon", "DEC_COGEN_GAS" : "goldenrod", "DEC_COGEN_OIL" : "mediumpurple", "DEC_ADVCOGEN_GAS" : "burlywood", "DEC_ADVCOGEN_H2" : "violet", "DEC_BOILER_GAS" : "moccasin", "DEC_BOILER_WOOD" : "peru", "DEC_BOILER_OIL" : "darkorchid", "DEC_SOLAR" : "yellow", "DEC_DIRECT_ELEC" : "deepskyblue"}
         elif category == 'Heat_high_T':
@@ -1316,7 +1316,7 @@ class AmplGraph:
         elif category == 'Storage_daily':
             color_dict = {"BATT_LI" : "royalblue", "BEV_BATT" : "deepskyblue", "PHEV_BATT" : "lightskyblue", "TS_DEC_HP_ELEC" : "blue", "TS_DHN_DAILY" : "lightcoral", "TS_HIGH_TEMP" : "red", "TS_DEC_DIRECT_ELEC":"darkgoldenrod", "TS_DEC_THHP_GAS": "orange", "TS_DEC_COGEN_GAS":"coral", "TS_DEC_COGEN_OIL":"darkviolet", "TS_DEC_ADVCOGEN_GAS":"sandybrown", "TS_DEC_ADVCOGEN_H2": "plum", "TS_DEC_BOILER_GAS": "tan", "TS_DEC_BOILER_WOOD":"peru", "TS_DEC_BOILER_OIL": "darkviolet"}
         elif category == 'Resources':
-            color_dict = {"ELECTRICITY" : "deepskyblue", "GASOLINE" : "gray", "DIESEL" : "silver", "BIOETHANOL" : "mediumorchid", "BIODIESEL" : "mediumpurple", "LFO" : "darkviolet", "GAS" : "orange", "GAS_RE" : "moccasin", "WOOD" : "peru", "WET_BIOMASS" : "seagreen", "COAL" : "black", "URANIUM" : "deeppink", "WASTE" : "olive", "H2" : "violet", "H2_RE" : "plum", "AMMONIA" : "slateblue", "AMMONIA_RE" : "blue", "METHANOL" : "orchid", "METHANOL_RE" : "mediumvioletred", "CO2_EMISSIONS" : "gainsboro", "RES_WIND" : "limegreen", "RES_SOLAR" : "yellow", "RES_HYDRO" : "blue", "RES_GEO" : "firebrick", "ELEC_EXPORT" : "chartreuse","CO2_ATM": "dimgray", "CO2_INDUSTRY": "darkgrey", "CO2_CAPTURED": "lightslategrey", "RE_FUELS": 'green','NRE_FUELS':'black'}
+            color_dict = {"ELECTRICITY" : "deepskyblue", "GASOLINE" : "gray", "DIESEL" : "silver", "BIOETHANOL" : "mediumorchid", "BIODIESEL" : "mediumpurple", "LFO" : "darkviolet", "GAS" : "orange", "GAS_RE" : "moccasin", "WOOD" : "peru", "WET_BIOMASS" : "seagreen", "LOCAL_COAL" : "black", "IMPORTED_COAL" : "dimgrey", "URANIUM" : "deeppink", "WASTE" : "olive", "H2" : "violet", "H2_RE" : "plum", "AMMONIA" : "slateblue", "AMMONIA_RE" : "blue", "METHANOL" : "orchid", "METHANOL_RE" : "mediumvioletred", "CO2_EMISSIONS" : "gainsboro", "RES_WIND" : "limegreen", "RES_SOLAR" : "yellow", "RES_HYDRO" : "blue", "RES_GEO" : "firebrick", "ELEC_EXPORT" : "chartreuse","CO2_ATM": "dimgray", "CO2_INDUSTRY": "darkgrey", "CO2_CAPTURED": "lightslategrey", "RE_FUELS": 'green','NRE_FUELS':'black'}
         elif category == 'Sectors':
             color_dict = {"ELECTRICITY" : "deepskyblue", "HEAT_HIGH_T":"red","HEAT_LOW_T_DECEN":"lightpink", "HEAT_LOW_T_DHN":"indianred", "MOB_PUBLIC":"gold", "MOB_PRIVATE":"goldenrod","MOBILITY_FREIGHT":"darkgoldenrod", "NON_ENERGY": "darkviolet", "INFRASTRUCTURE":"grey","HVC":"cyan",'STORAGE':'chartreuse'}
         elif category == 'Infrastructure':

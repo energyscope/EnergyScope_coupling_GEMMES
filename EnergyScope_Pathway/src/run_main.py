@@ -29,7 +29,7 @@ from ampl_collector import AmplCollector
 from ampl_graph import AmplGraph
 
 country = 'Colombia'
-type_of_model = 'MO'
+type_of_model = 'TD'
 nbr_tds = 12
 
 run_opti = True
@@ -55,8 +55,8 @@ else:
             os.path.join(pth_model,'PES_store_variables.mod')]
     mod_2_path = [os.path.join(pth_model,'PESTD_initialise_2020.mod'),
               os.path.join(pth_model,'fix.mod')]
-    dat_path = [os.path.join(pth_model,'PESTD_data_all_years.dat'),
-                os.path.join(pth_model,'PESTD_{}TD.dat'.format(nbr_tds))]
+    dat_path = [os.path.join(pth_model,country+'/PESTD_data_all_years.dat'),
+                os.path.join(pth_model,country+'/PESTD_{}TD.dat'.format(nbr_tds))]
 
 dat_path += [os.path.join(pth_model,'PES_data_all_years.dat'),
              os.path.join(pth_model,'PES_seq_opti.dat'),
@@ -292,17 +292,17 @@ if __name__ == '__main__':
             year_balance = z_Results['Year_balance'].copy()
             
             year_balance[['F','B','G','H']] = [1,0,0,0]
-            year_balance.iloc[year_balance.index.get_level_values('Elements').isin(list_private_mob_tech),[31,34]] = [0,1]
-            year_balance.iloc[year_balance.index.get_level_values('Elements').isin(list_public_mob_tech),[31,33]] = [0,1]
-            year_balance.iloc[year_balance.index.get_level_values('Elements').isin(list_cooling_tech),[31]] = 0
-            year_balance.iloc[year_balance.index.get_level_values('Elements').isin(['DEC_ELEC_COLD']),[32,33,34]] = shares_cooling.values
-            year_balance.iloc[year_balance.index.get_level_values('Elements').isin(['DEC_THHP_GAS_COLD']),[32,33,34]] = shares_cooling.iloc[1:,:].values
+            year_balance.loc[year_balance.index.get_level_values('Elements').isin(list_private_mob_tech),['F','H']] = [0,1]
+            year_balance.loc[year_balance.index.get_level_values('Elements').isin(list_public_mob_tech),['F','G']] = [0,1]
+            year_balance.loc[year_balance.index.get_level_values('Elements').isin(list_cooling_tech),['F']] = 0
+            year_balance.loc[year_balance.index.get_level_values('Elements').isin(['DEC_ELEC_COLD']),['B','G','H']] = shares_cooling.values
+            year_balance.loc[year_balance.index.get_level_values('Elements').isin(['DEC_THHP_GAS_COLD']),['B','G','H']] = shares_cooling.iloc[1:,:].values
             
             year_balance['merge_index_2'] = year_balance.index.get_level_values('Years')
             shares_LTH['merge_index_2'] = year_balance['merge_index_2'].unique()
             year_balance_bis = pd.merge(year_balance, shares_LTH, on='merge_index_2')
             year_balance_bis.index = year_balance.index
-            year_balance.iloc[year_balance.index.get_level_values('Elements').isin(list_LTH_tech),[31,32,33,34]] = year_balance_bis.iloc[year_balance_bis.index.get_level_values('Elements').isin(list_LTH_tech),[36,37,38,39]].values
+            year_balance.loc[year_balance.index.get_level_values('Elements').isin(list_LTH_tech),['F','B','G','H']] = year_balance_bis.loc[year_balance_bis.index.get_level_values('Elements').isin(list_LTH_tech),['F_y','B_y','G_y','H_y']].values
             
             year_balance = year_balance[year_balance['F']<0.999]
             year_balance = year_balance.loc[:, year_balance.columns.isin(['ELECTRICITY','GAS','WASTE','WET_BIOMASS','WOOD','DIESEL','GASOLINE','H2','METHANOL','B','G','H'])]
@@ -328,13 +328,16 @@ if __name__ == '__main__':
             prices_resources = Cost_breakdown_res.div(year_balance_tot)
             
             # Construct a price for locally produced electricity
-            technos_res_elec = ['CCGT','COAL_IGCC','PV','WIND_ONSHORE','WIND_OFFSHORE','HYDRO_DAM','HYDRO_RIVER','GEOTHERMAL','GRID','HVAC_LINE','GAS','COAL']
+            technos_res_elec = ['CCGT','IMPORTED_COAL_CENTRAL','LOCAL_COAL_CENTRAL','PV','WIND_ONSHORE','WIND_OFFSHORE','HYDRO_DAM','HYDRO_RIVER','GEOTHERMAL','GRID','HVAC_LINE','GAS','IMPORTED_COAL','LOCAL_COAL']
             Cost_elec_approx = Cost_breakdown.iloc[Cost_breakdown.index.get_level_values('Elements').isin(technos_res_elec)]
             year_balance_elec = z_Results['Year_balance'].copy()
-            year_balance_elec = year_balance_elec[['COAL','GAS','ELECTRICITY']]
+            year_balance_elec = year_balance_elec[['IMPORTED_COAL','LOCAL_COAL','GAS','ELECTRICITY']]
             Cost_elec_approx['perc_for_elec'] = np.nan
-            Cost_elec_approx.iloc[Cost_elec_approx.index.get_level_values('Elements').isin(['COAL']),3] = year_balance_elec.iloc[year_balance_elec.index.get_level_values('Elements').isin(['COAL_IGCC']),0].values / year_balance_elec.iloc[year_balance_elec.index.get_level_values('Elements').isin(['COAL']),0].values
-            Cost_elec_approx.iloc[Cost_elec_approx.index.get_level_values('Elements').isin(['GAS']),3] = year_balance_elec.iloc[year_balance_elec.index.get_level_values('Elements').isin(['CCGT']),1].values / year_balance_elec.iloc[year_balance_elec.index.get_level_values('Elements').isin(['GAS']),1].values
+            if('IMPORTED_COAL_CENTRAL' in year_balance_elec.index.get_level_values('Elements').to_list()):
+                Cost_elec_approx.loc[Cost_elec_approx.index.get_level_values('Elements').isin(['IMPORTED_COAL']),'perc_for_elec'] = year_balance_elec.loc[year_balance_elec.index.get_level_values('Elements').isin(['IMPORTED_COAL_CENTRAL']),'IMPORTED_COAL'].values / year_balance_elec.loc[year_balance_elec.index.get_level_values('Elements').isin(['IMPORTED_COAL']),'IMPORTED_COAL'].values
+            if('LOCAL_COAL_CENTRAL' in year_balance_elec.index.get_level_values('Elements').to_list()):
+                Cost_elec_approx.loc[Cost_elec_approx.index.get_level_values('Elements').isin(['LOCAL_COAL']),'perc_for_elec'] = year_balance_elec.loc[year_balance_elec.index.get_level_values('Elements').isin(['LOCAL_COAL_CENTRAL']),'LOCAL_COAL'].values / year_balance_elec.loc[year_balance_elec.index.get_level_values('Elements').isin(['LOCAL_COAL']),'LOCAL_COAL'].values
+            Cost_elec_approx.loc[Cost_elec_approx.index.get_level_values('Elements').isin(['GAS']),'perc_for_elec'] = year_balance_elec.loc[year_balance_elec.index.get_level_values('Elements').isin(['CCGT']),'GAS'].values / year_balance_elec.loc[year_balance_elec.index.get_level_values('Elements').isin(['GAS']),'GAS'].values
             Cost_elec_approx.loc[:,'C_op'] = Cost_elec_approx['C_op'] * Cost_elec_approx['perc_for_elec']
             Cost_elec_approx.loc[:,'C_op'] = Cost_elec_approx.loc[:,'C_op'].abs()
             Cost_elec_approx.drop(columns=['perc_for_elec'],inplace=True)
