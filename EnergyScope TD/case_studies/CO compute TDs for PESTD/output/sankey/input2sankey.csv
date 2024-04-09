@@ -1,0 +1,56 @@
+source,target,realValue,layerID,layerColor,layerUnit
+Woody biomass,Gasifi. to HVC,53.39,Woody biomass,#CD853F,TWh
+Elec,Gasifi. to HVC,0.64,Electricity,#00BFFF,TWh
+Heat HT,Gasifi. to HVC,1.17,Heat HT,#DC143C,TWh
+Gasifi. to HVC,HVC,22.42,HVC,#00FFFF,TWh
+HVC,Non-energy demand,22.42,HVC,#00FFFF,TWh
+Diesel,Mob public,0.05,Diesel,#D3D3D3,TWh
+Diesel,Freight,3.84,Diesel,#D3D3D3,TWh
+Nat. gas,Gas,42.77,Gas,#FFD700,TWh
+Nat. gas,Gas sto.,20.41,GAS,#FFD700,TWh
+Gas sto.,Gas,20.01,GAS,#FFD700,TWh
+Gas,Mob public,62.87,GAS,#FFD700,TWh
+Wind,Elec,38.19,Wind,#27AE34,TWh
+Hydro River,Elec,16.36,Hydro River,#0000FF,TWh
+Hydro Dams,Elec,40.89,Hydro Dam,#0000FF,TWh
+Coal,Boilers,25.90,Coal,#A0522D,TWh
+PV,Elec,0.50,PV,#FFFF00,TWh
+PV,Elec,27.65,PV,#FFFF00,TWh
+Waste,Boilers,10.35,Waste,#808000,TWh
+Elec,Mob priv,8.30,Electricity,#00BFFF,TWh
+Elec,Mob public,0.48,Electricity,#00BFFF,TWh
+Elec,Freight,1.80,Electricity,#00BFFF,TWh
+Elec,Exp & Loss,5.79,Electricity,#00BFFF,TWh
+Elec,Curt.,0.11,Electricity,#00BFFF,TWh
+Elec,Elec demand,62.34,Electricity,#00BFFF,TWh
+PV,Curt.,0.70,Solar,#FFFF00,TWh
+Wind,Curt.,0.46,Wind,#27AE34,TWh
+Elec,Storage,14.09,Electricity,#00BFFF,TWh
+Storage,Elec demand,13.67,Electricity,#00BFFF,TWh
+Elec,HPs,15.59,Electricity,#00BFFF,TWh
+Elec,refrig. cycles,1.28,Electricity,#00BFFF,TWh
+Elec,refrig. cycles,0.10,Electricity,#00BFFF,TWh
+Elec,Electrolyser,11.79,Electricity,#00BFFF,TWh
+Heat HT,Electrolyser,2.08,Heat HT,#DC143C,TWh
+Electrolyser,H2 prod,10.95,Electricity,#00BFFF,TWh
+Electrolyser,DHN,0.21,Heat LT,#FA8072,TWh
+H2 prod,H2 sto.,0.09,H2,#FF00FF,TWh
+H2 sto.,H2,0.08,H2,#FF00FF,TWh
+H2 prod,H2,10.86,H2,#FF00FF,TWh
+H2,Freight,10.94,H2,#FF00FF,TWh
+HPs,Dec. sto,16.56,Heat LT,#FA8072,TWh
+HPs,Heat LT Dec,10.86,Heat LT,#FA8072,TWh
+HPs,DHN,27.30,Heat LT,#FA8072,TWh
+refrig. cycles,Space cooling,5.10,SPACE_COOLING,#FA8072,TWh
+refrig. cycles,Process cooling,0.28,PROCESS_COOLING,#FA8072,TWh
+Woody biomass,Pyrolysis,21.68,Woody biomass,#CD853F,TWh
+Pyrolysis,Elec,0.22,Electricity,#00BFFF,TWh
+Pyrolysis,Diesel,3.90,Diesel,#D3D3D3,TWh
+Pyrolysis,Gasoline,8.54,Diesel,#808080,TWh
+Dec. sto,Heat LT Dec,14.94,Heat LT,#FA8072,TWh
+Boilers,Heat HT,29.72,Heat HT,#DC143C,TWh
+DHN,Heat LT DHN,10.87,Heat LT,#FA8072,TWh
+DHN,Loss DHN,1.38,Heat LT,#FA8072,TWh
+DHN,DHN Sto,15.26,Heat LT,#FA8072,TWh
+DHN Sto,Heat LT DHN,14.92,Heat LT,#FA8072,TWh
+Heat HT,Ind Heat Demand,26.47,Heat HT,#DC143C,TWh
