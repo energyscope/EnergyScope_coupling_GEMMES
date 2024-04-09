@@ -138,7 +138,7 @@ class AmplObject:
         amplpy_df = ampl_elem.getValues()
         elem = amplpy_df.toPandas()
         # getting the number of indices. If elem has more then 1 index, we set it as a MultiIndex
-        n_indices = amplpy_df.getNumIndices()
+        n_indices = amplpy_df._getNumIndices()
         if n_indices>1:
             elem.index = pd.MultiIndex.from_tuples(elem.index, names=indexing_sets)
         else:
@@ -354,8 +354,8 @@ class AmplObject:
         DataFrame transformed as 'long' dataframe (can be easily pivoted later)
         """
         
-        headers = amplpy_df.getHeaders()
-        columns = {header: list(amplpy_df.getColumn(header)) for header in headers}
+        headers = amplpy_df._getHeaders()
+        columns = {header: list(amplpy_df._getColumn(header)) for header in headers}
         df = pd.DataFrame(columns)
         df = df.rename(columns={headers[-1]:'Value'})
         df = df.set_index(list(headers[:-1]))

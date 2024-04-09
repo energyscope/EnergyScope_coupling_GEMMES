@@ -29,13 +29,13 @@ from ampl_collector import AmplCollector
 from ampl_graph import AmplGraph
 
 country = 'Colombia'
-type_of_model = 'TD'
+type_of_model = 'MO'
 nbr_tds = 12
 
 run_opti = True
 simulate_TEJ_scenario = False
 get_inputs_from_GEMMES = False
-graph = True
+graph = False
 graph_comp = False
 
 pth_esmy = os.path.join(curr_dir.parent,'ESMY')
