@@ -12,8 +12,8 @@ Category;Subcategory;Technologies name;Technologies param;c_inv;c_maint;gwp_cons
 Electricity;Electricity;Nuclear;NUCLEAR;4845.73;102.93;707.88;60;0.843906;0;1;4.8;7.2;
 Electricity;Electricity;Combined cycle gas turbine;CCGT;771.99;19.73;183.79;25;0.85;0;1;0;1.00E+15;
 Electricity;Electricity;Amonia combined cycle gas turbine;CCGT_AMMONIA ;771.99;19.55;183.79;25;0.961538462;0;1;0;1.00E+15;
-Electricity;Electricity;Ultra-supercritical coal power plant;COAL_US;2516.71;29.7;331.6;35;0.868;0;1;0;0;
-Electricity;Electricity;Intagrated gasification combined cycle with coal;COAL_IGCC;3245.81;48.95;331.6;35;0.856;0;1;0;1.00E+15;
+Electricity;Electricity;Coal power plant;IMPORTED_COAL_CENTRAL;2516.71;29.7;331.6;35;0.868;0;1;0;0;
+Electricity;Electricity;Lignite power plant;LOCAL_COAL_CENTRAL;3245.81;48.95;331.6;35;0.856;0;1;0;1.00E+15;
 Electricity;Electricity;Biomass power plant;BIOMASS_TO_POWER;1677.02;69.94;331.6;35;0.868;0;1;0;1.00E+15;
 Electricity;Electricity;Photovoltaic rooftop;PV_ROOFTOP;737.89;9.73;2081.43;25;1;0;1;5.995;130;
 Electricity;Electricity;Photovoltaic utility scale;PV_UTILITY;335.4;8.43;2081.43;25;1;0;1;0;1400;
