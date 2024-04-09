@@ -8,15 +8,15 @@
 ################################################################################
 
 # Load model
-model "/home/pjacques/Desktop/PhD/EnergyScope/case_studies/CO 2035 - no CO2 constraint/es_model.mod";
+model "/home/pjacques/Desktop/PhD/EnergyScope_GEMMES_coupling/EnergyScope TD/case_studies/CO 2035 - no CO2 constraint/es_model.mod";
 
 # Load data
-data "/home/pjacques/Desktop/PhD/EnergyScope/case_studies/CO 2035 - no CO2 constraint/ESTD_data.dat";
-data "/home/pjacques/Desktop/PhD/EnergyScope/case_studies/CO 2035 - no CO2 constraint/ESTD_12TD.dat";
+data "/home/pjacques/Desktop/PhD/EnergyScope_GEMMES_coupling/EnergyScope TD/case_studies/CO 2035 - no CO2 constraint/ESTD_data.dat";
+data "/home/pjacques/Desktop/PhD/EnergyScope_GEMMES_coupling/EnergyScope TD/case_studies/CO 2035 - no CO2 constraint/ESTD_12TD.dat";
 
 # Run options
 option show_stats "3";
-option log_file "/home/pjacques/Desktop/PhD/EnergyScope/case_studies/CO 2035 - no CO2 constraint/output/log.txt";
+option log_file "/home/pjacques/Desktop/PhD/EnergyScope_GEMMES_coupling/EnergyScope TD/case_studies/CO 2035 - no CO2 constraint/output/log.txt";
 option presolve "10";
 option presolve_eps "1e-7";
 option presolve_fixeps "1e-7";
@@ -38,7 +38,7 @@ display _solve_elapsed_time;
 
 
 # Saving sets and parameters to output file
-param PathName symbolic := "/home/pjacques/Desktop/PhD/EnergyScope/case_studies/CO 2035 - no CO2 constraint/output";
+param PathName symbolic := "/home/pjacques/Desktop/PhD/EnergyScope_GEMMES_coupling/EnergyScope TD/case_studies/CO 2035 - no CO2 constraint/output";
 
 if solve_result = "limit" then { # To avoid post treatment error
     print "TIME OUT";
@@ -55,9 +55,9 @@ else {
             exit 1;
         }
         else {
-			include "/home/pjacques/Desktop/PhD/EnergyScope/energyscope/energy_model/run/print_year_summary.run";
-			include "/home/pjacques/Desktop/PhD/EnergyScope/energyscope/energy_model/run/print_hourly_data.run";
-			include "/home/pjacques/Desktop/PhD/EnergyScope/energyscope/energy_model/run/print_sankey.run";
+			include "/home/pjacques/Desktop/PhD/EnergyScope_GEMMES_coupling/EnergyScope TD/energyscope/energy_model/run/print_year_summary.run";
+			include "/home/pjacques/Desktop/PhD/EnergyScope_GEMMES_coupling/EnergyScope TD/energyscope/energy_model/run/print_hourly_data.run";
+			include "/home/pjacques/Desktop/PhD/EnergyScope_GEMMES_coupling/EnergyScope TD/energyscope/energy_model/run/print_sankey.run";
 			exit 0;
 		}
 	}
