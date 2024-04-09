@@ -1,54 +1,55 @@
 
-Presolve eliminates 1014055 constraints and 647362 variables.
+Presolve eliminates 1041128 constraints and 665506 variables.
 "option presolve 10;" used, but "option presolve 5;" would suffice.
 Adjusted problem:
-278624 variables, all linear
-514940 constraints, all linear; 1585778 nonzeros
-	355256 equality constraints
+278914 variables, all linear
+515230 constraints, all linear; 1586646 nonzeros
+	355546 equality constraints
 	159684 inequality constraints
 1 linear objective; 1 nonzero.
 
 Setting $presolve_fixeps >= 1.65e-07 could change presolve results.
 
 presolve results:
-	variables omitted:	647074
-	constraints omitted:	1014055
+	variables omitted:	665218
+	constraints omitted:	1041128
 	ranges relaxed:		14822
-	bounds improved:	642079
+	bounds improved:	660223
 	constraint_drop_tol breakpoints: 0, 0, 6720.50174443415
 	nba cycles:		4
-	bound row scans:	303060
-	row-scan updates:	25320
+	bound row scans:	303350
+	row-scan updates:	25610
+The license for this solver will expire in 7.3 days.
 Gurobi 10.0.3:   pre:dual = -1
   alg:method = 2
   bar:crossover = 0
   pre:passes = 3
   bar:convtol = 1e-06
   pre:solve = -1
-Gurobi 10.0.3: optimal solution; objective 129964.9108
+Gurobi 10.0.3: optimal solution; objective 129964.9011
 0 simplex iterations
-73 barrier iterations
+75 barrier iterations
  
 ------------ WARNINGS ------------
 WARNING:  "Solution Check"
      [ sol:chk:feastol=1e-06, :feastolrel=1e-06, :inttol=1e-05,
        :round='', :prec='' ]
   - 1 original variable(s) violate bounds,
-        up to 2E-05 (abs)
+        up to 3E-06 (abs)
 Algebraic expression violations:
-  - 139 original expression(s) of type ':linrange',
-        up to 7E-04 (abs), up to 2E-06 (rel)
+  - 129 original expression(s) of type ':linrange',
+        up to 6E-04 (abs)
  
  
 solve_result = solved
 
 solve_result_num = 0
 
-_solve_elapsed_time = 33.9598
+_solve_elapsed_time = 33.1507
 
-TotalCost 129964.9107680218
+TotalCost 129964.901147909
 Carbon_cost 0
-GWP_op 435970.0282508808
+GWP_op 435968.7986349274
 carbon_price 0
 --------------SAVING COSTS -----------
 --------------SAVING RESOURCES -----------
