@@ -349,13 +349,13 @@ if sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]}((F_
         "TWh" > (PathName & "/sankey/input2sankey.csv");
 
 # Coal
-if sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]}((F_t ["COAL_US", h, td] + F_t ["COAL_IGCC", h, td]) ) > 10 then
+if sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]}((F_t ["IMPORTED_COAL_CENTRAL", h, td] + F_t ["LOCAL_COAL_CENTRAL", h, td]) ) > 10 then
     printf "%s,%s,%.2f,%s,%s,%s\n", "Coal" , "Elec", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in
-        TYPICAL_DAY_OF_PERIOD[t]}(-layers_in_out["COAL_US","COAL"] * F_t ["COAL_US", h, td]   - layers_in_out["COAL_IGCC","COAL"]
-        * F_t ["COAL_IGCC", h, td]  ) / 1000 , "Coal", "#A0522D", "TWh" >> (PathName & "/sankey/input2sankey.csv");
+        TYPICAL_DAY_OF_PERIOD[t]}(-layers_in_out["IMPORTED_COAL_CENTRAL","IMPORTED_COAL"] * F_t ["IMPORTED_COAL_CENTRAL", h, td]   - layers_in_out["LOCAL_COAL_CENTRAL","LOCAL_COAL"]
+        * F_t ["LOCAL_COAL_CENTRAL", h, td]  ) / 1000 , "Coal", "#A0522D", "TWh" >> (PathName & "/sankey/input2sankey.csv");
 if sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]}(F_t ["IND_BOILER_COAL", h, td]  ) > 10 then
     printf "%s,%s,%.2f,%s,%s,%s\n", "Coal" , "Boilers", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in
-        TYPICAL_DAY_OF_PERIOD[t]}(-layers_in_out["IND_BOILER_COAL","COAL"] * F_t ["IND_BOILER_COAL", h, td] -layers_in_out["COAL_STOVE","COAL"] * F_t ["COAL_STOVE", h, td]  ) / 1000 , "Coal",
+        TYPICAL_DAY_OF_PERIOD[t]}(-layers_in_out["IND_BOILER_COAL","LOCAL_COAL"] * F_t ["IND_BOILER_COAL", h, td] -(layers_in_out["COAL_STOVE","LOCAL_COAL"]+layers_in_out["COAL_STOVE","IMPORTED_COAL"]) * F_t ["COAL_STOVE", h, td]  ) / 1000 , "Coal",
         "#A0522D", "TWh" >> (PathName & "/sankey/input2sankey.csv");
 
 # Solar
