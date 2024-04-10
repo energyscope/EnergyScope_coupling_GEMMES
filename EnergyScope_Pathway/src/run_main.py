@@ -29,14 +29,14 @@ from ampl_collector import AmplCollector
 from ampl_graph import AmplGraph
 
 country = 'Colombia'
-type_of_model = 'MO'
+type_of_model = 'TD'
 nbr_tds = 12
 
-run_opti = True
+run_opti = False
 simulate_TEJ_scenario = False
 get_inputs_from_GEMMES = False
-output_csv = True
-graph = False
+output_csv = False
+graph = True
 graph_comp = False
 outputs_for_GEMMES = False
 
