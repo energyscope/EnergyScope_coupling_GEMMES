@@ -35,8 +35,10 @@ nbr_tds = 12
 run_opti = True
 simulate_TEJ_scenario = False
 get_inputs_from_GEMMES = False
+output_csv = True
 graph = False
 graph_comp = False
+outputs_for_GEMMES = False
 
 pth_esmy = os.path.join(curr_dir.parent,'ESMY')
 
@@ -195,6 +197,15 @@ if __name__ == '__main__':
                     ampl_collector.pkl()
                     break         
         
+        if output_csv:
+            ampl_graph = AmplGraph(output_file, ampl_0, case_study)
+            z_Results = ampl_graph.ampl_collector
+            z_Results['Resources'].to_csv('Resources.csv')
+            z_Results['Assets'].to_csv('Assets.csv')
+            z_Results['Cost_breakdown'].to_csv('Cost_breakdown.csv')
+            z_Results['Year_balance'].to_csv('Year_balance.csv')
+            z_Results['Gwp_breakdown'].to_csv('Gwp_breakdown.csv')
+
         if graph:
             ampl_graph = AmplGraph(output_file, ampl_0, case_study)
             z_Results = ampl_graph.ampl_collector
@@ -203,6 +214,45 @@ if __name__ == '__main__':
             # z_Cost_breakdown = z_Results['Cost_breakdown'].copy()
             # z_Year_balance = z_Results['Year_balance'].copy()
             # z_gwp_breakdown = z_Results['Gwp_breakdown'].copy()
+            
+            # a_website = "https://www.google.com"
+            # webbrowser.open_new(a_website)
+            ampl_graph.graph_resource()
+            # ampl_graph.graph_cost()
+            # # ampl_graph.graph_gwp_per_sector()
+            # ampl_graph.graph_cost_inv_phase_tech()
+            # # ampl_graph.graph_cost_return()
+            # ampl_graph.graph_cost_op_phase()
+        
+            # ampl_graph.graph_layer()
+            # ampl_graph.graph_gwp()
+            # ampl_graph.graph_tech_cap()
+            # ampl_graph.graph_total_cost_per_year()
+            # # ampl_graph.graph_load_factor()
+            # # df_unused = ampl_graph.graph_load_factor_2()
+            # ampl_graph.graph_new_old_decom()
+            
+        if graph_comp:
+            ampl_graph = AmplGraph(output_file, ampl_0,case_study)
+            
+            case_study_1 = '{}_{}_{}_gwp_limit_all_the_way'.format('TD',30,0)
+            output_folder_1 = os.path.join(pth_output_all,case_study_1)
+            output_file_1 = os.path.join(output_folder_1,'_Results.pkl')
+            
+            case_study_2 = '{}_{}_{}_gwp_limit_all_the_way'.format('TD',10,5)
+            output_folder_2 = os.path.join(pth_output_all,case_study_2)
+            output_file_2 = os.path.join(output_folder_2,'_Results.pkl')
+            
+            
+            output_files = [output_file_1,output_file_2]
+            
+            # ampl_graph.graph_comparison(output_files,'C_inv_phase_tech')
+            ampl_graph.graph_comparison(output_files,'C_op_phase')
+            # ampl_graph.graph_comparison(output_files,'Tech_cap')
+            
+        if outputs_for_GEMMES:
+            ampl_graph = AmplGraph(output_file, ampl_0, case_study)
+            z_Results = ampl_graph.ampl_collector
             
             C_inv = z_Results['C_inv_phase_tech_non_annualised'].copy()
             C_inv.rename(columns = {'C_inv_phase_tech_non_annualised':'Value'}, inplace = True)
@@ -393,43 +443,7 @@ if __name__ == '__main__':
             # Cost_breakdown_non_annualised = Cost_breakdown_non_annualised.loc[Cost_breakdown_non_annualised.index=='YEAR_2020']
             Cost_breakdown_non_annualised = Cost_breakdown_non_annualised.round(0)
             Cost_breakdown_non_annualised.to_csv(pth_output_all+'/'+country+'/Outputs_for_GEMMES/Initial_cost.csv')
-            
-            # a_website = "https://www.google.com"
-            # webbrowser.open_new(a_website)
-            ampl_graph.graph_resource()
-            # ampl_graph.graph_cost()
-            # # ampl_graph.graph_gwp_per_sector()
-            # ampl_graph.graph_cost_inv_phase_tech()
-            # # ampl_graph.graph_cost_return()
-            # ampl_graph.graph_cost_op_phase()
         
-            # ampl_graph.graph_layer()
-            # ampl_graph.graph_gwp()
-            # ampl_graph.graph_tech_cap()
-            # ampl_graph.graph_total_cost_per_year()
-            # # ampl_graph.graph_load_factor()
-            # # df_unused = ampl_graph.graph_load_factor_2()
-            # ampl_graph.graph_new_old_decom()
-            
-        if graph_comp:
-            ampl_graph = AmplGraph(output_file, ampl_0,case_study)
-            
-            case_study_1 = '{}_{}_{}_gwp_limit_all_the_way'.format('TD',30,0)
-            output_folder_1 = os.path.join(pth_output_all,case_study_1)
-            output_file_1 = os.path.join(output_folder_1,'_Results.pkl')
-            
-            case_study_2 = '{}_{}_{}_gwp_limit_all_the_way'.format('TD',10,5)
-            output_folder_2 = os.path.join(pth_output_all,case_study_2)
-            output_file_2 = os.path.join(output_folder_2,'_Results.pkl')
-            
-            
-            output_files = [output_file_1,output_file_2]
-            
-            # ampl_graph.graph_comparison(output_files,'C_inv_phase_tech')
-            ampl_graph.graph_comparison(output_files,'C_op_phase')
-            # ampl_graph.graph_comparison(output_files,'Tech_cap')
-            
-
             
         ###############################################################################
         ''' main script ends here '''
