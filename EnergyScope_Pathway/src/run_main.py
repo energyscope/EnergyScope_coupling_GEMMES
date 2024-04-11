@@ -32,10 +32,10 @@ country = 'Colombia'
 type_of_model = 'TD'
 nbr_tds = 12
 
-run_opti = False
+run_opti = True
 simulate_TEJ_scenario = False
 get_inputs_from_GEMMES = False
-output_csv = False
+output_csv = True
 graph = True
 graph_comp = False
 outputs_for_GEMMES = False
@@ -116,11 +116,27 @@ if __name__ == '__main__':
         n_year_overlap = N_year_overlap[m]
         
         if(simulate_TEJ_scenario):
-            case_study = 'TEJ'.format(type_of_model,n_year_opti,n_year_overlap)
-            expl_text = 'Transición Energetica Justa'.format(n_year_opti,n_year_overlap)
+            if(type_of_model=='MO'):
+                case_study = 'TEJ - MO'.format(type_of_model,n_year_opti,n_year_overlap)
+                expl_text = 'Transición Energetica Justa - monthly granularity'.format(n_year_opti,n_year_overlap)
+            else:
+                case_study = 'TEJ - TD'.format(type_of_model,n_year_opti,n_year_overlap)
+                expl_text = 'Transición Energetica Justa - hourly granularity'.format(n_year_opti,n_year_overlap)
         else:
-            case_study = 'Road to Net zero'.format(type_of_model,n_year_opti,n_year_overlap)
-            expl_text = 'Road to Net zero'.format(n_year_opti,n_year_overlap)
+            if(type_of_model=='MO'):
+                if(country=='Colombia'):
+                    case_study = 'Colombia - MO'.format(type_of_model,n_year_opti,n_year_overlap)
+                    expl_text = 'Colombia - monthly granularity'.format(n_year_opti,n_year_overlap)
+                else:
+                    case_study = 'Turkey - MO'.format(type_of_model,n_year_opti,n_year_overlap)
+                    expl_text = 'Turkey - monthly granularity'.format(n_year_opti,n_year_overlap)
+            else:
+                if(country=='Colombia'):
+                    case_study = 'Colombia - TD'.format(type_of_model,n_year_opti,n_year_overlap)
+                    expl_text = 'Colombia - hourly granularity'.format(n_year_opti,n_year_overlap)
+                else:
+                    case_study = 'Turkey - TD'.format(type_of_model,n_year_opti,n_year_overlap)
+                    expl_text = 'Turkey - hourly granularity'.format(n_year_opti,n_year_overlap)
         
         output_folder = os.path.join(pth_output_all,case_study)
         output_file = os.path.join(output_folder,'_Results.pkl')
@@ -218,18 +234,18 @@ if __name__ == '__main__':
             # a_website = "https://www.google.com"
             # webbrowser.open_new(a_website)
             ampl_graph.graph_resource()
-            # ampl_graph.graph_cost()
-            # # ampl_graph.graph_gwp_per_sector()
-            # ampl_graph.graph_cost_inv_phase_tech()
-            # # ampl_graph.graph_cost_return()
-            # ampl_graph.graph_cost_op_phase()
+            ampl_graph.graph_cost()
+            # ampl_graph.graph_gwp_per_sector()
+            ampl_graph.graph_cost_inv_phase_tech()
+            # ampl_graph.graph_cost_return()
+            ampl_graph.graph_cost_op_phase()
         
-            # ampl_graph.graph_layer()
-            # ampl_graph.graph_gwp()
+            ampl_graph.graph_layer()
+            ampl_graph.graph_gwp()
             # ampl_graph.graph_tech_cap()
             # ampl_graph.graph_total_cost_per_year()
-            # # ampl_graph.graph_load_factor()
-            # # df_unused = ampl_graph.graph_load_factor_2()
+            # ampl_graph.graph_load_factor()
+            # df_unused = ampl_graph.graph_load_factor_2()
             # ampl_graph.graph_new_old_decom()
             
         if graph_comp:

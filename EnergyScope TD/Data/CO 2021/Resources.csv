@@ -1,7 +1,7 @@
 ;;;Availability;Direct and indirect emissions;Price;Direct emissions;
 ;;units;[GWh/y];[ktCO2-eq./GWh];[Meuro/GWh];[ktCO2-eq./GWh];
 Category;Subcategory;parameter name;avail;gwp_op;c_op;CO2_op;Comment
-Non-renewable;Other non-renewable;ELECTRICITY;0;0.413;0.063732;0;
+Non-renewable;Other non-renewable;ELECTRICITY;120;0.413;0.063732;0;
 Non-renewable;Fossil fuel;GASOLINE;63438;0.3448;0.065566;0.25;
 Non-renewable;Fossil fuel;DIESEL;70949;0.3148;0.063479;0.27;
 Renewable;Biofuel;BIOETHANOL;7166;0;0.122503;0.25;

@@ -8,46 +8,42 @@ Adjusted problem:
 	119759 inequality constraints
 1 linear objective; 1 nonzero.
 
-Setting $presolve_fixeps >= 5.06e-07 could change presolve results.
+Setting $presolve_fixeps >= 4.44e-07 could change presolve results.
 
 presolve results:
 	variables omitted:	705553
 	constraints omitted:	1115877
 	ranges relaxed:		11566
 	bounds improved:	706044
-	constraint_drop_tol breakpoints: 0, 0, 4.173043478375539
+	constraint_drop_tol breakpoints: 0, 0, 4.173043478375543
 	nba cycles:		9
-	bound row scans:	273301
+	bound row scans:	273266
 	row-scan updates:	34366
-The license for this solver will expire in 7.6 days.
-Gurobi 10.0.3:   pre:dual = -1
+Gurobi 11.0.1:   pre:dual = -1
   alg:method = 2
   bar:crossover = 0
   pre:passes = 3
   bar:convtol = 1e-06
   pre:solve = -1
-Gurobi 10.0.3: optimal solution; objective 50271.60416
+Gurobi 11.0.1: optimal solution; objective 50269.66581
 0 simplex iterations
-62 barrier iterations
+67 barrier iterations
  
 ------------ WARNINGS ------------
-WARNING:  "Solution Check"
-     [ sol:chk:feastol=1e-06, :feastolrel=1e-06, :inttol=1e-05,
-       :round='', :prec='' ]
-Algebraic expression violations:
-  - 78 original expression(s) of type ':linrange',
-        up to 2E-04 (abs)
- 
- 
+WARNING:  "Tolerance violations"
+  Type                         MaxAbs [Name]   MaxRel [Name]
+* expr '_linrange'             9E-05           -             
+*: Using the solver's aux variable values.
+Documentation: mp.ampl.com/modeling-tools.html#automatic-solution-check.
 solve_result = solved
 
 solve_result_num = 0
 
-_solve_elapsed_time = 19.6235
+_solve_elapsed_time = 14.103
 
-TotalCost 50271.60416439452
+TotalCost 50269.66580770584
 Carbon_cost 0
-GWP_op 94107.22334751776
+GWP_op 94107.12584390967
 carbon_price 0
 --------------SAVING COSTS -----------
 --------------SAVING RESOURCES -----------
