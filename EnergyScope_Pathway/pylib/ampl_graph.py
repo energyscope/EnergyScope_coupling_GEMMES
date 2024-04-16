@@ -55,7 +55,7 @@ class AmplGraph:
         self.category = self._group_sets()
         self.cost_return_eff = self._get_cost_return_for_each_year()
         self.pattern_shape_map_res={
-            "ELECTRICITY" : "", "GASOLINE" : "", "DIESEL" : "", "BIOETHANOL" : "", "BIODIESEL" : "", "LFO" : "", "GAS" : "", "GAS_RE" : "",
+            "ELECTRICITY" : "", "GASOLINE" : "", "DIESEL" : "", "BIOETHANOL" : "", "BIODIESEL" : "", "LFO" : "", "LOCAL_GAS" : "", "IMPORTED_GAS" : "",
             "WOOD" : "", "WET_BIOMASS" : "", "IMPORTED_COAL" : "", "LOCAL_COAL" : "", "URANIUM" : "", "WASTE" : "", "H2" : "", "H2_RE" : "", "AMMONIA" : "slateblue",
             "AMMONIA_RE" : "", "METHANOL" : "", "METHANOL_RE" : "", "CO2_EMISSIONS" : "", "RES_WIND" : "", "RES_SOLAR" : "",
             "RES_HYDRO" : "", "RES_GEO" : "", "ELEC_EXPORT" : "","CO2_ATM": "", "CO2_INDUSTRY": "", "CO2_CAPTURED": ""}
@@ -88,7 +88,7 @@ class AmplGraph:
     def graph_layer(self):
         pio.renderers.default = 'browser'
         
-        col_plot = ['AMMONIA','ELECTRICITY','GAS','H2','HEAT_HIGH_T',
+        col_plot = ['AMMONIA','ELECTRICITY','LOCAL_GAS','H2','HEAT_HIGH_T',
                 'HEAT_LOW_T_DECEN','HEAT_LOW_T_DHN','HVC','METHANOL',
                 'MOB_FREIGHT_BOAT','MOB_FREIGHT_RAIL','MOB_FREIGHT_ROAD','MOB_PRIVATE',
                 'MOB_PUBLIC']
@@ -126,9 +126,9 @@ class AmplGraph:
     def graph_resource(self):
         
         order_entry = ['ELECTRICITY','GASOLINE','DIESEL','LFO','IMPORTED_COAL', 'LOCAL_COAL',
-                       'GAS','URANIUM','WOOD','WET_BIOMASS','WASTE',
+                       'LOCAL_GAS','IMPORTED_GAS','URANIUM','WOOD','WET_BIOMASS','WASTE',
                        'RES_SOLAR','RES_WIND',
-                       'AMMONIA_RE','METHANOL_RE','H2_RE','GAS_RE']
+                       'AMMONIA_RE','METHANOL_RE','H2_RE']
                        #'BIODIESEL','BIOETHANOL']
         
         pio.renderers.default = 'browser'
@@ -206,7 +206,7 @@ class AmplGraph:
         pio.renderers.default = 'browser'
         
         """Get the gwp breakdown [ktCO2e/y] of the different sectors"""
-        layers = ['GAS','H2','AMMONIA','METHANOL','ELECTRICITY','HEAT_HIGH_T',
+        layers = ['LOCAL_GAS','H2','AMMONIA','METHANOL','ELECTRICITY','HEAT_HIGH_T',
                 'HEAT_LOW_T_DECEN','HEAT_LOW_T_DHN','HVC',
                 'MOB_FREIGHT_BOAT','MOB_FREIGHT_RAIL','MOB_FREIGHT_ROAD','MOB_PRIVATE',
                 'MOB_PUBLIC']
@@ -265,7 +265,7 @@ class AmplGraph:
         
         gwp_per_layer = pd.DataFrame(index=end_uses.index,columns=['gwp_op','GWP_EUD','GWP_TOTAL'])
         
-        update_gwp_res = ['GAS','H2','AMMONIA','ELECTRICITY','DIESEL','GASOLINE','METHANOL','LFO']
+        update_gwp_res = ['LOCAL_GAS','H2','AMMONIA','ELECTRICITY','DIESEL','GASOLINE','METHANOL','LFO']
         
         for res in update_gwp_res:
             temp = year_balance_full.loc[year_balance_full[res] > 0]
@@ -1316,7 +1316,7 @@ class AmplGraph:
         elif category == 'Storage_daily':
             color_dict = {"BATT_LI" : "royalblue", "BEV_BATT" : "deepskyblue", "PHEV_BATT" : "lightskyblue", "TS_DEC_HP_ELEC" : "blue", "TS_DHN_DAILY" : "lightcoral", "TS_HIGH_TEMP" : "red", "TS_DEC_DIRECT_ELEC":"darkgoldenrod", "TS_DEC_THHP_GAS": "orange", "TS_DEC_COGEN_GAS":"coral", "TS_DEC_COGEN_OIL":"darkviolet", "TS_DEC_ADVCOGEN_GAS":"sandybrown", "TS_DEC_ADVCOGEN_H2": "plum", "TS_DEC_BOILER_GAS": "tan", "TS_DEC_BOILER_WOOD":"peru", "TS_DEC_BOILER_OIL": "darkviolet"}
         elif category == 'Resources':
-            color_dict = {"ELECTRICITY" : "deepskyblue", "GASOLINE" : "gray", "DIESEL" : "silver", "BIOETHANOL" : "mediumorchid", "BIODIESEL" : "mediumpurple", "LFO" : "darkviolet", "GAS" : "orange", "GAS_RE" : "moccasin", "WOOD" : "peru", "WET_BIOMASS" : "seagreen", "LOCAL_COAL" : "black", "IMPORTED_COAL" : "dimgrey", "URANIUM" : "deeppink", "WASTE" : "olive", "H2" : "violet", "H2_RE" : "plum", "AMMONIA" : "slateblue", "AMMONIA_RE" : "blue", "METHANOL" : "orchid", "METHANOL_RE" : "mediumvioletred", "CO2_EMISSIONS" : "gainsboro", "RES_WIND" : "limegreen", "RES_SOLAR" : "yellow", "RES_HYDRO" : "blue", "RES_GEO" : "firebrick", "ELEC_EXPORT" : "chartreuse","CO2_ATM": "dimgray", "CO2_INDUSTRY": "darkgrey", "CO2_CAPTURED": "lightslategrey", "RE_FUELS": 'green','NRE_FUELS':'black'}
+            color_dict = {"ELECTRICITY" : "deepskyblue", "GASOLINE" : "gray", "DIESEL" : "silver", "BIOETHANOL" : "mediumorchid", "BIODIESEL" : "mediumpurple", "LFO" : "darkviolet", "LOCAL_GAS" : "orange", "IMPORTED_GAS" : "darkorange", "WOOD" : "peru", "WET_BIOMASS" : "seagreen", "LOCAL_COAL" : "black", "IMPORTED_COAL" : "dimgrey", "URANIUM" : "deeppink", "WASTE" : "olive", "H2" : "violet", "H2_RE" : "plum", "AMMONIA" : "slateblue", "AMMONIA_RE" : "blue", "METHANOL" : "orchid", "METHANOL_RE" : "mediumvioletred", "CO2_EMISSIONS" : "gainsboro", "RES_WIND" : "limegreen", "RES_SOLAR" : "yellow", "RES_HYDRO" : "blue", "RES_GEO" : "firebrick", "ELEC_EXPORT" : "chartreuse","CO2_ATM": "dimgray", "CO2_INDUSTRY": "darkgrey", "CO2_CAPTURED": "lightslategrey", "RE_FUELS": 'green','NRE_FUELS':'black'}
         elif category == 'Sectors':
             color_dict = {"ELECTRICITY" : "deepskyblue", "HEAT_HIGH_T":"red","HEAT_LOW_T_DECEN":"lightpink", "HEAT_LOW_T_DHN":"indianred", "MOB_PUBLIC":"gold", "MOB_PRIVATE":"goldenrod","MOBILITY_FREIGHT":"darkgoldenrod", "NON_ENERGY": "darkviolet", "INFRASTRUCTURE":"grey","HVC":"cyan",'STORAGE':'chartreuse'}
         elif category == 'Infrastructure':
