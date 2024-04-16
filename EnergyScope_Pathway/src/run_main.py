@@ -21,7 +21,7 @@ curr_dir = Path(os.path.dirname(__file__))
 pymodPath = os.path.abspath(os.path.join(curr_dir.parent,'pylib'))
 sys.path.insert(0, pymodPath)
 
-GEMMES_path = '/home/pjacques/Desktop/PhD/EnergyScope_GEMMES_Colombia/Outputs_for_EnergyScope/'
+GEMMES_path = '/home/piejacques/Bureau/ColombiaEnergyScope/Outputs_for_EnergyScope/'
 
 from ampl_object import AmplObject
 from ampl_preprocessor import AmplPreProcessor
@@ -29,13 +29,13 @@ from ampl_collector import AmplCollector
 from ampl_graph import AmplGraph
 
 country = 'Colombia'
-type_of_model = 'TD'
+type_of_model = 'MO'
 nbr_tds = 12
 
 run_opti = True
 simulate_TEJ_scenario = False
 get_inputs_from_GEMMES = False
-output_csv = True
+output_csv = False
 graph = True
 graph_comp = False
 outputs_for_GEMMES = False
@@ -234,14 +234,14 @@ if __name__ == '__main__':
             # a_website = "https://www.google.com"
             # webbrowser.open_new(a_website)
             ampl_graph.graph_resource()
-            ampl_graph.graph_cost()
+            # ampl_graph.graph_cost()
             # ampl_graph.graph_gwp_per_sector()
-            ampl_graph.graph_cost_inv_phase_tech()
+            # ampl_graph.graph_cost_inv_phase_tech()
             # ampl_graph.graph_cost_return()
-            ampl_graph.graph_cost_op_phase()
+            # ampl_graph.graph_cost_op_phase()
         
-            ampl_graph.graph_layer()
-            ampl_graph.graph_gwp()
+            # ampl_graph.graph_layer()
+            # ampl_graph.graph_gwp()
             # ampl_graph.graph_tech_cap()
             # ampl_graph.graph_total_cost_per_year()
             # ampl_graph.graph_load_factor()
@@ -301,7 +301,7 @@ if __name__ == '__main__':
             list_LTH_tech = ['DHN_HP_ELEC','DHN_COGEN_GAS','DHN_COGEN_WOOD','DHN_COGEN_WASTE','DHN_COGEN_WET_BIOMASS','DHN_COGEN_BIO_HYDROLYSIS','DHN_BOILER_GAS','DHN_BOILER_WOOD','DHN_BOILER_OIL','DHN_DEEP_GEO','DHN_SOLAR','DEC_HP_ELEC','DEC_THHP_GAS','DEC_COGEN_GAS','DEC_COGEN_OIL','DEC_ADVCOGEN_GAS','DEC_ADVCOGEN_H2','DEC_BOILER_GAS','DEC_BOILER_WOOD','COAL_STOVE','DEC_BOILER_OIL','DEC_SOLAR','DEC_DIRECT_ELEC']
             C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(list_LTH_tech),[3,4,5,6]] = C_inv_bis.iloc[C_inv_bis.index.get_level_values('Technologies').isin(list_LTH_tech),[8,9,10,11]].values
             C_inv.drop(columns=['merge_index'],inplace=True)
-            # C_inv.to_csv(pth_output_all+'/'+country+'/C_inv_phase_tech_non_annualised.csv')
+            # C_inv.to_csv(pth_output_all+'/'+case_study+'/C_inv_phase_tech_non_annualised.csv')
             
             
             C_maint = z_Results['C_op_phase_tech_non_annualised']
@@ -310,7 +310,7 @@ if __name__ == '__main__':
             C_maint['Local'] = 1
             C_maint['Imported'] = 1 - C_maint['Local']
             C_maint[['F','B','G','H']] = C_inv.iloc[~C_inv.index.get_level_values('Phases').isin(['2015_2020']),[3,4,5,6]].values            
-            # C_maint.to_csv(pth_output_all+'/'+country+'/C_op_phase_tech_non_annualised.csv')
+            # C_maint.to_csv(pth_output_all+'/'+case_study+'/C_op_phase_tech_non_annualised.csv')
             
             
             # C_op is annualised - we need to get a non-annualised version of it
@@ -330,7 +330,7 @@ if __name__ == '__main__':
             C_op.iloc[C_op.index.get_level_values('Resources').isin(Local_resources),1] = 1
             C_op['Imported'] = 1 - C_op['Local']
             C_op[['F','B','G','H']] = [1,0,0,0]
-            # C_op.to_csv(pth_output_all+'/'+country+'/C_op_phase_res_non_annualised.csv')   
+            # C_op.to_csv(pth_output_all+'/'+case_study+'/C_op_phase_res_non_annualised.csv')   
             
             
             output_for_GEMMES = pd.DataFrame(index=annualised_factor.index[1:])
@@ -452,13 +452,13 @@ if __name__ == '__main__':
             output_for_GEMMES = output_for_GEMMES.round(3)
             output_for_GEMMES = output_for_GEMMES.iloc[1:,:]
             output_for_GEMMES = pd.concat([first_line, output_for_GEMMES])
-            output_for_GEMMES.to_csv(pth_output_all+'/'+country+'/Outputs_for_GEMMES/Costs_per_phase.csv')
+            output_for_GEMMES.to_csv(pth_output_all+'/'+case_study+'/Outputs_for_GEMMES/Costs_per_phase.csv')
             
             Cost_breakdown_non_annualised = z_Results['Cost_breakdown_non_annualised']
             Cost_breakdown_non_annualised = Cost_breakdown_non_annualised.groupby(level=[0]).sum()
             # Cost_breakdown_non_annualised = Cost_breakdown_non_annualised.loc[Cost_breakdown_non_annualised.index=='YEAR_2020']
             Cost_breakdown_non_annualised = Cost_breakdown_non_annualised.round(0)
-            Cost_breakdown_non_annualised.to_csv(pth_output_all+'/'+country+'/Outputs_for_GEMMES/Initial_cost.csv')
+            Cost_breakdown_non_annualised.to_csv(pth_output_all+'/'+case_study+'/Outputs_for_GEMMES/Initial_cost.csv')
         
             
         ###############################################################################
