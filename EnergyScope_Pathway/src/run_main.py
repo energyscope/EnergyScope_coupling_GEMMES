@@ -21,7 +21,7 @@ curr_dir = Path(os.path.dirname(__file__))
 pymodPath = os.path.abspath(os.path.join(curr_dir.parent,'pylib'))
 sys.path.insert(0, pymodPath)
 
-GEMMES_path = '/home/pjacques/Desktop/PhD/EnergyScope_GEMMES_coupling/EnergyScope_Pathway/Outputs_from_GEMMES/'
+GEMMES_path = os.path.join(curr_dir.parent,'Outputs_from_GEMMES/')
 
 from ampl_object import AmplObject
 from ampl_preprocessor import AmplPreProcessor
