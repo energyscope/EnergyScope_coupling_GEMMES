@@ -21,21 +21,35 @@ curr_dir = Path(os.path.dirname(__file__))
 pymodPath = os.path.abspath(os.path.join(curr_dir.parent,'pylib'))
 sys.path.insert(0, pymodPath)
 
+<<<<<<< HEAD
 GEMMES_path = '/home/piejacques/Bureau/ColombiaEnergyScope/Outputs_for_EnergyScope/'
+=======
+GEMMES_path = '/home/pjacques/Desktop/PhD/EnergyScope_GEMMES_coupling/EnergyScope_Pathway/Outputs_from_GEMMES/'
+>>>>>>> 027c2f329bf9872a778fc88981b4ca3ad6cc8408
 
 from ampl_object import AmplObject
 from ampl_preprocessor import AmplPreProcessor
 from ampl_collector import AmplCollector
 from ampl_graph import AmplGraph
 
+<<<<<<< HEAD
 country = 'Turkey'
+=======
+country = 'Colombia'
+>>>>>>> 027c2f329bf9872a778fc88981b4ca3ad6cc8408
 type_of_model = 'MO'
 nbr_tds = 12
 
 run_opti = True
+<<<<<<< HEAD
 simulate_TEJ_scenario = False
 get_inputs_from_GEMMES = False
 output_csv = False
+=======
+simulate_TEJ_scenario = True
+get_inputs_from_GEMMES = True # de-comment the lines with i_rate !
+output_csv = True
+>>>>>>> 027c2f329bf9872a778fc88981b4ca3ad6cc8408
 graph = True
 graph_comp = False
 outputs_for_GEMMES = False
@@ -158,8 +172,8 @@ if __name__ == '__main__':
                 ampl = AmplObject(mod_1_path, mod_2_path, dat_path, ampl_options, type_model = type_of_model)
 
                 if(get_inputs_from_GEMMES):
-                    i_rate = pd.read_csv(GEMMES_path + 'i_rate.csv')
-                    i_rate.set_index('Phase', inplace=True)
+                    # i_rate = pd.read_csv(GEMMES_path + 'i_rate.csv')
+                    # i_rate.set_index('Phase', inplace=True)
                     phases_ES = ['2015_2020', '2020_2025', '2025_2030', '2030_2035', '2035_2040', '2040_2045', '2045_2050']
                     # for j in range(len(phases_ES)):
                         # ampl.set_params('i_rate',{(phases_ES[j]):i_rate.iloc[j,0]})
