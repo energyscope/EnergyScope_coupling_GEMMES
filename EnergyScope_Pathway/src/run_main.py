@@ -21,35 +21,21 @@ curr_dir = Path(os.path.dirname(__file__))
 pymodPath = os.path.abspath(os.path.join(curr_dir.parent,'pylib'))
 sys.path.insert(0, pymodPath)
 
-<<<<<<< HEAD
-GEMMES_path = '/home/piejacques/Bureau/ColombiaEnergyScope/Outputs_for_EnergyScope/'
-=======
-GEMMES_path = '/home/pjacques/Desktop/PhD/EnergyScope_GEMMES_coupling/EnergyScope_Pathway/Outputs_from_GEMMES/'
->>>>>>> 027c2f329bf9872a778fc88981b4ca3ad6cc8408
+GEMMES_path = os.path.join(curr_dir.parent,'Outputs_from_GEMMES/')
 
 from ampl_object import AmplObject
 from ampl_preprocessor import AmplPreProcessor
 from ampl_collector import AmplCollector
 from ampl_graph import AmplGraph
 
-<<<<<<< HEAD
 country = 'Turkey'
-=======
-country = 'Colombia'
->>>>>>> 027c2f329bf9872a778fc88981b4ca3ad6cc8408
-type_of_model = 'MO'
+type_of_model = 'TD'
 nbr_tds = 12
 
-run_opti = True
-<<<<<<< HEAD
+run_opti = False
 simulate_TEJ_scenario = False
-get_inputs_from_GEMMES = False
-output_csv = False
-=======
-simulate_TEJ_scenario = True
-get_inputs_from_GEMMES = True # de-comment the lines with i_rate !
+get_inputs_from_GEMMES = False # de-comment the lines with i_rate !
 output_csv = True
->>>>>>> 027c2f329bf9872a778fc88981b4ca3ad6cc8408
 graph = True
 graph_comp = False
 outputs_for_GEMMES = False
@@ -255,8 +241,8 @@ if __name__ == '__main__':
             # ampl_graph.graph_cost_op_phase()
         
             # ampl_graph.graph_layer()
-            # ampl_graph.graph_gwp()
-            # ampl_graph.graph_tech_cap()
+            ampl_graph.graph_gwp()
+            ampl_graph.graph_tech_cap()
             # ampl_graph.graph_total_cost_per_year()
             # ampl_graph.graph_load_factor()
             # df_unused = ampl_graph.graph_load_factor_2()
