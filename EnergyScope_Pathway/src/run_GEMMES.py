@@ -44,3 +44,36 @@ newParms = newParms._replace(reducXrO=0)
 out = solveGEMMES(solvePy=solvePy, parms=newParms, solver="dopri", atol=1e-4, rtol=0, fac=0.85, facMin=0.1, facMax=4, nStepMax=300, hInit=0.025, hMin=0.025/100, hMax=0.2)
 
 out.plot(y=["ip"], use_index=True)
+
+
+
+# Import raw data from C++
+samplesExogVarCpp0 = solvePy.samplesExogVar()
+nSamplesVarExogVarCpp0 = solvePy.nSamplesVarExogVar()
+nVarExogVarCpp0 = solvePy.nVarExogVar()
+#build data frame in python, this will be the input passed to the Solve function    
+samplesExogVar = pd.DataFrame(np.zeros([nSamplesVarExogVarCpp0[0] , nVarExogVarCpp0]))
+for i in range(nVarExogVarCpp0):
+    for j in range(nSamplesVarExogVarCpp0[0]):
+        samplesExogVar[i][j] = samplesExogVarCpp0[i*nSamplesVarExogVarCpp0[0]+j]
+
+Costs_ES = pd.read_csv('Costs_per_phase.csv')
+
+
+
+
+outDopri2 = solve(solver="dopri", samplesExogVar=samplesExogVar, atol=1e-4, rtol=0, fac=0.85, facMin=0.1, facMax=4, nStepMax=300, hInit=0.025, hMin=0.025/100, hMax=0.2)
+
+
+
+
+
+
+
+
+
+
+
+
+
+

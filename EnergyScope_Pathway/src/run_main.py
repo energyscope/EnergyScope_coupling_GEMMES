@@ -21,22 +21,20 @@ curr_dir = Path(os.path.dirname(__file__))
 pymodPath = os.path.abspath(os.path.join(curr_dir.parent,'pylib'))
 sys.path.insert(0, pymodPath)
 
-GEMMES_path = os.path.join(curr_dir.parent,'Outputs_from_GEMMES/')
-
 from ampl_object import AmplObject
 from ampl_preprocessor import AmplPreProcessor
 from ampl_collector import AmplCollector
 from ampl_graph import AmplGraph
 
-country = 'Turkey'
-type_of_model = 'TD'
+country = 'Colombia'
+type_of_model = 'MO'
 nbr_tds = 12
 
-run_opti = False
+run_opti = True
 simulate_TEJ_scenario = False
-get_inputs_from_GEMMES = False # de-comment the lines with i_rate !
+get_inputs_from_GEMMES = True # de-comment the lines with i_rate !
 output_csv = True
-graph = True
+graph = False
 graph_comp = False
 outputs_for_GEMMES = False
 
@@ -101,9 +99,6 @@ ampl_options = {'show_stats': 1,
 
 if __name__ == '__main__':
     
-    ## Paths
-    pth_output_all = os.path.join(curr_dir.parent,'out')
-    
     N_year_opti = [30]
     N_year_overlap = [0]
 
@@ -138,6 +133,8 @@ if __name__ == '__main__':
                     case_study = 'Turkey - TD'.format(type_of_model,n_year_opti,n_year_overlap)
                     expl_text = 'Turkey - hourly granularity'.format(n_year_opti,n_year_overlap)
         
+        
+        pth_output_all = os.path.join(curr_dir.parent,'out')
         output_folder = os.path.join(pth_output_all,case_study)
         output_file = os.path.join(output_folder,'_Results.pkl')
         ampl_0 = AmplObject(mod_1_path, mod_2_path, dat_path_0, ampl_options, type_model = type_of_model)
@@ -158,19 +155,19 @@ if __name__ == '__main__':
                 ampl = AmplObject(mod_1_path, mod_2_path, dat_path, ampl_options, type_model = type_of_model)
 
                 if(get_inputs_from_GEMMES):
-                    # i_rate = pd.read_csv(GEMMES_path + 'i_rate.csv')
+                    # i_rate = pd.read_csv('i_rate.csv')
                     # i_rate.set_index('Phase', inplace=True)
                     phases_ES = ['2015_2020', '2020_2025', '2025_2030', '2030_2035', '2035_2040', '2040_2045', '2045_2050']
                     # for j in range(len(phases_ES)):
                         # ampl.set_params('i_rate',{(phases_ES[j]):i_rate.iloc[j,0]})
                     
-                    EUD_2021 = pd.read_csv(GEMMES_path + 'EUD_2021.csv')
-                    EUD_2026 = pd.read_csv(GEMMES_path + 'EUD_2026.csv')
-                    EUD_2031 = pd.read_csv(GEMMES_path + 'EUD_2031.csv')
-                    EUD_2036 = pd.read_csv(GEMMES_path + 'EUD_2036.csv')
-                    EUD_2041 = pd.read_csv(GEMMES_path + 'EUD_2041.csv')
-                    EUD_2046 = pd.read_csv(GEMMES_path + 'EUD_2046.csv')
-                    EUD_2051 = pd.read_csv(GEMMES_path + 'EUD_2051.csv')
+                    EUD_2021 = pd.read_csv('EUD_2021.csv')
+                    EUD_2026 = pd.read_csv('EUD_2026.csv')
+                    EUD_2031 = pd.read_csv('EUD_2031.csv')
+                    EUD_2036 = pd.read_csv('EUD_2036.csv')
+                    EUD_2041 = pd.read_csv('EUD_2041.csv')
+                    EUD_2046 = pd.read_csv('EUD_2046.csv')
+                    EUD_2051 = pd.read_csv('EUD_2051.csv')
                     EUD_2015 = EUD_2021.copy()
                     EUD_dict = {0:EUD_2015, 1:EUD_2021, 2:EUD_2026, 3:EUD_2031, 4:EUD_2036, 5:EUD_2041, 6:EUD_2046, 7:EUD_2051}
                     year_list = ['YEAR_2015', 'YEAR_2020', 'YEAR_2025', 'YEAR_2030', 'YEAR_2035', 'YEAR_2040', 'YEAR_2045', 'YEAR_2050']                  
@@ -216,11 +213,12 @@ if __name__ == '__main__':
         if output_csv:
             ampl_graph = AmplGraph(output_file, ampl_0, case_study)
             z_Results = ampl_graph.ampl_collector
-            z_Results['Resources'].to_csv('Resources.csv')
-            z_Results['Assets'].to_csv('Assets.csv')
-            z_Results['Cost_breakdown'].to_csv('Cost_breakdown.csv')
-            z_Results['Year_balance'].to_csv('Year_balance.csv')
-            z_Results['Gwp_breakdown'].to_csv('Gwp_breakdown.csv')
+            z_Results['Resources'].to_csv(os.path.join(output_folder,'Resources.csv'))
+            z_Results['Assets'].to_csv(os.path.join(output_folder,'Assets.csv'))
+            z_Results['Cost_breakdown'].to_csv(os.path.join(output_folder,'Cost_breakdown.csv'))
+            z_Results['Year_balance'].to_csv(os.path.join(output_folder,'Year_balance.csv'))
+            z_Results['Gwp_breakdown'].to_csv(os.path.join(output_folder,'Gwp_breakdown.csv'))
+            
 
         if graph:
             ampl_graph = AmplGraph(output_file, ampl_0, case_study)
@@ -285,7 +283,7 @@ if __name__ == '__main__':
             list_public_mob_tech = ['TRAMWAY_TROLLEY','BUS_COACH_DIESEL','BUS_COACH_GASOLINE','BUS_COACH_HYDIESEL','BUS_COACH_CNG_STOICH','BUS_COACH_FC_HYBRIDH2','TRAIN_PUB']
             C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(list_public_mob_tech),[3,5]] = [0,1] # Public mobility costs are supported by the State
             
-            shares_cooling = pd.read_csv(GEMMES_path + 'shares_cooling.csv')
+            shares_cooling = pd.read_csv('shares_cooling.csv')
             shares_cooling.set_index('Phase',inplace=True)
             list_cooling_tech = ['DEC_ELEC_COLD','DEC_THHP_GAS_COLD']
             C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(list_cooling_tech),3] = 0
@@ -293,7 +291,7 @@ if __name__ == '__main__':
             C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(['DEC_THHP_GAS_COLD']),[4,5,6]] = shares_cooling.values
             
             C_inv['merge_index'] = C_inv.index.get_level_values('Phases')
-            shares_LTH = pd.read_csv(GEMMES_path + 'shares_LTH.csv')
+            shares_LTH = pd.read_csv('shares_LTH.csv')
             shares_LTH.set_index('Phase',inplace=True)
             shares_LTH['merge_index'] = C_inv['merge_index'].unique()
             C_inv_bis = pd.merge(C_inv, shares_LTH, on='merge_index')
@@ -446,7 +444,7 @@ if __name__ == '__main__':
             output_for_GEMMES['opex_B_COP'] += C_op_to_add['B']
             output_for_GEMMES['opex_G_COP'] += C_op_to_add['G']
             output_for_GEMMES['opex_H_COP'] += C_op_to_add['H']
-            first_line = pd.read_csv(GEMMES_path + 'Costs_per_phase_first_line.csv')
+            first_line = pd.read_csv('Costs_per_phase_first_line.csv')
             first_line.set_index('Unnamed: 0', inplace=True)           
             output_for_GEMMES = output_for_GEMMES * first_line.loc['2015_2020',:].sum() / output_for_GEMMES.iloc[0,:].sum()
             output_for_GEMMES = output_for_GEMMES.round(3)
