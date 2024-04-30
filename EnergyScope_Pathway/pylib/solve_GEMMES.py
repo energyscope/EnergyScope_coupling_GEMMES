@@ -9,6 +9,7 @@ def solveGEMMES(solvePy=None, time=None, y0=None, parms=None, samplesExogVar=Non
         nt = solvePy.nt()
         tInit = solvePy.tInit()
         tEnd = solvePy.tEnd()
+        time = np.arange(tInit, tEnd+0.1, 0.1) 
     else: 
         nt = time.size
         tInit = time[0]
@@ -55,19 +56,21 @@ def solveGEMMES(solvePy=None, time=None, y0=None, parms=None, samplesExogVar=Non
     
     if(returnRK4 == 3):
         outSize = 2*nV+nIV
-        outNames = varNames + derivVarNames + intermediateVarNames
+        outNames = ['time'] + varNames + derivVarNames + intermediateVarNames
     elif (returnRK4 == 2):
         outSize = nV+nIV
-        outNames = varNames + intermediateVarNames
+        outNames = ['time'] + varNames + intermediateVarNames
     elif (returnRK4 == 1):
         outSize = 2*nV
-        outNames = varNames + derivVarNames
+        outNames = ['time'] + varNames + derivVarNames
     else:
         outSize = nV
-        outNames =varNames
-
-    outUnNamed = np.zeros((nt,outSize))
+        outNames = ['time'] + varNames
+    print(outNames)
+    print(len(outNames))
+    print(outSize)
+    outUnNamed = np.zeros((nt,outSize+1))
     for i in range(nt):
-        outUnNamed[i,:] = outCpp[(i*(outSize)):(i*(outSize)+(outSize))]
+        outUnNamed[i,:] = [time[i]] + outCpp[(i*(outSize)):(i*(outSize)+(outSize))]
     out = pd.DataFrame(outUnNamed, columns=outNames, index=time)
     return out

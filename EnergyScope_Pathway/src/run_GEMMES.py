@@ -8,7 +8,6 @@ import pickle as pkl
 import pandas as pd
 import numpy as np
 import amplpy as apy
-from solve_GEMMES import solveGEMMES
 from collections import namedtuple
 import cppimport
 
@@ -20,6 +19,8 @@ Cpp_path = GEMMES_path + '/SourceCode/cppCode'
 sys.path.insert(0, pymodPath)
 sys.path.insert(0, Cpp_path)
 sys.path.insert(0, Cpp_path + "/src")
+
+from solve_GEMMES import solveGEMMES
 
 cppimport.settings['force_rebuild'] = True
 solvePy = cppimport.imp('functionsForPy')
@@ -41,31 +42,22 @@ newParms = newParms._replace(fi3=0.45)
 newParms = newParms._replace(sigmaxnSpeed=0.48)
 newParms = newParms._replace(reducXrO=0)
 
-out = solveGEMMES(solvePy=solvePy, parms=newParms, solver="dopri", atol=1e-4, rtol=0, fac=0.85, facMin=0.1, facMax=4, nStepMax=300, hInit=0.025, hMin=0.025/100, hMax=0.2)
+## Fix the trajectories of exogenous variables
+Costs_ES_per_phase = pd.read_csv('Costs_per_phase.csv')
+Costs_ES_per_phase.drop(columns=['Unnamed: 0'], inplace=True)
 
+Costs_ES_per_year = pd.DataFrame(np.repeat(Costs_ES_per_phase.values, 5, axis=0))
+Costs_ES_per_year = Costs_ES_per_year.loc[2:,:]
+Costs_ES_per_year.reset_index(drop=True, inplace=True)
+
+Thetas = pd.read_csv('Thetas.csv')
+Thetas.drop(columns=['Unnamed: 0'], inplace=True)
+
+samplesExogVar = pd.concat([Costs_ES_per_year,Thetas], axis=1)
+samplesExogVar.columns = np.arange(len(samplesExogVar.columns))
+
+out = solveGEMMES(solvePy=solvePy, samplesExogVar=samplesExogVar, parms=newParms, solver="dopri", atol=1e-4, rtol=0, fac=0.85, facMin=0.1, facMax=4, nStepMax=300, hInit=0.025, hMin=0.025/100, hMax=0.2)
 out.plot(y=["ip"], use_index=True)
-
-
-
-# Import raw data from C++
-samplesExogVarCpp0 = solvePy.samplesExogVar()
-nSamplesVarExogVarCpp0 = solvePy.nSamplesVarExogVar()
-nVarExogVarCpp0 = solvePy.nVarExogVar()
-#build data frame in python, this will be the input passed to the Solve function    
-samplesExogVar = pd.DataFrame(np.zeros([nSamplesVarExogVarCpp0[0] , nVarExogVarCpp0]))
-for i in range(nVarExogVarCpp0):
-    for j in range(nSamplesVarExogVarCpp0[0]):
-        samplesExogVar[i][j] = samplesExogVarCpp0[i*nSamplesVarExogVarCpp0[0]+j]
-
-Costs_ES = pd.read_csv('Costs_per_phase.csv')
-
-
-
-
-outDopri2 = solve(solver="dopri", samplesExogVar=samplesExogVar, atol=1e-4, rtol=0, fac=0.85, facMin=0.1, facMax=4, nStepMax=300, hInit=0.025, hMin=0.025/100, hMax=0.2)
-
-
-
 
 
 

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon May 17 10:21 2021
+May 2024
 
-@author: Xavier Rixhon
+@authors: Pierre Jacques, Xavier Rixhon, Stanislas Augier
 """
 
 import os, sys
@@ -32,7 +32,7 @@ nbr_tds = 12
 
 run_opti = True
 simulate_TEJ_scenario = False
-get_inputs_from_GEMMES = True # de-comment the lines with i_rate !
+get_inputs_from_GEMMES = False # de-comment the lines with i_rate !
 output_csv = True
 graph = False
 graph_comp = False
