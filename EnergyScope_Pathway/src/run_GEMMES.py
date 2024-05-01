@@ -56,6 +56,7 @@ Thetas.drop(columns=['Unnamed: 0'], inplace=True)
 samplesExogVar = pd.concat([Costs_ES_per_year,Thetas], axis=1)
 samplesExogVar.columns = np.arange(len(samplesExogVar.columns))
 
+## Run the GEMMES model
 out = solveGEMMES(solvePy=solvePy, samplesExogVar=samplesExogVar, parms=newParms, solver="dopri", atol=1e-4, rtol=0, fac=0.85, facMin=0.1, facMax=4, nStepMax=300, hInit=0.025, hMin=0.025/100, hMax=0.2)
 out.plot(y=["ip"], use_index=True)
 

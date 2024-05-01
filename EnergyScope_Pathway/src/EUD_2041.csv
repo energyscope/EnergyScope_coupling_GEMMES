@@ -1,11 +1,11 @@
-"Category","Subcategory","parameter_name","HOUSEHOLDS","SERVICES","INDUSTRY","TRANSPORTATION","Units"
-"Electricity","baseload","ELECTRICITY",10239,19366,65286,0,"[GWh]"
-"Electricity","variable","ELECTRICITY_VAR",5275,14609,20617,0,"[GWh]"
-"Heat","high temperature","HEAT_HIGH_T",0,0,48617,0,"[GWh]"
-"Heat","space heating","HEAT_LOW_T_SH",17883,7873,29306,0,"[GWh]"
-"Heat","hot water","HEAT_LOW_T_HW",1490,0,14652,0,"[GWh]"
-"Cold","process cooling","PROCESS_COOLING",0,0,509,0,"[GWh]"
-"Cold","space cooling","SPACE_COOLING",3352,4935,0,0,"[GWh]"
-"Mobility","passenger","MOBILITY_PASSENGER",0,0,0,456104,"[Mpkm]"
-"Mobility","freight","MOBILITY_FREIGHT",0,0,0,174539,"[Mtkm]"
-"Non energy","Non energy","NON_ENERGY",0,0,47993,0,"[GWh]"
+Category,Subcategory,parameter_name,HOUSEHOLDS,SERVICES,INDUSTRY,TRANSPORTATION,Units
+Electricity,baseload,ELECTRICITY,10036.4,19658.9,62146.0,0.0,[GWh]
+Electricity,variable,ELECTRICITY_VAR,5170.3,14830.4,19625.1,0.0,[GWh]
+Heat,high temperature,HEAT_HIGH_T,0.0,0.0,46278.4,0.0,[GWh]
+Heat,space heating,HEAT_LOW_T_SH,17528.6,7991.7,39982.9,0.0,[GWh]
+Heat,hot water,HEAT_LOW_T_HW,1461.0,0.0,19992.7,0.0,[GWh]
+Cold,process cooling,PROCESS_COOLING,0.0,0.0,484.4,0.0,[GWh]
+Cold,space cooling,SPACE_COOLING,3285.2,5009.4,0.0,0.0,[GWh]
+Mobility,passenger,MOBILITY_PASSENGER,0.0,0.0,0.0,447048.2,[Mpkm]
+Mobility,freight,MOBILITY_FREIGHT,0.0,0.0,0.0,168271.4,[Mtkm]
+Non energy,Non energy,NON_ENERGY,0.0,0.0,45891.5,0.0,[GWh]

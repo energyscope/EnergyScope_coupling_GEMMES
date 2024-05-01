@@ -17,6 +17,7 @@ import numpy as np
 import amplpy as apy
 from collections import namedtuple
 import cppimport
+import time
 
 curr_dir = Path(os.path.dirname(__file__))
 
@@ -29,8 +30,6 @@ sys.path.insert(0, Cpp_path + "/src")
 
 ESMY_path = os.path.join(curr_dir.parent,'ESMY')
 EnergyScope_model_path = os.path.join(ESMY_path,'STEP_2_Pathway_Model')
-EnergyScope_output_path = os.path.join(curr_dir.parent,'out')
-EnergyScope_case_study_path = os.path.join(EnergyScope_output_path,case_study)
 
 from solve_GEMMES import solveGEMMES
 from ampl_object import AmplObject
@@ -38,47 +37,55 @@ from ampl_preprocessor import AmplPreProcessor
 from ampl_collector import AmplCollector
 from ampl_graph import AmplGraph
 
+## Read the GEMMES model
 cppimport.settings['force_rebuild'] = True
 solvePy = cppimport.imp('functionsForPy')
-
 
 ## Define the country studied and the time granularity of EnergyScope
 country = 'Colombia'
 EnergyScope_granularity = 'MO'
 nbr_tds = 12
 
-
-## Change parameters values in GEMMES according to scenario definition
-# Build default parms vector in python importing data from C++
-parmsNames = solvePy.parmsNames()
-# Declare a structure that stores parameters values and their names
-namedParms = namedtuple("namedParms", parmsNames)
-# build named parms vector using the parmsNamed structure and loading parms values from C++
-newParms = namedParms(*solvePy.parms())
-newParms = newParms._replace(sigmaxnpNew=1.2)
-newParms = newParms._replace(kappa03=0.03526333*1.05)
-newParms = newParms._replace(tauf=0.1859935*1.02)
-newParms = newParms._replace(taub=0.1222547*1.02)
-newParms = newParms._replace(tauw=0.08986282*1.02)
-newParms = newParms._replace(tauvat=0.1089564*1.02)
-newParms = newParms._replace(fi3=0.45)
-newParms = newParms._replace(sigmaxnSpeed=0.48)
-newParms = newParms._replace(reducXrO=0)
-
-
-## Read the EnergyScope model files
+## Read the EnergyScope model and data files
 if EnergyScope_granularity == 'MO':
     mod_1_path = [os.path.join(EnergyScope_model_path,'PESMO_model.mod'),
                 os.path.join(EnergyScope_model_path,'PESMO_store_variables.mod'),
                 os.path.join(EnergyScope_model_path,'PES_store_variables.mod')]
     mod_2_path = [os.path.join(EnergyScope_model_path,'PESMO_initialise_2020.mod'),
                   os.path.join(EnergyScope_model_path,'fix.mod')]
+    dat_path = [os.path.join(EnergyScope_model_path,country+'/PESMO_data_all_years.dat')] 
 else:
     mod_1_path = [os.path.join(EnergyScope_model_path,'PESTD_model.mod'),
             os.path.join(EnergyScope_model_path,'PESTD_store_variables.mod'),
             os.path.join(EnergyScope_model_path,'PES_store_variables.mod')]
     mod_2_path = [os.path.join(EnergyScope_model_path,'PESTD_initialise_2020.mod'),
               os.path.join(EnergyScope_model_path,'fix.mod')]
+    dat_path = [os.path.join(EnergyScope_model_path,country+'/PESTD_data_all_years.dat'),
+                os.path.join(EnergyScope_model_path,country+'/PESTD_{}TD.dat'.format(nbr_tds))]
+
+dat_path += [os.path.join(EnergyScope_model_path,'PES_data_all_years.dat'),
+             os.path.join(EnergyScope_model_path,'PES_seq_opti.dat'),
+             os.path.join(EnergyScope_model_path,country+'/PES_data_efficiencies.dat'),
+             os.path.join(EnergyScope_model_path,country+'/PES_data_year_related.dat'),
+             os.path.join(EnergyScope_model_path,'PES_data_set_AGE_2020.dat')]
+
+dat_path_0 = dat_path + [os.path.join(EnergyScope_model_path,'PES_data_remaining.dat'),
+             os.path.join(EnergyScope_model_path,'PES_data_decom_allowed_2020.dat')]
+
+dat_path += [os.path.join(EnergyScope_model_path,'PES_data_remaining_wnd.dat'),
+             os.path.join(EnergyScope_model_path,'PES_data_decom_allowed_2020.dat')]
+    
+
+## Name the EnergyScope output files
+if(EnergyScope_granularity=='MO'):
+    case_study = country+' - MO'
+    expl_text  = country+' - monthly granularity'
+else:
+    case_study = country+' - TD'
+    expl_text  = country+' - hourly granularity'
+
+EnergyScope_output_path = os.path.join(curr_dir.parent,'out')
+EnergyScope_case_study_path = os.path.join(EnergyScope_output_path,case_study)
 
 
 ## Options for ampl and gurobi (optimization within EnergyScope)
@@ -100,99 +107,148 @@ ampl_options = {'show_stats': 1,
                 'gurobi_options': gurobi_options_str,
                 '_log_input_only': False}
 
-
-## Name the EnergyScope output files
-if(EnergyScope_granularity=='MO'):
-    if(country=='Colombia'):
-        case_study = 'Colombia - MO'
-        expl_text = 'Colombia - monthly granularity'
-    else:
-        case_study = 'Turkey - MO'
-        expl_text = 'Turkey - monthly granularity'
-else:
-    if(country=='Colombia'):
-        case_study = 'Colombia - TD'
-        expl_text = 'Colombia - hourly granularity'
-    else:
-        case_study = 'Turkey - TD'
-        expl_text = 'Turkey - hourly granularity'
-
-
-
-
-
-
-
-
-
-
-
-
-
+def main():
+    plot_EnergyScope = False  
+    csv_EnergyScope  = False
+    output_GEMMES = run_GEMMES()
+    gdp_current = output_GEMMES['gdp']
+    diff = np.linalg.norm(gdp_current)
+    n_iter = 0
+    while(diff > 1e-3):
+        gdp_previous = gdp_current
+        n_iter += 1
+        output_EnergyScope = run_EnergyScope()
+        # write_EnergyScope_outputs(output_EnergyScope[0], output_EnergyScope[1])
+        output_GEMMES = run_GEMMES()
+        gdp_current = output_GEMMES['gdp']
+        diff = np.linalg.norm(gdp_current-gdp_previous)  
+    time.sleep(1)
+    print('Number of iterations before convergence between the two models: ', n_iter)
     
-    m=0
-        
-        i = 0
-        n_year_opti = 30
-        n_year_overlap = 0
-        
+    if plot_EnergyScope:
+        plot_EnergyScope_outputs(output_EnergyScope[0], output_EnergyScope[1])
+    if csv_EnergyScope:
+        EnergyScope_output_csv(output_EnergyScope[0], output_EnergyScope[1])
 
             
-        
-        
-        
-        output_file = os.path.join(EnergyScope_case_study_path,'_Results.pkl')
-        ampl_0 = AmplObject(mod_1_path, mod_2_path, dat_path_0, ampl_options, type_model = EnergyScope_granularity)
-        ampl_0.clean_history()
-        ampl_pre = AmplPreProcessor(ampl_0, n_year_opti, n_years_overlap=0)
-        ampl_collector = AmplCollector(ampl_pre, output_file, expl_text)
-        
-        t = time.time()
-        
-        if run_opti:
-        
-            i=0
-            
-                t_i = time.time()
-                curr_years_wnd = ampl_pre.write_seq_opti(i).copy()
-                ampl_pre.remaining_update(i)
-                
-                ampl = AmplObject(mod_1_path, mod_2_path, dat_path, ampl_options, type_model = EnergyScope_granularity)
-
-                
-
-                solve_result = ampl.run_ampl()
-                ampl.get_results()
-                
-
-                ampl_collector.init_storage(ampl)
-                
-                ampl_collector.update_storage(ampl,curr_years_wnd,i)
-                
-                ampl.set_init_sol()
-                
-                elapsed_i = time.time()-t_i
-                print('Time to solve the window #'+str(i+1)+': ',elapsed_i)
-                
-                
-                    elapsed = time.time()-t
-                    print('Time to solve the optimization problem: ',elapsed)
-                    ampl_collector.clean_collector()
-                    ampl_collector.pkl()       
-        
-
-            
-        
-
-
-        
-def read_GEMMES_outputs():
-    # i_rate = pd.read_csv('i_rate.csv')
-    # i_rate.set_index('Phase', inplace=True)
-    # phases_ES = ['2015_2020', '2020_2025', '2025_2030', '2030_2035', '2035_2040', '2040_2045', '2045_2050']
-    # for j in range(len(phases_ES)):
-        # ampl.set_params('i_rate',{(phases_ES[j]):i_rate.iloc[j,0]})
+def run_GEMMES():
+    ## Change parameters values in GEMMES according to scenario definition
+    # Build default parms vector in python importing data from C++
+    parmsNames = solvePy.parmsNames()
+    # Declare a structure that stores parameters values and their names
+    namedParms = namedtuple("namedParms", parmsNames)
+    # build named parms vector using the parmsNamed structure and loading parms values from C++
+    newParms = namedParms(*solvePy.parms())
+    newParms = newParms._replace(sigmaxnpNew=1.2)
+    newParms = newParms._replace(kappa03=0.03526333*1.05)
+    newParms = newParms._replace(tauf=0.1859935*1.02)
+    newParms = newParms._replace(taub=0.1222547*1.02)
+    newParms = newParms._replace(tauw=0.08986282*1.02)
+    newParms = newParms._replace(tauvat=0.1089564*1.02)
+    newParms = newParms._replace(fi3=0.45)
+    newParms = newParms._replace(sigmaxnSpeed=0.48)
+    newParms = newParms._replace(reducXrO=0)
     
+    ## Fix the trajectories of exogenous variables
+    Costs_ES_per_phase = pd.read_csv('Costs_per_phase.csv')
+    Costs_ES_per_phase.drop(columns=['Unnamed: 0'], inplace=True)
+
+    Costs_ES_per_year = pd.DataFrame(np.repeat(Costs_ES_per_phase.values, 5, axis=0))
+    Costs_ES_per_year = Costs_ES_per_year.loc[2:,:]
+    Costs_ES_per_year.reset_index(drop=True, inplace=True)
+
+    Thetas = pd.read_csv('Thetas.csv')
+    Thetas.drop(columns=['Unnamed: 0'], inplace=True)
+
+    samplesExogVar = pd.concat([Costs_ES_per_year,Thetas], axis=1)
+    samplesExogVar.columns = np.arange(len(samplesExogVar.columns))
+
+    ## Run the GEMMES model
+    output_GEMMES = solveGEMMES(solvePy=solvePy, samplesExogVar=samplesExogVar, parms=newParms, solver="dopri", atol=1e-4, rtol=0, fac=0.85, facMin=0.1, facMax=4, nStepMax=300, hInit=0.025, hMin=0.025/100, hMax=0.2)
+    output_GEMMES.index = output_GEMMES.index.round(1)
+
+    ## Save the projection for EUDs for EnergyScope
+    df_EUD = pd.read_csv('EUD_template.csv')
+    share_elec_cst_H = 0.66
+    share_elec_cst_S = 0.57
+    share_elec_cst_F = 0.76
+    list_years = [2021,2026,2031,2036,2041,2046,2051]
+    list_EUDs = [df_EUD.copy()] * 7
+    for i in range(7):
+        list_EUDs[i] = df_EUD.copy()
+        list_EUDs[i].set_index('parameter_name', inplace=True)
+        output_GEMMES_i = output_GEMMES.loc[(output_GEMMES.index>=list_years[i]) & (output_GEMMES.index<list_years[i]+1)].mean()
+        list_EUDs[i].loc[['ELECTRICITY', 'ELECTRICITY_VAR', 'HEAT_LOW_T_SH', 'HEAT_LOW_T_HW', 'SPACE_COOLING'], 'HOUSEHOLDS'] = [output_GEMMES_i['El_H']*share_elec_cst_H, output_GEMMES_i['El_H']*(1-share_elec_cst_H), output_GEMMES_i['HLTSH_H'], output_GEMMES_i['HLTHW_H'], output_GEMMES_i['SC_H']]
+        list_EUDs[i].loc[['ELECTRICITY', 'ELECTRICITY_VAR', 'HEAT_LOW_T_SH', 'SPACE_COOLING'], 'SERVICES'] = [(output_GEMMES_i['El_B']+output_GEMMES_i['El_G'])*share_elec_cst_S, (output_GEMMES_i['El_B']+output_GEMMES_i['El_G'])*(1-share_elec_cst_S), output_GEMMES_i['HLTSH_B']+output_GEMMES_i['HLTSH_G'], output_GEMMES_i['SC_B']+output_GEMMES_i['SC_G']]
+        list_EUDs[i].loc[['ELECTRICITY', 'ELECTRICITY_VAR', 'HEAT_HIGH_T', 'HEAT_LOW_T_SH', 'HEAT_LOW_T_HW', 'PROCESS_COOLING', 'NON_ENERGY'], 'INDUSTRY']  = [output_GEMMES_i['El_F']*share_elec_cst_F, output_GEMMES_i['El_F']*(1-share_elec_cst_F), output_GEMMES_i['HHT_F'], output_GEMMES_i['HLTSH_F'], output_GEMMES_i['HLTHW_F'], output_GEMMES_i['PC_F'], output_GEMMES_i['NE_F']]
+        list_EUDs[i].loc[['MOBILITY_PASSENGER', 'MOBILITY_FREIGHT'], 'TRANSPORTATION'] = [output_GEMMES_i['MP_H'], output_GEMMES_i['MF_F']]
+        list_EUDs[i] = list_EUDs[i].round(1)
+        list_EUDs[i].reset_index(inplace=True)
+        col_names = list_EUDs[i].columns
+        list_EUDs[i] = list_EUDs[i][col_names[[1,2,0,3,4,5,6,7]]]
+    list_EUDs[0].to_csv('EUD_2021.csv', index=False)
+    list_EUDs[1].to_csv('EUD_2026.csv', index=False)
+    list_EUDs[2].to_csv('EUD_2031.csv', index=False)
+    list_EUDs[3].to_csv('EUD_2036.csv', index=False)
+    list_EUDs[4].to_csv('EUD_2041.csv', index=False)
+    list_EUDs[5].to_csv('EUD_2046.csv', index=False)
+    list_EUDs[6].to_csv('EUD_2051.csv', index=False)
+    
+    ## Save the projections for space heating shares between sectors, space cooling shares between sectors and the discount rate
+    output_GEMMES['LTH_tot'] = output_GEMMES['HLTHW_F'] + output_GEMMES['HLTSH_F'] + output_GEMMES['HLTSH_B'] + output_GEMMES['HLTSH_G'] + output_GEMMES['HLTHW_H'] + output_GEMMES['HLTSH_H']
+    output_GEMMES['SC_tot'] = output_GEMMES['SC_B'] + output_GEMMES['SC_G'] + output_GEMMES['SC_H']
+    list_phases = ['2019_2021','2021_2026','2026_2031','2031_2036','2036_2041','2041_2046','2046_2051']
+    list_output_GEMMES = [output_GEMMES.loc[output_GEMMES.index<2021].mean()]
+    for i in range(6):
+        list_output_GEMMES.append(output_GEMMES.loc[(output_GEMMES.index>=list_years[i]) & (output_GEMMES.index<list_years[i+1])].mean())
+    shares_LTH = pd.DataFrame(index=list_phases, columns=['F','B','G','H'])
+    shares_cooling = pd.DataFrame(index=list_phases, columns=['B','G','H'])
+    i_rate = pd.DataFrame(index=list_phases, columns=['i_rate'])
+    for i in range(7):
+        shares_LTH.loc[list_phases[i],'F'] = round((list_output_GEMMES[i].loc['HLTSH_F'] + list_output_GEMMES[i].loc['HLTHW_F']) / list_output_GEMMES[i].loc['LTH_tot'], 3)
+        shares_LTH.loc[list_phases[i],'B'] = round(list_output_GEMMES[i].loc['HLTSH_B'] / list_output_GEMMES[i].loc['LTH_tot'], 3)
+        shares_LTH.loc[list_phases[i],'G'] = round(list_output_GEMMES[i].loc['HLTSH_G'] / list_output_GEMMES[i].loc['LTH_tot'], 3)
+        shares_LTH.loc[list_phases[i],'H'] = round((list_output_GEMMES[i].loc['HLTSH_H'] + list_output_GEMMES[i].loc['HLTHW_H']) / list_output_GEMMES[i].loc['LTH_tot'], 3)
+        shares_cooling.loc[list_phases[i],'B'] = round(list_output_GEMMES[i].loc['SC_B'] / list_output_GEMMES[i].loc['SC_tot'], 3)
+        shares_cooling.loc[list_phases[i],'G'] = round(list_output_GEMMES[i].loc['SC_G'] / list_output_GEMMES[i].loc['SC_tot'], 3)
+        shares_cooling.loc[list_phases[i],'H'] = round(list_output_GEMMES[i].loc['SC_H'] / list_output_GEMMES[i].loc['SC_tot'], 3)
+        i_rate.loc[list_phases[i],'i_rate'] = round(list_output_GEMMES[i].loc['ip'] - list_output_GEMMES[i].loc['pDot'] / list_output_GEMMES[i].loc['p'], 3)   
+    shares_LTH.reset_index(inplace=True)
+    shares_LTH.rename(columns={'index':'Phase'}, inplace=True)
+    shares_LTH.to_csv('shares_LTH.csv', index=False)
+    shares_cooling.reset_index(inplace=True)
+    shares_cooling.rename(columns={'index':'Phase'}, inplace=True)
+    shares_cooling.to_csv('shares_cooling.csv', index=False)
+    i_rate.reset_index(inplace=True)
+    i_rate.rename(columns={'index':'Phase'}, inplace=True)
+    i_rate.to_csv('i_rate.csv', index=False)
+
+    return output_GEMMES
+    
+
+def run_EnergyScope():
+    
+    n_year_opti = 30 # We optimize over the entire transition period, from 2021 to 2051
+    
+    ## Define the AMPL optimization problem
+    EnergyScope_output_file = os.path.join(EnergyScope_case_study_path,'_Results.pkl')
+    ampl_0 = AmplObject(mod_1_path, mod_2_path, dat_path_0, ampl_options, type_model=EnergyScope_granularity)
+    ampl_0.clean_history()
+    ampl_pre = AmplPreProcessor(ampl_0, n_year_opti, n_years_overlap=0)
+    ampl_collector = AmplCollector(ampl_pre, EnergyScope_output_file, expl_text)
+    t = time.time()
+    curr_years_wnd = ampl_pre.write_seq_opti(0).copy()
+    ampl_pre.remaining_update(0)
+    ampl = AmplObject(mod_1_path, mod_2_path, dat_path, ampl_options, type_model=EnergyScope_granularity)
+    
+    ## Read the input data from GEMMES
+    i_rate = pd.read_csv('i_rate.csv')
+    i_rate['i_rate'] = i_rate['i_rate'] * (i_rate['i_rate']>=0) 
+    i_rate['i_rate'] += 1e-4
+    i_rate.set_index('Phase', inplace=True)
+    phases_ES = ['2015_2020', '2020_2025', '2025_2030', '2030_2035', '2035_2040', '2040_2045', '2045_2050']
+    for j in range(len(phases_ES)):
+        ampl.set_params('i_rate',{(phases_ES[j]):i_rate.iloc[j,0]})
     EUD_2021 = pd.read_csv('EUD_2021.csv')
     EUD_2026 = pd.read_csv('EUD_2026.csv')
     EUD_2031 = pd.read_csv('EUD_2031.csv')
@@ -217,42 +273,66 @@ def read_GEMMES_outputs():
     eud_ampl = apy.DataFrame.from_pandas(eud_series_full)
     ampl.set_params('end_uses_demand_year', eud_ampl)                  
     # print(ampl.get_param('end_uses_demand_year'))
-
-
-def read_EnergyScope_inputs(EnergyScope_granularity, EnergyScope_model_path):
-    if EnergyScope_granularity == 'MO':
-        dat_path = [os.path.join(EnergyScope_model_path,country+'/PESMO_data_all_years.dat')]
-    else:
-        dat_path = [os.path.join(EnergyScope_model_path,country+'/PESTD_data_all_years.dat'),
-                    os.path.join(EnergyScope_model_path,country+'/PESTD_{}TD.dat'.format(nbr_tds))]
-
-    dat_path += [os.path.join(EnergyScope_model_path,'PES_data_all_years.dat'),
-                 os.path.join(EnergyScope_model_path,'PES_seq_opti.dat'),
-                 os.path.join(EnergyScope_model_path,country+'/PES_data_efficiencies.dat'),
-                 os.path.join(EnergyScope_model_path,country+'/PES_data_year_related.dat'),
-                 os.path.join(EnergyScope_model_path,'PES_data_set_AGE_2020.dat')]
-
-    dat_path_0 = dat_path + [os.path.join(EnergyScope_model_path,'PES_data_remaining.dat'),
-                 os.path.join(EnergyScope_model_path,'PES_data_decom_allowed_2020.dat')]
-
-    dat_path += [os.path.join(EnergyScope_model_path,'PES_data_remaining_wnd.dat'),
-                 os.path.join(EnergyScope_model_path,'PES_data_decom_allowed_2020.dat')]
-
-
-def run_EnergyScope()
     
-def write_EnergyScope_outputs()
-    ampl_graph = AmplGraph(output_file, ampl_0, case_study)
+    ## Run the AMPL optimization problem
+    solve_result = ampl.run_ampl()
+    ampl.get_results()
+    ampl_collector.init_storage(ampl)
+    ampl_collector.update_storage(ampl,curr_years_wnd,0)
+    ampl.set_init_sol()
+    elapsed = time.time()-t
+    print('Time to solve the optimization problem: ',elapsed)
+    ampl_collector.clean_collector()
+    ampl_collector.pkl()       
+    
+    return [EnergyScope_output_file, ampl_0]
+    
+def plot_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
+    ampl_graph = AmplGraph(EnergyScope_output_file, ampl_0, case_study)
+    z_Results = ampl_graph.ampl_collector
+    # z_Resources = z_Results['Resources'].copy()
+    # z_Assets = z_Results['Assets'].copy()
+    # z_Cost_breakdown = z_Results['Cost_breakdown'].copy()
+    # z_Year_balance = z_Results['Year_balance'].copy()
+    # z_gwp_breakdown = z_Results['Gwp_breakdown'].copy()
+    
+    # a_website = "https://www.google.com"
+    # webbrowser.open_new(a_website)
+    ampl_graph.graph_resource()
+    # ampl_graph.graph_cost()
+    # ampl_graph.graph_gwp_per_sector()
+    # ampl_graph.graph_cost_inv_phase_tech()
+    # ampl_graph.graph_cost_return()
+    # ampl_graph.graph_cost_op_phase()
+
+    # ampl_graph.graph_layer()
+    # ampl_graph.graph_gwp()
+    # ampl_graph.graph_tech_cap()
+    # ampl_graph.graph_total_cost_per_year()
+    # ampl_graph.graph_load_factor()
+    # df_unused = ampl_graph.graph_load_factor_2()
+    # ampl_graph.graph_new_old_decom()
+    
+
+def write_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
+    ampl_graph = AmplGraph(EnergyScope_output_file, ampl_0, case_study)
     z_Results = ampl_graph.ampl_collector
     
     C_inv = z_Results['C_inv_phase_tech_non_annualised'].copy()
     C_inv.rename(columns = {'C_inv_phase_tech_non_annualised':'Value'}, inplace = True)
     C_inv = C_inv.round(0)
-    C_inv['Local'] = 0
+    
+    Technos_local_fraction = pd.read_csv('Technos_local_fraction.csv')
+    C_inv.reset_index(inplace=True)
+    C_inv = pd.merge(C_inv, Technos_local_fraction, on='Technologies')
+    C_inv.set_index(['Phases','Technologies'], inplace=True)
+    C_inv.sort_values(['Phases','Technologies'], axis=0, inplace=True)
     C_inv['Imported'] = 1 - C_inv['Local']
     C_inv[['F','B','G','H']] = [1,0,0,0]
     
-    # C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(['DHN','GRID','HVAC_LINE']),[3,5]] = [0,1] # Costs supported by the PRIVATE SECTOR, actually (not by the state - grid costs for households are quite volatile, according to Santiago)
+    #############################################################
+    
+    # C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(['DHN','GRID','HVAC_LINE']),[3,5]] = [0,1] # Costs supported by the PRIVATE SECTOR, actually (not by the state - grid costs for households are quite volatile, according to DNP)
     
     list_private_mob_tech = ['MOTORCYCLE','CAR_GASOLINE','CAR_DIESEL','CAR_NG','CAR_METHANOL','CAR_HEV','CAR_PHEV','MOTORCYCLE_ELECTRIC','CAR_BEV','CAR_FUEL_CELL']
     C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(list_private_mob_tech),[3,6]] = [0,1] # Private mobility costs are supported by households
@@ -436,6 +516,18 @@ def write_EnergyScope_outputs()
     Cost_breakdown_non_annualised.to_csv(EnergyScope_output_path+'/'+case_study+'/Outputs_for_GEMMES/Initial_cost.csv')
     
     
+def EnergyScope_output_csv(EnergyScope_output_file, ampl_0):
+    ampl_graph = AmplGraph(EnergyScope_output_file, ampl_0, case_study)
+    z_Results = ampl_graph.ampl_collector
+    z_Results['Resources'].to_csv(os.path.join(EnergyScope_case_study_path,'Resources.csv'))
+    z_Results['Assets'].to_csv(os.path.join(EnergyScope_case_study_path,'Assets.csv'))
+    z_Results['Cost_breakdown'].to_csv(os.path.join(EnergyScope_case_study_path,'Cost_breakdown.csv'))
+    z_Results['Year_balance'].to_csv(os.path.join(EnergyScope_case_study_path,'Year_balance.csv'))
+    z_Results['Gwp_breakdown'].to_csv(os.path.join(EnergyScope_case_study_path,'Gwp_breakdown.csv'))
+    
+    
+if __name__ == '__main__':
+    main()
     
     
     
