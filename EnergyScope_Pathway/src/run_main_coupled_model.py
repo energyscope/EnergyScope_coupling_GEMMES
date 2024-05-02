@@ -227,7 +227,6 @@ def run_GEMMES():
     
 
 def run_EnergyScope():
-    
     n_year_opti = 30 # We optimize over the entire transition period, from 2021 to 2051
     
     ## Define the AMPL optimization problem
@@ -330,9 +329,7 @@ def write_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     C_inv['Imported'] = 1 - C_inv['Local']
     C_inv[['F','B','G','H']] = [1,0,0,0]
     
-    #############################################################
-    
-    # C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(['DHN','GRID','HVAC_LINE']),[3,5]] = [0,1] # Costs supported by the PRIVATE SECTOR, actually (not by the state - grid costs for households are quite volatile, according to DNP)
+    # C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(['DHN','GRID','HVAC_LINE']),[3,5]] = [0,1] # These costs supported by the PRIVATE SECTOR, actually (not by the state - grid costs for households are quite volatile, according to DNP)
     
     list_private_mob_tech = ['MOTORCYCLE','CAR_GASOLINE','CAR_DIESEL','CAR_NG','CAR_METHANOL','CAR_HEV','CAR_PHEV','MOTORCYCLE_ELECTRIC','CAR_BEV','CAR_FUEL_CELL']
     C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(list_private_mob_tech),[3,6]] = [0,1] # Private mobility costs are supported by households
@@ -356,7 +353,8 @@ def write_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     list_LTH_tech = ['DHN_HP_ELEC','DHN_COGEN_GAS','DHN_COGEN_WOOD','DHN_COGEN_WASTE','DHN_COGEN_WET_BIOMASS','DHN_COGEN_BIO_HYDROLYSIS','DHN_BOILER_GAS','DHN_BOILER_WOOD','DHN_BOILER_OIL','DHN_DEEP_GEO','DHN_SOLAR','DEC_HP_ELEC','DEC_THHP_GAS','DEC_COGEN_GAS','DEC_COGEN_OIL','DEC_ADVCOGEN_GAS','DEC_ADVCOGEN_H2','DEC_BOILER_GAS','DEC_BOILER_WOOD','COAL_STOVE','DEC_BOILER_OIL','DEC_SOLAR','DEC_DIRECT_ELEC']
     C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(list_LTH_tech),[3,4,5,6]] = C_inv_bis.iloc[C_inv_bis.index.get_level_values('Technologies').isin(list_LTH_tech),[8,9,10,11]].values
     C_inv.drop(columns=['merge_index'],inplace=True)
-    # C_inv.to_csv(EnergyScope_output_path+'/'+case_study+'/C_inv_phase_tech_non_annualised.csv')
+    # C_inv.to_csv(os.path.join(EnergyScope_case_study_path,'C_inv_phase_tech_non_annualised.csv')
+    
     
     
     C_maint = z_Results['C_op_phase_tech_non_annualised']
@@ -365,7 +363,9 @@ def write_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     C_maint['Local'] = 1
     C_maint['Imported'] = 1 - C_maint['Local']
     C_maint[['F','B','G','H']] = C_inv.iloc[~C_inv.index.get_level_values('Phases').isin(['2015_2020']),[3,4,5,6]].values            
-    # C_maint.to_csv(EnergyScope_output_path+'/'+case_study+'/C_op_phase_tech_non_annualised.csv')
+    # C_maint.to_csv(os.path.join(EnergyScope_case_study_path,'C_op_phase_tech_non_annualised.csv')
+    
+
     
     
     # C_op is annualised - we need to get a non-annualised version of it
@@ -385,7 +385,7 @@ def write_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     C_op.iloc[C_op.index.get_level_values('Resources').isin(Local_resources),1] = 1
     C_op['Imported'] = 1 - C_op['Local']
     C_op[['F','B','G','H']] = [1,0,0,0]
-    # C_op.to_csv(EnergyScope_output_path+'/'+case_study+'/C_op_phase_res_non_annualised.csv')   
+    # C_op.to_csv(os.path.join(EnergyScope_case_study_path,'C_op_phase_res_non_annualised.csv')
     
     
     output_for_GEMMES = pd.DataFrame(index=annualised_factor.index[1:])
