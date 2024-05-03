@@ -319,15 +319,15 @@ def write_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     
     C_inv = z_Results['C_inv_phase_tech_non_annualised'].copy()
     C_inv.rename(columns = {'C_inv_phase_tech_non_annualised':'Value'}, inplace = True)
-    C_inv = C_inv.round(0)
     
     New_old_decom = z_Results['New_old_decom'].copy()
-    New_old_decom = New_old_decom.round(2)
+    New_old_decom = New_old_decom
     New_old_decom.fillna(0, inplace=True)
     C_inv['Capa'] = New_old_decom['F_new']
     C_inv.drop(['DAM_STORAGE','BEV_BATT','EFFICIENCY'], level='Technologies', inplace=True)
     
-    Technos_local_fraction = pd.read_csv('Technos_local_fraction.csv')
+    Technos_local_fraction = pd.read_csv('Technos_information.csv')
+    Technos_local_fraction.drop(columns='Lifetime', inplace=True)
     C_inv.reset_index(inplace=True)
     C_inv = pd.merge(C_inv, Technos_local_fraction, on='Technologies')
     C_inv.set_index(['Phases','Technologies'], inplace=True)
@@ -403,7 +403,6 @@ def write_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     
     C_maint = z_Results['C_op_phase_tech_non_annualised']
     C_maint.rename(columns = {'C_op_phase_tech_non_annualised':'Value'}, inplace = True)
-    C_maint = C_maint.round(0)
     C_maint['Local'] = 1
     C_maint['Imported'] = 1 - C_maint['Local']
     C_maint.drop(['NUCLEAR','DAM_STORAGE','BEV_BATT','EFFICIENCY'], level='Technologies', inplace=True)
@@ -546,7 +545,7 @@ def write_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     output_for_GEMMES['sigmamiceg'] = output_for_GEMMES['opex_G_M'] / output_for_GEMMES['iceg']
     output_for_GEMMES['ceh'] = output_for_GEMMES['opex_H_CO'] + output_for_GEMMES['opex_H_M']
     output_for_GEMMES['sigmamceh'] = output_for_GEMMES['opex_H_M'] / output_for_GEMMES['ceh']
-    output_for_GEMMES.drop(columns=['opex_F_CO', 'opex_F_M', 'opex_B_CO','opex_B_M', 'opex_G_CO', 'opex_G_M', 'opex_H_CO', 'opex_H_M'])
+    output_for_GEMMES.drop(columns=['opex_F_CO', 'opex_F_M', 'opex_B_CO','opex_B_M', 'opex_G_CO', 'opex_G_M', 'opex_H_CO', 'opex_H_M'], inplace=True)
     
     
     
@@ -558,11 +557,24 @@ def write_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     # output_for_GEMMES = pd.concat([first_line, output_for_GEMMES])
     output_for_GEMMES.to_csv('Energy_system_costs.csv')
     
+    
+    
     Cost_breakdown_non_annualised = z_Results['Cost_breakdown_non_annualised']
-    Cost_breakdown_non_annualised = Cost_breakdown_non_annualised.groupby(level=[0]).sum()
-    # Cost_breakdown_non_annualised = Cost_breakdown_non_annualised.loc[Cost_breakdown_non_annualised.index=='YEAR_2020']
-    Cost_breakdown_non_annualised = Cost_breakdown_non_annualised.round(0)
+    Cost_breakdown_non_annualised = Cost_breakdown_non_annualised[Cost_breakdown_non_annualised.index.get_level_values('Years').isin(['YEAR_2020'])]
+    Technos_lifetime = pd.read_csv('Technos_information.csv')
+    Technos_lifetime.drop(columns='Local', inplace=True)
+    Technos_lifetime.rename(columns={'Technologies':'Elements'}, inplace=True)
+    Cost_breakdown_non_annualised = pd.merge(Cost_breakdown_non_annualised, Technos_lifetime, on='Elements')
+    Cost_breakdown_non_annualised['C_inv_per_year'] = Cost_breakdown_non_annualised['C_inv'] / Cost_breakdown_non_annualised['Lifetime']
+    Cost_breakdown_non_annualised.set_index('Elements', inplace=True)
+    Cost_breakdown_non_annualised = Cost_breakdown_non_annualised.sum()
+    Cost_breakdown_non_annualised.drop(index=['C_inv', 'Lifetime'], inplace=True)
+    Cost_breakdown_non_annualised = Cost_breakdown_non_annualised.round(1)
     Cost_breakdown_non_annualised.to_csv('Initial_cost.csv')
+    ################################################## RAJOUTER C_OP AINSI QUE LA SUBDIVISION DES TROIS COUTS PAR SECTEUR ET PAR LOCAL / IMPORTÉ
+    
+    
+    
     
     
 def EnergyScope_output_csv(EnergyScope_output_file, ampl_0):
