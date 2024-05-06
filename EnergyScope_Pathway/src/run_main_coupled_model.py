@@ -561,20 +561,28 @@ def write_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     
     Cost_breakdown_non_annualised = z_Results['Cost_breakdown_non_annualised']
     Cost_breakdown_non_annualised = Cost_breakdown_non_annualised[Cost_breakdown_non_annualised.index.get_level_values('Years').isin(['YEAR_2020'])]
+    Cost_breakdown_non_annualised.rename(columns={'C_maint':'C_maint_CO'}, inplace=True)
+    Cost_breakdown_non_annualised['C_maint_M'] = 0
+    Cost_breakdown_non_annualised_bis = Cost_breakdown_non_annualised.copy()
+    Cost_breakdown_non_annualised_bis['Local'] = 0
+    Cost_breakdown_non_annualised_bis.iloc[Cost_breakdown_non_annualised_bis.index.get_level_values('Elements').isin(Local_resources),4] = 1
+    Cost_breakdown_non_annualised_bis['Imported'] = 1 - Cost_breakdown_non_annualised_bis['Local']
+    Cost_breakdown_non_annualised_bis['C_op_CO'] = Cost_breakdown_non_annualised_bis['C_op'] * Cost_breakdown_non_annualised_bis['Local']
+    Cost_breakdown_non_annualised_bis['C_op_M'] = Cost_breakdown_non_annualised_bis['C_op'] * Cost_breakdown_non_annualised_bis['Imported']
+    Cost_breakdown_non_annualised_bis = Cost_breakdown_non_annualised_bis.sum()
+    Cost_breakdown_non_annualised_bis.drop(index=['C_inv','C_maint_CO','C_maint_M','C_op','Local','Imported'], inplace=True)
     Technos_lifetime = pd.read_csv('Technos_information.csv')
-    Technos_lifetime.drop(columns='Local', inplace=True)
     Technos_lifetime.rename(columns={'Technologies':'Elements'}, inplace=True)
     Cost_breakdown_non_annualised = pd.merge(Cost_breakdown_non_annualised, Technos_lifetime, on='Elements')
     Cost_breakdown_non_annualised['C_inv_per_year'] = Cost_breakdown_non_annualised['C_inv'] / Cost_breakdown_non_annualised['Lifetime']
     Cost_breakdown_non_annualised.set_index('Elements', inplace=True)
+    Cost_breakdown_non_annualised['C_inv_CO'] = Cost_breakdown_non_annualised['C_inv_per_year'] * Cost_breakdown_non_annualised['Local']
+    Cost_breakdown_non_annualised['C_inv_M']  = Cost_breakdown_non_annualised['C_inv_per_year'] * (1 - Cost_breakdown_non_annualised['Local'])
     Cost_breakdown_non_annualised = Cost_breakdown_non_annualised.sum()
-    Cost_breakdown_non_annualised.drop(index=['C_inv', 'Lifetime'], inplace=True)
+    Cost_breakdown_non_annualised.drop(index=['C_inv','C_op','Local','C_inv_per_year','Lifetime'], inplace=True)
+    Cost_breakdown_non_annualised = pd.concat([Cost_breakdown_non_annualised, Cost_breakdown_non_annualised_bis])
     Cost_breakdown_non_annualised = Cost_breakdown_non_annualised.round(1)
-    Cost_breakdown_non_annualised.to_csv('Initial_cost.csv')
-    ################################################## RAJOUTER C_OP AINSI QUE LA SUBDIVISION DES TROIS COUTS PAR SECTEUR ET PAR LOCAL / IMPORTÉ
-    
-    
-    
+    Cost_breakdown_non_annualised.to_csv('Initial_cost.csv')  
     
     
 def EnergyScope_output_csv(EnergyScope_output_file, ampl_0):
