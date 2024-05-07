@@ -118,7 +118,7 @@ def main():
         gdp_previous = gdp_current
         n_iter += 1
         output_EnergyScope = run_EnergyScope()
-        # write_EnergyScope_outputs(output_EnergyScope[0], output_EnergyScope[1])
+        write_EnergyScope_outputs(output_EnergyScope[0], output_EnergyScope[1])
         output_GEMMES = run_GEMMES()
         gdp_current = output_GEMMES['gdp']
         diff = np.linalg.norm(gdp_current-gdp_previous)  
@@ -341,7 +341,7 @@ def plot_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     
     # a_website = "https://www.google.com"
     # webbrowser.open_new(a_website)
-    # ampl_graph.graph_resource()
+    ampl_graph.graph_resource()
     ampl_graph.graph_cost()
     # ampl_graph.graph_gwp_per_sector()
     # ampl_graph.graph_cost_inv_phase_tech()
@@ -403,7 +403,6 @@ def write_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     list_LTH_tech = ['DHN_HP_ELEC','DHN_COGEN_GAS','DHN_COGEN_WOOD','DHN_COGEN_WASTE','DHN_COGEN_WET_BIOMASS','DHN_COGEN_BIO_HYDROLYSIS','DHN_BOILER_GAS','DHN_BOILER_WOOD','DHN_BOILER_OIL','DHN_DEEP_GEO','DHN_SOLAR','DEC_HP_ELEC','DEC_THHP_GAS','DEC_COGEN_GAS','DEC_COGEN_OIL','DEC_ADVCOGEN_GAS','DEC_ADVCOGEN_H2','DEC_BOILER_GAS','DEC_BOILER_WOOD','COAL_STOVE','DEC_BOILER_OIL','DEC_SOLAR','DEC_DIRECT_ELEC']
     C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(list_LTH_tech),[4,5,6,7]] = C_inv_bis.iloc[C_inv_bis.index.get_level_values('Technologies').isin(list_LTH_tech),[9,10,11,12]].values
     C_inv.drop(columns=['merge_index'],inplace=True)
-    # C_inv.to_csv(os.path.join(EnergyScope_case_study_path,'C_inv_phase_tech_non_annualised.csv')
     
     # Transform C_inv into capital investments, prices and import propensities for each economic sector in GEMMES
     output_for_GEMMES = pd.DataFrame(index=C_inv.index.get_level_values(0).unique())
@@ -450,8 +449,7 @@ def write_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     C_maint['Local'] = 1
     C_maint['Imported'] = 1 - C_maint['Local']
     C_maint.drop(['NUCLEAR','DAM_STORAGE','BEV_BATT','EFFICIENCY'], level='Technologies', inplace=True)
-    C_maint[['F','B','G','H']] = C_inv.iloc[~C_inv.index.get_level_values('Phases').isin(['2015_2020']),[4,5,6,7]].values            
-    # C_maint.to_csv(os.path.join(EnergyScope_case_study_path,'C_op_phase_tech_non_annualised.csv')
+    C_maint[['F','B','G','H']] = C_inv.iloc[~C_inv.index.get_level_values('Phases').isin(['2015_2020']),[4,5,6,7]].values        
     
     # C_op is annualised - we need to get a non-annualised version of it
     annualised_factor = pd.DataFrame(index=z_Results['C_inv_phase'].index, data=z_Results['C_inv_phase'].values / z_Results['C_inv_phase_non_annualised'].values )
@@ -469,7 +467,6 @@ def write_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     C_op.iloc[C_op.index.get_level_values('Resources').isin(Local_resources),1] = 1
     C_op['Imported'] = 1 - C_op['Local']
     C_op[['F','B','G','H']] = [1,0,0,0]
-    # C_op.to_csv(os.path.join(EnergyScope_case_study_path,'C_op_phase_res_non_annualised.csv')
     
     output_for_GEMMES['opex_F_CO'] = (C_maint['Value'] * C_maint['Local'] * C_maint['F']).groupby(level=[0]).sum() + (C_op['Value'] * C_op['Local'] * C_op['F']).groupby(level=[0]).sum()
     output_for_GEMMES['opex_F_M']  = (C_maint['Value'] * C_maint['Imported'] * C_maint['F']).groupby(level=[0]).sum() + (C_op['Value'] * C_op['Imported'] * C_op['F']).groupby(level=[0]).sum()
@@ -533,8 +530,23 @@ def write_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
         Cost_elec_approx.loc[Cost_elec_approx.index.get_level_values('Elements').isin(['IMPORTED_COAL']),'perc_for_elec'] = year_balance_elec.loc[year_balance_elec.index.get_level_values('Elements').isin(['IMPORTED_COAL_CENTRAL']),'IMPORTED_COAL'].values / year_balance_elec.loc[year_balance_elec.index.get_level_values('Elements').isin(['IMPORTED_COAL']),'IMPORTED_COAL'].values
     if('LOCAL_COAL_CENTRAL' in year_balance_elec.index.get_level_values('Elements').to_list()):
         Cost_elec_approx.loc[Cost_elec_approx.index.get_level_values('Elements').isin(['LOCAL_COAL']),'perc_for_elec'] = year_balance_elec.loc[year_balance_elec.index.get_level_values('Elements').isin(['LOCAL_COAL_CENTRAL']),'LOCAL_COAL'].values / year_balance_elec.loc[year_balance_elec.index.get_level_values('Elements').isin(['LOCAL_COAL']),'LOCAL_COAL'].values
-    Cost_elec_approx.loc[Cost_elec_approx.index.get_level_values('Elements').isin(['LOCAL_GAS']),'perc_for_elec']    = year_balance_elec.loc[year_balance_elec.index.get_level_values('Elements').isin(['CCGT']),'LOCAL_GAS'].values / (year_balance_elec.loc[year_balance_elec.index.get_level_values('Elements').isin(['LOCAL_GAS']),'LOCAL_GAS'].values + year_balance_elec.loc[year_balance_elec.index.get_level_values('Elements').isin(['IMPORTED_GAS']),'LOCAL_GAS'].values)
-    Cost_elec_approx.loc[Cost_elec_approx.index.get_level_values('Elements').isin(['IMPORTED_GAS']),'perc_for_elec'] = year_balance_elec.loc[year_balance_elec.index.get_level_values('Elements').isin(['CCGT']),'LOCAL_GAS'].values / (year_balance_elec.loc[year_balance_elec.index.get_level_values('Elements').isin(['LOCAL_GAS']),'LOCAL_GAS'].values + year_balance_elec.loc[year_balance_elec.index.get_level_values('Elements').isin(['IMPORTED_GAS']),'LOCAL_GAS'].values)
+    Local_gas_yearly = year_balance_elec.loc[year_balance_elec.index.get_level_values('Elements').isin(['LOCAL_GAS']),'LOCAL_GAS'].to_frame()
+    Local_gas_yearly.reset_index(inplace=True)
+    Local_gas_yearly.drop(columns=['Elements'], inplace=True)
+    Local_gas_yearly.set_index('Years', inplace=True)
+    Imported_gas_yearly = year_balance_elec.loc[year_balance_elec.index.get_level_values('Elements').isin(['IMPORTED_GAS']),'LOCAL_GAS'].to_frame()
+    Imported_gas_yearly.reset_index(inplace=True)
+    Imported_gas_yearly.drop(columns=['Elements'], inplace=True)
+    Imported_gas_yearly.set_index('Years', inplace=True)   
+    temp_local_gas    = Cost_elec_approx.loc[Cost_elec_approx.index.get_level_values('Elements').isin(['LOCAL_GAS']),'perc_for_elec'].to_frame()
+    temp_imported_gas = Cost_elec_approx.loc[Cost_elec_approx.index.get_level_values('Elements').isin(['IMPORTED_GAS']),'perc_for_elec'].to_frame()
+    perc_gas = (year_balance_elec.loc[year_balance_elec.index.get_level_values('Elements').isin(['CCGT']),'LOCAL_GAS'] / pd.merge(Local_gas_yearly, Imported_gas_yearly, on='Years', how='outer').sum(axis=1) ).to_frame()
+    temp_local_gas    = pd.merge(temp_local_gas, perc_gas, on='Years', how='left')
+    temp_imported_gas = pd.merge(temp_imported_gas, perc_gas, on='Years', how='left')
+    temp_local_gas.drop(columns=['perc_for_elec'], inplace=True)
+    temp_imported_gas.drop(columns=['perc_for_elec'], inplace=True)
+    Cost_elec_approx.loc[Cost_elec_approx.index.get_level_values('Elements').isin(['LOCAL_GAS']),'perc_for_elec']    = temp_local_gas.values
+    Cost_elec_approx.loc[Cost_elec_approx.index.get_level_values('Elements').isin(['IMPORTED_GAS']),'perc_for_elec'] = temp_imported_gas.values
     
     Cost_elec_approx.loc[:,'C_op'] = Cost_elec_approx['C_op'] * Cost_elec_approx['perc_for_elec']
     Cost_elec_approx.loc[:,'C_op'] = Cost_elec_approx.loc[:,'C_op'].abs()
