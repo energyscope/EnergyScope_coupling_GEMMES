@@ -108,7 +108,7 @@ ampl_options = {'show_stats': 1,
                 '_log_input_only': False}
 
 def main():
-    plot_EnergyScope = False  
+    plot_EnergyScope = True  
     csv_EnergyScope  = False
     output_GEMMES = run_GEMMES()
     gdp_current = output_GEMMES['gdp']
