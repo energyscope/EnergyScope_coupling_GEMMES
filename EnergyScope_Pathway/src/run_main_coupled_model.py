@@ -108,7 +108,7 @@ ampl_options = {'show_stats': 1,
                 '_log_input_only': False}
 
 def main():
-    plot_EnergyScope = False  
+    plot_EnergyScope = True  
     csv_EnergyScope  = False
     output_GEMMES = run_GEMMES()
     gdp_current = output_GEMMES['gdp']
@@ -280,13 +280,42 @@ def run_EnergyScope():
     Technos_local_fraction.drop(columns='Lifetime', inplace=True)
     c_inv_ampl = pd.merge(c_inv_ampl, Technos_local_fraction, on='Technologies', how='left')
     c_inv_ampl.fillna(0, inplace=True)
+    en_0 = 3.74424417 # k COP / USD 2021
     en = pd.read_csv('en.csv')
     en.set_index('Unnamed: 0', inplace=True)
     en_yearly = pd.DataFrame(index=year_list, columns=['en'])
     list_years = [2019,2021,2026,2031,2036,2041,2046,2051]
     for i in range(8):
         en_yearly.iloc[i,0] = en.loc[(en.index>=list_years[i]) & (en.index<list_years[i]+1), 'en'].mean()
+    en_yearly = en_yearly / en_yearly.loc['YEAR_2020'] 
+    en_yearly.reset_index(inplace=True)
+    en_yearly.rename(columns={'index': 'Year'}, inplace=True)
+    c_inv_ampl = pd.merge(c_inv_ampl, en_yearly, on='Year', how='left')
+    c_inv_ampl['Value'] *= en_0 # Convert constant USD to constant k COP
+    c_inv_ampl['Value'] = ( c_inv_ampl['Value']*c_inv_ampl['Local'] + c_inv_ampl['Value']*c_inv_ampl['en']*(1-c_inv_ampl['Local']) ) # The imported fraction of goods is subject to exchange rate's fluctuations
+    c_inv_ampl.drop(columns=['Local', 'en'], inplace=True)
+    c_inv_ampl.set_index(['Year', 'Technologies'], inplace=True)
+    c_inv_ampl = apy.DataFrame.from_pandas(c_inv_ampl)
+    ampl.set_params('c_inv', c_inv_ampl)
     
+    # We assume that all maintenance costs are local costs
+    c_maint_ampl = ampl.get_param('c_maint').to_list()
+    c_maint_ampl = pd.DataFrame(c_maint_ampl, columns=['Year', 'Technologies', 'Value'])
+    c_maint_ampl['Value'] *= en_0 # Convert constant USD to constant k COP
+    c_maint_ampl.set_index(['Year', 'Technologies'], inplace=True)
+    c_maint_ampl = apy.DataFrame.from_pandas(c_maint_ampl)
+    ampl.set_params('c_maint', c_maint_ampl)
+    
+    c_op_ampl = ampl.get_param('c_op').to_list()
+    c_op_ampl = pd.DataFrame(c_op_ampl, columns=['Year', 'Resources', 'Value'])
+    Imported_resources = ['URANIUM', 'H2', 'ELECTRICITY', 'AMMONIA_RE', 'METHANOL_RE', 'IMPORTED_COAL', 'METHANOL', 'H2_RE', 'AMMONIA', 'ELEC_EXPORT', 'IMPORTED_GAS']
+    c_op_ampl = pd.merge(c_op_ampl, en_yearly, on='Year', how='left')
+    c_op_ampl['Value'] *= en_0 # Convert constant USD to constant k COP
+    c_op_ampl.loc[c_op_ampl['Resources'].isin(Imported_resources),'Value'] *= np.array(c_op_ampl.loc[c_op_ampl['Resources'].isin(Imported_resources),'en'].astype(float).values).round(4) # The imported resources are subject to exchange rate's fluctuations
+    c_op_ampl.drop(columns=['en'], inplace=True)
+    c_op_ampl.set_index(['Year', 'Resources'], inplace=True)
+    c_op_ampl = apy.DataFrame.from_pandas(c_op_ampl)
+    ampl.set_params('c_op', c_op_ampl)
     
     ## Run the AMPL optimization problem
     solve_result = ampl.run_ampl()
@@ -312,8 +341,8 @@ def plot_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     
     # a_website = "https://www.google.com"
     # webbrowser.open_new(a_website)
-    ampl_graph.graph_resource()
-    # ampl_graph.graph_cost()
+    # ampl_graph.graph_resource()
+    ampl_graph.graph_cost()
     # ampl_graph.graph_gwp_per_sector()
     # ampl_graph.graph_cost_inv_phase_tech()
     # ampl_graph.graph_cost_return()
