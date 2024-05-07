@@ -108,7 +108,7 @@ ampl_options = {'show_stats': 1,
                 '_log_input_only': False}
 
 def main():
-    plot_EnergyScope = True  
+    plot_EnergyScope = False  
     csv_EnergyScope  = False
     output_GEMMES = run_GEMMES()
     gdp_current = output_GEMMES['gdp']
@@ -222,6 +222,7 @@ def run_GEMMES():
     i_rate.reset_index(inplace=True)
     i_rate.rename(columns={'index':'Phase'}, inplace=True)
     i_rate.to_csv('i_rate.csv', index=False)
+    output_GEMMES['en'].to_csv('en.csv')
 
     return output_GEMMES
     
@@ -272,6 +273,20 @@ def run_EnergyScope():
     eud_ampl = apy.DataFrame.from_pandas(eud_series_full)
     ampl.set_params('end_uses_demand_year', eud_ampl)                  
     # print(ampl.get_param('end_uses_demand_year'))
+    
+    c_inv_ampl = ampl.get_param('c_inv').to_list()
+    c_inv_ampl = pd.DataFrame(c_inv_ampl, columns=['Year', 'Technologies', 'Value'])
+    Technos_local_fraction = pd.read_csv('Technos_information.csv')
+    Technos_local_fraction.drop(columns='Lifetime', inplace=True)
+    c_inv_ampl = pd.merge(c_inv_ampl, Technos_local_fraction, on='Technologies', how='left')
+    c_inv_ampl.fillna(0, inplace=True)
+    en = pd.read_csv('en.csv')
+    en.set_index('Unnamed: 0', inplace=True)
+    en_yearly = pd.DataFrame(index=year_list, columns=['en'])
+    list_years = [2019,2021,2026,2031,2036,2041,2046,2051]
+    for i in range(8):
+        en_yearly.iloc[i,0] = en.loc[(en.index>=list_years[i]) & (en.index<list_years[i]+1), 'en'].mean()
+    
     
     ## Run the AMPL optimization problem
     solve_result = ampl.run_ampl()
