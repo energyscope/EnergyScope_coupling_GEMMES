@@ -5,109 +5,6 @@ May 2024
 @authors: Xavier Rixhon, Pierre Jacques, Stanislas Augier
 """
 
-import os, sys
-from os import system
-from pathlib import Path
-import webbrowser
-import time
-import multiprocessing as mp
-import pickle as pkl
-import pandas as pd
-import numpy as np
-import amplpy as apy
-from collections import namedtuple
-import cppimport
-import time
-import matplotlib.pyplot as plt
-
-curr_dir = Path(os.path.dirname(__file__))
-
-pymodPath = os.path.abspath(os.path.join(curr_dir.parent,'pylib'))
-GEMMES_path = '/home/piejacques/Bureau/ColombiaEnergyScope'
-Cpp_path = GEMMES_path + '/SourceCode/cppCode'
-sys.path.insert(0, pymodPath)
-sys.path.insert(0, Cpp_path)
-sys.path.insert(0, Cpp_path + "/src")
-
-ESMY_path = os.path.join(curr_dir.parent,'ESMY')
-EnergyScope_model_path = os.path.join(ESMY_path,'STEP_2_Pathway_Model')
-
-from solve_GEMMES import solveGEMMES
-from ampl_object import AmplObject
-from ampl_preprocessor import AmplPreProcessor
-from ampl_collector import AmplCollector
-from ampl_graph import AmplGraph
-
-## Read the GEMMES model
-cppimport.settings['force_rebuild'] = True
-solvePy = cppimport.imp('functionsForPy')
-
-## Define the country studied and the time granularity of EnergyScope
-country = 'Colombia'
-EnergyScope_granularity = 'MO'
-nbr_tds = 12
-
-## Read the EnergyScope model and data files
-if EnergyScope_granularity == 'MO':
-    mod_1_path = [os.path.join(EnergyScope_model_path,'PESMO_model.mod'),
-                os.path.join(EnergyScope_model_path,'PESMO_store_variables.mod'),
-                os.path.join(EnergyScope_model_path,'PES_store_variables.mod')]
-    mod_2_path = [os.path.join(EnergyScope_model_path,'PESMO_initialise_2020.mod'),
-                  os.path.join(EnergyScope_model_path,'fix.mod')]
-    dat_path = [os.path.join(EnergyScope_model_path,country+'/PESMO_data_all_years.dat')] 
-else:
-    mod_1_path = [os.path.join(EnergyScope_model_path,'PESTD_model.mod'),
-            os.path.join(EnergyScope_model_path,'PESTD_store_variables.mod'),
-            os.path.join(EnergyScope_model_path,'PES_store_variables.mod')]
-    mod_2_path = [os.path.join(EnergyScope_model_path,'PESTD_initialise_2020.mod'),
-              os.path.join(EnergyScope_model_path,'fix.mod')]
-    dat_path = [os.path.join(EnergyScope_model_path,country+'/PESTD_data_all_years.dat'),
-                os.path.join(EnergyScope_model_path,country+'/PESTD_{}TD.dat'.format(nbr_tds))]
-
-dat_path += [os.path.join(EnergyScope_model_path,'PES_data_all_years.dat'),
-             os.path.join(EnergyScope_model_path,'PES_seq_opti.dat'),
-             os.path.join(EnergyScope_model_path,country+'/PES_data_efficiencies.dat'),
-             os.path.join(EnergyScope_model_path,country+'/PES_data_year_related.dat'),
-             os.path.join(EnergyScope_model_path,'PES_data_set_AGE_2020.dat')]
-
-dat_path_0 = dat_path + [os.path.join(EnergyScope_model_path,'PES_data_remaining.dat'),
-             os.path.join(EnergyScope_model_path,'PES_data_decom_allowed_2020.dat')]
-
-dat_path += [os.path.join(EnergyScope_model_path,'PES_data_remaining_wnd.dat'),
-             os.path.join(EnergyScope_model_path,'PES_data_decom_allowed_2020.dat')]
-    
-
-## Name the EnergyScope output files
-if(EnergyScope_granularity=='MO'):
-    case_study = country+' - MO'
-    expl_text  = country+' - monthly granularity'
-else:
-    case_study = country+' - TD'
-    expl_text  = country+' - hourly granularity'
-
-EnergyScope_output_path = os.path.join(curr_dir.parent,'out')
-EnergyScope_case_study_path = os.path.join(EnergyScope_output_path,case_study)
-
-
-## Options for ampl and gurobi (optimization within EnergyScope)
-gurobi_options = ['predual=-1',
-                'method = 2', # 2 is for barrier method
-                'crossover=0', #-1 let gurobi decide
-                'prepasses = 3',
-                'barconvtol=1e-6',
-                'presolve=-1'] # Not a good idea to put it to 0 if the model is too big
-
-gurobi_options_str = ' '.join(gurobi_options)
-
-ampl_options = {'show_stats': 1,
-                'log_file': os.path.join(EnergyScope_model_path,'log.txt'),
-                'presolve': 10,
-                'presolve_eps': 1e-6,
-                'presolve_fixeps': 1e-6,
-                'show_boundtol': 0,
-                'gurobi_options': gurobi_options_str,
-                '_log_input_only': False}
-
 def main():
     plot_EnergyScope = False  
     csv_EnergyScope  = False
@@ -115,7 +12,7 @@ def main():
     gdp_current = output_GEMMES['gdp']
     diff = np.linalg.norm(gdp_current)
     n_iter = 0
-    while(diff > 1e-2):
+    while(diff > 1e-1):
         gdp_previous = gdp_current
         n_iter += 1
         output_EnergyScope = run_EnergyScope()
@@ -506,8 +403,10 @@ def write_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     year_balance.loc[year_balance.index.get_level_values('Elements').isin(list_private_mob_tech),['F','H']] = [0,1]
     year_balance.loc[year_balance.index.get_level_values('Elements').isin(list_public_mob_tech),['F','G']] = [0,1]
     year_balance.loc[year_balance.index.get_level_values('Elements').isin(list_cooling_tech),['F']] = 0
-    year_balance.loc[year_balance.index.get_level_values('Elements').isin(['DEC_ELEC_COLD']),['B','G','H']] = shares_cooling.values
-    year_balance.loc[year_balance.index.get_level_values('Elements').isin(['DEC_THHP_GAS_COLD']),['B','G','H']] = shares_cooling.iloc[1:,:].values
+    if('DEC_ELEC_COLD' in year_balance.index.get_level_values('Elements')):
+        year_balance.loc[year_balance.index.get_level_values('Elements').isin(['DEC_ELEC_COLD']),['B','G','H']] = shares_cooling.values
+    if('DEC_THHP_GAS_COLD' in year_balance.index.get_level_values('Elements')):
+        year_balance.loc[year_balance.index.get_level_values('Elements').isin(['DEC_THHP_GAS_COLD']),['B','G','H']] = shares_cooling.iloc[1:,:].values
     
     year_balance['merge_index_2'] = year_balance.index.get_level_values('Years')
     shares_LTH['merge_index_2'] = year_balance['merge_index_2'].unique()
@@ -667,7 +566,110 @@ def EnergyScope_output_csv(EnergyScope_output_file, ampl_0):
     z_Results['Cost_breakdown'].to_csv(os.path.join(EnergyScope_case_study_path,'Cost_breakdown.csv'))
     z_Results['Year_balance'].to_csv(os.path.join(EnergyScope_case_study_path,'Year_balance.csv'))
     z_Results['Gwp_breakdown'].to_csv(os.path.join(EnergyScope_case_study_path,'Gwp_breakdown.csv'))
+
+
+import os, sys
+from os import system
+from pathlib import Path
+import webbrowser
+import time
+import multiprocessing as mp
+import pickle as pkl
+import pandas as pd
+import numpy as np
+import amplpy as apy
+from collections import namedtuple
+import cppimport
+import time
+import matplotlib.pyplot as plt
+
+curr_dir = Path(os.path.dirname(__file__))
+
+pymodPath = os.path.abspath(os.path.join(curr_dir.parent,'pylib'))
+GEMMES_path = '/home/piejacques/Bureau/ColombiaEnergyScope'
+Cpp_path = GEMMES_path + '/SourceCode/cppCode'
+sys.path.insert(0, pymodPath)
+sys.path.insert(0, Cpp_path)
+sys.path.insert(0, Cpp_path + "/src")
+
+ESMY_path = os.path.join(curr_dir.parent,'ESMY')
+EnergyScope_model_path = os.path.join(ESMY_path,'STEP_2_Pathway_Model')
+
+from solve_GEMMES import solveGEMMES
+from ampl_object import AmplObject
+from ampl_preprocessor import AmplPreProcessor
+from ampl_collector import AmplCollector
+from ampl_graph import AmplGraph
+
+## Read the GEMMES model
+cppimport.settings['force_rebuild'] = True
+solvePy = cppimport.imp('functionsForPy')
+
+## Define the country studied and the time granularity of EnergyScope
+country = 'Colombia'
+EnergyScope_granularity = 'MO'
+nbr_tds = 12
+
+## Read the EnergyScope model and data files
+if EnergyScope_granularity == 'MO':
+    mod_1_path = [os.path.join(EnergyScope_model_path,'PESMO_model.mod'),
+                os.path.join(EnergyScope_model_path,'PESMO_store_variables.mod'),
+                os.path.join(EnergyScope_model_path,'PES_store_variables.mod')]
+    mod_2_path = [os.path.join(EnergyScope_model_path,'PESMO_initialise_2020.mod'),
+                  os.path.join(EnergyScope_model_path,'fix.mod')]
+    dat_path = [os.path.join(EnergyScope_model_path,country+'/PESMO_data_all_years.dat')] 
+else:
+    mod_1_path = [os.path.join(EnergyScope_model_path,'PESTD_model.mod'),
+            os.path.join(EnergyScope_model_path,'PESTD_store_variables.mod'),
+            os.path.join(EnergyScope_model_path,'PES_store_variables.mod')]
+    mod_2_path = [os.path.join(EnergyScope_model_path,'PESTD_initialise_2020.mod'),
+              os.path.join(EnergyScope_model_path,'fix.mod')]
+    dat_path = [os.path.join(EnergyScope_model_path,country+'/PESTD_data_all_years.dat'),
+                os.path.join(EnergyScope_model_path,country+'/PESTD_{}TD.dat'.format(nbr_tds))]
+
+dat_path += [os.path.join(EnergyScope_model_path,'PES_data_all_years.dat'),
+             os.path.join(EnergyScope_model_path,'PES_seq_opti.dat'),
+             os.path.join(EnergyScope_model_path,country+'/PES_data_efficiencies.dat'),
+             os.path.join(EnergyScope_model_path,country+'/PES_data_year_related.dat'),
+             os.path.join(EnergyScope_model_path,'PES_data_set_AGE_2020.dat')]
+
+dat_path_0 = dat_path + [os.path.join(EnergyScope_model_path,'PES_data_remaining.dat'),
+             os.path.join(EnergyScope_model_path,'PES_data_decom_allowed_2020.dat')]
+
+dat_path += [os.path.join(EnergyScope_model_path,'PES_data_remaining_wnd.dat'),
+             os.path.join(EnergyScope_model_path,'PES_data_decom_allowed_2020.dat')]
     
+
+## Name the EnergyScope output files
+if(EnergyScope_granularity=='MO'):
+    case_study = country+' - MO'
+    expl_text  = country+' - monthly granularity'
+else:
+    case_study = country+' - TD'
+    expl_text  = country+' - hourly granularity'
+
+EnergyScope_output_path = os.path.join(curr_dir.parent,'out')
+EnergyScope_case_study_path = os.path.join(EnergyScope_output_path,case_study)
+
+
+## Options for ampl and gurobi (optimization within EnergyScope)
+gurobi_options = ['predual=-1',
+                'method = 2', # 2 is for barrier method
+                'crossover=0', #-1 let gurobi decide
+                'prepasses = 3',
+                'barconvtol=1e-6',
+                'presolve=-1'] # Not a good idea to put it to 0 if the model is too big
+
+gurobi_options_str = ' '.join(gurobi_options)
+
+ampl_options = {'show_stats': 1,
+                'log_file': os.path.join(EnergyScope_model_path,'log.txt'),
+                'presolve': 10,
+                'presolve_eps': 1e-6,
+                'presolve_fixeps': 1e-6,
+                'show_boundtol': 0,
+                'gurobi_options': gurobi_options_str,
+                '_log_input_only': False}
     
 if __name__ == '__main__':
     main()
