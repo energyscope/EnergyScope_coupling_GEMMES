@@ -6,18 +6,17 @@ May 2024
 """
 
 def main():
-    plot_EnergyScope = False  
+    plot_EnergyScope = True  
     csv_EnergyScope  = False
     variables_GEMMES = run_GEMMES()
     gdp_current = variables_GEMMES['gdp']
     diff = np.linalg.norm(gdp_current)
     n_iter = 0
-    while(diff > 1e-1):
+    while(diff > 1): ############ Check si cette tolérance n'est pas un peu trop large
         gdp_previous = gdp_current
         n_iter += 1
         output_EnergyScope = run_EnergyScope(variables_GEMMES)
-        plot_EnergyScope_outputs(output_EnergyScope[0], output_EnergyScope[1]) #############################
-        write_EnergyScope_outputs(output_EnergyScope[0], output_EnergyScope[1], variables_GEMMES)
+        compute_energy_system_costs(output_EnergyScope[0], output_EnergyScope[1], variables_GEMMES)
         variables_GEMMES = run_GEMMES()
         gdp_current = variables_GEMMES['gdp']
         diff = np.linalg.norm(gdp_current-gdp_previous) 
@@ -30,19 +29,22 @@ def main():
         EnergyScope_output_csv(output_EnergyScope[0], output_EnergyScope[1])
 
     plt.figure()
-    plt.plot(variables_GEMMES['time'], variables_GEMMES['gdp'], label='gdp')
+    plt.plot(variables_GEMMES['time'], variables_GEMMES['TFNB'], 'TFNB')
     plt.legend(loc='upper left', fancybox=True, shadow=True)
     plt.grid(True, color="#93a1a1", alpha=0.3)
     plt.figure()
-    plt.plot(variables_GEMMES['time'], variables_GEMMES['p'], label='p')
+
+    plt.figure()
+    plt.plot(variables_GEMMES['time'], variables_GEMMES['pkef'], label='pkef')
     plt.legend(loc='upper left', fancybox=True, shadow=True)
     plt.grid(True, color="#93a1a1", alpha=0.3)
     plt.figure()
+    
     plt.plot(variables_GEMMES['time'], variables_GEMMES['ip'], label='ip')
     plt.legend(loc='upper right', fancybox=True, shadow=True)
     plt.grid(True, color="#93a1a1", alpha=0.3)
 
-            
+    
 def run_GEMMES():
     ## Change parameters values in GEMMES according to scenario definition
     # Build default parms vector in python importing data from C++
@@ -264,7 +266,7 @@ def plot_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     # ampl_graph.graph_new_old_decom()
     ampl_graph.graph_resource()
 
-def write_EnergyScope_outputs(EnergyScope_output_file, ampl_0, variables_GEMMES):
+def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMMES):
     ampl_graph = AmplGraph(EnergyScope_output_file, ampl_0, case_study)
     z_Results = ampl_graph.ampl_collector
     
@@ -535,10 +537,23 @@ def write_EnergyScope_outputs(EnergyScope_output_file, ampl_0, variables_GEMMES)
     output_for_GEMMES['sigmamkeb'] = output_for_GEMMES['ikebM'] / output_for_GEMMES['ikeb']
     output_for_GEMMES['sigmamkeg'] = output_for_GEMMES['ikegM'] / output_for_GEMMES['ikeg']
     output_for_GEMMES['sigmamkeh'] = output_for_GEMMES['ikehM'] / output_for_GEMMES['ikeh']
-    # output_for_GEMMES.drop(columns=['capex_F_CO', 'capex_F_M', 'ikefCO', 'ikefM'], inplace=True)
-    # output_for_GEMMES.drop(columns=['capex_B_CO', 'capex_B_M', 'ikebCO', 'ikebM'], inplace=True)
-    # output_for_GEMMES.drop(columns=['capex_G_CO', 'capex_G_M', 'ikegCO', 'ikegM'], inplace=True)
-    # output_for_GEMMES.drop(columns=['capex_H_CO', 'capex_H_M', 'ikehCO', 'ikehM'], inplace=True)
+    # Adjust the repartitions pke / ike so that the ike's have the same order of magnitude as ikf in GEMMES
+    output_for_GEMMES['pkefCO'] *= 254.3531
+    output_for_GEMMES['pkefM']  *= 254.3531
+    output_for_GEMMES['ikef']   /= 254.3531
+    output_for_GEMMES['pkebCO'] *= 47.92296
+    output_for_GEMMES['pkebM']  *= 47.92296
+    output_for_GEMMES['ikeb']   /= 47.92296
+    output_for_GEMMES['pkegCO'] *= 34.85306
+    output_for_GEMMES['pkegM']  *= 34.85306
+    output_for_GEMMES['ikeg']   /= 34.85306
+    output_for_GEMMES['pkehCO'] *= 95.84592
+    output_for_GEMMES['pkehM']  *= 95.84592
+    output_for_GEMMES['ikeh']   /= 95.84592
+    output_for_GEMMES.drop(columns=['capex_F_CO', 'capex_F_M', 'ikefCO', 'ikefM'], inplace=True)
+    output_for_GEMMES.drop(columns=['capex_B_CO', 'capex_B_M', 'ikebCO', 'ikebM'], inplace=True)
+    output_for_GEMMES.drop(columns=['capex_G_CO', 'capex_G_M', 'ikegCO', 'ikegM'], inplace=True)
+    output_for_GEMMES.drop(columns=['capex_H_CO', 'capex_H_M', 'ikehCO', 'ikehM'], inplace=True)
     output_for_GEMMES['icef'] = output_for_GEMMES['opex_F_CO'] + output_for_GEMMES['opex_F_M']
     output_for_GEMMES['sigmamicef'] = output_for_GEMMES['opex_F_M'] / output_for_GEMMES['icef']
     output_for_GEMMES['iceb'] = output_for_GEMMES['opex_B_CO'] + output_for_GEMMES['opex_B_M']
@@ -548,7 +563,7 @@ def write_EnergyScope_outputs(EnergyScope_output_file, ampl_0, variables_GEMMES)
     output_for_GEMMES['ceh'] = output_for_GEMMES['opex_H_CO'] + output_for_GEMMES['opex_H_M']
     output_for_GEMMES['sigmamceh'] = output_for_GEMMES['opex_H_M'] / output_for_GEMMES['ceh']
     output_for_GEMMES['pieM'] = 1 / (variables_GEMMES_2021['pw'] * variables_GEMMES_2021['en'])
-    # output_for_GEMMES.drop(columns=['opex_F_CO', 'opex_F_M', 'opex_B_CO','opex_B_M', 'opex_G_CO', 'opex_G_M', 'opex_H_CO', 'opex_H_M'], inplace=True)
+    output_for_GEMMES.drop(columns=['opex_F_CO', 'opex_F_M', 'opex_B_CO','opex_B_M', 'opex_G_CO', 'opex_G_M', 'opex_H_CO', 'opex_H_M'], inplace=True)
     output_for_GEMMES = output_for_GEMMES.round(3)
     output_for_GEMMES.to_csv('Energy_system_costs.csv')   
     
