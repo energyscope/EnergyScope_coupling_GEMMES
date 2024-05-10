@@ -15,12 +15,12 @@ def main():
     while(diff > 1e-1):
         gdp_previous = gdp_current
         n_iter += 1
-        output_EnergyScope = run_EnergyScope()
-        write_EnergyScope_outputs(output_EnergyScope[0], output_EnergyScope[1])
+        output_EnergyScope = run_EnergyScope(output_GEMMES)
+        plot_EnergyScope_outputs(output_EnergyScope[0], output_EnergyScope[1]) #############################
+        write_EnergyScope_outputs(output_EnergyScope[0], output_EnergyScope[1], output_GEMMES)
         output_GEMMES = run_GEMMES()
         gdp_current = output_GEMMES['gdp']
         diff = np.linalg.norm(gdp_current-gdp_previous) 
-        plot_EnergyScope_outputs(output_EnergyScope[0], output_EnergyScope[1]) #############################
     time.sleep(1)
     print('Number of iterations before convergence between the two models: ', n_iter)
     
@@ -134,11 +134,10 @@ def run_GEMMES():
     i_rate.reset_index(inplace=True)
     i_rate.rename(columns={'index':'Phase'}, inplace=True)
     i_rate.to_csv('i_rate.csv', index=False)
-    output_GEMMES[['en','p','pw']].to_csv('GEMMES_variables.csv')
 
     return output_GEMMES
     
-def run_EnergyScope():
+def run_EnergyScope(output_GEMMES):
     n_year_opti = 30 # We optimize over the entire transition period, from 2021 to 2051
     
     ## Define the AMPL optimization problem
@@ -192,12 +191,10 @@ def run_EnergyScope():
     c_inv_ampl = pd.merge(c_inv_ampl, Technos_local_fraction, on='Technologies', how='left')
     c_inv_ampl.fillna(0, inplace=True)
     en0 = 3.74424417 # k COP / USD 2021
-    GEMMES_variables = pd.read_csv('GEMMES_variables.csv')
-    GEMMES_variables.set_index('Unnamed: 0', inplace=True)
     en_yearly = pd.DataFrame(index=year_list, columns=['en'])
     list_years = [2019,2021,2026,2031,2036,2041,2046,2051]
     for i in range(8):
-        en_yearly.iloc[i,0] = GEMMES_variables.loc[(GEMMES_variables.index>=list_years[i]) & (GEMMES_variables.index<list_years[i]+1), 'en'].mean()
+        en_yearly.iloc[i,0] = output_GEMMES.loc[(output_GEMMES.index>=list_years[i]) & (output_GEMMES.index<list_years[i]+1), 'en'].mean()
     en_yearly = en_yearly / en_yearly.loc['YEAR_2020'] 
     en_yearly.reset_index(inplace=True)
     en_yearly.rename(columns={'index': 'Year'}, inplace=True)
@@ -252,7 +249,7 @@ def plot_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     
     # a_website = "https://www.google.com"
     # webbrowser.open_new(a_website)
-    # ampl_graph.graph_resource()
+    ampl_graph.graph_resource()
     # ampl_graph.graph_gwp_per_sector()
     # ampl_graph.graph_cost_inv_phase_tech()
     # ampl_graph.graph_cost_return()
@@ -265,9 +262,9 @@ def plot_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     # ampl_graph.graph_load_factor()
     # df_unused = ampl_graph.graph_load_factor_2()
     # ampl_graph.graph_new_old_decom()
-    ampl_graph.graph_cost()
+    # ampl_graph.graph_cost()
 
-def write_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
+def write_EnergyScope_outputs(EnergyScope_output_file, ampl_0, output_GEMMES):
     ampl_graph = AmplGraph(EnergyScope_output_file, ampl_0, case_study)
     z_Results = ampl_graph.ampl_collector
     
@@ -387,12 +384,10 @@ def write_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     output_for_GEMMES.loc['2015_2020',['opex_F_CO','opex_B_CO','opex_G_CO','opex_H_CO']] = Cost_breakdown_non_annualised[['C_maint_CO', 'C_op_CO']].sum() * output_for_GEMMES.loc['2020_2025',['opex_F_CO','opex_B_CO','opex_G_CO','opex_H_CO']] / output_for_GEMMES.loc['2020_2025',['opex_F_CO','opex_B_CO','opex_G_CO','opex_H_CO']].sum() * 5
     output_for_GEMMES.loc['2015_2020',['opex_F_M','opex_B_M','opex_G_M','opex_H_M']] = Cost_breakdown_non_annualised[['C_maint_M', 'C_op_M']].sum() * output_for_GEMMES.loc['2020_2025',['opex_F_M','opex_B_M','opex_G_M','opex_H_M']] / output_for_GEMMES.loc['2020_2025',['opex_F_M','opex_B_M','opex_G_M','opex_H_M']].sum() * 5
     
-    GEMMES_variables = pd.read_csv('GEMMES_variables.csv')
-    GEMMES_variables.set_index('Unnamed: 0', inplace=True)
-    GEMMES_variables = GEMMES_variables.loc[(GEMMES_variables.index>=2021) & (GEMMES_variables.index<2022)].mean()
+    output_GEMMES_2021 = output_GEMMES.loc[(output_GEMMES.index>=2021) & (output_GEMMES.index<2022)].mean()
     
     Real_energy_system_cost_2021 = 33.323773083 # billion 2021 COP, according to DNP
-    corrective_factor = Real_energy_system_cost_2021 / ( GEMMES_variables['p'] * output_for_GEMMES.loc['2015_2020'].sum() ) # The corrective factor also allows to transform the phase costs into yearly costs (division by 5 included in the factor)
+    corrective_factor = Real_energy_system_cost_2021 / ( output_GEMMES_2021['p'] * output_for_GEMMES.loc['2015_2020'].sum() ) # The corrective factor also allows to transform the phase costs into yearly costs (division by 5 included in the factor)
     
     
     ### Add to C_op the money paid by B,G,H to F for buying the fuels and electricity
@@ -525,13 +520,13 @@ def write_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     output_for_GEMMES['ikehCO'] = (C_inv['Capa'] * C_inv['Local']    * C_inv['H']).groupby(level=[0]).sum()
     output_for_GEMMES['ikehM']  = (C_inv['Capa'] * C_inv['Imported'] * C_inv['H']).groupby(level=[0]).sum()
     output_for_GEMMES['pkefCO'] = output_for_GEMMES['capex_F_CO'] / output_for_GEMMES['ikefCO']
-    output_for_GEMMES['pkefM']  = output_for_GEMMES['capex_F_M']  / output_for_GEMMES['ikefM'] / (GEMMES_variables['pw'] * GEMMES_variables['en'])
+    output_for_GEMMES['pkefM']  = output_for_GEMMES['capex_F_M']  / output_for_GEMMES['ikefM'] / (output_GEMMES_2021['pw'] * output_GEMMES_2021['en'])
     output_for_GEMMES['pkebCO'] = output_for_GEMMES['capex_B_CO'] / output_for_GEMMES['ikebCO']
-    output_for_GEMMES['pkebM']  = output_for_GEMMES['capex_B_M']  / output_for_GEMMES['ikebM'] / (GEMMES_variables['pw'] * GEMMES_variables['en'])
+    output_for_GEMMES['pkebM']  = output_for_GEMMES['capex_B_M']  / output_for_GEMMES['ikebM'] / (output_GEMMES_2021['pw'] * output_GEMMES_2021['en'])
     output_for_GEMMES['pkegCO'] = output_for_GEMMES['capex_G_CO'] / output_for_GEMMES['ikegCO']
-    output_for_GEMMES['pkegM']  = output_for_GEMMES['capex_G_M']  / output_for_GEMMES['ikegM'] / (GEMMES_variables['pw'] * GEMMES_variables['en'])
+    output_for_GEMMES['pkegM']  = output_for_GEMMES['capex_G_M']  / output_for_GEMMES['ikegM'] / (output_GEMMES_2021['pw'] * output_GEMMES_2021['en'])
     output_for_GEMMES['pkehCO'] = output_for_GEMMES['capex_H_CO'] / output_for_GEMMES['ikehCO']
-    output_for_GEMMES['pkehM']  = output_for_GEMMES['capex_H_M']  / output_for_GEMMES['ikehM'] / (GEMMES_variables['pw'] * GEMMES_variables['en'])
+    output_for_GEMMES['pkehM']  = output_for_GEMMES['capex_H_M']  / output_for_GEMMES['ikehM'] / (output_GEMMES_2021['pw'] * output_GEMMES_2021['en'])
     output_for_GEMMES['ikef'] = output_for_GEMMES['ikefCO'] + output_for_GEMMES['ikefM']
     output_for_GEMMES['ikeb'] = output_for_GEMMES['ikebCO'] + output_for_GEMMES['ikebM']
     output_for_GEMMES['ikeg'] = output_for_GEMMES['ikegCO'] + output_for_GEMMES['ikegM']
@@ -552,7 +547,7 @@ def write_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     output_for_GEMMES['sigmamiceg'] = output_for_GEMMES['opex_G_M'] / output_for_GEMMES['iceg']
     output_for_GEMMES['ceh'] = output_for_GEMMES['opex_H_CO'] + output_for_GEMMES['opex_H_M']
     output_for_GEMMES['sigmamceh'] = output_for_GEMMES['opex_H_M'] / output_for_GEMMES['ceh']
-    output_for_GEMMES['pieM'] = 1 / (GEMMES_variables['pw'] * GEMMES_variables['en'])
+    output_for_GEMMES['pieM'] = 1 / (output_GEMMES_2021['pw'] * output_GEMMES_2021['en'])
     # output_for_GEMMES.drop(columns=['opex_F_CO', 'opex_F_M', 'opex_B_CO','opex_B_M', 'opex_G_CO', 'opex_G_M', 'opex_H_CO', 'opex_H_M'], inplace=True)
     output_for_GEMMES = output_for_GEMMES.round(3)
     output_for_GEMMES.to_csv('Energy_system_costs.csv')   
