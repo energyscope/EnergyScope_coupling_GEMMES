@@ -8,18 +8,18 @@ May 2024
 def main():
     plot_EnergyScope = False  
     csv_EnergyScope  = False
-    output_GEMMES = run_GEMMES()
-    gdp_current = output_GEMMES['gdp']
+    variables_GEMMES = run_GEMMES()
+    gdp_current = variables_GEMMES['gdp']
     diff = np.linalg.norm(gdp_current)
     n_iter = 0
     while(diff > 1e-1):
         gdp_previous = gdp_current
         n_iter += 1
-        output_EnergyScope = run_EnergyScope(output_GEMMES)
+        output_EnergyScope = run_EnergyScope(variables_GEMMES)
         plot_EnergyScope_outputs(output_EnergyScope[0], output_EnergyScope[1]) #############################
-        write_EnergyScope_outputs(output_EnergyScope[0], output_EnergyScope[1], output_GEMMES)
-        output_GEMMES = run_GEMMES()
-        gdp_current = output_GEMMES['gdp']
+        write_EnergyScope_outputs(output_EnergyScope[0], output_EnergyScope[1], variables_GEMMES)
+        variables_GEMMES = run_GEMMES()
+        gdp_current = variables_GEMMES['gdp']
         diff = np.linalg.norm(gdp_current-gdp_previous) 
     time.sleep(1)
     print('Number of iterations before convergence between the two models: ', n_iter)
@@ -30,15 +30,15 @@ def main():
         EnergyScope_output_csv(output_EnergyScope[0], output_EnergyScope[1])
 
     plt.figure()
-    plt.plot(output_GEMMES['time'], output_GEMMES['gdp'], label='gdp')
+    plt.plot(variables_GEMMES['time'], variables_GEMMES['gdp'], label='gdp')
     plt.legend(loc='upper left', fancybox=True, shadow=True)
     plt.grid(True, color="#93a1a1", alpha=0.3)
     plt.figure()
-    plt.plot(output_GEMMES['time'], output_GEMMES['p'], label='p')
+    plt.plot(variables_GEMMES['time'], variables_GEMMES['p'], label='p')
     plt.legend(loc='upper left', fancybox=True, shadow=True)
     plt.grid(True, color="#93a1a1", alpha=0.3)
     plt.figure()
-    plt.plot(output_GEMMES['time'], output_GEMMES['ip'], label='ip')
+    plt.plot(variables_GEMMES['time'], variables_GEMMES['ip'], label='ip')
     plt.legend(loc='upper right', fancybox=True, shadow=True)
     plt.grid(True, color="#93a1a1", alpha=0.3)
 
@@ -76,8 +76,8 @@ def run_GEMMES():
     samplesExogVar.columns = np.arange(len(samplesExogVar.columns))
 
     ## Run the GEMMES model
-    output_GEMMES = solveGEMMES(solvePy=solvePy, samplesExogVar=samplesExogVar, parms=newParms, solver="dopri", atol=1e-4, rtol=0, fac=0.85, facMin=0.1, facMax=4, nStepMax=300, hInit=0.025, hMin=0.025/100, hMax=0.2)
-    output_GEMMES.index = output_GEMMES.index.round(1)
+    variables_GEMMES = solveGEMMES(solvePy=solvePy, samplesExogVar=samplesExogVar, parms=newParms, solver="dopri", atol=1e-4, rtol=0, fac=0.85, facMin=0.1, facMax=4, nStepMax=300, hInit=0.025, hMin=0.025/100, hMax=0.2)
+    variables_GEMMES.index = variables_GEMMES.index.round(1)
 
     ## Save the projection for EUDs for EnergyScope
     df_EUD = pd.read_csv('EUD_template.csv')
@@ -89,11 +89,11 @@ def run_GEMMES():
     for i in range(7):
         list_EUDs[i] = df_EUD.copy()
         list_EUDs[i].set_index('parameter_name', inplace=True)
-        output_GEMMES_i = output_GEMMES.loc[(output_GEMMES.index>=list_years[i]) & (output_GEMMES.index<list_years[i]+1)].mean()
-        list_EUDs[i].loc[['ELECTRICITY', 'ELECTRICITY_VAR', 'HEAT_LOW_T_SH', 'HEAT_LOW_T_HW', 'SPACE_COOLING'], 'HOUSEHOLDS'] = [output_GEMMES_i['El_H']*share_elec_cst_H, output_GEMMES_i['El_H']*(1-share_elec_cst_H), output_GEMMES_i['HLTSH_H'], output_GEMMES_i['HLTHW_H'], output_GEMMES_i['SC_H']]
-        list_EUDs[i].loc[['ELECTRICITY', 'ELECTRICITY_VAR', 'HEAT_LOW_T_SH', 'SPACE_COOLING'], 'SERVICES'] = [(output_GEMMES_i['El_B']+output_GEMMES_i['El_G'])*share_elec_cst_S, (output_GEMMES_i['El_B']+output_GEMMES_i['El_G'])*(1-share_elec_cst_S), output_GEMMES_i['HLTSH_B']+output_GEMMES_i['HLTSH_G'], output_GEMMES_i['SC_B']+output_GEMMES_i['SC_G']]
-        list_EUDs[i].loc[['ELECTRICITY', 'ELECTRICITY_VAR', 'HEAT_HIGH_T', 'HEAT_LOW_T_SH', 'HEAT_LOW_T_HW', 'PROCESS_COOLING', 'NON_ENERGY'], 'INDUSTRY']  = [output_GEMMES_i['El_F']*share_elec_cst_F, output_GEMMES_i['El_F']*(1-share_elec_cst_F), output_GEMMES_i['HHT_F'], output_GEMMES_i['HLTSH_F'], output_GEMMES_i['HLTHW_F'], output_GEMMES_i['PC_F'], output_GEMMES_i['NE_F']]
-        list_EUDs[i].loc[['MOBILITY_PASSENGER', 'MOBILITY_FREIGHT'], 'TRANSPORTATION'] = [output_GEMMES_i['MP_H'], output_GEMMES_i['MF_F']]
+        variables_GEMMES_i = variables_GEMMES.loc[(variables_GEMMES.index>=list_years[i]) & (variables_GEMMES.index<list_years[i]+1)].mean()
+        list_EUDs[i].loc[['ELECTRICITY', 'ELECTRICITY_VAR', 'HEAT_LOW_T_SH', 'HEAT_LOW_T_HW', 'SPACE_COOLING'], 'HOUSEHOLDS'] = [variables_GEMMES_i['El_H']*share_elec_cst_H, variables_GEMMES_i['El_H']*(1-share_elec_cst_H), variables_GEMMES_i['HLTSH_H'], variables_GEMMES_i['HLTHW_H'], variables_GEMMES_i['SC_H']]
+        list_EUDs[i].loc[['ELECTRICITY', 'ELECTRICITY_VAR', 'HEAT_LOW_T_SH', 'SPACE_COOLING'], 'SERVICES'] = [(variables_GEMMES_i['El_B']+variables_GEMMES_i['El_G'])*share_elec_cst_S, (variables_GEMMES_i['El_B']+variables_GEMMES_i['El_G'])*(1-share_elec_cst_S), variables_GEMMES_i['HLTSH_B']+variables_GEMMES_i['HLTSH_G'], variables_GEMMES_i['SC_B']+variables_GEMMES_i['SC_G']]
+        list_EUDs[i].loc[['ELECTRICITY', 'ELECTRICITY_VAR', 'HEAT_HIGH_T', 'HEAT_LOW_T_SH', 'HEAT_LOW_T_HW', 'PROCESS_COOLING', 'NON_ENERGY'], 'INDUSTRY']  = [variables_GEMMES_i['El_F']*share_elec_cst_F, variables_GEMMES_i['El_F']*(1-share_elec_cst_F), variables_GEMMES_i['HHT_F'], variables_GEMMES_i['HLTSH_F'], variables_GEMMES_i['HLTHW_F'], variables_GEMMES_i['PC_F'], variables_GEMMES_i['NE_F']]
+        list_EUDs[i].loc[['MOBILITY_PASSENGER', 'MOBILITY_FREIGHT'], 'TRANSPORTATION'] = [variables_GEMMES_i['MP_H'], variables_GEMMES_i['MF_F']]
         list_EUDs[i] = list_EUDs[i].round(1)
         list_EUDs[i].reset_index(inplace=True)
         col_names = list_EUDs[i].columns
@@ -107,24 +107,24 @@ def run_GEMMES():
     list_EUDs[6].to_csv('EUD_2051.csv', index=False)
     
     ## Save the projections for space heating shares between sectors, space cooling shares between sectors and the discount rate
-    output_GEMMES['LTH_tot'] = output_GEMMES['HLTHW_F'] + output_GEMMES['HLTSH_F'] + output_GEMMES['HLTSH_B'] + output_GEMMES['HLTSH_G'] + output_GEMMES['HLTHW_H'] + output_GEMMES['HLTSH_H']
-    output_GEMMES['SC_tot'] = output_GEMMES['SC_B'] + output_GEMMES['SC_G'] + output_GEMMES['SC_H']
+    variables_GEMMES['LTH_tot'] = variables_GEMMES['HLTHW_F'] + variables_GEMMES['HLTSH_F'] + variables_GEMMES['HLTSH_B'] + variables_GEMMES['HLTSH_G'] + variables_GEMMES['HLTHW_H'] + variables_GEMMES['HLTSH_H']
+    variables_GEMMES['SC_tot'] = variables_GEMMES['SC_B'] + variables_GEMMES['SC_G'] + variables_GEMMES['SC_H']
     list_phases = ['2019_2021','2021_2026','2026_2031','2031_2036','2036_2041','2041_2046','2046_2051']
-    list_output_GEMMES = [output_GEMMES.loc[output_GEMMES.index<2021].mean()]
+    list_variables_GEMMES = [variables_GEMMES.loc[variables_GEMMES.index<2021].mean()]
     for i in range(6):
-        list_output_GEMMES.append(output_GEMMES.loc[(output_GEMMES.index>=list_years[i]) & (output_GEMMES.index<list_years[i+1])].mean())
+        list_variables_GEMMES.append(variables_GEMMES.loc[(variables_GEMMES.index>=list_years[i]) & (variables_GEMMES.index<list_years[i+1])].mean())
     shares_LTH = pd.DataFrame(index=list_phases, columns=['F','B','G','H'])
     shares_cooling = pd.DataFrame(index=list_phases, columns=['B','G','H'])
     i_rate = pd.DataFrame(index=list_phases, columns=['i_rate'])
     for i in range(7):
-        shares_LTH.loc[list_phases[i],'F'] = round((list_output_GEMMES[i].loc['HLTSH_F'] + list_output_GEMMES[i].loc['HLTHW_F']) / list_output_GEMMES[i].loc['LTH_tot'], 3)
-        shares_LTH.loc[list_phases[i],'B'] = round(list_output_GEMMES[i].loc['HLTSH_B'] / list_output_GEMMES[i].loc['LTH_tot'], 3)
-        shares_LTH.loc[list_phases[i],'G'] = round(list_output_GEMMES[i].loc['HLTSH_G'] / list_output_GEMMES[i].loc['LTH_tot'], 3)
-        shares_LTH.loc[list_phases[i],'H'] = round((list_output_GEMMES[i].loc['HLTSH_H'] + list_output_GEMMES[i].loc['HLTHW_H']) / list_output_GEMMES[i].loc['LTH_tot'], 3)
-        shares_cooling.loc[list_phases[i],'B'] = round(list_output_GEMMES[i].loc['SC_B'] / list_output_GEMMES[i].loc['SC_tot'], 3)
-        shares_cooling.loc[list_phases[i],'G'] = round(list_output_GEMMES[i].loc['SC_G'] / list_output_GEMMES[i].loc['SC_tot'], 3)
-        shares_cooling.loc[list_phases[i],'H'] = round(list_output_GEMMES[i].loc['SC_H'] / list_output_GEMMES[i].loc['SC_tot'], 3)
-        i_rate.loc[list_phases[i],'i_rate'] = round(list_output_GEMMES[i].loc['ip'] - list_output_GEMMES[i].loc['pDot'] / list_output_GEMMES[i].loc['p'], 3)   
+        shares_LTH.loc[list_phases[i],'F'] = round((list_variables_GEMMES[i].loc['HLTSH_F'] + list_variables_GEMMES[i].loc['HLTHW_F']) / list_variables_GEMMES[i].loc['LTH_tot'], 3)
+        shares_LTH.loc[list_phases[i],'B'] = round(list_variables_GEMMES[i].loc['HLTSH_B'] / list_variables_GEMMES[i].loc['LTH_tot'], 3)
+        shares_LTH.loc[list_phases[i],'G'] = round(list_variables_GEMMES[i].loc['HLTSH_G'] / list_variables_GEMMES[i].loc['LTH_tot'], 3)
+        shares_LTH.loc[list_phases[i],'H'] = round((list_variables_GEMMES[i].loc['HLTSH_H'] + list_variables_GEMMES[i].loc['HLTHW_H']) / list_variables_GEMMES[i].loc['LTH_tot'], 3)
+        shares_cooling.loc[list_phases[i],'B'] = round(list_variables_GEMMES[i].loc['SC_B'] / list_variables_GEMMES[i].loc['SC_tot'], 3)
+        shares_cooling.loc[list_phases[i],'G'] = round(list_variables_GEMMES[i].loc['SC_G'] / list_variables_GEMMES[i].loc['SC_tot'], 3)
+        shares_cooling.loc[list_phases[i],'H'] = round(list_variables_GEMMES[i].loc['SC_H'] / list_variables_GEMMES[i].loc['SC_tot'], 3)
+        i_rate.loc[list_phases[i],'i_rate'] = round(list_variables_GEMMES[i].loc['ip'] - list_variables_GEMMES[i].loc['pDot'] / list_variables_GEMMES[i].loc['p'], 3)   
     shares_LTH.reset_index(inplace=True)
     shares_LTH.rename(columns={'index':'Phase'}, inplace=True)
     shares_LTH.to_csv('shares_LTH.csv', index=False)
@@ -135,9 +135,9 @@ def run_GEMMES():
     i_rate.rename(columns={'index':'Phase'}, inplace=True)
     i_rate.to_csv('i_rate.csv', index=False)
 
-    return output_GEMMES
+    return variables_GEMMES
     
-def run_EnergyScope(output_GEMMES):
+def run_EnergyScope(variables_GEMMES):
     n_year_opti = 30 # We optimize over the entire transition period, from 2021 to 2051
     
     ## Define the AMPL optimization problem
@@ -194,7 +194,7 @@ def run_EnergyScope(output_GEMMES):
     en_yearly = pd.DataFrame(index=year_list, columns=['en'])
     list_years = [2019,2021,2026,2031,2036,2041,2046,2051]
     for i in range(8):
-        en_yearly.iloc[i,0] = output_GEMMES.loc[(output_GEMMES.index>=list_years[i]) & (output_GEMMES.index<list_years[i]+1), 'en'].mean()
+        en_yearly.iloc[i,0] = variables_GEMMES.loc[(variables_GEMMES.index>=list_years[i]) & (variables_GEMMES.index<list_years[i]+1), 'en'].mean()
     en_yearly = en_yearly / en_yearly.loc['YEAR_2020'] 
     en_yearly.reset_index(inplace=True)
     en_yearly.rename(columns={'index': 'Year'}, inplace=True)
@@ -249,7 +249,7 @@ def plot_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     
     # a_website = "https://www.google.com"
     # webbrowser.open_new(a_website)
-    ampl_graph.graph_resource()
+    # ampl_graph.graph_cost()
     # ampl_graph.graph_gwp_per_sector()
     # ampl_graph.graph_cost_inv_phase_tech()
     # ampl_graph.graph_cost_return()
@@ -262,9 +262,9 @@ def plot_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     # ampl_graph.graph_load_factor()
     # df_unused = ampl_graph.graph_load_factor_2()
     # ampl_graph.graph_new_old_decom()
-    # ampl_graph.graph_cost()
+    ampl_graph.graph_resource()
 
-def write_EnergyScope_outputs(EnergyScope_output_file, ampl_0, output_GEMMES):
+def write_EnergyScope_outputs(EnergyScope_output_file, ampl_0, variables_GEMMES):
     ampl_graph = AmplGraph(EnergyScope_output_file, ampl_0, case_study)
     z_Results = ampl_graph.ampl_collector
     
@@ -384,10 +384,10 @@ def write_EnergyScope_outputs(EnergyScope_output_file, ampl_0, output_GEMMES):
     output_for_GEMMES.loc['2015_2020',['opex_F_CO','opex_B_CO','opex_G_CO','opex_H_CO']] = Cost_breakdown_non_annualised[['C_maint_CO', 'C_op_CO']].sum() * output_for_GEMMES.loc['2020_2025',['opex_F_CO','opex_B_CO','opex_G_CO','opex_H_CO']] / output_for_GEMMES.loc['2020_2025',['opex_F_CO','opex_B_CO','opex_G_CO','opex_H_CO']].sum() * 5
     output_for_GEMMES.loc['2015_2020',['opex_F_M','opex_B_M','opex_G_M','opex_H_M']] = Cost_breakdown_non_annualised[['C_maint_M', 'C_op_M']].sum() * output_for_GEMMES.loc['2020_2025',['opex_F_M','opex_B_M','opex_G_M','opex_H_M']] / output_for_GEMMES.loc['2020_2025',['opex_F_M','opex_B_M','opex_G_M','opex_H_M']].sum() * 5
     
-    output_GEMMES_2021 = output_GEMMES.loc[(output_GEMMES.index>=2021) & (output_GEMMES.index<2022)].mean()
+    variables_GEMMES_2021 = variables_GEMMES.loc[(variables_GEMMES.index>=2021) & (variables_GEMMES.index<2022)].mean()
     
     Real_energy_system_cost_2021 = 33.323773083 # billion 2021 COP, according to DNP
-    corrective_factor = Real_energy_system_cost_2021 / ( output_GEMMES_2021['p'] * output_for_GEMMES.loc['2015_2020'].sum() ) # The corrective factor also allows to transform the phase costs into yearly costs (division by 5 included in the factor)
+    corrective_factor = Real_energy_system_cost_2021 / ( variables_GEMMES_2021['p'] * output_for_GEMMES.loc['2015_2020'].sum() ) # The corrective factor also allows to transform the phase costs into yearly costs (division by 5 included in the factor)
     
     
     ### Add to C_op the money paid by B,G,H to F for buying the fuels and electricity
@@ -520,13 +520,13 @@ def write_EnergyScope_outputs(EnergyScope_output_file, ampl_0, output_GEMMES):
     output_for_GEMMES['ikehCO'] = (C_inv['Capa'] * C_inv['Local']    * C_inv['H']).groupby(level=[0]).sum()
     output_for_GEMMES['ikehM']  = (C_inv['Capa'] * C_inv['Imported'] * C_inv['H']).groupby(level=[0]).sum()
     output_for_GEMMES['pkefCO'] = output_for_GEMMES['capex_F_CO'] / output_for_GEMMES['ikefCO']
-    output_for_GEMMES['pkefM']  = output_for_GEMMES['capex_F_M']  / output_for_GEMMES['ikefM'] / (output_GEMMES_2021['pw'] * output_GEMMES_2021['en'])
+    output_for_GEMMES['pkefM']  = output_for_GEMMES['capex_F_M']  / output_for_GEMMES['ikefM'] / (variables_GEMMES_2021['pw'] * variables_GEMMES_2021['en'])
     output_for_GEMMES['pkebCO'] = output_for_GEMMES['capex_B_CO'] / output_for_GEMMES['ikebCO']
-    output_for_GEMMES['pkebM']  = output_for_GEMMES['capex_B_M']  / output_for_GEMMES['ikebM'] / (output_GEMMES_2021['pw'] * output_GEMMES_2021['en'])
+    output_for_GEMMES['pkebM']  = output_for_GEMMES['capex_B_M']  / output_for_GEMMES['ikebM'] / (variables_GEMMES_2021['pw'] * variables_GEMMES_2021['en'])
     output_for_GEMMES['pkegCO'] = output_for_GEMMES['capex_G_CO'] / output_for_GEMMES['ikegCO']
-    output_for_GEMMES['pkegM']  = output_for_GEMMES['capex_G_M']  / output_for_GEMMES['ikegM'] / (output_GEMMES_2021['pw'] * output_GEMMES_2021['en'])
+    output_for_GEMMES['pkegM']  = output_for_GEMMES['capex_G_M']  / output_for_GEMMES['ikegM'] / (variables_GEMMES_2021['pw'] * variables_GEMMES_2021['en'])
     output_for_GEMMES['pkehCO'] = output_for_GEMMES['capex_H_CO'] / output_for_GEMMES['ikehCO']
-    output_for_GEMMES['pkehM']  = output_for_GEMMES['capex_H_M']  / output_for_GEMMES['ikehM'] / (output_GEMMES_2021['pw'] * output_GEMMES_2021['en'])
+    output_for_GEMMES['pkehM']  = output_for_GEMMES['capex_H_M']  / output_for_GEMMES['ikehM'] / (variables_GEMMES_2021['pw'] * variables_GEMMES_2021['en'])
     output_for_GEMMES['ikef'] = output_for_GEMMES['ikefCO'] + output_for_GEMMES['ikefM']
     output_for_GEMMES['ikeb'] = output_for_GEMMES['ikebCO'] + output_for_GEMMES['ikebM']
     output_for_GEMMES['ikeg'] = output_for_GEMMES['ikegCO'] + output_for_GEMMES['ikegM']
@@ -547,7 +547,7 @@ def write_EnergyScope_outputs(EnergyScope_output_file, ampl_0, output_GEMMES):
     output_for_GEMMES['sigmamiceg'] = output_for_GEMMES['opex_G_M'] / output_for_GEMMES['iceg']
     output_for_GEMMES['ceh'] = output_for_GEMMES['opex_H_CO'] + output_for_GEMMES['opex_H_M']
     output_for_GEMMES['sigmamceh'] = output_for_GEMMES['opex_H_M'] / output_for_GEMMES['ceh']
-    output_for_GEMMES['pieM'] = 1 / (output_GEMMES_2021['pw'] * output_GEMMES_2021['en'])
+    output_for_GEMMES['pieM'] = 1 / (variables_GEMMES_2021['pw'] * variables_GEMMES_2021['en'])
     # output_for_GEMMES.drop(columns=['opex_F_CO', 'opex_F_M', 'opex_B_CO','opex_B_M', 'opex_G_CO', 'opex_G_M', 'opex_H_CO', 'opex_H_M'], inplace=True)
     output_for_GEMMES = output_for_GEMMES.round(3)
     output_for_GEMMES.to_csv('Energy_system_costs.csv')   
