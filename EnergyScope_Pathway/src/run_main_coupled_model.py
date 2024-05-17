@@ -5,6 +5,11 @@ May 2024
 @authors: Xavier Rixhon, Pierre Jacques, Stanislas Augier
 """
 
+## Define the country studied and the time granularity of EnergyScope
+country = 'Colombia'
+EnergyScope_granularity = 'MO'
+nbr_tds = 12
+
 def main():
     plot_EnergyScope = True  
     csv_EnergyScope  = False
@@ -12,7 +17,7 @@ def main():
     gdp_current = variables_GEMMES['gdp']
     diff = np.linalg.norm(gdp_current)
     n_iter = 0
-    while(diff > 1): ############ Check si cette tolérance n'est pas un peu trop large
+    while(diff > 1):
         gdp_previous = gdp_current
         n_iter += 1
         output_EnergyScope = run_EnergyScope(variables_GEMMES)
@@ -29,13 +34,13 @@ def main():
         EnergyScope_output_csv(output_EnergyScope[0], output_EnergyScope[1])
 
     plt.figure()
-    plt.plot(variables_GEMMES['time'], variables_GEMMES['TFNB'], 'TFNB')
+    plt.plot(variables_GEMMES['time'], variables_GEMMES['GDP'], label='GDP')
     plt.legend(loc='upper left', fancybox=True, shadow=True)
     plt.grid(True, color="#93a1a1", alpha=0.3)
     plt.figure()
 
     plt.figure()
-    plt.plot(variables_GEMMES['time'], variables_GEMMES['pkef'], label='pkef')
+    plt.plot(variables_GEMMES['time'], variables_GEMMES['p'], label='p')
     plt.legend(loc='upper left', fancybox=True, shadow=True)
     plt.grid(True, color="#93a1a1", alpha=0.3)
     plt.figure()
@@ -614,11 +619,6 @@ from ampl_graph import AmplGraph
 ## Read the GEMMES model
 cppimport.settings['force_rebuild'] = True
 solvePy = cppimport.imp('functionsForPy')
-
-## Define the country studied and the time granularity of EnergyScope
-country = 'Colombia'
-EnergyScope_granularity = 'MO'
-nbr_tds = 12
 
 ## Read the EnergyScope model and data files
 if EnergyScope_granularity == 'MO':
