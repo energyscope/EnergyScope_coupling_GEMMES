@@ -13,6 +13,7 @@ nbr_tds = 12
 def main():
     plot_EnergyScope = True  
     csv_EnergyScope  = False
+    plot_GEMMES = False
     variables_GEMMES = run_GEMMES()
     gdp_current = variables_GEMMES['gdp']
     diff = np.linalg.norm(gdp_current)
@@ -32,19 +33,15 @@ def main():
         plot_EnergyScope_outputs(output_EnergyScope[0], output_EnergyScope[1])
     if csv_EnergyScope:
         EnergyScope_output_csv(output_EnergyScope[0], output_EnergyScope[1])
+    if plot_GEMMES:
+        plot_GEMMES_outputs()
 
     plt.figure()
     plt.plot(variables_GEMMES['time'], variables_GEMMES['GDP'], label='GDP')
     plt.legend(loc='upper left', fancybox=True, shadow=True)
     plt.grid(True, color="#93a1a1", alpha=0.3)
-    plt.figure()
-
-    plt.figure()
-    plt.plot(variables_GEMMES['time'], variables_GEMMES['p'], label='p')
-    plt.legend(loc='upper left', fancybox=True, shadow=True)
-    plt.grid(True, color="#93a1a1", alpha=0.3)
-    plt.figure()
     
+    plt.figure()
     plt.plot(variables_GEMMES['time'], variables_GEMMES['ip'], label='ip')
     plt.legend(loc='upper right', fancybox=True, shadow=True)
     plt.grid(True, color="#93a1a1", alpha=0.3)
@@ -582,6 +579,80 @@ def EnergyScope_output_csv(EnergyScope_output_file, ampl_0):
     z_Results['Year_balance'].to_csv(os.path.join(EnergyScope_case_study_path,'Year_balance.csv'))
     z_Results['Gwp_breakdown'].to_csv(os.path.join(EnergyScope_case_study_path,'Gwp_breakdown.csv'))
 
+
+def plot_GEMMES_outputs(variables_GEMMES):
+    plt.figure()
+    plt.plot(variables_GEMMES['time'], variables_GEMMES['yedot']/variables_GEMMES['ye'], label='a - Real GDP growth rate')
+    plt.legend(loc='lower right', fancybox=True, shadow=True)
+    plt.grid(True, color="#93a1a1", alpha=0.3)
+    plt.figure()
+    
+    plt.figure()
+    plt.plot(variables_GEMMES['time'], variables_GEMMES['unem'], label='b - Unemployment rate')
+    plt.legend(loc='lower left', fancybox=True, shadow=True)
+    plt.grid(True, color="#93a1a1", alpha=0.3)
+    plt.figure()
+    
+    plt.figure()
+    plt.plot(variables_GEMMES['time'], (variables_GEMMES['im']-variables_GEMMES['x'])/variables_GEMMES['gdp'], label='c - Trade Balance (% GDP)')
+    plt.legend(loc='upper right', fancybox=True, shadow=True)
+    plt.grid(True, color="#93a1a1", alpha=0.3)
+    plt.figure()
+    
+    plt.figure()
+    plt.plot(variables_GEMMES['time'], variables_GEMMES['CAD'], label='d - Current account deficit (% GDP)')
+    plt.legend(loc='upper right', fancybox=True, shadow=True)
+    plt.grid(True, color="#93a1a1", alpha=0.3)
+    plt.figure()
+    
+    plt.figure()
+    plt.plot(variables_GEMMES['time'], variables_GEMMES['endot']/variables_GEMMES['en'], label='e - Nominal depreciation')
+    plt.legend(loc='lower right', fancybox=True, shadow=True)
+    plt.grid(True, color="#93a1a1", alpha=0.3)
+    plt.figure()
+
+    plt.figure()
+    plt.plot(variables_GEMMES['time'], variables_GEMMES['pdot']/variables_GEMMES['p'], label='f - Inflation')
+    plt.legend(loc='upper right', fancybox=True, shadow=True)
+    plt.grid(True, color="#93a1a1", alpha=0.3)
+    plt.figure()
+    
+    plt.figure()
+    plt.plot(variables_GEMMES['time'], variables_GEMMES['Rfx']*variables_GEMMES['en']/variables_GEMMES['GDP'], label='g - Foreign reserves (% GDP)')
+    plt.legend(loc='lower left', fancybox=True, shadow=True)
+    plt.grid(True, color="#93a1a1", alpha=0.3)
+    plt.figure()
+    
+    plt.figure()
+    plt.plot(variables_GEMMES['time'], variables_GEMMES['FDI'].pct_change(), label='h - FDI growth rates')
+    plt.legend(loc='lower left', fancybox=True, shadow=True)
+    plt.grid(True, color="#93a1a1", alpha=0.3)
+    plt.figure()
+    
+    plt.figure()
+    plt.plot(variables_GEMMES['time'], variables_GEMMES['FD']/variables_GEMMES['GDP'], label='i - Fiscal deficit (% GDP)')
+    plt.legend(loc='upper right', fancybox=True, shadow=True)
+    plt.grid(True, color="#93a1a1", alpha=0.3)
+    plt.figure()
+    
+    plt.figure()
+    plt.plot(variables_GEMMES['time'], ( variables_GEMMES['Bg']+(variables_GEMMES['Bgfx']+variables_GEMMES['Lgfx']+variables_GEMMES['Lgfxtr'])*variables_GEMMES['en'] ) / variables_GEMMES['GDP'], label='j - Government total debt (% GDP)')
+    plt.legend(loc='upper right', fancybox=True, shadow=True)
+    plt.grid(True, color="#93a1a1", alpha=0.3)
+    plt.figure()
+    
+    plt.figure()
+    plt.plot(variables_GEMMES['time'], variables_GEMMES['ibgdc'], label='k - Domestic interest rate')
+    plt.legend(loc='upper right', fancybox=True, shadow=True)
+    plt.grid(True, color="#93a1a1", alpha=0.3)
+    plt.figure()
+    
+    plt.figure()
+    plt.plot(variables_GEMMES['time'], variables_GEMMES['ibgfx'], label='l - Foreign interest rate')
+    plt.legend(loc='upper right', fancybox=True, shadow=True)
+    plt.grid(True, color="#93a1a1", alpha=0.3)
+    plt.figure()
+    
 
 import os, sys
 from os import system
