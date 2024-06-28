@@ -7,7 +7,7 @@ May 2024
 
 ## Define the country studied and the time granularity of EnergyScope
 country = 'Colombia'
-EnergyScope_granularity = 'MO'
+EnergyScope_granularity = 'TD'
 nbr_tds = 12
 
 def main():
