@@ -7,7 +7,7 @@ May 2024
 
 ## Define the country studied and the time granularity of EnergyScope
 country = 'Colombia'
-EnergyScope_granularity = 'TD'
+EnergyScope_granularity = 'MO'
 nbr_tds = 12
 
 def main():
@@ -800,8 +800,9 @@ import matplotlib.pyplot as plt
 curr_dir = Path(os.path.dirname(__file__))
 
 pymodPath = os.path.abspath(os.path.join(curr_dir.parent,'pylib'))
-GEMMES_path = '/home/piejacques/Bureau/ColombiaEnergyScope'
-Cpp_path = GEMMES_path + '/SourceCode/cppCode'
+GEMMES_path = os.path.abspath(os.path.join(Path(__file__).parents[3], 'ColombiaEnergyScope')) # '/home/piejacques/Bureau/ColombiaEnergyScope'
+# Cpp_path = GEMMES_path + '/SourceCode/cppCode'
+Cpp_path = os.path.join(GEMMES_path, '/SourceCode/cppCode')
 sys.path.insert(0, pymodPath)
 sys.path.insert(0, Cpp_path)
 sys.path.insert(0, Cpp_path + "/src")
