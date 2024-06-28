@@ -13,7 +13,7 @@ nbr_tds = 12
 def main():
     plot_EnergyScope = False  
     csv_EnergyScope  = True
-    plot_GEMMES = False
+    plot_GEMMES = True
     csv_GEMMES = True
     variables_GEMMES = run_GEMMES()
     gdp_current = variables_GEMMES['gdp']
@@ -36,11 +36,11 @@ def main():
         EnergyScope_output_csv(output_EnergyScope[0], output_EnergyScope[1])
     if plot_GEMMES:
         # plot_GEMMES_outputs_fig1(variables_GEMMES.iloc[20:,:])
-        plot_GEMMES_outputs_fig4(variables_GEMMES.iloc[40:,:])
+        plot_GEMMES_outputs_fig4(variables_GEMMES.iloc[40:,:], output_EnergyScope[0])
     if csv_GEMMES:
         variables_GEMMES_to_output = variables_GEMMES.copy()
         variables_GEMMES_to_output = variables_GEMMES_to_output[::10]
-        variables_GEMMES_to_output.to_csv('GEMMES_output.csv')
+        variables_GEMMES_to_output.to_csv(os.path.join(output_EnergyScope[0],'GEMMES_output.csv'))
     
     # plt.figure()
     # plt.plot(variables_GEMMES['time'], variables_GEMMES['ip'], label='ip')
@@ -654,113 +654,131 @@ def plot_GEMMES_outputs_fig1(variables_GEMMES):
     plt.grid(True, color="#93a1a1", alpha=0.3)
     plt.figure()
 
-def plot_GEMMES_outputs_fig4(variables_GEMMES):
+def plot_GEMMES_outputs_fig4(variables_GEMMES, output_directory):
     plt.figure()
     plt.plot(variables_GEMMES['time'], variables_GEMMES['yedot']/variables_GEMMES['ye'], label='a - Real GDP growth rate')
     plt.legend(loc='lower right', fancybox=True, shadow=True)
     plt.grid(True, color="#93a1a1", alpha=0.3)
+    plt.savefig(os.path.join(EnergyScope_case_study_path,'graphs_GEMMES/a - Real GDP growth rate.png'), format='png')
     plt.figure()
     
     plt.figure()
     plt.plot(variables_GEMMES['time'], (variables_GEMMES['x']-variables_GEMMES['im'])/variables_GEMMES['gdp'], label='b - Trade Balance (% GDP)')
     plt.legend(loc='lower right', fancybox=True, shadow=True)
     plt.grid(True, color="#93a1a1", alpha=0.3)
+    plt.savefig(os.path.join(EnergyScope_case_study_path,'graphs_GEMMES/b - Trade Balance (% GDP).png'), format='png')
     plt.figure()
     
     plt.figure()
     plt.plot(variables_GEMMES['time'], variables_GEMMES['en'], label='c - Nominal Exchange rate')
     plt.legend(loc='upper left', fancybox=True, shadow=True)
     plt.grid(True, color="#93a1a1", alpha=0.3)
+    plt.savefig(os.path.join(EnergyScope_case_study_path,'graphs_GEMMES/c - Nominal Exchange rate.png'), format='png')
     plt.figure()
     
     plt.figure()
     plt.plot(variables_GEMMES['time'], 10*variables_GEMMES['p'].pct_change(), label='d - Producer inflation rate (%)')
     plt.legend(loc='upper right', fancybox=True, shadow=True)
     plt.grid(True, color="#93a1a1", alpha=0.3)
+    plt.savefig(os.path.join(EnergyScope_case_study_path,'graphs_GEMMES/d - Producer inflation rate (%).png'), format='png')
     plt.figure()
     
     plt.figure()
     plt.plot(variables_GEMMES['time'], 10*variables_GEMMES['pc'].pct_change(), label='e - Consumer inflation rate (%)')
     plt.legend(loc='upper right', fancybox=True, shadow=True)
     plt.grid(True, color="#93a1a1", alpha=0.3)
+    plt.savefig(os.path.join(EnergyScope_case_study_path,'graphs_GEMMES/e - Consumer inflation rate (%).png'), format='png')
     plt.figure()
     
     plt.figure()
     plt.plot(variables_GEMMES['time'], variables_GEMMES['Con']/(variables_GEMMES['pc']*variables_GEMMES['gdp']), label='f - Consumption as a share of real GDP')
     plt.legend(loc='upper right', fancybox=True, shadow=True)
     plt.grid(True, color="#93a1a1", alpha=0.3)
+    plt.savefig(os.path.join(EnergyScope_case_study_path,'graphs_GEMMES/f - Consumption as a share of real GDP.png'), format='png')
     plt.figure()
     
     plt.figure()
     plt.plot(variables_GEMMES['time'], variables_GEMMES['Ik']/(variables_GEMMES['pk']*variables_GEMMES['gdp']), label='g - Investment as a share of real GDP')
     plt.legend(loc='upper right', fancybox=True, shadow=True)
     plt.grid(True, color="#93a1a1", alpha=0.3)
+    plt.savefig(os.path.join(EnergyScope_case_study_path,'graphs_GEMMES/g - Investment as a share of real GDP.png'), format='png')
     plt.figure()
     
     plt.figure()
     plt.plot(variables_GEMMES['time'], variables_GEMMES['unem'], label='h - Unemployment rate(%)')
     plt.legend(loc='upper right', fancybox=True, shadow=True)
     plt.grid(True, color="#93a1a1", alpha=0.3)
+    plt.savefig(os.path.join(EnergyScope_case_study_path,'graphs_GEMMES/h - Unemployment rate(%).png'), format='png')
     plt.figure()
 
     plt.figure()
     plt.plot(variables_GEMMES['time'], variables_GEMMES['FD']/variables_GEMMES['GDP'], label='i - Fiscal deficit (%GDP)')
     plt.legend(loc='upper right', fancybox=True, shadow=True)
     plt.grid(True, color="#93a1a1", alpha=0.3)
+    plt.savefig(os.path.join(EnergyScope_case_study_path,'graphs_GEMMES/i - Fiscal deficit (%GDP).png'), format='png')
     plt.figure()
     
     plt.figure()
     plt.plot(variables_GEMMES['time'], ( variables_GEMMES['Bg']+(variables_GEMMES['Bgfx']+variables_GEMMES['Lgfx']+variables_GEMMES['Lgfxtr'])*variables_GEMMES['en'] ) / variables_GEMMES['GDP'], label='j - Government total debt (% GDP)')
     plt.legend(loc='lower left', fancybox=True, shadow=True)
     plt.grid(True, color="#93a1a1", alpha=0.3)
+    plt.savefig(os.path.join(EnergyScope_case_study_path,'graphs_GEMMES/j - Government total debt (% GDP).png'), format='png')
     plt.figure()
     
     plt.figure()
     plt.plot(variables_GEMMES['time'], variables_GEMMES['IA']/variables_GEMMES['GDP'], label='k - Current Account (%GDP)')
     plt.legend(loc='upper left', fancybox=True, shadow=True)
     plt.grid(True, color="#93a1a1", alpha=0.3)
+    plt.savefig(os.path.join(EnergyScope_case_study_path,'graphs_GEMMES/k - Current Account (%GDP).png'), format='png')
     plt.figure()
     
     plt.figure()
     plt.plot(variables_GEMMES['time'], -( variables_GEMMES['Rfxbdesdot']+variables_GEMMES['Dfxwdot']-(variables_GEMMES['FDI']/variables_GEMMES['en']+variables_GEMMES['Bgfxdot']+variables_GEMMES['Lgfxdot']+variables_GEMMES['Lfxfwdot']+variables_GEMMES['Lfxbwdot']+variables_GEMMES['Bgwdot']/variables_GEMMES['en']-variables_GEMMES['Rfxcbdot']) ) / variables_GEMMES['GDP'], label='l - Financial Account (%GDP)')
     plt.legend(loc='upper right', fancybox=True, shadow=True)
     plt.grid(True, color="#93a1a1", alpha=0.3)
+    plt.savefig(os.path.join(EnergyScope_case_study_path,'graphs_GEMMES/l - Financial Account (%GDP).png'), format='png')
     plt.figure()
     
     plt.figure()
     plt.plot(variables_GEMMES['time'], (variables_GEMMES['Ldf']+(variables_GEMMES['Lfxfb']+variables_GEMMES['Lfxfw'])*variables_GEMMES['en'])/variables_GEMMES['GDP'], label='m - NFCs total debt (%GDP)')
     plt.legend(loc='lower right', fancybox=True, shadow=True)
     plt.grid(True, color="#93a1a1", alpha=0.3)
+    plt.savefig(os.path.join(EnergyScope_case_study_path,'graphs_GEMMES/m - NFCs total debt (%GDP).png'), format='png')
     plt.figure()
     
     plt.figure()
     plt.plot(variables_GEMMES['time'], variables_GEMMES['Rfx']*variables_GEMMES['en']/variables_GEMMES['GDP'], label='n - FX reserves (%GDP)')
     plt.legend(loc='upper right', fancybox=True, shadow=True)
     plt.grid(True, color="#93a1a1", alpha=0.3)
+    plt.savefig(os.path.join(EnergyScope_case_study_path,'graphs_GEMMES/n - FX reserves (%GDP).png'), format='png')
     plt.figure()
     
     plt.figure()
     plt.plot(variables_GEMMES['time'], variables_GEMMES['rsk'], label='o - Country risk')
     plt.legend(loc='lower right', fancybox=True, shadow=True)
     plt.grid(True, color="#93a1a1", alpha=0.3)
+    plt.savefig(os.path.join(EnergyScope_case_study_path,'graphs_GEMMES/o - Country risk.png'), format='png')
     plt.figure()
     
     plt.figure()
     plt.plot(variables_GEMMES['time'], variables_GEMMES['ibgfx'], label='p - Government FX bond rate')
     plt.legend(loc='lower right', fancybox=True, shadow=True)
     plt.grid(True, color="#93a1a1", alpha=0.3)
+    plt.savefig(os.path.join(EnergyScope_case_study_path,'graphs_GEMMES/p - Government FX bond rate.png'), format='png')
     plt.figure()
     
     plt.figure()
     plt.plot(variables_GEMMES['time'], variables_GEMMES['er'], label='q - Real exchange rate')
     plt.legend(loc='lower right', fancybox=True, shadow=True)
     plt.grid(True, color="#93a1a1", alpha=0.3)
+    plt.savefig(os.path.join(EnergyScope_case_study_path,'graphs_GEMMES/q - Real exchange rate.png'), format='png')
     plt.figure()
     
     plt.figure()
     plt.plot(variables_GEMMES['time'], variables_GEMMES['GDP']/(variables_GEMMES['pop']*variables_GEMMES['en']*variables_GEMMES['pw']), label='r - Per Capita Income in USD')
     plt.legend(loc='upper left', fancybox=True, shadow=True)
     plt.grid(True, color="#93a1a1", alpha=0.3)
+    plt.savefig(os.path.join(EnergyScope_case_study_path,'graphs_GEMMES/r - Per Capita Income in USD.png'), format='png')
     plt.figure()
 
 
