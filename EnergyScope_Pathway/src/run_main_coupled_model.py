@@ -11,9 +11,10 @@ EnergyScope_granularity = 'MO'
 nbr_tds = 12
 
 def main():
-    plot_EnergyScope = True  
-    csv_EnergyScope  = False
-    plot_GEMMES = True
+    plot_EnergyScope = False  
+    csv_EnergyScope  = True
+    plot_GEMMES = False
+    csv_GEMMES = True
     variables_GEMMES = run_GEMMES()
     gdp_current = variables_GEMMES['gdp']
     diff = np.linalg.norm(gdp_current)
@@ -35,7 +36,11 @@ def main():
         EnergyScope_output_csv(output_EnergyScope[0], output_EnergyScope[1])
     if plot_GEMMES:
         # plot_GEMMES_outputs_fig1(variables_GEMMES.iloc[20:,:])
-        plot_GEMMES_outputs_fig4(variables_GEMMES.iloc[20:,:])
+        plot_GEMMES_outputs_fig4(variables_GEMMES.iloc[40:,:])
+    if csv_GEMMES:
+        variables_GEMMES_to_output = variables_GEMMES.copy()
+        variables_GEMMES_to_output = variables_GEMMES_to_output[::10]
+        variables_GEMMES_to_output.to_csv('GEMMES_output.csv')
     
     # plt.figure()
     # plt.plot(variables_GEMMES['time'], variables_GEMMES['ip'], label='ip')
