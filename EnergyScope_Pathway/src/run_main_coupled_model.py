@@ -12,9 +12,9 @@ nbr_tds = 12
 
 def main():
     plot_EnergyScope = False  
-    csv_EnergyScope  = True
+    csv_EnergyScope  = False
     plot_GEMMES = True
-    csv_GEMMES = True
+    csv_GEMMES = False
     variables_GEMMES = run_GEMMES()
     gdp_current = variables_GEMMES['gdp']
     diff = np.linalg.norm(gdp_current)
@@ -40,7 +40,7 @@ def main():
     if csv_GEMMES:
         variables_GEMMES_to_output = variables_GEMMES.copy()
         variables_GEMMES_to_output = variables_GEMMES_to_output[::10]
-        variables_GEMMES_to_output.to_csv(os.path.join(output_EnergyScope[0],'GEMMES_output.csv'))
+        variables_GEMMES_to_output.to_csv(os.path.join(EnergyScope_case_study_path,'GEMMES_output.csv'))
     
     # plt.figure()
     # plt.plot(variables_GEMMES['time'], variables_GEMMES['ip'], label='ip')
@@ -129,7 +129,7 @@ def run_GEMMES():
         shares_cooling.loc[list_phases[i],'B'] = round(list_variables_GEMMES[i].loc['SC_B'] / list_variables_GEMMES[i].loc['SC_tot'], 3)
         shares_cooling.loc[list_phases[i],'G'] = round(list_variables_GEMMES[i].loc['SC_G'] / list_variables_GEMMES[i].loc['SC_tot'], 3)
         shares_cooling.loc[list_phases[i],'H'] = round(list_variables_GEMMES[i].loc['SC_H'] / list_variables_GEMMES[i].loc['SC_tot'], 3)
-        i_rate.loc[list_phases[i],'i_rate'] = round(list_variables_GEMMES[i].loc['ip'] - list_variables_GEMMES[i].loc['pDot'] / list_variables_GEMMES[i].loc['p'], 3)   
+        i_rate.loc[list_phases[i],'i_rate'] = round(list_variables_GEMMES[i].loc['ip'], 3) #- list_variables_GEMMES[i].loc['pDot'] / list_variables_GEMMES[i].loc['p'], 3)   
     shares_LTH.reset_index(inplace=True)
     shares_LTH.rename(columns={'index':'Phase'}, inplace=True)
     shares_LTH.to_csv('shares_LTH.csv', index=False)
@@ -553,10 +553,6 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     output_for_GEMMES['pkehCO'] *= 95.84592
     output_for_GEMMES['pkehM']  *= 95.84592
     output_for_GEMMES['ikeh']   /= 95.84592
-    output_for_GEMMES.drop(columns=['capex_F_CO', 'capex_F_M', 'ikefCO', 'ikefM'], inplace=True)
-    output_for_GEMMES.drop(columns=['capex_B_CO', 'capex_B_M', 'ikebCO', 'ikebM'], inplace=True)
-    output_for_GEMMES.drop(columns=['capex_G_CO', 'capex_G_M', 'ikegCO', 'ikegM'], inplace=True)
-    output_for_GEMMES.drop(columns=['capex_H_CO', 'capex_H_M', 'ikehCO', 'ikehM'], inplace=True)
     output_for_GEMMES['icef'] = output_for_GEMMES['opex_F_CO'] + output_for_GEMMES['opex_F_M']
     output_for_GEMMES['sigmamicef'] = output_for_GEMMES['opex_F_M'] / output_for_GEMMES['icef']
     output_for_GEMMES['iceb'] = output_for_GEMMES['opex_B_CO'] + output_for_GEMMES['opex_B_M']
@@ -566,8 +562,15 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     output_for_GEMMES['ceh'] = output_for_GEMMES['opex_H_CO'] + output_for_GEMMES['opex_H_M']
     output_for_GEMMES['sigmamceh'] = output_for_GEMMES['opex_H_M'] / output_for_GEMMES['ceh']
     output_for_GEMMES['pieM'] = 1 / (variables_GEMMES_2021['pw'] * variables_GEMMES_2021['en'])
-    output_for_GEMMES.drop(columns=['opex_F_CO', 'opex_F_M', 'opex_B_CO','opex_B_M', 'opex_G_CO', 'opex_G_M', 'opex_H_CO', 'opex_H_M'], inplace=True)
     output_for_GEMMES = output_for_GEMMES.round(3)
+    aggregated_costs = output_for_GEMMES.copy()
+    aggregated_costs = aggregated_costs[['capex_F_CO', 'capex_F_M', 'capex_B_CO', 'capex_B_M', 'capex_G_CO', 'capex_G_M', 'capex_H_CO', 'capex_H_M', 'opex_F_CO', 'opex_F_M', 'opex_B_CO','opex_B_M', 'opex_G_CO', 'opex_G_M', 'opex_H_CO', 'opex_H_M']]
+    aggregated_costs.to_csv('Energy_system_costs_aggregated.csv')
+    output_for_GEMMES.drop(columns=['capex_F_CO', 'capex_F_M', 'ikefCO', 'ikefM'], inplace=True)
+    output_for_GEMMES.drop(columns=['capex_B_CO', 'capex_B_M', 'ikebCO', 'ikebM'], inplace=True)
+    output_for_GEMMES.drop(columns=['capex_G_CO', 'capex_G_M', 'ikegCO', 'ikegM'], inplace=True)
+    output_for_GEMMES.drop(columns=['capex_H_CO', 'capex_H_M', 'ikehCO', 'ikehM'], inplace=True)
+    output_for_GEMMES.drop(columns=['opex_F_CO', 'opex_F_M', 'opex_B_CO','opex_B_M', 'opex_G_CO', 'opex_G_M', 'opex_H_CO', 'opex_H_M'], inplace=True)
     output_for_GEMMES.to_csv('Energy_system_costs.csv')   
     
 def EnergyScope_output_csv(EnergyScope_output_file, ampl_0):
@@ -577,6 +580,7 @@ def EnergyScope_output_csv(EnergyScope_output_file, ampl_0):
     z_Results['New_old_decom'].to_csv(os.path.join(EnergyScope_case_study_path,'Assets.csv'))
     z_Results['Assets'].to_csv(os.path.join(EnergyScope_case_study_path,'Assets.csv'))
     z_Results['Cost_breakdown'].to_csv(os.path.join(EnergyScope_case_study_path,'Cost_breakdown.csv'))
+    z_Results['Cost_breakdown_non_annualised'].to_csv(os.path.join(EnergyScope_case_study_path,'Cost_breakdown_non_annualised.csv'))
     z_Results['Year_balance'].to_csv(os.path.join(EnergyScope_case_study_path,'Year_balance.csv'))
     z_Results['Gwp_breakdown'].to_csv(os.path.join(EnergyScope_case_study_path,'Gwp_breakdown.csv'))
 
@@ -800,9 +804,8 @@ import matplotlib.pyplot as plt
 curr_dir = Path(os.path.dirname(__file__))
 
 pymodPath = os.path.abspath(os.path.join(curr_dir.parent,'pylib'))
-GEMMES_path = os.path.abspath(os.path.join(Path(__file__).parents[3], 'ColombiaEnergyScope')) # '/home/piejacques/Bureau/ColombiaEnergyScope'
-# Cpp_path = GEMMES_path + '/SourceCode/cppCode'
-Cpp_path = os.path.join(GEMMES_path, '/SourceCode/cppCode')
+GEMMES_path = os.path.abspath(os.path.join(Path(__file__).parents[3], 'ColombiaEnergyScope'))
+Cpp_path = os.path.join(GEMMES_path, 'SourceCode/cppCode')
 sys.path.insert(0, pymodPath)
 sys.path.insert(0, Cpp_path)
 sys.path.insert(0, Cpp_path + "/src")
