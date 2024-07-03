@@ -55,6 +55,7 @@ Authors:
 - Gauthier Limpens, Université catholique de Louvain (Belgium), <gauthierLimpens@gmail.com>  
 - Paolo Thiran, Université catholique de Louvain (Belgium)
 - Xavier Rixhon, Université catholique de Louvain (Belgium)
+- Pierre Jacques, Université catholique de Louvain (Belgium)
 
 Model utilisation
 =================
@@ -172,6 +173,10 @@ The model has been applied to the following countries:
 - Spain:
   
     * *Scenario analysis*: see :cite:t:`rosello2021study` for different scenarios of transition in Spain.
+
+- Colombia and Turkey:
+
+    * See this documentation
 
 - Other countries:
   
