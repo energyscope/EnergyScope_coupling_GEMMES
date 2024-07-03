@@ -1474,7 +1474,11 @@ code; similarly, the input efficiency is named
    (lower). Example based on Eq. :eq:`eq:layer_balance`.
 
 The entire implementation is available on the directory
-:cite:`ESTD_v2_1_repo` and its architecture is illustrated
+:cite:`ESTD_v2_1_repo` (standard model for Belgium) and
+
+
+
+and its architecture is illustrated
 in :numref:`Figure %s <fig:ch2_estd_repo_structure>`. Four folders compose
 the repository and contain the documentation (``Documentation``), the
 data used (``Data_management``), the MILP implementation

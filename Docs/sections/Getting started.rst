@@ -91,7 +91,7 @@ Compared to GLPK files, AMPL uses an extra file with solver options. Moreover, t
 (i) in the data files, AMPL uses 'Infinity' to define unbounded numerical values and 
 (ii) in the model files, the resolution and output writting must be moved in the new file.
 
-In addition, in order to facilitate the coupling of EnergyScope with other modelling tools, the AMPL code is wrapped in a python code. The version applied to Colombia and Turkey is with AMPL and a python wrapper.
+In addition, to facilitate the coupling of EnergyScope with other modelling tools, the AMPL code is wrapped in a python code. The version applied to Colombia and Turkey is the one with AMPL and a python wrapper.
 
 Running EnergyScope with AMPL and a python wrapper requires:
 
@@ -99,6 +99,6 @@ Running EnergyScope with AMPL and a python wrapper requires:
 (ii) to add AMPL to the PATH variable of your computer so that you can call AMPL from any location in your computer;
 (iii) to install the EnergyScope python package using pip.
 
-How to operate these three steps is explained in detail at the following page: https://sustainable-energy.notion.site/Install-Run-ESTD-a7f535db0a02421fa6a2b37e5af894e1
+How to perform these three steps is explained in detail on the following page: https://sustainable-energy.notion.site/Install-Run-ESTD-a7f535db0a02421fa6a2b37e5af894e1
 
 
