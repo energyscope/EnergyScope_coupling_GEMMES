@@ -83,24 +83,22 @@ To open the Sankey diagram, open the ``ESTD_sankey.html`` file. The browser shou
 
 Click on the ``Browse`` button and select the Sankey file ``input2sankey``. Finally, click on the ``Show Sankey`` button.
 
-How to install and run the model with AMPL:
-===========================================
+How to install and run the model with AMPL and a python wrapper:
+================================================================
 
 Compared to GLPK files, AMPL uses an extra file with solver options. Moreover, there are 2 syntax changes: 
 
 (i) in the data files, AMPL uses 'Infinity' to define unbounded numerical values and 
 (ii) in the model files, the resolution and output writting must be moved in the new file.
 
-For sake of simplicity, only the GLPK version is provided in this repository. 
+In addition, in order to facilitate the coupling of EnergyScope with other modelling tools, the AMPL code is wrapped in a python code. The version applied to Colombia and Turkey is with AMPL and a python wrapper.
 
+Running EnergyScope with AMPL and a python wrapper requires:
 
-Exercices:
-==========
+(i) to have an AMPL license on your computer;
+(ii) to add AMPL to the PATH variable of your computer so that you can call AMPL from any location in your computer;
+(iii) to install the EnergyScope python package using pip.
 
-Exercice 1 - analyse the system
--------------------------------
+How to operate these three steps is explained in detail at the following page: https://sustainable-energy.notion.site/Install-Run-ESTD-a7f535db0a02421fa6a2b37e5af894e1
 
-
-.. caution ::
-   TO BE DONE
 
