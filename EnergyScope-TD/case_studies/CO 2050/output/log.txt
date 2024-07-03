@@ -37,7 +37,7 @@ solve_result = solved
 
 solve_result_num = 0
 
-_solve_elapsed_time = 34.7152
+_solve_elapsed_time = 36.5607
 
 TotalCost 98020.34764899981
 Carbon_cost 0

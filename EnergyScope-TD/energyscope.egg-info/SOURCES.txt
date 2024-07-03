@@ -4,6 +4,65 @@ README.md
 VERSION
 environment.yml
 setup.py
+.eggs/README.txt
+.eggs/setuptools_scm-8.0.4-py3.11.egg/EGG-INFO/LICENSE
+.eggs/setuptools_scm-8.0.4-py3.11.egg/EGG-INFO/PKG-INFO
+.eggs/setuptools_scm-8.0.4-py3.11.egg/EGG-INFO/RECORD
+.eggs/setuptools_scm-8.0.4-py3.11.egg/EGG-INFO/WHEEL
+.eggs/setuptools_scm-8.0.4-py3.11.egg/EGG-INFO/entry_points.txt
+.eggs/setuptools_scm-8.0.4-py3.11.egg/EGG-INFO/requires.txt
+.eggs/setuptools_scm-8.0.4-py3.11.egg/EGG-INFO/top_level.txt
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/.git_archival.txt
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/__init__.py
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/__main__.py
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/_cli.py
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/_config.py
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/_entrypoints.py
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/_get_version_impl.py
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/_log.py
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/_modify_version.py
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/_overrides.py
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/_run_cmd.py
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/_types.py
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/_version_cls.py
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/discover.py
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/fallbacks.py
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/git.py
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/hg.py
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/hg_git.py
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/integration.py
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/scm_workdir.py
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/version.py
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/__pycache__/__init__.cpython-311.pyc
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/__pycache__/_config.cpython-311.pyc
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/__pycache__/_entrypoints.cpython-311.pyc
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/__pycache__/_get_version_impl.cpython-311.pyc
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/__pycache__/_log.cpython-311.pyc
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/__pycache__/_modify_version.cpython-311.pyc
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/__pycache__/_overrides.cpython-311.pyc
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/__pycache__/_run_cmd.cpython-311.pyc
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/__pycache__/_types.cpython-311.pyc
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/__pycache__/_version_cls.cpython-311.pyc
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/__pycache__/discover.cpython-311.pyc
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/__pycache__/fallbacks.cpython-311.pyc
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/__pycache__/integration.cpython-311.pyc
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/__pycache__/version.cpython-311.pyc
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/_file_finders/__init__.py
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/_file_finders/git.py
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/_file_finders/hg.py
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/_file_finders/__pycache__/__init__.cpython-311.pyc
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/_file_finders/__pycache__/git.cpython-311.pyc
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/_integration/__init__.py
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/_integration/dump_version.py
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/_integration/pyproject_reading.py
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/_integration/setuptools.py
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/_integration/toml.py
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/_integration/__pycache__/__init__.cpython-311.pyc
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/_integration/__pycache__/dump_version.cpython-311.pyc
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/_integration/__pycache__/pyproject_reading.cpython-311.pyc
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/_integration/__pycache__/setuptools.cpython-311.pyc
+.eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/_integration/__pycache__/toml.cpython-311.pyc
+Data/_Results.pkl
 Data/misc_doc.json
 Data/CO 2021/Demand.csv
 Data/CO 2021/END_USES_CATEGORIES.csv
@@ -36,6 +95,7 @@ Data/CO 2035/Old/Storage_eff_out.csv
 Data/CO 2035/Old/Technologies.csv
 Data/CO 2035/Old/Time_series.csv
 Data/CO 2035/Old/misc.json
+Data/CO 2050/.~lock.Layers_in_out.csv#
 Data/CO 2050/Demand.csv
 Data/CO 2050/END_USES_CATEGORIES.csv
 Data/CO 2050/Layers_in_out.csv
@@ -56,6 +116,26 @@ Data/CO 2050/Old/Storage_eff_out.csv
 Data/CO 2050/Old/Technologies.csv
 Data/CO 2050/Old/Time_series.csv
 Data/CO 2050/Old/misc.json
+Data/CO compute TDs for PESTD/Demand.csv
+Data/CO compute TDs for PESTD/END_USES_CATEGORIES.csv
+Data/CO compute TDs for PESTD/Layers_in_out.csv
+Data/CO compute TDs for PESTD/Resources.csv
+Data/CO compute TDs for PESTD/Storage_characteristics.csv
+Data/CO compute TDs for PESTD/Storage_eff_in.csv
+Data/CO compute TDs for PESTD/Storage_eff_out.csv
+Data/CO compute TDs for PESTD/Technologies.csv
+Data/CO compute TDs for PESTD/Time_series.csv
+Data/CO compute TDs for PESTD/misc.json
+Data/CO compute TDs for PESTD/Old/Demand.csv
+Data/CO compute TDs for PESTD/Old/END_USES_CATEGORIES.csv
+Data/CO compute TDs for PESTD/Old/Layers_in_out.csv
+Data/CO compute TDs for PESTD/Old/Resources.csv
+Data/CO compute TDs for PESTD/Old/Storage_characteristics.csv
+Data/CO compute TDs for PESTD/Old/Storage_eff_in.csv
+Data/CO compute TDs for PESTD/Old/Storage_eff_out.csv
+Data/CO compute TDs for PESTD/Old/Technologies.csv
+Data/CO compute TDs for PESTD/Old/Time_series.csv
+Data/CO compute TDs for PESTD/Old/misc.json
 Data/TK 2019/Demand.csv
 Data/TK 2019/END_USES_CATEGORIES.csv
 Data/TK 2019/Layers_in_out.csv
@@ -76,12 +156,20 @@ Data/TK 2035/Storage_eff_out.csv
 Data/TK 2035/Technologies.csv
 Data/TK 2035/Time_series.csv
 Data/TK 2035/misc.json
+Data/TK compute TDs for PESTD/Demand.csv
+Data/TK compute TDs for PESTD/END_USES_CATEGORIES.csv
+Data/TK compute TDs for PESTD/Layers_in_out.csv
+Data/TK compute TDs for PESTD/Resources.csv
+Data/TK compute TDs for PESTD/Storage_characteristics.csv
+Data/TK compute TDs for PESTD/Storage_eff_in.csv
+Data/TK compute TDs for PESTD/Storage_eff_out.csv
+Data/TK compute TDs for PESTD/Technologies.csv
+Data/TK compute TDs for PESTD/Time_series.csv
+Data/TK compute TDs for PESTD/misc.json
 case_studies/CO 2021/ESTD_12TD.dat
 case_studies/CO 2021/ESTD_data.dat
 case_studies/CO 2021/ESTD_main.run
 case_studies/CO 2021/es_model.mod
-case_studies/CO 2021/output/.~lock.assets.txt#
-case_studies/CO 2021/output/.~lock.year_balance.txt#
 case_studies/CO 2021/output/assets.txt
 case_studies/CO 2021/output/cost_breakdown.txt
 case_studies/CO 2021/output/gwp_breakdown.txt
@@ -105,7 +193,9 @@ case_studies/CO 2021/output/hourly_data/layer_HEAT_HIGH_T.txt
 case_studies/CO 2021/output/hourly_data/layer_HEAT_LOW_T_DECEN.txt
 case_studies/CO 2021/output/hourly_data/layer_HEAT_LOW_T_DHN.txt
 case_studies/CO 2021/output/hourly_data/layer_HVC.txt
+case_studies/CO 2021/output/hourly_data/layer_IMPORTED_COAL.txt
 case_studies/CO 2021/output/hourly_data/layer_LFO.txt
+case_studies/CO 2021/output/hourly_data/layer_LOCAL_COAL.txt
 case_studies/CO 2021/output/hourly_data/layer_METHANOL.txt
 case_studies/CO 2021/output/hourly_data/layer_MOB_FREIGHT_BOAT.txt
 case_studies/CO 2021/output/hourly_data/layer_MOB_FREIGHT_RAIL.txt
@@ -178,6 +268,7 @@ case_studies/CO 2035 - net zero/ESTD_12TD.dat
 case_studies/CO 2035 - net zero/ESTD_data.dat
 case_studies/CO 2035 - net zero/ESTD_main.run
 case_studies/CO 2035 - net zero/es_model.mod
+case_studies/CO 2035 - net zero/output/.~lock.assets.txt#
 case_studies/CO 2035 - net zero/output/assets.txt
 case_studies/CO 2035 - net zero/output/cost_breakdown.txt
 case_studies/CO 2035 - net zero/output/gwp_breakdown.txt
@@ -250,7 +341,9 @@ case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_HEAT_HIGH_T.tx
 case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_HEAT_LOW_T_DECEN.txt
 case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_HEAT_LOW_T_DHN.txt
 case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_HVC.txt
+case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_IMPORTED_COAL.txt
 case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_LFO.txt
+case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_LOCAL_COAL.txt
 case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_METHANOL.txt
 case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_MOB_FREIGHT_BOAT.txt
 case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_MOB_FREIGHT_RAIL.txt
@@ -271,6 +364,10 @@ case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_WET_BIOMASS.tx
 case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_WOOD.txt
 case_studies/CO 2035 - no CO2 constraint/output/sankey/input2sankey.csv
 case_studies/CO 2035 - no CO2 constraint/output/sankey/python_generated_sankey.html
+case_studies/CO 2050/ESTD_12TD.dat
+case_studies/CO 2050/ESTD_data.dat
+case_studies/CO 2050/ESTD_main.run
+case_studies/CO 2050/es_model.mod
 case_studies/CO 2050 - net zero/ESTD_12TD.dat
 case_studies/CO 2050 - net zero/ESTD_data.dat
 case_studies/CO 2050 - net zero/ESTD_main.run
@@ -288,7 +385,6 @@ case_studies/CO 2050 - net zero/output/hourly_data/layer_AMMONIA.txt
 case_studies/CO 2050 - net zero/output/hourly_data/layer_CO2_ATM.txt
 case_studies/CO 2050 - net zero/output/hourly_data/layer_CO2_CAPTURED.txt
 case_studies/CO 2050 - net zero/output/hourly_data/layer_CO2_INDUSTRY.txt
-case_studies/CO 2050 - net zero/output/hourly_data/layer_COAL.txt
 case_studies/CO 2050 - net zero/output/hourly_data/layer_DIESEL.txt
 case_studies/CO 2050 - net zero/output/hourly_data/layer_ELECTRICITY.txt
 case_studies/CO 2050 - net zero/output/hourly_data/layer_GAS.txt
@@ -298,7 +394,9 @@ case_studies/CO 2050 - net zero/output/hourly_data/layer_HEAT_HIGH_T.txt
 case_studies/CO 2050 - net zero/output/hourly_data/layer_HEAT_LOW_T_DECEN.txt
 case_studies/CO 2050 - net zero/output/hourly_data/layer_HEAT_LOW_T_DHN.txt
 case_studies/CO 2050 - net zero/output/hourly_data/layer_HVC.txt
+case_studies/CO 2050 - net zero/output/hourly_data/layer_IMPORTED_COAL.txt
 case_studies/CO 2050 - net zero/output/hourly_data/layer_LFO.txt
+case_studies/CO 2050 - net zero/output/hourly_data/layer_LOCAL_COAL.txt
 case_studies/CO 2050 - net zero/output/hourly_data/layer_METHANOL.txt
 case_studies/CO 2050 - net zero/output/hourly_data/layer_MOB_FREIGHT_BOAT.txt
 case_studies/CO 2050 - net zero/output/hourly_data/layer_MOB_FREIGHT_RAIL.txt
@@ -319,10 +417,157 @@ case_studies/CO 2050 - net zero/output/hourly_data/layer_WET_BIOMASS.txt
 case_studies/CO 2050 - net zero/output/hourly_data/layer_WOOD.txt
 case_studies/CO 2050 - net zero/output/sankey/input2sankey.csv
 case_studies/CO 2050 - net zero/output/sankey/python_generated_sankey.html
+case_studies/CO 2050 - no CO2 constraint/ESTD_12TD.dat
+case_studies/CO 2050 - no CO2 constraint/ESTD_data.dat
+case_studies/CO 2050 - no CO2 constraint/ESTD_main.run
+case_studies/CO 2050 - no CO2 constraint/es_model.mod
+case_studies/CO 2050 - no CO2 constraint/output/assets.txt
+case_studies/CO 2050 - no CO2 constraint/output/cost_breakdown.txt
+case_studies/CO 2050 - no CO2 constraint/output/gwp_breakdown.txt
+case_studies/CO 2050 - no CO2 constraint/output/log.txt
+case_studies/CO 2050 - no CO2 constraint/output/losses.txt
+case_studies/CO 2050 - no CO2 constraint/output/resources_breakdown.txt
+case_studies/CO 2050 - no CO2 constraint/output/sto_year.txt
+case_studies/CO 2050 - no CO2 constraint/output/year_balance.txt
+case_studies/CO 2050 - no CO2 constraint/output/hourly_data/energy_stored.txt
+case_studies/CO 2050 - no CO2 constraint/output/hourly_data/layer_AMMONIA.txt
+case_studies/CO 2050 - no CO2 constraint/output/hourly_data/layer_CO2_ATM.txt
+case_studies/CO 2050 - no CO2 constraint/output/hourly_data/layer_CO2_CAPTURED.txt
+case_studies/CO 2050 - no CO2 constraint/output/hourly_data/layer_CO2_INDUSTRY.txt
+case_studies/CO 2050 - no CO2 constraint/output/hourly_data/layer_DIESEL.txt
+case_studies/CO 2050 - no CO2 constraint/output/hourly_data/layer_ELECTRICITY.txt
+case_studies/CO 2050 - no CO2 constraint/output/hourly_data/layer_GAS.txt
+case_studies/CO 2050 - no CO2 constraint/output/hourly_data/layer_GASOLINE.txt
+case_studies/CO 2050 - no CO2 constraint/output/hourly_data/layer_H2.txt
+case_studies/CO 2050 - no CO2 constraint/output/hourly_data/layer_HEAT_HIGH_T.txt
+case_studies/CO 2050 - no CO2 constraint/output/hourly_data/layer_HEAT_LOW_T_DECEN.txt
+case_studies/CO 2050 - no CO2 constraint/output/hourly_data/layer_HEAT_LOW_T_DHN.txt
+case_studies/CO 2050 - no CO2 constraint/output/hourly_data/layer_HVC.txt
+case_studies/CO 2050 - no CO2 constraint/output/hourly_data/layer_IMPORTED_COAL.txt
+case_studies/CO 2050 - no CO2 constraint/output/hourly_data/layer_LFO.txt
+case_studies/CO 2050 - no CO2 constraint/output/hourly_data/layer_LOCAL_COAL.txt
+case_studies/CO 2050 - no CO2 constraint/output/hourly_data/layer_METHANOL.txt
+case_studies/CO 2050 - no CO2 constraint/output/hourly_data/layer_MOB_FREIGHT_BOAT.txt
+case_studies/CO 2050 - no CO2 constraint/output/hourly_data/layer_MOB_FREIGHT_RAIL.txt
+case_studies/CO 2050 - no CO2 constraint/output/hourly_data/layer_MOB_FREIGHT_ROAD.txt
+case_studies/CO 2050 - no CO2 constraint/output/hourly_data/layer_MOB_PRIVATE.txt
+case_studies/CO 2050 - no CO2 constraint/output/hourly_data/layer_MOB_PUBLIC.txt
+case_studies/CO 2050 - no CO2 constraint/output/hourly_data/layer_PROCESS_COOLING.txt
+case_studies/CO 2050 - no CO2 constraint/output/hourly_data/layer_PT_HEAT.txt
+case_studies/CO 2050 - no CO2 constraint/output/hourly_data/layer_RES_GEO.txt
+case_studies/CO 2050 - no CO2 constraint/output/hourly_data/layer_RES_HYDRO.txt
+case_studies/CO 2050 - no CO2 constraint/output/hourly_data/layer_RES_SOLAR.txt
+case_studies/CO 2050 - no CO2 constraint/output/hourly_data/layer_RES_WIND.txt
+case_studies/CO 2050 - no CO2 constraint/output/hourly_data/layer_SPACE_COOLING.txt
+case_studies/CO 2050 - no CO2 constraint/output/hourly_data/layer_ST_HEAT.txt
+case_studies/CO 2050 - no CO2 constraint/output/hourly_data/layer_URANIUM.txt
+case_studies/CO 2050 - no CO2 constraint/output/hourly_data/layer_WASTE.txt
+case_studies/CO 2050 - no CO2 constraint/output/hourly_data/layer_WET_BIOMASS.txt
+case_studies/CO 2050 - no CO2 constraint/output/hourly_data/layer_WOOD.txt
+case_studies/CO 2050 - no CO2 constraint/output/sankey/input2sankey.csv
+case_studies/CO 2050 - no CO2 constraint/output/sankey/python_generated_sankey.html
+case_studies/CO 2050/output/assets.txt
+case_studies/CO 2050/output/cost_breakdown.txt
+case_studies/CO 2050/output/gwp_breakdown.txt
+case_studies/CO 2050/output/log.txt
+case_studies/CO 2050/output/losses.txt
+case_studies/CO 2050/output/resources_breakdown.txt
+case_studies/CO 2050/output/sto_year.txt
+case_studies/CO 2050/output/year_balance.txt
+case_studies/CO 2050/output/hourly_data/energy_stored.txt
+case_studies/CO 2050/output/hourly_data/layer_AMMONIA.txt
+case_studies/CO 2050/output/hourly_data/layer_CO2_ATM.txt
+case_studies/CO 2050/output/hourly_data/layer_CO2_CAPTURED.txt
+case_studies/CO 2050/output/hourly_data/layer_CO2_INDUSTRY.txt
+case_studies/CO 2050/output/hourly_data/layer_COAL.txt
+case_studies/CO 2050/output/hourly_data/layer_DIESEL.txt
+case_studies/CO 2050/output/hourly_data/layer_ELECTRICITY.txt
+case_studies/CO 2050/output/hourly_data/layer_GAS.txt
+case_studies/CO 2050/output/hourly_data/layer_GASOLINE.txt
+case_studies/CO 2050/output/hourly_data/layer_H2.txt
+case_studies/CO 2050/output/hourly_data/layer_HEAT_HIGH_T.txt
+case_studies/CO 2050/output/hourly_data/layer_HEAT_LOW_T_DECEN.txt
+case_studies/CO 2050/output/hourly_data/layer_HEAT_LOW_T_DHN.txt
+case_studies/CO 2050/output/hourly_data/layer_HVC.txt
+case_studies/CO 2050/output/hourly_data/layer_IMPORTED_COAL.txt
+case_studies/CO 2050/output/hourly_data/layer_LFO.txt
+case_studies/CO 2050/output/hourly_data/layer_LOCAL_COAL.txt
+case_studies/CO 2050/output/hourly_data/layer_METHANOL.txt
+case_studies/CO 2050/output/hourly_data/layer_MOB_FREIGHT_BOAT.txt
+case_studies/CO 2050/output/hourly_data/layer_MOB_FREIGHT_RAIL.txt
+case_studies/CO 2050/output/hourly_data/layer_MOB_FREIGHT_ROAD.txt
+case_studies/CO 2050/output/hourly_data/layer_MOB_PRIVATE.txt
+case_studies/CO 2050/output/hourly_data/layer_MOB_PUBLIC.txt
+case_studies/CO 2050/output/hourly_data/layer_PROCESS_COOLING.txt
+case_studies/CO 2050/output/hourly_data/layer_PT_HEAT.txt
+case_studies/CO 2050/output/hourly_data/layer_RES_GEO.txt
+case_studies/CO 2050/output/hourly_data/layer_RES_HYDRO.txt
+case_studies/CO 2050/output/hourly_data/layer_RES_SOLAR.txt
+case_studies/CO 2050/output/hourly_data/layer_RES_WIND.txt
+case_studies/CO 2050/output/hourly_data/layer_SPACE_COOLING.txt
+case_studies/CO 2050/output/hourly_data/layer_ST_HEAT.txt
+case_studies/CO 2050/output/hourly_data/layer_URANIUM.txt
+case_studies/CO 2050/output/hourly_data/layer_WASTE.txt
+case_studies/CO 2050/output/hourly_data/layer_WET_BIOMASS.txt
+case_studies/CO 2050/output/hourly_data/layer_WOOD.txt
+case_studies/CO 2050/output/sankey/input2sankey.csv
+case_studies/CO 2050/output/sankey/python_generated_sankey.html
+case_studies/CO compute TDs for PESTD/ESTD_12TD.dat
+case_studies/CO compute TDs for PESTD/ESTD_data.dat
+case_studies/CO compute TDs for PESTD/ESTD_main.run
+case_studies/CO compute TDs for PESTD/es_model.mod
+case_studies/CO compute TDs for PESTD/output/assets.txt
+case_studies/CO compute TDs for PESTD/output/cost_breakdown.txt
+case_studies/CO compute TDs for PESTD/output/gwp_breakdown.txt
+case_studies/CO compute TDs for PESTD/output/log.txt
+case_studies/CO compute TDs for PESTD/output/losses.txt
+case_studies/CO compute TDs for PESTD/output/resources_breakdown.txt
+case_studies/CO compute TDs for PESTD/output/sto_year.txt
+case_studies/CO compute TDs for PESTD/output/year_balance.txt
+case_studies/CO compute TDs for PESTD/output/hourly_data/energy_stored.txt
+case_studies/CO compute TDs for PESTD/output/hourly_data/layer_AMMONIA.txt
+case_studies/CO compute TDs for PESTD/output/hourly_data/layer_CO2_ATM.txt
+case_studies/CO compute TDs for PESTD/output/hourly_data/layer_CO2_CAPTURED.txt
+case_studies/CO compute TDs for PESTD/output/hourly_data/layer_CO2_INDUSTRY.txt
+case_studies/CO compute TDs for PESTD/output/hourly_data/layer_DIESEL.txt
+case_studies/CO compute TDs for PESTD/output/hourly_data/layer_ELECTRICITY.txt
+case_studies/CO compute TDs for PESTD/output/hourly_data/layer_GAS.txt
+case_studies/CO compute TDs for PESTD/output/hourly_data/layer_GASOLINE.txt
+case_studies/CO compute TDs for PESTD/output/hourly_data/layer_H2.txt
+case_studies/CO compute TDs for PESTD/output/hourly_data/layer_HEAT_HIGH_T.txt
+case_studies/CO compute TDs for PESTD/output/hourly_data/layer_HEAT_LOW_T_DECEN.txt
+case_studies/CO compute TDs for PESTD/output/hourly_data/layer_HEAT_LOW_T_DHN.txt
+case_studies/CO compute TDs for PESTD/output/hourly_data/layer_HVC.txt
+case_studies/CO compute TDs for PESTD/output/hourly_data/layer_IMPORTED_COAL.txt
+case_studies/CO compute TDs for PESTD/output/hourly_data/layer_LFO.txt
+case_studies/CO compute TDs for PESTD/output/hourly_data/layer_LOCAL_COAL.txt
+case_studies/CO compute TDs for PESTD/output/hourly_data/layer_METHANOL.txt
+case_studies/CO compute TDs for PESTD/output/hourly_data/layer_MOB_FREIGHT_BOAT.txt
+case_studies/CO compute TDs for PESTD/output/hourly_data/layer_MOB_FREIGHT_RAIL.txt
+case_studies/CO compute TDs for PESTD/output/hourly_data/layer_MOB_FREIGHT_ROAD.txt
+case_studies/CO compute TDs for PESTD/output/hourly_data/layer_MOB_PRIVATE.txt
+case_studies/CO compute TDs for PESTD/output/hourly_data/layer_MOB_PUBLIC.txt
+case_studies/CO compute TDs for PESTD/output/hourly_data/layer_PROCESS_COOLING.txt
+case_studies/CO compute TDs for PESTD/output/hourly_data/layer_PT_HEAT.txt
+case_studies/CO compute TDs for PESTD/output/hourly_data/layer_RES_GEO.txt
+case_studies/CO compute TDs for PESTD/output/hourly_data/layer_RES_HYDRO.txt
+case_studies/CO compute TDs for PESTD/output/hourly_data/layer_RES_SOLAR.txt
+case_studies/CO compute TDs for PESTD/output/hourly_data/layer_RES_WIND.txt
+case_studies/CO compute TDs for PESTD/output/hourly_data/layer_SPACE_COOLING.txt
+case_studies/CO compute TDs for PESTD/output/hourly_data/layer_ST_HEAT.txt
+case_studies/CO compute TDs for PESTD/output/hourly_data/layer_URANIUM.txt
+case_studies/CO compute TDs for PESTD/output/hourly_data/layer_WASTE.txt
+case_studies/CO compute TDs for PESTD/output/hourly_data/layer_WET_BIOMASS.txt
+case_studies/CO compute TDs for PESTD/output/hourly_data/layer_WOOD.txt
+case_studies/CO compute TDs for PESTD/output/sankey/input2sankey.csv
+case_studies/CO compute TDs for PESTD/output/sankey/python_generated_sankey.html
 case_studies/TK 2019/ESTD_12TD.dat
 case_studies/TK 2019/ESTD_data.dat
 case_studies/TK 2019/ESTD_main.run
 case_studies/TK 2019/es_model.mod
+case_studies/TK 2019/output/.~lock.assets.txt#
+case_studies/TK 2019/output/.~lock.resources_breakdown.txt#
+case_studies/TK 2019/output/.~lock.year_balance.txt#
 case_studies/TK 2019/output/assets.txt
 case_studies/TK 2019/output/cost_breakdown.txt
 case_studies/TK 2019/output/gwp_breakdown.txt
@@ -346,7 +591,9 @@ case_studies/TK 2019/output/hourly_data/layer_HEAT_HIGH_T.txt
 case_studies/TK 2019/output/hourly_data/layer_HEAT_LOW_T_DECEN.txt
 case_studies/TK 2019/output/hourly_data/layer_HEAT_LOW_T_DHN.txt
 case_studies/TK 2019/output/hourly_data/layer_HVC.txt
+case_studies/TK 2019/output/hourly_data/layer_IMPORTED_COAL.txt
 case_studies/TK 2019/output/hourly_data/layer_LFO.txt
+case_studies/TK 2019/output/hourly_data/layer_LOCAL_COAL.txt
 case_studies/TK 2019/output/hourly_data/layer_METHANOL.txt
 case_studies/TK 2019/output/hourly_data/layer_MOB_FREIGHT_BOAT.txt
 case_studies/TK 2019/output/hourly_data/layer_MOB_FREIGHT_RAIL.txt
@@ -442,7 +689,9 @@ case_studies/TK 2035 - no CO2 constraint/output/hourly_data/layer_HEAT_HIGH_T.tx
 case_studies/TK 2035 - no CO2 constraint/output/hourly_data/layer_HEAT_LOW_T_DECEN.txt
 case_studies/TK 2035 - no CO2 constraint/output/hourly_data/layer_HEAT_LOW_T_DHN.txt
 case_studies/TK 2035 - no CO2 constraint/output/hourly_data/layer_HVC.txt
+case_studies/TK 2035 - no CO2 constraint/output/hourly_data/layer_IMPORTED_COAL.txt
 case_studies/TK 2035 - no CO2 constraint/output/hourly_data/layer_LFO.txt
+case_studies/TK 2035 - no CO2 constraint/output/hourly_data/layer_LOCAL_COAL.txt
 case_studies/TK 2035 - no CO2 constraint/output/hourly_data/layer_METHANOL.txt
 case_studies/TK 2035 - no CO2 constraint/output/hourly_data/layer_MOB_FREIGHT_BOAT.txt
 case_studies/TK 2035 - no CO2 constraint/output/hourly_data/layer_MOB_FREIGHT_RAIL.txt
@@ -463,6 +712,55 @@ case_studies/TK 2035 - no CO2 constraint/output/hourly_data/layer_WET_BIOMASS.tx
 case_studies/TK 2035 - no CO2 constraint/output/hourly_data/layer_WOOD.txt
 case_studies/TK 2035 - no CO2 constraint/output/sankey/input2sankey.csv
 case_studies/TK 2035 - no CO2 constraint/output/sankey/python_generated_sankey.html
+case_studies/TK compute TDs for PESTD/ESTD_12TD.dat
+case_studies/TK compute TDs for PESTD/ESTD_data.dat
+case_studies/TK compute TDs for PESTD/ESTD_main.run
+case_studies/TK compute TDs for PESTD/es_model.mod
+case_studies/TK compute TDs for PESTD/output/assets.txt
+case_studies/TK compute TDs for PESTD/output/cost_breakdown.txt
+case_studies/TK compute TDs for PESTD/output/gwp_breakdown.txt
+case_studies/TK compute TDs for PESTD/output/log.txt
+case_studies/TK compute TDs for PESTD/output/losses.txt
+case_studies/TK compute TDs for PESTD/output/resources_breakdown.txt
+case_studies/TK compute TDs for PESTD/output/sto_year.txt
+case_studies/TK compute TDs for PESTD/output/year_balance.txt
+case_studies/TK compute TDs for PESTD/output/hourly_data/energy_stored.txt
+case_studies/TK compute TDs for PESTD/output/hourly_data/layer_AMMONIA.txt
+case_studies/TK compute TDs for PESTD/output/hourly_data/layer_CO2_ATM.txt
+case_studies/TK compute TDs for PESTD/output/hourly_data/layer_CO2_CAPTURED.txt
+case_studies/TK compute TDs for PESTD/output/hourly_data/layer_CO2_INDUSTRY.txt
+case_studies/TK compute TDs for PESTD/output/hourly_data/layer_DIESEL.txt
+case_studies/TK compute TDs for PESTD/output/hourly_data/layer_ELECTRICITY.txt
+case_studies/TK compute TDs for PESTD/output/hourly_data/layer_GAS.txt
+case_studies/TK compute TDs for PESTD/output/hourly_data/layer_GASOLINE.txt
+case_studies/TK compute TDs for PESTD/output/hourly_data/layer_H2.txt
+case_studies/TK compute TDs for PESTD/output/hourly_data/layer_HEAT_HIGH_T.txt
+case_studies/TK compute TDs for PESTD/output/hourly_data/layer_HEAT_LOW_T_DECEN.txt
+case_studies/TK compute TDs for PESTD/output/hourly_data/layer_HEAT_LOW_T_DHN.txt
+case_studies/TK compute TDs for PESTD/output/hourly_data/layer_HVC.txt
+case_studies/TK compute TDs for PESTD/output/hourly_data/layer_IMPORTED_COAL.txt
+case_studies/TK compute TDs for PESTD/output/hourly_data/layer_LFO.txt
+case_studies/TK compute TDs for PESTD/output/hourly_data/layer_LOCAL_COAL.txt
+case_studies/TK compute TDs for PESTD/output/hourly_data/layer_METHANOL.txt
+case_studies/TK compute TDs for PESTD/output/hourly_data/layer_MOB_FREIGHT_BOAT.txt
+case_studies/TK compute TDs for PESTD/output/hourly_data/layer_MOB_FREIGHT_RAIL.txt
+case_studies/TK compute TDs for PESTD/output/hourly_data/layer_MOB_FREIGHT_ROAD.txt
+case_studies/TK compute TDs for PESTD/output/hourly_data/layer_MOB_PRIVATE.txt
+case_studies/TK compute TDs for PESTD/output/hourly_data/layer_MOB_PUBLIC.txt
+case_studies/TK compute TDs for PESTD/output/hourly_data/layer_PROCESS_COOLING.txt
+case_studies/TK compute TDs for PESTD/output/hourly_data/layer_PT_HEAT.txt
+case_studies/TK compute TDs for PESTD/output/hourly_data/layer_RES_GEO.txt
+case_studies/TK compute TDs for PESTD/output/hourly_data/layer_RES_HYDRO.txt
+case_studies/TK compute TDs for PESTD/output/hourly_data/layer_RES_SOLAR.txt
+case_studies/TK compute TDs for PESTD/output/hourly_data/layer_RES_WIND.txt
+case_studies/TK compute TDs for PESTD/output/hourly_data/layer_SPACE_COOLING.txt
+case_studies/TK compute TDs for PESTD/output/hourly_data/layer_ST_HEAT.txt
+case_studies/TK compute TDs for PESTD/output/hourly_data/layer_URANIUM.txt
+case_studies/TK compute TDs for PESTD/output/hourly_data/layer_WASTE.txt
+case_studies/TK compute TDs for PESTD/output/hourly_data/layer_WET_BIOMASS.txt
+case_studies/TK compute TDs for PESTD/output/hourly_data/layer_WOOD.txt
+case_studies/TK compute TDs for PESTD/output/sankey/input2sankey.csv
+case_studies/TK compute TDs for PESTD/output/sankey/python_generated_sankey.html
 energyscope/__init__.py
 energyscope/common.py
 energyscope.egg-info/PKG-INFO
@@ -522,6 +820,7 @@ energyscope/preprocessing/es_pre/headers/header_data.txt
 energyscope/preprocessing/es_pre/headers/run_header.txt
 energyscope/preprocessing/es_pre/headers/run_save.txt
 energyscope/preprocessing/es_pre/headers/run_solve.txt
+energyscope/preprocessing/td_selection/2024-04-10_17-57-05.388605.energyscope.log
 energyscope/preprocessing/td_selection/data.dat
 energyscope/preprocessing/td_selection/header.txt
 energyscope/preprocessing/td_selection/log.txt
@@ -541,6 +840,7 @@ energyscope/preprocessing/utils/__pycache__/print_dat.cpython-38.pyc
 energyscope/preprocessing/utils/__pycache__/print_run.cpython-310.pyc
 energyscope/preprocessing/utils/__pycache__/print_run.cpython-311.pyc
 energyscope/preprocessing/utils/__pycache__/print_run.cpython-38.pyc
-scripts/2024-01-09_17-39-52.908719.energyscope.log
+scripts/2024-07-01_12-15-47.691946.energyscope.log
+scripts/2024-07-01_12-16-45.287674.energyscope.log
 scripts/config_ref.yaml
 scripts/run_energyscope.py

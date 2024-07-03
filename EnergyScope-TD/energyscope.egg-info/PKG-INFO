@@ -6,6 +6,11 @@ Author:
 Requires-Python: >=3.7
 License-File: LICENSE
 License-File: NOTICE
+Requires-Dist: numpy
+Requires-Dist: pandas
+Requires-Dist: pyyaml
+Requires-Dist: matplotlib
+Requires-Dist: plotly
 
 ![energyScope logo](./Docs/images/estd_graphical_abstract.png)
 ===================
