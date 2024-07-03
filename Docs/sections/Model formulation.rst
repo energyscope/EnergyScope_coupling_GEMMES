@@ -1474,33 +1474,17 @@ code; similarly, the input efficiency is named
    (lower). Example based on Eq. :eq:`eq:layer_balance`.
 
 The entire implementation is available on the directory
-:cite:`ESTD_v2_1_repo` (standard model for Belgium) and
+:cite:`ESTD_v2_1_repo` (standard model for Belgium) and :cite:`ESTD_v2_1_repo2`
+(model with python wrapper applied to Colombia and Turkey). In the case of the
+model applied to Colombia and Turkey, the directory contains 4 main folders:
 
+- 'energyscope' contains the code describing the model formulation. In particular, all equations described above are written as is in the sub-folder 'energy_model', in the file 'es_model.mod'.
+- 'Data' contains several data sets in different sub-folders, each corresponding to a different case study. For example, 'CO 2035' contains the values of all parameters for applying the model to Colombia in the year 2035.
+- 'case_studies' contains the ready-to-run AMPL formulation of the model as well as the ouptuts of the runs for each case study, in different sub-folders.
+- 'scripts' contains two important files:
 
-
-and its architecture is illustrated
-in :numref:`Figure %s <fig:ch2_estd_repo_structure>`. Four folders compose
-the repository and contain the documentation (``Documentation``), the
-data used (``Data_management``), the MILP implementation
-(``STEP_1_TD_selection``) and the LP implementation
-(``STEP_2_Energy_Model``). For each of the models, the definition of the
-terms (SETS, Variables and Parameters) as well as the domains of the
-variables, the formulation of the constraints and the objective function
-are included in the model file (with the extension ``.mod``). The
-numerical values of the parameters are contained in separate files (with
-the extension ``.dat``). Finally, the output data of the model are saved
-in a file (wit the extension ``.out``) or a folder (``\outputs``). An
-interface - via excel - allows to visualise the data (``DATA.xlsx``) and
-to generate the data files (``STEP_1_in.xlsx``, ``STEP_1_out.xlsx`` and
-``STEP_2_in.xlsx``). Finally, a user guide manual is available in the
-documentation to support the modeler in her/his first steps.
-
-.. figure:: /images/model_formulation/ch_estd_repo_structure.png
-   :alt: EnergyScope TD repository structure.
-   :name: fig:ch2_estd_repo_structure
-
-   EnergyScope TD repository structure available at
-   :cite:`ESTD_v2_1_repo`.
+    * config_ref.yaml indicates which case study is chosen, by pointing towards the right subfolders in 'Data' and 'case_studies' and by indicating the chosen limit for GHG emissions.
+    * run_energyscope.py is the python file which runs everything.
 
 .. [1]
     Air passenger transport is accounted for in passenger mobility (excluding international flights).

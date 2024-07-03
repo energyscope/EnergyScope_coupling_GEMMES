@@ -46,7 +46,7 @@ Codes versions
 - second release (v2, hourly LP) of the EnergyScope (ES) model: https://github.com/energyscope/EnergyScope/tree/v2.0 .	See :cite:t:`Limpens2019`.
 - second release with energy system improvment (v2.1 Energy system update) of EnergyScope (ES) model: https://github.com/energyscope/EnergyScope/tree/v2.1 . See :cite:t:`Limpens_belgian_2020`.
 - second release with energy system improvment (v2.2 Energy system update) of EnergyScope (ES) model: https://github.com/energyscope/EnergyScope/tree/v2.2 .
-- second release, with python wrapper and some equations tailored to the case of Colombia and Turkey (v2.2 Energy system update): https://github.com/energyscope/EnergyScope_coupling_GEMMES/EnergyScope-TD
+- second release, with python wrapper and some equations tailored to the case of Colombia and Turkey (v2.2 Energy system update): https://github.com/energyscope/EnergyScope_coupling_GEMMES/tree/master/EnergyScope-TD
 
 
 Authors: 
