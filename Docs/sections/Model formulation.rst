@@ -1334,19 +1334,7 @@ Similarly to eq. :eq:`eq:fmin_max_perc`, eq. :eq:`eq:f_max_perc_motorcycle` impo
     \textbf{F}(Efficiency) =  \frac{1}{1+i_{rate}} 
     :label: eq:efficiency
 
-To account for efficiency measures from today to the target year,
-Eq. :eq:`eq:efficiency` imposes their cost. The EUD
-is based on a scenario detailed in 
-`Data for end use demand <#sec:app1_end_uses>`__ and has a lower energy demand
-than the “business as usual” scenario, which has the highest energy
-demand. Hence, the energy efficiency cost accounts for all the
-investment required to decrease the demand from the “business as usual”
-scenario and the implemented one. As the reduced demand is imposed over
-the year, the required investments must be completed before this year.
-Therefore, the annualisation cost has to be deducted from one year. This
-mathematically implies to define the capacity of efficiency measures
-deployed to :math:`1/ (1+i_{rate})` rather than 1. The investment is
-already expressed in €\ :sub:`2015`.
+Eq. :eq:`eq:efficiency` is supposed to compute the cost of efficiency measures. This equation was used to put a cost on the energy efficiency measures envisaged by the EU Commission for European countries. It is not used for the case of Colombia and Turkey (i.e. F(Efficiency) is multiplied by a zero-cost later on).
 
 .. _sssec_lp_imports_exports_renewables:
 

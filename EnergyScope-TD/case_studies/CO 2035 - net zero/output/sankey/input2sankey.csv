@@ -4,62 +4,50 @@ Elec,Gasifi. to HVC,0.90,Electricity,#00BFFF,TWh
 Heat HT,Gasifi. to HVC,1.63,Heat HT,#DC143C,TWh
 Gasifi. to HVC,HVC,31.39,HVC,#00FFFF,TWh
 HVC,Non-energy demand,31.39,HVC,#00FFFF,TWh
-Bio-ethanol,Gasoline,2.89,Gasoline,#808080,TWh
-Bio-diesel,Diesel,5.80,Diesel,#D3D3D3,TWh
-Diesel,Freight,5.86,Diesel,#D3D3D3,TWh
-Nat. gas,Gas,-24.65,Gas,#FFD700,TWh
-Nat. gas,Gas sto.,24.75,GAS,#FFD700,TWh
-Gas sto.,Gas,24.26,GAS,#FFD700,TWh
-Gas,Mob public,88.10,GAS,#FFD700,TWh
-Wind,Elec,210.85,Wind,#27AE34,TWh
-Hydro River,Elec,16.06,Hydro River,#0000FF,TWh
-Hydro Dams,Elec,40.89,Hydro Dam,#0000FF,TWh
+Bio-ethanol,Gasoline,3.02,Gasoline,#808080,TWh
+Bio-diesel,Diesel,100.00,Diesel,#D3D3D3,TWh
+Diesel,Mob public,73.09,Diesel,#D3D3D3,TWh
+Diesel,Freight,26.91,Diesel,#D3D3D3,TWh
+Nat. gas,Gas sto.,3.14,GAS,#FFD700,TWh
+Gas sto.,Gas,3.08,GAS,#FFD700,TWh
+Gas,Mob public,14.38,GAS,#FFD700,TWh
+Gas,refrig. cycles,0.02,GAS,#FFD700,TWh
+Gas,Boilers,0.43,GAS,#FFD700,TWh
+Hydro River,Elec,97.64,Hydro River,#0000FF,TWh
+Hydro Dams,Elec,62.61,Hydro Dam,#0000FF,TWh
 PV,Elec,0.50,PV,#FFFF00,TWh
-PV,Elec,66.02,PV,#FFFF00,TWh
-Solar thermal,Dec. sto,0.17,Solar thermal,#FFFF00,TWh
-Solar thermal,Heat LT Dec,0.17,Solar thermal,#FFFF00,TWh
+PV,Elec,37.94,PV,#FFFF00,TWh
+Waste,Boilers,0.18,Waste,#808000,TWh
+Woody biomass,Boilers,0.33,Woody biomass,#CD853F,TWh
 Wet biomass,Biomethanation,49.78,Woody biomass,#CD853F,TWh
-Biomethanation,Gas,21.06,GAS,#FFD700,TWh
-Biomethanation,Elec,1.99,Electricity,#00BFFF,TWh
+Biomethanation,Gas,14.88,GAS,#FFD700,TWh
 Elec,Mob priv,13.06,Electricity,#00BFFF,TWh
 Elec,Mob public,0.75,Electricity,#00BFFF,TWh
 Elec,Freight,2.80,Electricity,#00BFFF,TWh
-Elec,Exp & Loss,15.57,Electricity,#00BFFF,TWh
-Elec,Curt.,0.25,Electricity,#00BFFF,TWh
-Elec,Elec demand,89.32,Electricity,#00BFFF,TWh
-PV,Curt.,5.02,Solar,#FFFF00,TWh
-Wind,Curt.,2.90,Wind,#27AE34,TWh
-Elec,Storage,17.51,Electricity,#00BFFF,TWh
-Storage,Elec demand,17.10,Electricity,#00BFFF,TWh
-Elec,HPs,15.96,Electricity,#00BFFF,TWh
+Elec,Exp & Loss,9.32,Electricity,#00BFFF,TWh
+Elec,Curt.,0.07,Electricity,#00BFFF,TWh
+Elec,Elec demand,81.07,Electricity,#00BFFF,TWh
+PV,Curt.,0.41,Solar,#FFFF00,TWh
+Elec,Storage,25.99,Electricity,#00BFFF,TWh
+Storage,Elec demand,25.36,Electricity,#00BFFF,TWh
+Elec,HPs,22.48,Electricity,#00BFFF,TWh
 Elec,refrig. cycles,2.25,Electricity,#00BFFF,TWh
 Elec,refrig. cycles,0.16,Electricity,#00BFFF,TWh
-Elec,Dec. sto,2.68,Electricity,#00BFFF,TWh
-Elec,Heat LT Dec,0.63,Electricity,#00BFFF,TWh
-Elec,HT sto,18.75,Electricity,#00BFFF,TWh
-HT sto,Heat HT,18.69,Heat HT,#DC143C,TWh
-Elec,Heat HT,38.79,Electricity,#00BFFF,TWh
-Elec,Electrolyser,106.43,Electricity,#00BFFF,TWh
-Heat HT,Electrolyser,18.78,Heat HT,#DC143C,TWh
-Electrolyser,H2 prod,98.92,Electricity,#00BFFF,TWh
-Electrolyser,DHN,1.88,Heat LT,#FA8072,TWh
-H2 prod,H2 sto.,0.56,H2,#FF00FF,TWh
-H2 sto.,H2,0.48,H2,#FF00FF,TWh
-H2 prod,H2,98.36,H2,#FF00FF,TWh
-H2,Freight,18.07,H2,#FF00FF,TWh
-H2,Gas Prod,80.78,H2,#FF00FF,TWh
-HPs,Dec. sto,21.84,Heat LT,#FA8072,TWh
-HPs,Heat LT Dec,13.42,Heat LT,#FA8072,TWh
-HPs,DHN,16.80,Heat LT,#FA8072,TWh
-refrig. cycles,Space cooling,7.16,SPACE_COOLING,#FA8072,TWh
+Elec,HT sto,0.21,Electricity,#00BFFF,TWh
+HT sto,Heat HT,0.21,Heat HT,#DC143C,TWh
+Elec,Heat HT,37.66,Electricity,#00BFFF,TWh
+H2 prod,H2 sto.,0.00,H2,#FF00FF,TWh
+H2 sto.,H2,0.00,H2,#FF00FF,TWh
+H2 prod,H2,0.00,H2,#FF00FF,TWh
+HPs,Dec. sto,23.18,Heat LT,#FA8072,TWh
+HPs,Heat LT Dec,15.35,Heat LT,#FA8072,TWh
+HPs,DHN,38.55,Heat LT,#FA8072,TWh
+refrig. cycles,Space cooling,7.18,SPACE_COOLING,#FA8072,TWh
 refrig. cycles,Process cooling,0.39,PROCESS_COOLING,#FA8072,TWh
-Woody biomass,Pyrolysis,0.33,Woody biomass,#CD853F,TWh
-Pyrolysis,Elec,0.00,Electricity,#00BFFF,TWh
-Pyrolysis,Diesel,0.06,Diesel,#D3D3D3,TWh
-Pyrolysis,Gasoline,0.13,Diesel,#808080,TWh
-Dec. sto,Heat LT Dec,21.89,Heat LT,#FA8072,TWh
-DHN,Heat LT DHN,15.79,Heat LT,#FA8072,TWh
+Dec. sto,Heat LT Dec,20.76,Heat LT,#FA8072,TWh
+Boilers,Heat HT,0.83,Heat HT,#DC143C,TWh
+DHN,Heat LT DHN,14.80,Heat LT,#FA8072,TWh
 DHN,Loss DHN,1.93,Heat LT,#FA8072,TWh
-DHN,DHN Sto,20.82,Heat LT,#FA8072,TWh
-DHN Sto,Heat LT DHN,20.32,Heat LT,#FA8072,TWh
+DHN,DHN Sto,21.82,Heat LT,#FA8072,TWh
+DHN Sto,Heat LT DHN,21.31,Heat LT,#FA8072,TWh
 Heat HT,Ind Heat Demand,37.06,Heat HT,#DC143C,TWh

@@ -19,6 +19,11 @@ The data can be grouped into three parts: resources (Section `Resources <#app:se
 
 Regarding resources, ...
 
+Regarding technologies, they are characterised by the following characteristics:
+energy balances, cost (investment and maintenance) and environmental
+impact (global warming potential (GWP)). Regarding weather-dependent technologies (wind, solar, etc.), real
+production time series were collected for a representative year.
+
 Regarding the GWP, LCA data are taken from the Ecoinvent
 database v3.2 [1]_ :cite:`weidema_ecoinvent_2013` using the
 “allocation at the point of substitution” method. GWP is assessed with

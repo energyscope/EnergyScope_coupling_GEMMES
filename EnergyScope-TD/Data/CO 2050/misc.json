@@ -26,7 +26,7 @@
 			"BEV_BATT" :  [0.0,0.0,0.0,0.0,0.0,0.0,0.6,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
 	},
     "loss_network" : {"ELECTRICITY": 4.7E-02, "HEAT_LOW_T_DHN": 5.0E-02},
-    "c_grid_extra" : 367.8,
+    "c_grid_extra" : 518.5,
     "import_capacity" : 0.395,
     "export_capacity" : 0.535,
     "STORAGE_DAILY" : ["TS_DEC_HP_ELEC", "TS_DEC_THHP_GAS", "TS_DEC_COGEN_GAS", "TS_DEC_COGEN_OIL",
