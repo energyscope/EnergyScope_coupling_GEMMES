@@ -1,50 +1,47 @@
 
-Presolve eliminates 932197 constraints and 599878 variables.
+Presolve eliminates 959270 constraints and 618022 variables.
 "option presolve 10;" used, but "option presolve 5;" would suffice.
 Adjusted problem:
-326108 variables, all linear
-596798 constraints, all linear; 1871069 nonzeros
-	397911 equality constraints
+326397 variables, all linear
+596800 constraints, all linear; 1871361 nonzeros
+	397913 equality constraints
 	198887 inequality constraints
 1 linear objective; 1 nonzero.
 
 presolve results:
-	variables omitted:	599878
-	constraints omitted:	932197
-	ranges relaxed:		43832
-	bounds improved:	597635
+	variables omitted:	618022
+	constraints omitted:	959270
+	ranges relaxed:		44408
+	bounds improved:	615779
 	constraint_drop_tol breakpoints: 0, 0, 7021.151751316723
 	nba cycles:		4
-	bound row scans:	385146
-	row-scan updates:	55699
-Gurobi 10.0.3:   pre:dual = -1
+	bound row scans:	385723
+	row-scan updates:	55722
+Gurobi 11.0.1:   pre:dual = -1
   alg:method = 2
   bar:crossover = 0
   pre:passes = 3
   bar:convtol = 1e-06
   pre:solve = -1
-Gurobi 10.0.3: optimal solution; objective 130084.7652
+Gurobi 11.0.1: optimal solution; objective 174748.7079
 0 simplex iterations
-93 barrier iterations
+82 barrier iterations
  
 ------------ WARNINGS ------------
-WARNING:  "Solution Check"
-     [ sol:chk:feastol=1e-06, :feastolrel=1e-06, :inttol=1e-05,
-       :round='', :prec='' ]
-Algebraic expression violations:
-  - 2326 original expression(s) of type ':linrange',
-        up to 2E-04 (abs)
- 
- 
+WARNING:  "Tolerance violations"
+  Type                         MaxAbs [Name]   MaxRel [Name]
+* expr '_linrange'             1E-03           -             
+*: Using the solver's aux variable values.
+Documentation: mp.ampl.com/modeling-tools.html#automatic-solution-check.
 solve_result = solved
 
 solve_result_num = 0
 
-_solve_elapsed_time = 60.972
+_solve_elapsed_time = 35.369
 
-TotalCost 130084.7652162803
+TotalCost 174748.7079460491
 Carbon_cost 0
-GWP_op 1500.000007363991
+GWP_op 1500.000047829333
 carbon_price 0
 --------------SAVING COSTS -----------
 --------------SAVING RESOURCES -----------

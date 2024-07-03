@@ -2,9 +2,9 @@
 Presolve eliminates 1041128 constraints and 665506 variables.
 "option presolve 10;" used, but "option presolve 5;" would suffice.
 Adjusted problem:
-278914 variables, all linear
-515230 constraints, all linear; 1586646 nonzeros
-	355546 equality constraints
+278913 variables, all linear
+514942 constraints, all linear; 1586070 nonzeros
+	355258 equality constraints
 	159684 inequality constraints
 1 linear objective; 1 nonzero.
 
@@ -17,45 +17,21 @@ presolve results:
 	bounds improved:	660223
 	constraint_drop_tol breakpoints: 0, 0, 6720.50174443415
 	nba cycles:		4
-	bound row scans:	303350
-	row-scan updates:	25610
-The license for this solver will expire in 7.3 days.
-Gurobi 10.0.3:   pre:dual = -1
+	bound row scans:	303062
+	row-scan updates:	25634
+Gurobi 11.0.1:   pre:dual = -1
   alg:method = 2
   bar:crossover = 0
   pre:passes = 3
   bar:convtol = 1e-06
   pre:solve = -1
-Gurobi 10.0.3: optimal solution; objective 129964.9011
+Gurobi 11.0.1: terminated due to unrecoverable numerical issues
 0 simplex iterations
-75 barrier iterations
- 
------------- WARNINGS ------------
-WARNING:  "Solution Check"
-     [ sol:chk:feastol=1e-06, :feastolrel=1e-06, :inttol=1e-05,
-       :round='', :prec='' ]
-  - 1 original variable(s) violate bounds,
-        up to 3E-06 (abs)
-Algebraic expression violations:
-  - 129 original expression(s) of type ':linrange',
-        up to 6E-04 (abs)
- 
- 
-solve_result = solved
+96 barrier iterations
+solve_result = failure
 
-solve_result_num = 0
+solve_result_num = 550
 
-_solve_elapsed_time = 33.1507
+_solve_elapsed_time = 28.4809
 
-TotalCost 129964.901147909
-Carbon_cost 0
-GWP_op 435968.7986349274
-carbon_price 0
---------------SAVING COSTS -----------
---------------SAVING RESOURCES -----------
---------------SAVING GWP -----------
---------------SAVING Losses -----------
---------------SAVING ASSETS -----------
---------------SAVING STORAGE -----------
---------------SAVING LAYERS -----------
---------- SAVING SANKEY --------
+FAILURE
