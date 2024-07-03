@@ -260,9 +260,9 @@ if sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]} ((F
      printf "%s,%s,%.2f,%s,%s,%s\n", "Nat. gas" , "Gas", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in
          TYPICAL_DAY_OF_PERIOD[t]}(F_t ["GAS", h, td] * t_op [h, td] - Storage_in["GAS_STORAGE", "GAS", h, td]) / 1000 , "Gas", "#FFD700", "TWh" >> (PathName & "/sankey/input2sankey.csv");
 
-if sum {t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]} (F_t ["GAS_RE", h, td] * t_op [h, td]) > 10 then
-    printf "%s,%s,%.2f,%s,%s,%s\n", "Gas RE" , "Gas", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in
-        TYPICAL_DAY_OF_PERIOD[t]}(F_t ["GAS_RE", h, td] * t_op [h, td]) / 1000 , "Gas", "#FFD700", "TWh" >>
+if sum {t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]} (F_t ["IMPORTED_GAS", h, td] * t_op [h, td]) > 10 then
+    printf "%s,%s,%.2f,%s,%s,%s\n", "Imported Gas" , "Gas", sum{t in PERIODS, h in HOUR_OF_PERIOD[t], td in
+        TYPICAL_DAY_OF_PERIOD[t]}(F_t ["IMPORTED_GAS", h, td] * t_op [h, td]) / 1000 , "Gas", "#FFD700", "TWh" >>
         (PathName & "/sankey/input2sankey.csv");
         # SNG use:
  # Storage?

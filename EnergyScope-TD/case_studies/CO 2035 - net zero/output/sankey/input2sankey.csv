@@ -13,7 +13,7 @@ Gas sto.,Gas,3.08,GAS,#FFD700,TWh
 Gas,Mob public,14.38,GAS,#FFD700,TWh
 Gas,refrig. cycles,0.02,GAS,#FFD700,TWh
 Gas,Boilers,0.43,GAS,#FFD700,TWh
-Hydro River,Elec,97.64,Hydro River,#0000FF,TWh
+Hydro River,Elec,97.63,Hydro River,#0000FF,TWh
 Hydro Dams,Elec,62.61,Hydro Dam,#0000FF,TWh
 PV,Elec,0.50,PV,#FFFF00,TWh
 PV,Elec,37.94,PV,#FFFF00,TWh
@@ -27,7 +27,7 @@ Elec,Freight,2.80,Electricity,#00BFFF,TWh
 Elec,Exp & Loss,9.32,Electricity,#00BFFF,TWh
 Elec,Curt.,0.07,Electricity,#00BFFF,TWh
 Elec,Elec demand,81.07,Electricity,#00BFFF,TWh
-PV,Curt.,0.41,Solar,#FFFF00,TWh
+PV,Curt.,0.40,Solar,#FFFF00,TWh
 Elec,Storage,25.99,Electricity,#00BFFF,TWh
 Storage,Elec demand,25.36,Electricity,#00BFFF,TWh
 Elec,HPs,22.48,Electricity,#00BFFF,TWh

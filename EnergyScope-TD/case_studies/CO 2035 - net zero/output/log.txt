@@ -2,9 +2,9 @@
 Presolve eliminates 972437 constraints and 626463 variables.
 "option presolve 10;" used, but "option presolve 6;" would suffice.
 Adjusted problem:
-319121 variables, all linear
-585085 constraints, all linear; 1847596 nonzeros
-	392930 equality constraints
+319120 variables, all linear
+584797 constraints, all linear; 1847020 nonzeros
+	392642 equality constraints
 	192155 inequality constraints
 1 linear objective; 1 nonzero.
 
@@ -15,33 +15,33 @@ presolve results:
 	bounds improved:	624752
 	constraint_drop_tol breakpoints: 0, 0, 20776.729964049387
 	nba cycles:		5
-	bound row scans:	376259
-	row-scan updates:	42920
+	bound row scans:	375677
+	row-scan updates:	42651
 Gurobi 11.0.1:   pre:dual = -1
   alg:method = 2
   bar:crossover = 0
   pre:passes = 3
   bar:convtol = 1e-06
   pre:solve = -1
-Gurobi 11.0.1: optimal solution; objective 64276.76156
+Gurobi 11.0.1: optimal solution; objective 64276.77034
 0 simplex iterations
-71 barrier iterations
+73 barrier iterations
  
 ------------ WARNINGS ------------
 WARNING:  "Tolerance violations"
   Type                         MaxAbs [Name]   MaxRel [Name]
-* expr '_linrange'             1E-04           -             
+* expr '_linrange'             5E-04           -             
 *: Using the solver's aux variable values.
 Documentation: mp.ampl.com/modeling-tools.html#automatic-solution-check.
 solve_result = solved
 
 solve_result_num = 0
 
-_solve_elapsed_time = 32.2099
+_solve_elapsed_time = 30.7457
 
-TotalCost 64276.76156219583
+TotalCost 64276.7703408404
 Carbon_cost 0
-GWP_op 1500.000008415725
+GWP_op 1500.000040573699
 carbon_price 0
 --------------SAVING COSTS -----------
 --------------SAVING RESOURCES -----------

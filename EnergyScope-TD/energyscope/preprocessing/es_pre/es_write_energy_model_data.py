@@ -128,7 +128,7 @@ def print_data(config):
         END_USES_INPUT = list(eud_simple.index)
         END_USES_CATEGORIES = list(end_uses_categories.loc[:, 'END_USES_CATEGORIES'].unique())
         RESOURCES = list(resources_simple.index)
-        RES_IMPORT_CONSTANT = ['GAS', 'GAS_RE', 'H2_RE', 'H2']  # TODO automatise
+        RES_IMPORT_CONSTANT = ['IMPORTED_GAS', 'H2_RE', 'H2']  # TODO automatise
         BIOFUELS = list(resources[resources.loc[:, 'Subcategory'] == 'Biofuel'].index)
         RE_RESOURCES = list(
             resources.loc[(resources['Category'] == 'Renewable'), :].index)
