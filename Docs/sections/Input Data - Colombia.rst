@@ -32,8 +32,8 @@ accounts for the technology construction; for resources, it accounts for
 extraction, transportation and combustion. In addition, data for fuel
 combustion are taken from :cite:t:`Quaschning2015`.
 
-Regarding the costs, ... *real*\  [2]_ Euros for the
-year 2015 (€\ :sub:`2015`) ...
+Regarding the costs, they are all expressed in *real*\  [2]_ US Dollars for the year 2021 ($\ :sub:`2021`).
+If not specified, $ refers to $\ :sub:`2021`.
 
 
 .. _app:sec:ESTD_CO_resources:
@@ -2738,7 +2738,7 @@ for choosing a value for :math:`gwp_{limit}` is to take a certain percentage of 
    The database can be consulted online: http://www.ecoinvent.org
 
 .. [2]
-   *Real* values are expressed at the net of inflation. They differ from
+   *Real* values are expressed the net of inflation. They differ from
    *nominal* values, which are the actual prices in a given year,
    accounting for inflation.
 
