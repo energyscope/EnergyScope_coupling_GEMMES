@@ -32,8 +32,80 @@ accounts for the technology construction; for resources, it accounts for
 extraction, transportation and combustion. In addition, data for fuel
 combustion are taken from :cite:t:`Quaschning2015`.
 
-Regarding the costs, they are all expressed in *real*\  [2]_ US Dollars for the year 2021 ($\ :sub:`2021`).
-If not specified, $ refers to $\ :sub:`2021`.
+Regarding the costs, they are all expressed in *real*\  [2]_ US Dollars for the year 2021 (USD\ :sub:`2021`).
+If not specified, USD refers to USD\ :sub:`2021`. Unless indicated otherwise, the costs are the same as in
+the other versions of EnergyScope, except that they are expressed in USD\ :sub:`2021` instead of €\ :sub:`2015`.
+The conversion from €\ :sub:`2015` to USD\ :sub:`2021` is performed via Eq. :eq:`eqn:currency_conv_1`. 
+
+.. math::
+    c_{inv} [\text{USD}_{2021}] = \frac{\text{CEPCI}_{2021} \ [\text{USD}_{2021}]}{\text{CEPCI}_{2015} \ [\text{USD}_{2015}]} \cdot \frac{\text{USD}_{2015}}{\text{€}_{2015}} \cdot c_{inv} [\text{€}_{2015}]
+    :label: eqn:currency_conv_1
+
+Where the historical exchange rate for 2015, :math:`\frac{\text{USD}_{2015}}{\text{€}_{2015}}`, is equal to 1.11 :cite:`BancoRepublica2024` and the CEPCI
+:cite:`chemical_engineering_chemical_2016` is an index
+taking into account the evolution of the equipment cost. The CEPCI values for recent years, extracted from :cite:`CEPCI`, are
+given in :numref:`Table %s <tbl:cepci>`.
+
+.. container::
+
+   .. table:: CEPCI values
+      :name: tbl:cepci
+
+      ======== =========
+      **Year** **CEPCI**
+      ======== =========
+      2010     550.8
+      2011     585.7
+      2012     584.6
+      2013     567.3
+      2014     576.1
+      2015     556.8
+      2016     541.7
+      2017     567.5
+      2018     603.1
+      2019     607.5
+      2020     596.2
+      2021     708.8
+      2022     816.0
+      ======== =========
+
+For the cost of resources, the evolution of the cost from 2015 to 2021 is not computed using the CEPCI, 
+but instead using the supplementary data of the PEN 2050 :cite:`PEN2050`.
+
+
+CONTINUER APD ICI
+
+
+
+
+All cost data used in the model originally expressed in
+other currencies or referring to another year are converted to
+€\ :sub:`2015` to offer a coherent comparison. Most of the data come
+from a previous work :cite:`Moret2017PhDThesis,Limpens2019`,
+and were expressed in CHF\ :sub:`2015` (Based on the average annual
+exchange rate value from ECB https://www.ecb.europa.eu, the annual rate
+was 1€\ :sub:`2015` = 1.0679CHF\ :sub:`2015`). 
+Blabla Eq. :eq:`eqn:currency_conv_2`.
+
+.. math::
+    c_{inv} [\text{€}_{2015}] = c_{inv} [C_y] \cdot  \frac{\text{USD}_y}{C_y}  \cdot \frac{\text{CEPCI}_{2015} \ [\text{USD}_{2015}]}{\text{CEPCI}_y \ [\text{USD}_y]} \cdot \frac{\text{€}_{2015}}{\text{USD}_{2015}} 
+    :label: eqn:currency_conv_2
+
+Where :math:`C` and :math:`y` are the currency and the year in which the
+original cost data are expressed, respectively,  
+
+As an example, if the cost data are
+originally in EUR\ :sub:`2010`, they are first converted to
+USD\ :sub:`2010`, then brought to USD\ :sub:`2015` taking into account
+the evolution of the equipment cost (by using the CEPCI), and finally
+converted to €\ :sub:`2015`. The intermediate conversion to USD is
+motivated by the fact that the CEPCI is expressed in *nominal* USD.
+
+
+
+
+
+
 
 
 .. _app:sec:ESTD_CO_resources:
