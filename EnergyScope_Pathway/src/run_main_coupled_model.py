@@ -11,7 +11,7 @@ EnergyScope_granularity = 'MO'
 nbr_tds = 12
 
 def main():
-    plot_EnergyScope = False  
+    plot_EnergyScope = True  
     csv_EnergyScope  = False
     plot_GEMMES = True
     csv_GEMMES = False
@@ -19,7 +19,7 @@ def main():
     gdp_current = variables_GEMMES['gdp']
     diff = np.linalg.norm(gdp_current)
     n_iter = 0
-    while(diff > 1):
+    while(diff > 1 and n_iter < 6): ##################### 
         gdp_previous = gdp_current
         n_iter += 1
         output_EnergyScope = run_EnergyScope(variables_GEMMES)
@@ -64,7 +64,7 @@ def run_GEMMES():
     newParms = newParms._replace(tauvat=0.1089564*1.02)
     newParms = newParms._replace(fi3=0.45)
     newParms = newParms._replace(sigmaxnSpeed=0.48)
-    newParms = newParms._replace(reducXrO=0)
+    newParms = newParms._replace(reducXrO=0.044)
     
     ## Fix the trajectories of exogenous variables
     Costs_ES_per_phase = pd.read_csv('Energy_system_costs.csv')
@@ -261,7 +261,7 @@ def plot_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     # ampl_graph.graph_cost_op_phase()
 
     # ampl_graph.graph_layer()
-    # ampl_graph.graph_gwp()
+    ampl_graph.graph_gwp()
     # ampl_graph.graph_tech_cap()
     # ampl_graph.graph_total_cost_per_year()
     # ampl_graph.graph_load_factor()
@@ -784,6 +784,26 @@ def plot_GEMMES_outputs_fig4(variables_GEMMES, output_directory):
     plt.grid(True, color="#93a1a1", alpha=0.3)
     plt.savefig(os.path.join(EnergyScope_case_study_path,'graphs_GEMMES/r - Per Capita Income in USD.png'), format='png')
     plt.figure()
+    
+    plt.figure()
+    plt.plot(variables_GEMMES['time'], variables_GEMMES['GDP'], label='GDP')
+    plt.legend(loc='upper left', fancybox=True, shadow=True)
+    plt.grid(True, color="#93a1a1", alpha=0.3)
+    plt.figure()
+    
+    plt.figure()
+    plt.plot(variables_GEMMES['time'], variables_GEMMES['X'], label='Exports')
+    plt.plot(variables_GEMMES['time'], variables_GEMMES['xrO']*variables_GEMMES['pO']*variables_GEMMES['en'], label='Fossil fuels exports')
+    plt.legend(loc='upper left', fancybox=True, shadow=True)
+    plt.grid(True, color="#93a1a1", alpha=0.3)
+    plt.figure()
+    
+    plt.figure()
+    plt.plot(variables_GEMMES['time'], variables_GEMMES['xrO'], label='xrO')
+    plt.legend(loc='upper left', fancybox=True, shadow=True)
+    plt.grid(True, color="#93a1a1", alpha=0.3)
+    plt.figure()
+    
 
 
 import os, sys

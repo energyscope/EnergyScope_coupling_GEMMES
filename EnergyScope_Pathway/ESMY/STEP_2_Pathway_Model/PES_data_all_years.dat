@@ -141,7 +141,7 @@ param	limit_LT_renovation	:=	0.33	;#25% of refurbishment per period (5years)
 param	limit_pass_mob_changes	:=	0.5	;#25% of refurbishment per period (5years) 																										
 param	limit_freight_changes	:=	0.5	;#25% of refurbishment per period (5years) 																										
 																														
-param c_grid_extra :=	4.67E+02	;	# cost to reinforce the grid due to intermittent renewable energy penetration. See 2.2.2																											
+param c_grid_extra :=	518.5	;	# cost to reinforce the grid due to intermittent renewable energy penetration. See 2.2.2																											
 																														
 param power_density_pv :=	0.186	;																												
 param power_density_solar_thermal :=	0.7	;
