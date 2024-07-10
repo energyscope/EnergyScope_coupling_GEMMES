@@ -268,7 +268,7 @@ subject to end_uses_t {y in YEARS_WND diff YEAR_ONE, l in LAYERS, t in PERIODS}:
 
 # [Eq. 1]	
 subject to totalcost_cal {y in YEARS_UP_TO union YEARS_WND}:
-	TotalCost [y] = sum {j in TECHNOLOGIES} (tau [y,j]  * C_inv [y,j] + C_maint [y,j]) + sum {i in RESOURCES} C_op [y,i];
+	TotalCost [y] = sum {j in TECHNOLOGIES} (tau [y,j]  * C_inv [y,j] + C_maint [y,j]) + sum {i in RESOURCES diff EXPORT diff EXPORT_E_FUELS} C_op [y,i] - sum {i in EXPORT union EXPORT_E_FUELS} C_op [y,i];
 	
 # [Eq. 3] Investment cost of each technology
 subject to investment_cost_calc {y in YEARS_UP_TO union YEARS_WND,j in TECHNOLOGIES}: 
@@ -333,6 +333,15 @@ subject to resource_availability {y in YEARS_WND diff YEAR_ONE, i in RESOURCES}:
 var Import_constant {y in YEARS diff YEAR_ONE, RES_IMPORT_CONSTANT} >= 0;
 subject to resource_constant_import {y in YEARS_WND diff YEAR_ONE, i in RES_IMPORT_CONSTANT, t in PERIODS}:
 	F_t [y, i, t] * t_op [t] = Import_constant [y, i];
+
+# [Eq. 2.12-tris] Constant flow of export of e-fuels
+var Export_constant {y in YEARS diff YEAR_ONE, EXPORT_E_FUELS} >= 0;
+subject to efuels_constant_export {y in YEARS_WND diff YEAR_ONE, i in EXPORT_E_FUELS, t in PERIODS}:
+	F_t [y, i, t] * t_op [t] = Export_constant [y, i];
+
+# [Eq. 2.12-quater] Upper/lower bound to the export of e-fuels
+subject to bound_efuels_export {y in YEARS_WND diff YEAR_ONE}:
+	sum{i in EXPORT_E_FUELS, t in PERIODS} F_t [y, i, t] * t_op [t] <= 100000;
 
 
 ## Layers
