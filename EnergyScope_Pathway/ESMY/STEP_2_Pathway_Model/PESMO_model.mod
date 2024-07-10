@@ -44,7 +44,7 @@ set END_USES_CATEGORIES; # Categories of demand (end-uses): electricity, heat, m
 set END_USES_TYPES_OF_CATEGORY {END_USES_CATEGORIES}; # Types of demand (end-uses).
 set RESOURCES; # Resources: fuels (renewables and fossils) and electricity imports
 set RES_IMPORT_CONSTANT within RESOURCES; # resources imported at constant power (e.g. NG, diesel, ...)
-set BIOFUELS within RESOURCES; # imported biofuels.
+set BLENDED_FUELS within RESOURCES; # Fuels which are blended with other fuels in the layers
 set EXPORT within RESOURCES; # exported resources
 set EXPORT_E_FUELS; # export of e-fuels
 set END_USES_TYPES := setof {i in END_USES_CATEGORIES, j in END_USES_TYPES_OF_CATEGORY [i]} j; # secondary set
@@ -55,7 +55,7 @@ set INFRASTRUCTURE; # Infrastructure: DHN, grid, and intermediate energy convers
 set RE_TECH; # Set composed of PV, WIND_ON and WIND_OFF
 
 ## SECONDARY SETS: a secondary set is defined by operations on MAIN SETS
-set LAYERS := (RESOURCES diff BIOFUELS diff EXPORT diff EXPORT_E_FUELS) union END_USES_TYPES; # Layers are used to balance resources/products in the system
+set LAYERS := (RESOURCES diff BLENDED_FUELS diff EXPORT diff EXPORT_E_FUELS) union END_USES_TYPES; # Layers are used to balance resources/products in the system
 set TECHNOLOGIES := (setof {i in END_USES_TYPES, j in TECHNOLOGIES_OF_END_USES_TYPE [i]} j) union STORAGE_TECH union INFRASTRUCTURE; 
 set TECHNOLOGIES_OF_END_USES_CATEGORY {i in END_USES_CATEGORIES} within TECHNOLOGIES := setof {j in END_USES_TYPES_OF_CATEGORY[i], k in TECHNOLOGIES_OF_END_USES_TYPE [j]} k;
 set RE_RESOURCES within RESOURCES; # List of RE resources (including wind hydro solar), used to compute the RE share
