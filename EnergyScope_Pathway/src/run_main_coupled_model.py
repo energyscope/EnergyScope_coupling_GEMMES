@@ -11,7 +11,7 @@ EnergyScope_granularity = 'MO'
 nbr_tds = 12
 
 def main():
-    plot_EnergyScope = True  
+    plot_EnergyScope = False  
     csv_EnergyScope  = False
     plot_GEMMES = True
     csv_GEMMES = False
@@ -19,7 +19,7 @@ def main():
     gdp_current = variables_GEMMES['gdp']
     diff = np.linalg.norm(gdp_current)
     n_iter = 0
-    while(diff > 1 and n_iter < 6): ##################### 
+    while(diff > 1 and n_iter < 2): ##################### 
         gdp_previous = gdp_current
         n_iter += 1
         output_EnergyScope = run_EnergyScope(variables_GEMMES)
