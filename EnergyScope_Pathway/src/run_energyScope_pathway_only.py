@@ -27,13 +27,6 @@ nbr_tds = 12
 
 curr_dir = Path(os.path.dirname(__file__))
 
-pymodPath = os.path.abspath(os.path.join(curr_dir.parent,'pylib'))
-GEMMES_path = os.path.abspath(os.path.join(Path(__file__).parents[3], 'ColombiaEnergyScope'))
-Cpp_path = os.path.join(GEMMES_path, 'SourceCode/cppCode')
-sys.path.insert(0, pymodPath)
-sys.path.insert(0, Cpp_path)
-sys.path.insert(0, Cpp_path + "/src")
-
 ESMY_path = os.path.join(curr_dir.parent,'ESMY')
 EnergyScope_model_path = os.path.join(ESMY_path,'STEP_2_Pathway_Model')
 
@@ -42,10 +35,6 @@ from ampl_object import AmplObject
 from ampl_preprocessor import AmplPreProcessor
 from ampl_collector import AmplCollector
 from ampl_graph import AmplGraph
-
-## Read the GEMMES model
-cppimport.settings['force_rebuild'] = True
-solvePy = cppimport.imp('functionsForPy')
 
 ## Read the EnergyScope model and data files
 if EnergyScope_granularity == 'MO':

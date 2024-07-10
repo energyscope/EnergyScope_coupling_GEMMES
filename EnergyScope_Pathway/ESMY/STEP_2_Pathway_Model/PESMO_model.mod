@@ -55,7 +55,7 @@ set INFRASTRUCTURE; # Infrastructure: DHN, grid, and intermediate energy convers
 set RE_TECH; # Set composed of PV, WIND_ON and WIND_OFF
 
 ## SECONDARY SETS: a secondary set is defined by operations on MAIN SETS
-set LAYERS := (RESOURCES diff BLENDED_FUELS diff EXPORT diff EXPORT_E_FUELS) union END_USES_TYPES; # Layers are used to balance resources/products in the system
+set LAYERS := (RESOURCES diff BLENDED_FUELS diff EXPORT) union END_USES_TYPES; # Layers are used to balance resources/products in the system
 set TECHNOLOGIES := (setof {i in END_USES_TYPES, j in TECHNOLOGIES_OF_END_USES_TYPE [i]} j) union STORAGE_TECH union INFRASTRUCTURE; 
 set TECHNOLOGIES_OF_END_USES_CATEGORY {i in END_USES_CATEGORIES} within TECHNOLOGIES := setof {j in END_USES_TYPES_OF_CATEGORY[i], k in TECHNOLOGIES_OF_END_USES_TYPE [j]} k;
 set RE_RESOURCES within RESOURCES; # List of RE resources (including wind hydro solar), used to compute the RE share
@@ -102,6 +102,7 @@ param end_uses_input {y in YEARS, i in END_USES_INPUT} := sum {s in SECTORS} (en
 param i_rate {PHASE} > 0 default 0.015; # discount rate [-]: real discount rate
 param re_share_primary {YEARS} >= 0 default 0; # re_share [-]: minimum share of primary energy coming from RE
 param gwp_limit {YEARS} >= 0 default 0;    # [ktCO2-eq./year] maximum gwp emissions allowed.
+param efuels_export_bound {YEARS} >= 0 default 0;    # [GWh/year]
 param share_mobility_public_min {YEARS} >= 0, <= 1 default 0; # %_public,min [-]: min limit for penetration of public mobility over total mobility 
 param share_mobility_public_max {YEARS} >= 0, <= 1 default 0; # %_public,max [-]: max limit for penetration of public mobility over total mobility 
 # Share train vs truck in freight transportation
@@ -268,7 +269,7 @@ subject to end_uses_t {y in YEARS_WND diff YEAR_ONE, l in LAYERS, t in PERIODS}:
 
 # [Eq. 1]	
 subject to totalcost_cal {y in YEARS_UP_TO union YEARS_WND}:
-	TotalCost [y] = sum {j in TECHNOLOGIES} (tau [y,j]  * C_inv [y,j] + C_maint [y,j]) + sum {i in RESOURCES diff EXPORT diff EXPORT_E_FUELS} C_op [y,i] - sum {i in EXPORT union EXPORT_E_FUELS} C_op [y,i];
+	TotalCost [y] = sum {j in TECHNOLOGIES} (tau [y,j]  * C_inv [y,j] + C_maint [y,j]) + sum {i in RESOURCES diff EXPORT} C_op [y,i] - sum {i in EXPORT} C_op [y,i];
 	
 # [Eq. 3] Investment cost of each technology
 subject to investment_cost_calc {y in YEARS_UP_TO union YEARS_WND,j in TECHNOLOGIES}: 
@@ -341,8 +342,13 @@ subject to efuels_constant_export {y in YEARS_WND diff YEAR_ONE, i in EXPORT_E_F
 
 # [Eq. 2.12-quater] Upper/lower bound to the export of e-fuels
 subject to bound_efuels_export {y in YEARS_WND diff YEAR_ONE}:
-	sum{i in EXPORT_E_FUELS, t in PERIODS} F_t [y, i, t] * t_op [t] <= 100000;
+	sum{i in EXPORT_E_FUELS, t in PERIODS} F_t [y, i, t] * t_op [t] >= efuels_export_bound [y];
 
+# [Eq. 2.12-quint] total revenues from exports
+var export_revenues {y in YEARS_WND diff YEAR_ONE} >= 0;
+subject to compute_export_revenues {y in YEARS_WND diff YEAR_ONE}:
+	sum {i in EXPORT} C_op [y,i] = export_revenues [y];
+	
 
 ## Layers
 #--------
@@ -620,7 +626,7 @@ subject to Opex_tot_cost_calculation :# category: COST_calc
 
 # [Eq. XX] Compute operating cost for years
 subject to Opex_cost_calculation{y in YEARS_WND union YEARS_UP_TO} : # category: COST_calc
-	C_opex [y] = sum {j in TECHNOLOGIES} C_maint [y,j] + sum {i in RESOURCES} C_op [y,i]; #In â‚¬_y
+	C_opex [y] = sum {j in TECHNOLOGIES} C_maint [y,j] + sum {i in RESOURCES diff EXPORT} C_op [y,i]; #In â‚¬_y
 
 subject to operation_computation_tech {p in PHASE_WND union PHASE_UP_TO, y_start in PHASE_START[p], y_stop in PHASE_STOP[p], i in TECHNOLOGIES}:
 	C_op_phase_tech [p,i] = t_phase *   ((C_maint [y_start,i] + C_maint [y_stop,i])/2 *annualised_factor[p] ); #In euros_2015
@@ -628,7 +634,7 @@ subject to operation_computation_tech {p in PHASE_WND union PHASE_UP_TO, y_start
 subject to operation_computation_tech_non_annualised {p in PHASE_WND union PHASE_UP_TO, y_start in PHASE_START[p], y_stop in PHASE_STOP[p], i in TECHNOLOGIES}:
 	C_op_phase_tech_non_annualised [p,i] = t_phase *   ((C_maint [y_start,i] + C_maint [y_stop,i])/2 );
 
-subject to operation_computation_res {p in PHASE_WND union PHASE_UP_TO, y_start in PHASE_START[p], y_stop in PHASE_STOP[p], i in RESOURCES}:
+subject to operation_computation_res {p in PHASE_WND union PHASE_UP_TO, y_start in PHASE_START[p], y_stop in PHASE_STOP[p], i in RESOURCES diff EXPORT}:
 	C_op_phase_res [p,i] = t_phase *   ((C_op [y_start,i] + C_op [y_stop,i])/2 *annualised_factor[p] ); #In euros_2015
 
 subject to computation_res_non_annualised {p in PHASE_WND union PHASE_UP_TO, i in RESOURCES}:

@@ -65,6 +65,18 @@ YEAR_2040	32333
 YEAR_2045	16917 																																																																																																																
 YEAR_2050	1500 																																																																																																																
 ;
+
+param efuels_export_bound :=            # [GWh/year]
+YEAR_2015	0 																																																																																																																
+YEAR_2020	0 																																																																																																																
+YEAR_2025	0 																																																																																																																
+YEAR_2030	0 																																																																																																											
+YEAR_2035	0 																																																																																																																
+YEAR_2040	0 																																																																																																																
+YEAR_2045	10000 																																																																																																																
+YEAR_2050	10000 																																																																																																																
+;
+
 # Part [2.4]																																																																																																																	
 param batt_per_car : CAR_PHEV  CAR_BEV:= #ev_batt,size [GWh]: Size of batteries per car per technology of EV  																																																																																																																	
 YEAR_2015	10	50																																																																																																															

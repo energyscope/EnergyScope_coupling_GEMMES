@@ -11,7 +11,7 @@ EnergyScope_granularity = 'MO'
 nbr_tds = 12
 
 def main():
-    plot_EnergyScope = True  
+    plot_EnergyScope = False  
     csv_EnergyScope  = True
     plot_GEMMES = True
     csv_GEMMES = False
