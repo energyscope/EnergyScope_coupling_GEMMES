@@ -569,7 +569,7 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     output_for_GEMMES['ceh'] = output_for_GEMMES['opex_H_CO'] + output_for_GEMMES['opex_H_M']
     output_for_GEMMES['sigmamceh'] = output_for_GEMMES['opex_H_M'] / output_for_GEMMES['ceh']
     output_for_GEMMES['pieM'] = 1 / variables_GEMMES_2021['en']
-    output_for_GEMMES['sum_xrec'] = output_for_GEMMES['exports_CO'] / variables_GEMMES_2021['en']
+    output_for_GEMMES['xrec'] = output_for_GEMMES['exports_CO'] / variables_GEMMES_2021['en']
     output_for_GEMMES = output_for_GEMMES.round(3)
     aggregated_costs = output_for_GEMMES.copy()
     aggregated_costs = aggregated_costs[['capex_F_CO', 'capex_F_M', 'capex_B_CO', 'capex_B_M', 'capex_G_CO', 'capex_G_M', 'capex_H_CO', 'capex_H_M', 'opex_F_CO', 'opex_F_M', 'opex_B_CO','opex_B_M', 'opex_G_CO', 'opex_G_M', 'opex_H_CO', 'opex_H_M', 'exports_CO']]
@@ -800,8 +800,9 @@ def plot_GEMMES_outputs_fig4(variables_GEMMES, output_directory):
     plt.figure()
     
     plt.figure()
-    plt.plot(variables_GEMMES['time'], variables_GEMMES['X'], label='Exports')
+    # plt.plot(variables_GEMMES['time'], variables_GEMMES['X'], label='Exports')
     plt.plot(variables_GEMMES['time'], variables_GEMMES['xrO']*variables_GEMMES['pO']*variables_GEMMES['en'], label='Fossil fuels exports')
+    plt.plot(variables_GEMMES['time'], variables_GEMMES['xrec']*variables_GEMMES['prec']*variables_GEMMES['en'], label='Renewable energy carriers exports')
     plt.legend(loc='upper left', fancybox=True, shadow=True)
     plt.grid(True, color="#93a1a1", alpha=0.3)
     plt.figure()
