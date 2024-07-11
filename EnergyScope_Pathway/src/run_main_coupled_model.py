@@ -19,7 +19,7 @@ def main():
     gdp_current = variables_GEMMES['gdp']
     diff = np.linalg.norm(gdp_current)
     n_iter = 0
-    while(diff > 1 and n_iter < 2): ##################### 
+    while(diff > 1 and n_iter < 1): ##################### 
         gdp_previous = gdp_current
         n_iter += 1
         output_EnergyScope = run_EnergyScope(variables_GEMMES)
@@ -348,6 +348,9 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     C_op['Local'] = 0
     Local_resources = ['GASOLINE','DIESEL','BIOETHANOL','BIODIESEL','LFO','LOCAL_GAS','WOOD','LOCAL_COAL','CO2_EMISSIONS','CO2_CAPTURED','CO2_INDUSTRY','RES_WIND','RES_SOLAR','RES_HYDRO','CO2_ATM','WET_BIOMASS','WASTE','RES_GEO']
     C_op.iloc[C_op.index.get_level_values('Resources').isin(Local_resources),1] = 1
+    C_op['Exported'] = 0
+    Exported_resources = ['ELEC_EXPORT','H2_EXPORT','GAS_RE_EXPORT','AMMONIA_EXPORT','METHANOL_EXPORT','CO2_EMISSIONS']
+    C_op.iloc[C_op.index.get_level_values('Resources').isin(Exported_resources),2] = 1
     C_op['Imported'] = 1 - C_op['Local']
     C_op[['F','B','G','H']] = [1,0,0,0]
     
@@ -359,7 +362,7 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     output_for_GEMMES['opex_G_M']  = (C_maint['Value'] * C_maint['Imported'] * C_maint['G']).groupby(level=[0]).sum() + (C_op['Value'] * C_op['Imported'] * C_op['G']).groupby(level=[0]).sum()
     output_for_GEMMES['opex_H_CO'] = (C_maint['Value'] * C_maint['Local'] * C_maint['H']).groupby(level=[0]).sum() + (C_op['Value'] * C_op['Local'] * C_op['H']).groupby(level=[0]).sum()
     output_for_GEMMES['opex_H_M']  = (C_maint['Value'] * C_maint['Imported'] * C_maint['H']).groupby(level=[0]).sum() + (C_op['Value'] * C_op['Imported'] * C_op['H']).groupby(level=[0]).sum()
-
+    output_for_GEMMES['exports_CO'] = 0
 
     # Reconstruct the costs for the first phase based on YEAR_2020 data
     Cost_breakdown_non_annualised = z_Results['Cost_breakdown_non_annualised']
@@ -562,15 +565,16 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     output_for_GEMMES['ceh'] = output_for_GEMMES['opex_H_CO'] + output_for_GEMMES['opex_H_M']
     output_for_GEMMES['sigmamceh'] = output_for_GEMMES['opex_H_M'] / output_for_GEMMES['ceh']
     output_for_GEMMES['pieM'] = 1 / (variables_GEMMES_2021['pw'] * variables_GEMMES_2021['en'])
+    output_for_GEMMES['sum_xrec'] = output_for_GEMMES['exports_CO']
     output_for_GEMMES = output_for_GEMMES.round(3)
     aggregated_costs = output_for_GEMMES.copy()
-    aggregated_costs = aggregated_costs[['capex_F_CO', 'capex_F_M', 'capex_B_CO', 'capex_B_M', 'capex_G_CO', 'capex_G_M', 'capex_H_CO', 'capex_H_M', 'opex_F_CO', 'opex_F_M', 'opex_B_CO','opex_B_M', 'opex_G_CO', 'opex_G_M', 'opex_H_CO', 'opex_H_M']]
+    aggregated_costs = aggregated_costs[['capex_F_CO', 'capex_F_M', 'capex_B_CO', 'capex_B_M', 'capex_G_CO', 'capex_G_M', 'capex_H_CO', 'capex_H_M', 'opex_F_CO', 'opex_F_M', 'opex_B_CO','opex_B_M', 'opex_G_CO', 'opex_G_M', 'opex_H_CO', 'opex_H_M', 'exports_CO']]
     aggregated_costs.to_csv('Energy_system_costs_aggregated.csv')
     output_for_GEMMES.drop(columns=['capex_F_CO', 'capex_F_M', 'ikefCO', 'ikefM'], inplace=True)
     output_for_GEMMES.drop(columns=['capex_B_CO', 'capex_B_M', 'ikebCO', 'ikebM'], inplace=True)
     output_for_GEMMES.drop(columns=['capex_G_CO', 'capex_G_M', 'ikegCO', 'ikegM'], inplace=True)
     output_for_GEMMES.drop(columns=['capex_H_CO', 'capex_H_M', 'ikehCO', 'ikehM'], inplace=True)
-    output_for_GEMMES.drop(columns=['opex_F_CO', 'opex_F_M', 'opex_B_CO','opex_B_M', 'opex_G_CO', 'opex_G_M', 'opex_H_CO', 'opex_H_M'], inplace=True)
+    output_for_GEMMES.drop(columns=['opex_F_CO', 'opex_F_M', 'opex_B_CO','opex_B_M', 'opex_G_CO', 'opex_G_M', 'opex_H_CO', 'opex_H_M', 'exports_CO'], inplace=True)
     output_for_GEMMES.to_csv('Energy_system_costs.csv')   
     
 def EnergyScope_output_csv(EnergyScope_output_file, ampl_0):
