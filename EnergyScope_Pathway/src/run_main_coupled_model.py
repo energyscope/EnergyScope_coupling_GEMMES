@@ -19,7 +19,7 @@ def main():
     gdp_current = variables_GEMMES['gdp']
     diff = np.linalg.norm(gdp_current)
     n_iter = 0
-    while(diff > 1 and n_iter < 1): ##################### 
+    while(diff > 1 and n_iter < 2): ##################### 
         gdp_previous = gdp_current
         n_iter += 1
         output_EnergyScope = run_EnergyScope(variables_GEMMES)
@@ -221,10 +221,10 @@ def run_EnergyScope(variables_GEMMES):
     
     c_op_ampl = ampl.get_param('c_op').to_list()
     c_op_ampl = pd.DataFrame(c_op_ampl, columns=['Year', 'Resources', 'Value'])
-    Imported_resources = ['URANIUM', 'H2', 'ELECTRICITY', 'AMMONIA_RE', 'METHANOL_RE', 'IMPORTED_COAL', 'METHANOL', 'H2_RE', 'AMMONIA', 'ELEC_EXPORT', 'IMPORTED_GAS']
+    Non_local_resources = ['URANIUM', 'H2', 'ELECTRICITY', 'AMMONIA_RE', 'METHANOL_RE', 'IMPORTED_COAL', 'METHANOL', 'H2_RE', 'AMMONIA', 'ELEC_EXPORT', 'IMPORTED_GAS', 'H2_EXPORT', 'GAS_RE_EXPORT', 'AMMONIA_EXPORT', 'METHANOL_EXPORT']
     c_op_ampl = pd.merge(c_op_ampl, en_yearly, on='Year', how='left')
     c_op_ampl['Value'] *= en0 # Convert constant USD to constant k COP
-    c_op_ampl.loc[c_op_ampl['Resources'].isin(Imported_resources),'Value'] *= np.array(c_op_ampl.loc[c_op_ampl['Resources'].isin(Imported_resources),'en'].astype(float).values).round(4) # The imported resources are subject to exchange rate's fluctuations
+    c_op_ampl.loc[c_op_ampl['Resources'].isin(Non_local_resources),'Value'] *= np.array(c_op_ampl.loc[c_op_ampl['Resources'].isin(Non_local_resources),'en'].astype(float).values).round(4) # The imported resources are subject to exchange rate's fluctuations
     c_op_ampl.drop(columns=['en'], inplace=True)
     c_op_ampl.set_index(['Year', 'Resources'], inplace=True)
     c_op_ampl = apy.DataFrame.from_pandas(c_op_ampl)
@@ -346,12 +346,12 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     C_op_bis.drop(columns=['merge_index'], inplace=True)
     C_op['Value'] = C_op_bis['Value'].values/C_op_bis[0].values
     C_op['Local'] = 0
-    Local_resources = ['GASOLINE','DIESEL','BIOETHANOL','BIODIESEL','LFO','LOCAL_GAS','WOOD','LOCAL_COAL','CO2_EMISSIONS','CO2_CAPTURED','CO2_INDUSTRY','RES_WIND','RES_SOLAR','RES_HYDRO','CO2_ATM','WET_BIOMASS','WASTE','RES_GEO']
+    Local_resources = ['GASOLINE','DIESEL','BIOETHANOL','BIODIESEL','LFO','LOCAL_GAS','WOOD','LOCAL_COAL','CO2_CAPTURED','CO2_INDUSTRY','RES_WIND','RES_SOLAR','RES_HYDRO','CO2_ATM','WET_BIOMASS','WASTE','RES_GEO']
     C_op.iloc[C_op.index.get_level_values('Resources').isin(Local_resources),1] = 1
     C_op['Exported'] = 0
     Exported_resources = ['ELEC_EXPORT','H2_EXPORT','GAS_RE_EXPORT','AMMONIA_EXPORT','METHANOL_EXPORT','CO2_EMISSIONS']
     C_op.iloc[C_op.index.get_level_values('Resources').isin(Exported_resources),2] = 1
-    C_op['Imported'] = 1 - C_op['Local']
+    C_op['Imported'] = 1 - C_op['Local'] -  C_op['Exported']
     C_op[['F','B','G','H']] = [1,0,0,0]
     
     output_for_GEMMES['opex_F_CO'] = (C_maint['Value'] * C_maint['Local'] * C_maint['F']).groupby(level=[0]).sum() + (C_op['Value'] * C_op['Local'] * C_op['F']).groupby(level=[0]).sum()
@@ -362,7 +362,8 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     output_for_GEMMES['opex_G_M']  = (C_maint['Value'] * C_maint['Imported'] * C_maint['G']).groupby(level=[0]).sum() + (C_op['Value'] * C_op['Imported'] * C_op['G']).groupby(level=[0]).sum()
     output_for_GEMMES['opex_H_CO'] = (C_maint['Value'] * C_maint['Local'] * C_maint['H']).groupby(level=[0]).sum() + (C_op['Value'] * C_op['Local'] * C_op['H']).groupby(level=[0]).sum()
     output_for_GEMMES['opex_H_M']  = (C_maint['Value'] * C_maint['Imported'] * C_maint['H']).groupby(level=[0]).sum() + (C_op['Value'] * C_op['Imported'] * C_op['H']).groupby(level=[0]).sum()
-    output_for_GEMMES['exports_CO'] = 0
+    output_for_GEMMES['exports_CO'] = (C_op['Value'] * C_op['Exported']).groupby(level=[0]).sum()
+    output_for_GEMMES.loc['2015_2020','exports_CO'] = 0
 
     # Reconstruct the costs for the first phase based on YEAR_2020 data
     Cost_breakdown_non_annualised = z_Results['Cost_breakdown_non_annualised']
@@ -373,6 +374,7 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     Cost_breakdown_non_annualised_bis['Local'] = 0
     Cost_breakdown_non_annualised_bis.iloc[Cost_breakdown_non_annualised_bis.index.get_level_values('Elements').isin(Local_resources),4] = 1
     Cost_breakdown_non_annualised_bis['Imported'] = 1 - Cost_breakdown_non_annualised_bis['Local']
+    Cost_breakdown_non_annualised_bis.iloc[Cost_breakdown_non_annualised_bis.index.get_level_values('Elements').isin(Exported_resources),5] = 0
     Cost_breakdown_non_annualised_bis['C_op_CO'] = Cost_breakdown_non_annualised_bis['C_op'] * Cost_breakdown_non_annualised_bis['Local']
     Cost_breakdown_non_annualised_bis['C_op_M'] = Cost_breakdown_non_annualised_bis['C_op'] * Cost_breakdown_non_annualised_bis['Imported']
     Cost_breakdown_non_annualised_bis = Cost_breakdown_non_annualised_bis.sum()
@@ -503,7 +505,9 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     year_balance['G % C_op'] = year_balance['cost_G'] / year_balance['C_op_tot']
     year_balance['H % C_op'] = year_balance['cost_H'] / year_balance['C_op_tot']
     
-    C_op_to_add = C_op['Value'].groupby(level=[0]).sum().to_frame()
+    C_op_minus_exports = C_op.copy()
+    C_op_minus_exports['Value'] = C_op_minus_exports['Value'] * (1 - C_op_minus_exports['Exported'])
+    C_op_to_add = C_op_minus_exports['Value'].groupby(level=[0]).sum().to_frame()
     C_op_to_add_2015_2020 = C_op_to_add.loc['2020_2025'].to_frame().transpose()
     C_op_to_add_2015_2020.rename(index={'2020_2025':'2015_2020'}, inplace=True)
     C_op_to_add = pd.concat([C_op_to_add_2015_2020, C_op_to_add])
