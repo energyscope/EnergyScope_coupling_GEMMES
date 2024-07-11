@@ -532,13 +532,13 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     output_for_GEMMES['ikehCO'] = (C_inv['Capa'] * C_inv['Local']    * C_inv['H']).groupby(level=[0]).sum()
     output_for_GEMMES['ikehM']  = (C_inv['Capa'] * C_inv['Imported'] * C_inv['H']).groupby(level=[0]).sum()
     output_for_GEMMES['pkefCO'] = output_for_GEMMES['capex_F_CO'] / output_for_GEMMES['ikefCO']
-    output_for_GEMMES['pkefM']  = output_for_GEMMES['capex_F_M']  / output_for_GEMMES['ikefM'] / (variables_GEMMES_2021['pw'] * variables_GEMMES_2021['en'])
+    output_for_GEMMES['pkefM']  = output_for_GEMMES['capex_F_M']  / output_for_GEMMES['ikefM'] / variables_GEMMES_2021['en']
     output_for_GEMMES['pkebCO'] = output_for_GEMMES['capex_B_CO'] / output_for_GEMMES['ikebCO']
-    output_for_GEMMES['pkebM']  = output_for_GEMMES['capex_B_M']  / output_for_GEMMES['ikebM'] / (variables_GEMMES_2021['pw'] * variables_GEMMES_2021['en'])
+    output_for_GEMMES['pkebM']  = output_for_GEMMES['capex_B_M']  / output_for_GEMMES['ikebM'] / variables_GEMMES_2021['en']
     output_for_GEMMES['pkegCO'] = output_for_GEMMES['capex_G_CO'] / output_for_GEMMES['ikegCO']
-    output_for_GEMMES['pkegM']  = output_for_GEMMES['capex_G_M']  / output_for_GEMMES['ikegM'] / (variables_GEMMES_2021['pw'] * variables_GEMMES_2021['en'])
+    output_for_GEMMES['pkegM']  = output_for_GEMMES['capex_G_M']  / output_for_GEMMES['ikegM'] / variables_GEMMES_2021['en']
     output_for_GEMMES['pkehCO'] = output_for_GEMMES['capex_H_CO'] / output_for_GEMMES['ikehCO']
-    output_for_GEMMES['pkehM']  = output_for_GEMMES['capex_H_M']  / output_for_GEMMES['ikehM'] / (variables_GEMMES_2021['pw'] * variables_GEMMES_2021['en'])
+    output_for_GEMMES['pkehM']  = output_for_GEMMES['capex_H_M']  / output_for_GEMMES['ikehM'] / variables_GEMMES_2021['en']
     output_for_GEMMES['ikef'] = output_for_GEMMES['ikefCO'] + output_for_GEMMES['ikefM']
     output_for_GEMMES['ikeb'] = output_for_GEMMES['ikebCO'] + output_for_GEMMES['ikebM']
     output_for_GEMMES['ikeg'] = output_for_GEMMES['ikegCO'] + output_for_GEMMES['ikegM']
@@ -568,8 +568,8 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     output_for_GEMMES['sigmamiceg'] = output_for_GEMMES['opex_G_M'] / output_for_GEMMES['iceg']
     output_for_GEMMES['ceh'] = output_for_GEMMES['opex_H_CO'] + output_for_GEMMES['opex_H_M']
     output_for_GEMMES['sigmamceh'] = output_for_GEMMES['opex_H_M'] / output_for_GEMMES['ceh']
-    output_for_GEMMES['pieM'] = 1 / (variables_GEMMES_2021['pw'] * variables_GEMMES_2021['en'])
-    output_for_GEMMES['sum_xrec'] = output_for_GEMMES['exports_CO']
+    output_for_GEMMES['pieM'] = 1 / variables_GEMMES_2021['en']
+    output_for_GEMMES['sum_xrec'] = output_for_GEMMES['exports_CO'] / variables_GEMMES_2021['en']
     output_for_GEMMES = output_for_GEMMES.round(3)
     aggregated_costs = output_for_GEMMES.copy()
     aggregated_costs = aggregated_costs[['capex_F_CO', 'capex_F_M', 'capex_B_CO', 'capex_B_M', 'capex_G_CO', 'capex_G_M', 'capex_H_CO', 'capex_H_M', 'opex_F_CO', 'opex_F_M', 'opex_B_CO','opex_B_M', 'opex_G_CO', 'opex_G_M', 'opex_H_CO', 'opex_H_M', 'exports_CO']]
