@@ -11,7 +11,7 @@ EnergyScope_granularity = 'MO'
 nbr_tds = 12
 
 def main():
-    plot_EnergyScope = False  
+    plot_EnergyScope = True  
     csv_EnergyScope  = True
     plot_GEMMES = True
     csv_GEMMES = False
@@ -261,7 +261,7 @@ def plot_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     # ampl_graph.graph_cost_op_phase()
 
     # ampl_graph.graph_layer()
-    ampl_graph.graph_gwp()
+    # ampl_graph.graph_gwp()
     # ampl_graph.graph_tech_cap()
     # ampl_graph.graph_total_cost_per_year()
     # ampl_graph.graph_load_factor()

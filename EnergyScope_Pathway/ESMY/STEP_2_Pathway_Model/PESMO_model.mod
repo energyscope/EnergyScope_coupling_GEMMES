@@ -342,7 +342,8 @@ subject to efuels_constant_export {y in YEARS_WND diff YEAR_ONE, i in EXPORT_E_F
 
 # [Eq. 2.12-quater] Upper/lower bound to the export of e-fuels
 subject to bound_efuels_export {y in YEARS_WND diff YEAR_ONE}:
-	sum{i in EXPORT_E_FUELS, t in PERIODS} F_t [y, i, t] * t_op [t] >= efuels_export_bound [y];
+	sum{t in PERIODS} F_t [y, "H2_EXPORT", t] * t_op [t] >= efuels_export_bound [y];
+#	sum{i in EXPORT_E_FUELS, t in PERIODS} F_t [y, i, t] * t_op [t] >= efuels_export_bound [y];
 
 # [Eq. 2.12-quint] total revenues from exports
 var export_revenues {y in YEARS_WND diff YEAR_ONE} >= 0;
