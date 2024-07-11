@@ -634,11 +634,9 @@ subject to operation_computation_tech {p in PHASE_WND union PHASE_UP_TO, y_start
 subject to operation_computation_tech_non_annualised {p in PHASE_WND union PHASE_UP_TO, y_start in PHASE_START[p], y_stop in PHASE_STOP[p], i in TECHNOLOGIES}:
 	C_op_phase_tech_non_annualised [p,i] = t_phase *   ((C_maint [y_start,i] + C_maint [y_stop,i])/2 );
 
-subject to operation_computation_res {p in PHASE_WND union PHASE_UP_TO, y_start in PHASE_START[p], y_stop in PHASE_STOP[p], i in RESOURCES diff EXPORT}:
+subject to operation_computation_res {p in PHASE_WND union PHASE_UP_TO, y_start in PHASE_START[p], y_stop in PHASE_STOP[p], i in RESOURCES}:
 	C_op_phase_res [p,i] = t_phase *   ((C_op [y_start,i] + C_op [y_stop,i])/2 *annualised_factor[p] ); #In euros_2015
-
-subject to computation_res_non_annualised {p in PHASE_WND union PHASE_UP_TO, i in RESOURCES}:
-	C_op_phase_res_non_annualised [p,i] = 0;
+	
 
 # [Eq. XX] We could either limit the max investment on a period or fix that these investments must be equals in â‚¬_2015
 subject to maxInvestment {p in PHASE_WND}:
