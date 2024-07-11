@@ -342,8 +342,8 @@ subject to efuels_constant_export {y in YEARS_WND diff YEAR_ONE, i in EXPORT_E_F
 
 # [Eq. 2.12-quater] Upper/lower bound to the export of e-fuels
 subject to bound_efuels_export {y in YEARS_WND diff YEAR_ONE}:
-	sum{t in PERIODS} F_t [y, "H2_EXPORT", t] * t_op [t] >= efuels_export_bound [y];
-#	sum{i in EXPORT_E_FUELS, t in PERIODS} F_t [y, i, t] * t_op [t] >= efuels_export_bound [y];
+	sum{i in EXPORT_E_FUELS, t in PERIODS} F_t [y, i, t] * t_op [t] <= efuels_export_bound [y];
+#	sum{t in PERIODS} F_t [y, "H2_EXPORT", t] * t_op [t] >= efuels_export_bound [y];
 
 # [Eq. 2.12-quint] total revenues from exports
 var export_revenues {y in YEARS_WND diff YEAR_ONE} >= 0;
@@ -623,7 +623,14 @@ subject to investment_return {i in TECHNOLOGIES}:
 subject to Opex_tot_cost_calculation :# category: COST_calc
 	C_tot_opex = C_opex["YEAR_2020"] 
 				 + t_phase *  sum {p in PHASE_WND union PHASE_UP_TO,y_start in PHASE_START [p],y_stop in PHASE_STOP [p]} ( 
-					                 (C_opex [y_start] + C_opex [y_stop])/2 *annualised_factor[p] ); #In euros_2015
+				 			(C_opex [y_start] + C_opex [y_stop])/2 *annualised_factor[p] ); #In euros_2015
+
+var export_revenues_tot >= 0;
+# [Eq. XX] Compute export revenues for transition
+subject to export_revenues_tot_calculation :# category: COST_calc
+	export_revenues_tot = export_revenues["YEAR_2020"] 
+				 + t_phase *  sum {p in PHASE_WND union PHASE_UP_TO,y_start in PHASE_START [p],y_stop in PHASE_STOP [p]} ( 
+					                 (export_revenues [y_start] + export_revenues [y_stop])/2 *annualised_factor[p] ); #In euros_2015					                 
 
 # [Eq. XX] Compute operating cost for years
 subject to Opex_cost_calculation{y in YEARS_WND union YEARS_UP_TO} : # category: COST_calc
@@ -659,6 +666,6 @@ subject to Gwp_tot_cost_calculation:
 # 	TotalTransitionCost = C_tot_capex + C_tot_opex;
 # minimize obj: TotalTransitionCost;
 # Can choose between TotalTransitionCost_calculation and TotalGWP and TotalCost
-minimize  TotalTransitionCost: C_tot_capex + C_tot_opex + Gwp_tot_cost;#sum {y in YEARS} TotalCost [y];
+minimize  TotalTransitionCost: C_tot_capex + C_tot_opex + Gwp_tot_cost - export_revenues_tot;#sum {y in YEARS} TotalCost [y];
 # subject to New_totalTransitionCost_calculation :
 # 	TotalTransitionCost = C_tot_capex + C_tot_opex;
