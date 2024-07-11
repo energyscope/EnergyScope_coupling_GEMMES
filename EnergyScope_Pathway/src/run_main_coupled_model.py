@@ -19,7 +19,7 @@ def main():
     gdp_current = variables_GEMMES['gdp']
     diff = np.linalg.norm(gdp_current)
     n_iter = 0
-    while(diff > 1 and n_iter < 1): ##################### 
+    while(diff > 1 and n_iter < 3): ##################### 
         gdp_previous = gdp_current
         n_iter += 1
         output_EnergyScope = run_EnergyScope(variables_GEMMES)
@@ -260,7 +260,7 @@ def plot_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     # ampl_graph.graph_cost_return()
     # ampl_graph.graph_cost_op_phase()
 
-    # ampl_graph.graph_layer()
+    ampl_graph.graph_layer()
     # ampl_graph.graph_gwp()
     # ampl_graph.graph_tech_cap()
     # ampl_graph.graph_total_cost_per_year()
