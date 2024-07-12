@@ -30,7 +30,6 @@ curr_dir = Path(os.path.dirname(__file__))
 ESMY_path = os.path.join(curr_dir.parent,'ESMY')
 EnergyScope_model_path = os.path.join(ESMY_path,'STEP_2_Pathway_Model')
 
-from solve_GEMMES import solveGEMMES
 from ampl_object import AmplObject
 from ampl_preprocessor import AmplPreProcessor
 from ampl_collector import AmplCollector
@@ -100,7 +99,7 @@ ampl_options = {'show_stats': 1,
 
 def main():
     plot_EnergyScope = True  
-    csv_EnergyScope  = False
+    csv_EnergyScope  = True
 
     output_EnergyScope = run_EnergyScope()
 
@@ -194,14 +193,14 @@ def run_EnergyScope():
 def plot_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     ampl_graph = AmplGraph(EnergyScope_output_file, ampl_0, case_study)
     z_Results = ampl_graph.ampl_collector
-    # z_Resources = z_Results['Resources'].copy()
-    # z_Assets = z_Results['Assets'].copy()
-    # z_Cost_breakdown = z_Results['Cost_breakdown'].copy()
-    # z_Year_balance = z_Results['Year_balance'].copy()
-    # z_gwp_breakdown = z_Results['Gwp_breakdown'].copy()
+    z_Resources = z_Results['Resources'].copy()
+    z_Assets = z_Results['Assets'].copy()
+    z_Cost_breakdown = z_Results['Cost_breakdown'].copy()
+    z_Year_balance = z_Results['Year_balance'].copy()
+    z_gwp_breakdown = z_Results['Gwp_breakdown'].copy()
     
-    # a_website = "https://www.google.com"
-    # webbrowser.open_new(a_website)
+    a_website = "https://www.google.com"
+    webbrowser.open_new(a_website)
     # ampl_graph.graph_cost()
     # ampl_graph.graph_gwp_per_sector()
     # ampl_graph.graph_cost_inv_phase_tech()
@@ -209,7 +208,7 @@ def plot_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     # ampl_graph.graph_cost_op_phase()
 
     # ampl_graph.graph_layer()
-    ampl_graph.graph_gwp()
+    # ampl_graph.graph_gwp()
     # ampl_graph.graph_tech_cap()
     # ampl_graph.graph_total_cost_per_year()
     # ampl_graph.graph_load_factor()
