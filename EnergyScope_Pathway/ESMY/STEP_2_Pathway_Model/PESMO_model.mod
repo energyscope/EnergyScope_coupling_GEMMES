@@ -147,6 +147,7 @@ param loss_network {YEARS, END_USES_TYPES} >= 0 default 0; # %_net_loss: Losses 
 param batt_per_car {YEARS, V2G} >= 0 default 0; # ev_Batt_size [GWh]: Battery size per EVs car technology
 param c_grid_extra >=0; # # Cost to reinforce the grid due to IRE penetration [Meuros/GW of (PV + Wind)].
 param elec_max_import_capa  {YEARS} >=0;
+param elec_max_export_capa  {YEARS} >=0;
 param solar_area_rooftop	 {YEARS} >= 0; # Maximum rooftop area available for PV deployment [km2]
 param solar_area_ground	 {YEARS} >= 0; # Maximum ground area available for PV deployment [km2]
 param power_density_pv >=0 default 0;# Maximum power irradiance for PV.
@@ -517,6 +518,10 @@ subject to extra_efficiency {y in YEARS_WND diff YEAR_ONE}:
 # [Eq. 38] Limit electricity import capacity
 subject to max_elec_import {y in YEARS_WND diff YEAR_ONE, t in PERIODS}:
 	F_t [y, "ELECTRICITY", t] * t_op [t] <= elec_max_import_capa [y] + F[y,"HVAC_LINE"];
+
+# [Eq. 38 bis] Limit electricity export capacity
+subject to max_elec_export {y in YEARS_WND diff YEAR_ONE, t in PERIODS}:
+	F_t [y, "ELEC_EXPORT", t] * t_op [t] <= elec_max_export_capa [y] + F[y,"HVAC_LINE"];	
 	
 # [Eq. 39] Limit surface area for rooftop solar
 subject to solar_area_rooftop_limited {y in YEARS_WND diff YEAR_ONE} :
