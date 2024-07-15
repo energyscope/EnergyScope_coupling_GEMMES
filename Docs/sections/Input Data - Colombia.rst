@@ -72,40 +72,11 @@ given in :numref:`Table %s <tbl:cepci>`.
 For the cost of resources, the evolution of the cost from 2015 to 2021 is not computed using the CEPCI, 
 but instead using the supplementary data of the PEN 2050 :cite:`PEN2050`.
 
-
-CONTINUER APD ICI
-
-
-
-
-All cost data used in the model originally expressed in
-other currencies or referring to another year are converted to
-€\ :sub:`2015` to offer a coherent comparison. Most of the data come
-from a previous work :cite:`Moret2017PhDThesis,Limpens2019`,
-and were expressed in CHF\ :sub:`2015` (Based on the average annual
-exchange rate value from ECB https://www.ecb.europa.eu, the annual rate
-was 1€\ :sub:`2015` = 1.0679CHF\ :sub:`2015`). 
-Blabla Eq. :eq:`eqn:currency_conv_2`.
-
-.. math::
-    c_{inv} [\text{€}_{2015}] = c_{inv} [C_y] \cdot  \frac{\text{USD}_y}{C_y}  \cdot \frac{\text{CEPCI}_{2015} \ [\text{USD}_{2015}]}{\text{CEPCI}_y \ [\text{USD}_y]} \cdot \frac{\text{€}_{2015}}{\text{USD}_{2015}} 
-    :label: eqn:currency_conv_2
-
-Where :math:`C` and :math:`y` are the currency and the year in which the
-original cost data are expressed, respectively,  
-
-As an example, if the cost data are
-originally in EUR\ :sub:`2010`, they are first converted to
-USD\ :sub:`2010`, then brought to USD\ :sub:`2015` taking into account
-the evolution of the equipment cost (by using the CEPCI), and finally
-converted to €\ :sub:`2015`. The intermediate conversion to USD is
-motivated by the fact that the CEPCI is expressed in *nominal* USD.
-
-
-
-
-
-
+Note that originally, to express all costs in €\ :sub:`2015` in the other versions of EnergyScope, many
+data expressed in other currencies or referring to another year had to be converted to €\ :sub:`2015`.
+Most of these data came from the works :cite:`Moret2017PhDThesis,Limpens2019` and were expressed in CHF\ :sub:`2015`.
+They were converted into €\ :sub:`2015` thanks to similar equations to :eq:`eqn:currency_conv_1`, using relevant annual exchange
+rate values retrieved from the ECB and using CEPCI indices between relevant years.
 
 
 .. _app:sec:ESTD_CO_resources:

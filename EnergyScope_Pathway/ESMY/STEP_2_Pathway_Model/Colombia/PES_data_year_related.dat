@@ -67,14 +67,14 @@ YEAR_2050	1500
 ;
 
 param efuels_export_bound :=            # [GWh/year]
-YEAR_2015	INFINITY 																																																																																																																
-YEAR_2020	INFINITY																																																																																																																
-YEAR_2025	INFINITY 																																																																																																																
-YEAR_2030	INFINITY # 25000 																																																																																																											
-YEAR_2035	INFINITY # 50000 																																																																																																																
-YEAR_2040	INFINITY # 100000 																																																																																																																
-YEAR_2045	INFINITY # 300000																																																																																																																
-YEAR_2050	INFINITY # 500000																																																																																																																
+YEAR_2015	0 																																																																																																																
+YEAR_2020	0																																																																																																																
+YEAR_2025	0 																																																																																																																
+YEAR_2030	0 # 25000 																																																																																																											
+YEAR_2035	0 # 50000 																																																																																																																
+YEAR_2040	0 # 100000 																																																																																																																
+YEAR_2045	0 # 300000																																																																																																																
+YEAR_2050	0 # 500000																																																																																																																
 ;
 
 # Part [2.4]																																																																																																																	

@@ -48,8 +48,9 @@ set END_USES_CATEGORIES; # Categories of demand (end-uses): electricity, heat, m
 set END_USES_TYPES_OF_CATEGORY {END_USES_CATEGORIES}; # Types of demand (end-uses).
 set RESOURCES; # Resources: fuels (renewables and fossils) and electricity imports
 set RES_IMPORT_CONSTANT within RESOURCES; # resources imported at constant power (e.g. NG, diesel, ...)
-set BIOFUELS within RESOURCES; # imported biofuels.
+set BLENDED_FUELS within RESOURCES; # Fuels which are blended with other fuels in the layers
 set EXPORT within RESOURCES; # exported resources
+set EXPORT_E_FUELS; # export of e-fuels
 set END_USES_TYPES := setof {i in END_USES_CATEGORIES, j in END_USES_TYPES_OF_CATEGORY [i]} j; # secondary set
 set TECHNOLOGIES_OF_END_USES_TYPE {END_USES_TYPES}; # set all energy conversion technologies (excluding storage technologies and infrastructure)
 set STORAGE_TECH; #  set of storage technologies 
@@ -58,7 +59,7 @@ set INFRASTRUCTURE; # Infrastructure: DHN, grid, and intermediate energy convers
 set RE_TECH; # Set composed of PV, WIND_ON and WIND_OFF
 
 ## SECONDARY SETS: a secondary set is defined by operations on MAIN SETS
-set LAYERS := (RESOURCES diff BIOFUELS diff EXPORT) union END_USES_TYPES; # Layers are used to balance resources/products in the system
+set LAYERS := (RESOURCES diff BLENDED_FUELS diff EXPORT) union END_USES_TYPES; # Layers are used to balance resources/products in the system
 set TECHNOLOGIES := (setof {i in END_USES_TYPES, j in TECHNOLOGIES_OF_END_USES_TYPE [i]} j) union STORAGE_TECH union INFRASTRUCTURE; 
 set TECHNOLOGIES_OF_END_USES_CATEGORY {i in END_USES_CATEGORIES} within TECHNOLOGIES := setof {j in END_USES_TYPES_OF_CATEGORY[i], k in TECHNOLOGIES_OF_END_USES_TYPE [j]} k;
 set RE_RESOURCES within RESOURCES; # List of RE resources (including wind hydro solar), used to compute the RE share
@@ -111,6 +112,7 @@ param end_uses_input {y in YEARS, i in END_USES_INPUT} := sum {s in SECTORS} (en
 param i_rate {PHASE} > 0 default 0.015; # discount rate [-]: real discount rate
 param re_share_primary {YEARS} >= 0 default 0; # re_share [-]: minimum share of primary energy coming from RE
 param gwp_limit {YEARS} >= 0 default 0;    # [ktCO2-eq./year] maximum gwp emissions allowed.
+param efuels_export_bound {YEARS} >= 0 default 0;    # [GWh/year]
 param share_mobility_public_min {YEARS} >= 0, <= 1 default 0; # %_public,min [-]: min limit for penetration of public mobility over total mobility 
 param share_mobility_public_max {YEARS} >= 0, <= 1 default 0; # %_public,max [-]: max limit for penetration of public mobility over total mobility 
 # Share train vs truck in freight transportation
@@ -156,6 +158,7 @@ param batt_per_car {YEARS, V2G} >= 0 default 0; # ev_Batt_size [GWh]: Battery si
 param state_of_charge_ev {EVs_BATT,HOURS} >= 0, default 0; # Minimum state of charge of the EV during the day. 
 param c_grid_extra >=0; # # Cost to reinforce the grid due to IRE penetration [Meuros/GW of (PV + Wind)].
 param elec_max_import_capa  {YEARS} >=0;
+param elec_max_export_capa  {YEARS} >=0;
 param solar_area_ground	 {YEARS} >= 0; # Maximum land available for PV deployment [km2]
 param solar_area_rooftop	 {YEARS} >= 0; # Maximum rooftop available for PV deployment [km2]
 param power_density_pv >=0 default 0;# Maximum power irradiance for PV.
@@ -274,7 +277,7 @@ subject to end_uses_t {y in YEARS_WND diff YEAR_ONE, l in LAYERS, h in HOURS, td
 
 # [Eq. 1]	
 subject to totalcost_cal {y in YEARS_UP_TO union YEARS_WND}:
-	TotalCost [y] = sum {j in TECHNOLOGIES} (tau [y,j]  * C_inv [y,j] + C_maint [y,j]) + sum {i in RESOURCES} C_op [y,i];
+	TotalCost [y] = sum {j in TECHNOLOGIES} (tau [y,j]  * C_inv [y,j] + C_maint [y,j]) + sum {i in RESOURCES diff EXPORT} C_op [y,i] - sum {i in EXPORT} C_op [y,i];
 	
 # [Eq. 3] Investment cost of each technology
 subject to investment_cost_calc {y in YEARS_UP_TO union YEARS_WND,j in TECHNOLOGIES}: 
@@ -339,6 +342,19 @@ var Import_constant {y in YEARS diff YEAR_ONE, RES_IMPORT_CONSTANT} >= 0;
 subject to resource_constant_import {y in YEARS_WND diff YEAR_ONE, i in RES_IMPORT_CONSTANT, h in HOURS, td in TYPICAL_DAYS}:
 	F_t [y, i, h, td] * t_op [h, td] = Import_constant [y, i];
 
+# [Eq. 2.12-tris] Constant flow of export of e-fuels
+var Export_constant {y in YEARS diff YEAR_ONE, EXPORT_E_FUELS} >= 0;
+subject to efuels_constant_export {y in YEARS_WND diff YEAR_ONE, i in EXPORT_E_FUELS, h in HOURS, td in TYPICAL_DAYS}:
+	F_t [y, i, h, td] * t_op [h, td] = Export_constant [y, i];
+
+# [Eq. 2.12-quater] Upper/lower bound to the export of e-fuels
+subject to bound_efuels_export {y in YEARS_WND diff YEAR_ONE}:
+	sum{i in EXPORT_E_FUELS, h in HOURS, td in TYPICAL_DAYS} F_t [y, i, h, td] * t_op [h, td] <= efuels_export_bound [y];
+
+# [Eq. 2.12-quint] total revenues from exports
+var export_revenues {y in YEARS_WND diff YEAR_ONE} >= 0;
+subject to compute_export_revenues {y in YEARS_WND diff YEAR_ONE}:
+	sum {i in EXPORT} C_op [y,i] = export_revenues [y];
 
 ## Layers
 #--------
@@ -508,6 +524,10 @@ subject to extra_efficiency {y in YEARS_WND diff YEAR_ONE}:
 subject to max_elec_import {y in YEARS_WND diff YEAR_ONE, h in HOURS, td in TYPICAL_DAYS}:
 	F_t [y, "ELECTRICITY", h, td] * t_op [h, td] <= elec_max_import_capa [y] + F[y,"HVAC_LINE"];
 	
+# [Eq. 38 bis] Limit electricity export capacity
+subject to max_elec_export {y in YEARS_WND diff YEAR_ONE, h in HOURS, td in TYPICAL_DAYS}:
+	F_t [y, "ELEC_EXPORT", h, td] * t_op [h, td] <= elec_max_export_capa [y] + F[y,"HVAC_LINE"];
+	
 # [Eq. 39] Limit surface area for rooftop solar
 subject to solar_area_rooftop_limited {y in YEARS_WND diff YEAR_ONE} :
 	( F [y, "DEC_SOLAR"] + F [y, "DHN_SOLAR"] ) / power_density_solar_thermal <= solar_area_rooftop [y];
@@ -615,9 +635,16 @@ subject to Opex_tot_cost_calculation :# category: COST_calc
 				 + t_phase *  sum {p in PHASE_WND union PHASE_UP_TO,y_start in PHASE_START [p],y_stop in PHASE_STOP [p]} ( 
 					                 (C_opex [y_start] + C_opex [y_stop])/2 *annualised_factor[p] ); #In euros_2015
 
+var export_revenues_tot >= 0;
+# [Eq. XX] Compute export revenues for transition
+subject to export_revenues_tot_calculation :# category: COST_calc
+	export_revenues_tot = export_revenues["YEAR_2020"] 
+				 + t_phase *  sum {p in PHASE_WND union PHASE_UP_TO,y_start in PHASE_START [p],y_stop in PHASE_STOP [p]} ( 
+					                 (export_revenues [y_start] + export_revenues [y_stop])/2 *annualised_factor[p] ); #In euros_2015
+
 # [Eq. XX] Compute operating cost for years
 subject to Opex_cost_calculation{y in YEARS_WND  union YEARS_UP_TO} : # category: COST_calc
-	C_opex [y] = sum {j in TECHNOLOGIES} C_maint [y,j] + sum {i in RESOURCES} C_op [y,i]; #In â‚¬_y
+	C_opex [y] = sum {j in TECHNOLOGIES} C_maint [y,j] + sum {i in RESOURCES diff EXPORT} C_op [y,i]; #In â‚¬_y
 
 subject to operation_computation_tech {p in PHASE_WND union PHASE_UP_TO, y_start in PHASE_START[p], y_stop in PHASE_STOP[p], i in TECHNOLOGIES}:
 	C_op_phase_tech [p,i] = t_phase *   ((C_maint [y_start,i] + C_maint [y_stop,i])/2 *annualised_factor[p] ); #In euros_2015
@@ -651,6 +678,6 @@ subject to Gwp_tot_cost_calculation:
 # 	TotalTransitionCost = C_tot_capex + C_tot_opex;
 # minimize obj: TotalTransitionCost;
 # Can choose between TotalTransitionCost_calculation and TotalGWP and TotalCost
-minimize  TotalTransitionCost: C_tot_capex + C_tot_opex + Gwp_tot_cost;#sum {y in YEARS} TotalCost [y];
+minimize  TotalTransitionCost: C_tot_capex + C_tot_opex + Gwp_tot_cost - export_revenues_tot;#sum {y in YEARS} TotalCost [y];
 # subject to New_totalTransitionCost_calculation :
 # 	TotalTransitionCost = C_tot_capex + C_tot_opex;
