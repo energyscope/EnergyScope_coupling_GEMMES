@@ -7,19 +7,19 @@ May 2024
 
 ## Define the country studied and the time granularity of EnergyScope
 country = 'Colombia'
-EnergyScope_granularity = 'MO'
+EnergyScope_granularity = 'TD'
 nbr_tds = 12
 
 def main():
     plot_EnergyScope = True  
     csv_EnergyScope  = True
     plot_GEMMES = True
-    csv_GEMMES = False
+    csv_GEMMES = True
     variables_GEMMES = run_GEMMES()
     gdp_current = variables_GEMMES['gdp']
     diff = np.linalg.norm(gdp_current)
     n_iter = 0
-    while(diff > 1 and n_iter < 3): ##################### 
+    while(diff > 1 and n_iter < 2): ##################### 
         gdp_previous = gdp_current
         n_iter += 1
         output_EnergyScope = run_EnergyScope(variables_GEMMES)
@@ -249,7 +249,7 @@ def plot_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     z_Results = ampl_graph.ampl_collector
     # z_Resources = z_Results['Resources'].copy()
     # z_Assets = z_Results['Assets'].copy()
-    # z_Cost_breakdown = z_Results['Cost_breakdown'].copy()
+    z_Cost_breakdown = z_Results['Cost_breakdown'].copy()
     # z_Year_balance = z_Results['Year_balance'].copy()
     # z_gwp_breakdown = z_Results['Gwp_breakdown'].copy()
     

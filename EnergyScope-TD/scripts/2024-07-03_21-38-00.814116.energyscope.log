@@ -1,9 +1,0 @@
-24/07/03 21:38:00 [INFO    ] (import_data): Importing data files from /home/piejacques/Bureau/EnergyScope_coupling_GEMMES/EnergyScope-TD/Data/TK 2035
-24/07/03 21:38:00 [INFO    ] (kmedoid_clustering): Starting kmedoid clustering of typical days based on /home/piejacques/Bureau/EnergyScope_coupling_GEMMES/EnergyScope-TD/energyscope/preprocessing/td_selection/data.dat
-24/07/03 21:38:00 [INFO    ] (kmedoid_clustering): Running kmedoid clustering
-24/07/03 21:38:09 [INFO    ] (kmedoid_clustering): End of kmedoid clustering
-24/07/03 21:38:09 [INFO    ] (print_data): Printing ESTD_data.dat
-24/07/03 21:38:09 [INFO    ] (print_data): Printing ESTD_12TD.dat
-24/07/03 21:38:09 [INFO    ] (run_es): Running EnergyScope
-24/07/03 21:39:07 [INFO    ] (run_es): End of run
-24/07/03 21:39:07 [INFO    ] (read_outputs): Reading outputs from: /home/piejacques/Bureau/EnergyScope_coupling_GEMMES/EnergyScope-TD/case_studies/TK 2035 - net zero/output
