@@ -281,8 +281,8 @@ of final energy consumption given in :cite:`TK_national_energy_plan`.
 Electricity
 -----------
 
-Final electricity consumption in 2019 is taken from PFU_DATABASE. The electricity used for heating and cooling in 2019 is subtracted from it, based
-on the values given in PFU_DATABASE. This aggregated electricity EUD is then divided between baseload and variable load according to the proportions
+Final electricity consumption in 2019 is taken from :cite:`Brockway_2024`. The electricity used for heating and cooling in 2019 is subtracted from it, based
+on the values given in :cite:`Brockway_2024`. This aggregated electricity EUD is then divided between baseload and variable load according to the proportions
 retrieved from the EPIAS Transparency Portal for the year 2019 (https://seffaflik.epias.com.tr/transparency/). This gives a share of 55% baseload and
 45% variable load. Finally, the values for baseload and variable load are divided between the different economic sectors by using the proportions given in :cite:t:`IEA_world_energy_balances_TK` (and aggregating together industry, agriculture and fishing).
 
@@ -294,7 +294,7 @@ For :math:`\%_{elec}`, we normalize the real electricity demand from the year 20
 Heating and cooling
 -------------------
 
-The aggregated EUDs for different heating and cooling types were retrieved from PFU_DATABASE. The time series :math:`\%_{sh}` and :math:`\%_{sc}` are 
+The aggregated EUDs for different heating and cooling types were retrieved from :cite:`Brockway_2024`. The time series :math:`\%_{sh}` and :math:`\%_{sc}` are 
 based on our own computations, following the method described in :cite:`borasio2022deep`.
 
 .. math::
@@ -557,7 +557,7 @@ Heating and cogeneration
 
 Tables :numref:`%s <tbl:ind_cogen_boiler>`, :numref:`%s <tbl:dhn_cogen_boiler>` and :numref:`%s <tbl:dec_cogen_boiler>`
 previously gave the characteristics of the heating and cogeneration technologies modelled in EnergyScope. By using the
-data from PFU_DATABASE, we can determine that the following capacities were installed in 2019:
+data from :cite:`Brockway_2024`, we can determine that the following capacities were installed in 2019:
 
 .. container::
 
@@ -585,7 +585,7 @@ thermal (i.e. the mean of its :math:`c_{p,t}` time series) is thus found to be 2
 Cooling
 -------
 
-Based on data from PFU_DATABASE, we could determine the 2019 coefficient of performance of some cooling technnologies:
+Based on data from :cite:`Brockway_2024`, we could determine the 2019 coefficient of performance of some cooling technnologies:
 
 .. container::
 

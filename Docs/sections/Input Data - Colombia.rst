@@ -17,8 +17,6 @@ The data can be grouped into three parts: resources (Section `Resources <#app:se
 `Demand <#sec:app1_end_uses>`__) and technologies (Section
 `Technologies <#app:ESTD_CO_data_technologies>`__).
 
-Regarding resources, ...
-
 Regarding technologies, they are characterised by the following characteristics:
 energy balances, cost (investment and maintenance) and environmental
 impact (global warming potential (GWP)). Regarding weather-dependent technologies (wind, solar, etc.), real
@@ -97,7 +95,7 @@ Additionnaly, Colombia has a limited geothermal potential. In EnergyScope, the l
 Solar, wind, hydro and geothermal
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-:numref:`Table %s <tab:renewableTechPotentialIn2035>` gives the Colombian potential for solar, wind, hydro and geothermal energy. These data are put into perspective with the values used for the calibration to the year 2021.
+:numref:`Table %s <tab:renewableTechPotentialIn2035>` gives the 2050 Colombian potential for solar, wind, hydro and geothermal energy. These data are put into perspective with the values used for the calibration to the year 2021.
       
 .. container::
 
@@ -208,8 +206,8 @@ not landfill (composting, recycling) and paper cardboard. Finally, *biofuels* ar
 
 		bioethanol , 7.2 [7a]_ , 100 [7b]_ , [TWh]
 		biodiesel , 2.5 [7a]_ , 100 [7b]_ , [TWh]
-		woody biomass , 34.3 [7c]_ , 75.0 [7d]_ , [TWh]
-		wet biomass , 0 , 49.8 [7d]_ , [TWh]
+		woody biomass , 34.3 [7c]_ , 24.6 [7d]_ , [TWh]
+		wet biomass , 0 , 29.9 [7d]_ , [TWh]
 		non-renewable waste, 0 , 10.3 [7e]_ , [TWh]
    
    .. [7a]
@@ -222,67 +220,80 @@ not landfill (composting, recycling) and paper cardboard. Finally, *biofuels* ar
       Endogenous computation, based on the data of the EUDs and technologies in 2021. This value matches grossly the primary solid biomass data for year 2019 given in :cite:`IEA_world_energy_balances`.
       
    .. [7d]
-      According to :cite:`RE_potential_2023`, :cite:`UPME_2009` gives a gross energy potential from waste biomass in Colombia of 124.9 TWh and :cite:`TECSOL_2018` gives a biogas potential of 14.9 TWh. In Energyscope, biogas is produced based on *wet biomass*, with a conversion factor  of 3.35 in 2021. By using this conversion factor, we can transform the biogas potential into a wet biomass potential of 49.8 TWh. Finally, subtracting the wet biomass potential from the gross energy potential from waste biomass gives the potential for woody biomass.
+      :cite:`Magne2024` performed a detailed assessment of the renewable biomass potential of all countries in South America. The corresponding data for Colombia were thus retrieved: the "forestry" potential gave the potential for woody biomass and the "agro-industrial" and "municipal waste" potentials were added to give the wet biomass potential.
 
    .. [7e] 
       Data obtained from Departamento Nacional de Planeación (DNP), the Colombian National Planning Department
       
-Prices and GHG emissions of biomass resources given in :numref:`Table %s <tab:prices_resources_biomass>` ... source ...
+The corresponding price and GHG emissions are given in :numref:`Table %s <tab:prices_resources_biomass>`. Two metrics are proposed for GHG emissions:
+one accounting for the impact associated with extraction, transportation and
+combustion (based on GWP100a-IPCC2013 :cite:`Moret2017PhDThesis`); the other accounting
+only for direct emissions related to combustion (based on :cite:t:`Quaschning2015`). The first metric
+is used when imposing constraints on the energy system's total emissions; the second one is used when calibrating the model to the year 2021 (see Section **GHG emissions**).
 
 .. container::
 
    .. csv-table:: Price and GHG emissions of biomass and waste resources.
-      :header: **Resources** , **c**:sub:`op` , **gwp**:sub:`op` [8a]_ , **CO**:sub:`2direct` [8b]_
+      :header: **Resources** , **c**:sub:`op` [8a]_ , **gwp**:sub:`op` [8b]_ , **CO**:sub:`2direct`
       :widths: 15 15 15 15
       :name: tab:prices_resources_biomass
 		
-		 , [€\ :sub:`2015`/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`]
-		bioethanol , 111.3 , 0 , 250
-		biodiesel , 120.1 , 0 , 270
-		woody biomass , 32.8 , 10 , 390
-		wet biomass , 5.8 , 10 , 390
-		non-renewable waste, 8.1 , 190 , 260 [8c]_
+		 , [USD\ :sub:`2021`/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`]
+		bioethanol , 88.2 , 0 , 250
+		biodiesel , 47.3 , 0 , 270
+		woody biomass , 4.7 , 11.8 , 390
+		wet biomass , 0.7 , 11.8 , 390
+		non-renewable waste, 2.7 , 150 , 260 [8c]_
 
 .. [8a]
+   Computed based on the supplementary data of the PEN 2050 :cite:`PEN2050`.
+
+.. [8b]
    GWP100a-IPCC2013 metric: impact associated to extraction, transportation and combustion. Note that this metric accounts for negative 
    upstream emissions, hence the null or very low value for the different biomass resources.
-   
-.. [8b]
-   Direct emissions related to combustion :cite:`Quaschning2015`. These data are not used in EnergyScope Colombia (since the capacity of technology CCS_industrial is set to zero), but they help us to check that the calibration of EnergyScope to the 2021 Colombian energy system is correct.
 
 .. [8c]
    Assuming that the energy content can be assimilated to plastics.
 
 
-Domestically produced fossil fuels
-----------------------------------
+Fossil fuels
+------------
 
-Fossil fuels used in Colombia are produced and refined nearly 100% domestically :cite:`IEA_2023`.
-They include coal and hydrocarbons (natural gas, gasoline, diesel, light fuel oil).
+A large share of fossil fuels used in Colombia is produced and refined domestically :cite:`IEA_2023`. They include coal and hydrocarbons (natural gas, gasoline, diesel, light fuel oil). However, Colombia is also importing an increasing amount of natural gas.
 
-No constraint regarding the availability of domestically produced fossil fuels, since the cost-optimization already does the trick ?
 
-Prices and GHG emissions given in :numref:`Table %s <tab:prices_resources_fossil>` ... source ...
+The availability of all fossil fuel resources is set to a value high enough to allow unlimited use in the model, except for local natural gas. Its availability in 2035 is set to to 13 TWh, based on :cite:`wtw2023`.
+
+:numref:`Table %s <tab:prices_resources_fossil>` therefore gives the prices and GHG emissions associated with both domestic and imported fossil fuels in Colombia. Imported coal is included,
+even though the model never selects it given the lower cost and unbounded potential of local coal.
 
 .. container::
 
-   .. csv-table:: Price and GHG emissions of domestically produced fossil fuels, in 2035. Abbreviations: Liquid Fuel Oil (LFO).
-      :header: **Resources** , **c**:sub:`op` , **gwp**:sub:`op` [9a]_ , **CO**:sub:`2direct` [9b]_
+   .. csv-table:: Price and GHG emissions of domestically produced and imported fossil fuels, in 2035. Abbreviations: Liquid Fuel Oil (LFO).
+      :header: **Resources** , **c**:sub:`op` [9a]_  , **gwp**:sub:`op` [9b]_ , **CO**:sub:`2direct` [9c]_
       :widths: 15 15 15 15
       :name: tab:prices_resources_fossil
 		
-		 , [€\ :sub:`2015`/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`]
-		coal , 17.7 , 470 , 360
-		natural gas , 44.3 , 330 , 200
-		gasoline , 82.4 , 430 , 250
-		diesel , 79.7 , 400 , 270
-		LFO , 60.2 , 370 , 260
+		 , [USD\ :sub:`2021`/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`]
+		local coal , 7.3 , 401 , 360
+		imported coal , 11.2 , 401 , 360
+		local natural gas , 25.4 , 267 , 200
+		imported natural gas , 39.0 , 267 , 200
+		local gasoline , 44.1 , 345 , 250
+		local diesel , 23.7 , 315 , 270
+		local LFO , 30.0 , 312 , 280
 
 .. [9a]
+   Computed based on the supplementary data of the PEN 2050 :cite:`PEN2050`.
+
+.. [9b]
    GWP100a-IPCC2013 metric: impact associated to extraction, transportation and combustion
    
-.. [9b]
+.. [9c]
    Direct emissions related to combustion :cite:`Quaschning2015`. These data are not used in EnergyScope Colombia (since the capacity of technology CCS_industrial is set to zero), but they help us to check that the calibration of EnergyScope to the 2021 Colombian energy system of is correct.
+
+
+
 
 Electricity imports and exports
 -------------------------------
@@ -309,8 +320,7 @@ The availability of the cross-border electricity imports and exports, when defin
    .. [10c]
       Value inspired from the interconnection projects described in :cite:`IEA_2023`.
 
-
-Prices and GHG emissions given in :numref:`Table %s <tab:prices_elec_import_export>` ... source ...
+The corresponding prices and GHG emissions are given in :numref:`Table %s <tab:prices_elec_import_export>`.
 
 .. container::
 
@@ -319,21 +329,24 @@ Prices and GHG emissions given in :numref:`Table %s <tab:prices_elec_import_expo
       :widths: 15 15 15 15
       :name: tab:prices_elec_import_export
 		
-		 , [€\ :sub:`2015`/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`]
-		elec imports , 84.3 , 250 , 0
-		elec exports , 75.9 [11b]_ , 0 , 0
+		 , [USD\ :sub:`2021`/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`]
+		elec imports , 42.9 [11b]_ , 206 , 0
+		elec exports , 38.6 [11c]_ , 0 , 0
 
 .. [11a]
-   GWP100a-IPCC2013 metric: impact associated to extraction, transportation and combustion
-   
+   GWP100a-IPCC2013 metric: impact associated to extraction, transportation and combustion. The value for electricity imports takes into account the projected progressive decarbonisation of Ecuador's electricity mix.
+
 .. [11b]
+   Computed based on the supplementary data of the PEN 2050 :cite:`PEN2050`.
+   
+.. [11c]
    The price of electricity exports is assumed to be equal to 90% of the price of electricity imports, to account for cross-border tariffs.
    
 
-Export of electro-fuels
------------------------
+Export of electrofuels
+----------------------
 
-Electro-fuels (or e-fuels) are a recent type of fuel. They are produced using (renewable) electricity. Thus, they do not act as an
+Electrofuels (or e-fuels) are a recent type of fuel. They are produced using (renewable) electricity. Thus, they do not act as an
 energy source but rather as an energy carrier. The export of e-fuels is currently envisaged by Colombia as a possible strategy
 for partially compensating for the planned decrease in fossil fuels' exports. Four types of e-fuels are considered in EnergyScope:
 hydrogen, methane, ammonia and methanol. In the model's code, they are designated with the appendix 'RE' to distinguish them from 
@@ -350,11 +363,11 @@ computed import price. The corresponding values are indicated in :numref:`Table 
       :widths: 15 15 15
       :name: tab:prices_resources_efuels
 		
-		 , [€\ :sub:`2015`/MWh :sub:`fuel`] [12a]_ , [€\ :sub:`2015`/MWh :sub:`fuel`] [12b]_
-		green hydrogen , 119.2 , 95.4
-		e-methane , 118.3 , 94.7
-		e-ammonia , 81.8 , 65.5
-		e-methanol , 111.3 , 89.1
+		 , [USD\ :sub:`2021`/MWh :sub:`fuel`] [12a]_ , [USD\ :sub:`2021`/MWh :sub:`fuel`] [12b]_
+		green hydrogen , 126.6 , 101.3
+		e-methane , / , 101.3
+		e-ammonia , 87.4 , 69.9
+		e-methanol , 119.9 , 95.9
 
 .. [12a]
    Taken as equal to the import price of e-fuels from international market, computed by :cite:`H2coalition2020shipping`.
@@ -505,24 +518,27 @@ Hidroituango power plant (1.2 GW according to :cite:`IEA_2023`), which was compl
 
    .. csv-table:: Renewable electricity production technologies in 2035. Abbreviations: concentrated solar power 
       with parabolic trough (CSP PT), concentrated solar power with solar tower (CSP ST).
-      :header: **Technology**, **c**:sub:`inv`, **c**:sub:`maint`, **gwp**:sub:`constr` [14a]_ , **lifetime**, **c**:sub:`p`
+      :header: **Technology**, **c**:sub:`inv`, **c**:sub:`maint`, **gwp**:sub:`constr` [14aa]_ , **lifetime**, **c**:sub:`p`
       :widths: 19 18 24 23 15 15
       :name: tab:elec_prod_re
 		 
-		  , [€ :sub:`2015`/kW :sub:`e`], [€ :sub:`2015`/kW :sub:`e`/year], [kgCO :sub:`2`-eq./kW :sub:`e`], [year], [%]
-		 Hydro dam, 4201 [14b]_, 21.0 [14b]_, 1693, 40 [14b]_, 50 [14c]_
-		 Hydro river, 5045 [14b]_, 50.4 [14b]_, 1263, 40 [14b]_, 50 [14c]_
-		 Rooftop PV, 738 [14d]_, 9.7 [14d]_, 2081, 40 [14d]_, 19 [14e]_
-		 Utility scale PV, 335 [14d]_, 8.4 [14d]_, 2081, 40 [14d]_, 21 [14e]_
-		 Onshore wind, 1010 [14d]_, 16.8 [14d]_, 623, 30 [14f]_, 27 [14g]_
-		 Offshore wind, 1255 [14d]_, 50.6 [14d]_, 623, 30 [14f]_, 50 [14h]_
-		 Geothermal, 7488 [14i]_, 142.3 [14i]_, 24929, 30, 86 [14j]_
-		 CSP PT, 1045 [14k]_, 62.7 [14k]_, 0 [14m]_ , 25, 32 [14l]_
-		 CSP ST, 768 [14k]_, 63.0 [14k]_, 0 [14m]_ , 25, 32 [14l]_
-		 Biomass central, 1677 [14d]_, 69.9 [14d]_, 332, 35, 87
+		  , [USD\ :sub:`2021`/kW :sub:`e`], [USD\ :sub:`2021`/kW :sub:`e`/year], [kgCO :sub:`2`-eq./kW :sub:`e`], [year], [%]
+		 Hydro dam, 3116 [14a]_, 31.2 [14a]_, 1693, 40 [14b]_, 50 [14c]_
+		 Hydro river, 2825 [14a]_, 28.3 [14a]_, 1263, 40 [14b]_, 50 [14c]_
+		 Rooftop PV, 1040 [14d]_, 13.7 [14d]_, 2081, 40 [14d]_, 19 [14e]_
+		 Utility scale PV, 474 [14d]_, 11.9 [14d]_, 2081, 40 [14d]_, 21 [14e]_
+		 Onshore wind, 1427 [14d]_, 23.7 [14d]_, 623, 30 [14f]_, 27 [14g]_
+		 Offshore wind, 1773 [14d]_, 71.3 [14d]_, 623, 30 [14f]_, 50 [14h]_
+		 Geothermal, 10576 [14i]_, 196.5 [14i]_, 24929, 30, 86 [14j]_
+		 CSP PT, 1473 [14k]_, 88.3 [14k]_, 0 [14m]_ , 25, 32 [14l]_
+		 CSP ST, 1083 [14k]_, 88.8 [14k]_, 0 [14m]_ , 25, 32 [14l]_
+		 Biomass central, 2364 [14d]_, 98.6 [14d]_, 332, 35, 87
 		 
-.. [14a]
+.. [14aa]
    Data from :cite:`weidema_ecoinvent_2013`
+   
+.. [14a]
+   Data based on costs reported for the neighbouring country Bolivia, in :cite:`ENDE2015` and :cite:`ENDE2019`
 
 .. [14b]
    Data taken from :cite:`association_des_entreprises_electriques_suisses_aes_grande_2014`
@@ -614,10 +630,10 @@ The installed capacity of each technology in 2021 is given as well.
       :widths: 11 17 24 23 12 8 13 8 8
       :name: tab:elec_prod_nre
 		 
-		  , [€ :sub:`2015`/kW :sub:`e`], [€ :sub:`2015`/kW :sub:`e`/year], [kgCO :sub:`2`-eq./kW :sub:`e`], [year], [%], [%], [tCO2/MWh :sub:`e`], [GW]
-		 CCGT, 772 [15d]_, 19.7 [15d]_, 184, 25, 85, 63 [15e]_, 0.317, 2.43
-		 CCGT ammonia [15f]_, 772, 19.6, 184, 25, 59, 50, 0, 0
-		 Coal central, 3246 [15g]_, 49.0 [15g]_, 332, 35, 86 [15b]_, 54 [15h]_, 0.667, 0.61
+		  , [USD\ :sub:`2021`/kW :sub:`e`], [USD\ :sub:`2021`/kW :sub:`e`/year], [kgCO :sub:`2`-eq./kW :sub:`e`], [year], [%], [%], [tCO2/MWh :sub:`e`], [GW]
+		 CCGT, 1090 [15d]_, 27.8 [15d]_, 184, 25, 85, 63 [15e]_, 0.317, 2.43
+		 CCGT ammonia [15f]_, 1090, 27.8, 184, 25, 59, 50, 0, 0
+		 Coal central, 3555 [15g]_, 41.5 [15g]_, 332, 35, 86 [15b]_, 54 [15h]_, 0.667, 0.61
 		 
 .. [15a]
    Data from :cite:`weidema_ecoinvent_2013`
@@ -688,12 +704,12 @@ respectively, i.e. they are not constraining the model.
       |              |              |              |              |              |              |              |              | direct}`     |
       |              |              |              |              |              |              |              |              | [16a]_       |
       +--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+
-      |              | [€           | [€           | [kgCO        | [y]          | [%]          | [%]          | [%]          | [tCO2/       |
-      |              | :sub:`2015`  | :sub:`2015`  | :sub:`2-eq.` |              |              |              |              | MWh          |
+      |              | [USD         | [USD         | [kgCO        | [y]          | [%]          | [%]          | [%]          | [tCO2/       |
+      |              | :sub:`2021`  | :sub:`2021`  | :sub:`2-eq.` |              |              |              |              | MWh          |
       |              | /kW          | /kW          | /kW          |              |              |              |              | :sub:`th`    |
       |              | :sub:`th`]   | :sub:`th`/y] | :sub:`th`]   |              |              |              |              | ]            |
       +--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+
-      | CHP NG       | 1408         | 92.6         | 1024         | 25           | 85           | 44           | 46           | 0.435        |
+      | CHP NG       | 1989         | 127.8        | 1024         | 25           | 85           | 44           | 46           | 0.435        |
       |              | [16b]_       | [16c]_       | \            | \            |              | [16d]_       | [16d]_       |              |
       |              |              |              | :cite:`\     | :cite:`\     |              |              |              |              |
       |              |              |              | weidem\      | ove\         |              |              |              |              |
@@ -704,7 +720,7 @@ respectively, i.e. they are not constraining the model.
       |              |              |              |              | eview_\      |              |              |              |              |
       |              |              |              |              | 2011`        |              |              |              |              |
       +--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+
-      | CHP          | 1080         | 40.5         | 165.3        | 25           | 85           | 18           | 53           | 0.735        |
+      | CHP          | 1527         | 55.9         | 165.3        | 25           | 85           | 18           | 53           | 0.735        |
       | Wood         | \            | \            | \            | \            |              | \            | \            |              |
       | [16e]_       | \            | \            | \            | \            |              | \            | \            |              |
       |              | :cite:`\     | :cite:`\     | :cite:`\     | :cite:`\     |              | :cite:`\     | :cite:`\     |              |
@@ -717,7 +733,7 @@ respectively, i.e. they are not constraining the model.
       |              | iea_20\      | iea_20\      |              | 2011`        |              | iea_20\      | iea_20\      |              |
       |              | 14-1`        | 14-1`        |              |              |              | 14-1`        | 14-1`        |              |
       +--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+
-      | CHP          | 2928         | 111.3        | 647.8        | 25           | 85           | 20           | 45           | 0.578        |
+      | CHP          | 4135         | 152.4        | 647.8        | 25           | 85           | 20           | 45           | 0.578        |
       | Waste        | [16f]_       | [16f]_       | [16g]_       | \            |              | \            | \            |              |
       |              |              |              |              | :cite:`\     |              | :cite:`\     | :cite:`\     |              |
       |              |              |              |              | ove\         |              | ove\         | ove\         |              |
@@ -728,7 +744,7 @@ respectively, i.e. they are not constraining the model.
       |              |              |              |              | eview_\      |              | eview_\      | eview_\      |              |
       |              |              |              |              | 2011`        |              | 2011`        | 2011`        |              |
       +--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+
-      | Boiler       | 58.9         | 1.2          | 12.3         | 17           | 95           | 0            | 92.7         | 0.216        |
+      | Boiler       | 83           | 1.7          | 12.3         | 17           | 95           | 0            | 92.7         | 0.216        |
       | NG           | :cite:`\     | :cite:`\     | [16h]_       | \            |              |              | \            |              |
       |              | \            | \            |              | \            |              |              | :cite:`\     |              |
       |              | Mo\          | Mo\          |              | :cite:`\     |              |              | Mo\          |              |
@@ -739,7 +755,7 @@ respectively, i.e. they are not constraining the model.
       |              |              |              |              | nergy_\      |              |              |              |              |
       |              |              |              |              | 2008`        |              |              |              |              |
       +--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+
-      | Boiler       | 115          | 2.3          | 28.9         | 17           | 90           | 0            | 86.4         | 0.451        |
+      | Boiler       | 163          | 3.3          | 28.9         | 17           | 90           | 0            | 86.4         | 0.451        |
       | Wood         | \            | \            | \            | \            |              |              | \            |              |
       |              | :cite:`\     | :cite:`\     | \            | \            |              |              | :cite:`\     |              |
       |              | Mo\          | Mo\          | :cite:`\     | :cite:`\     |              |              | Mo\          |              |
@@ -750,7 +766,7 @@ respectively, i.e. they are not constraining the model.
       |              |              |              |              | nergy_\      |              |              |              |              |
       |              |              |              |              | 2008`        |              |              |              |              |
       +--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+
-      | Boiler       | 54.9         | 1.2          | 12.3         | 17           | 95           | 0            | 87.3         | 0.309        |
+      | Boiler       | 77           | 1.7          | 12.3         | 17           | 95           | 0            | 87.3         | 0.309        |
       | Oil          | [16i]_       | [16j]_       | \            | \            |              |              | \            |              |
       |              |              |              | \            | \            |              |              | :cite:`\     |              |
       |              |              |              | :cite:`\     | :cite:`\     |              |              | Mo\          |              |
@@ -761,7 +777,7 @@ respectively, i.e. they are not constraining the model.
       |              |              |              |              | nergy_\      |              |              |              |              |
       |              |              |              |              | 2008`        |              |              |              |              |
       +--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+
-      | Boiler       | 115          | 2.3          | 48.2         | 17           | 90           | 0            | 82           | 0.439        |
+      | Boiler       | 163          | 3.3          | 48.2         | 17           | 90           | 0            | 82           | 0.439        |
       | Coal         | [16l]_       | [16l]_       | \            | \            |              |              |              |              |
       |              |              |              | \            | \            |              |              |              |              |
       |              |              |              | :cite:`\     | :cite:`\     |              |              |              |              |
@@ -772,7 +788,7 @@ respectively, i.e. they are not constraining the model.
       |              |              |              |              | nergy_\      |              |              |              |              |
       |              |              |              |              | 2008`        |              |              |              |              |
       +--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+
-      | Boiler       | 115          | 2.3          | 28.9         | 17           | 90           | 0            | 82           | 0.317        |
+      | Boiler       | 163          | 3.3          | 28.9         | 17           | 90           | 0            | 82           | 0.317        |
       | Waste        | [16l]_       | [16l]_       | [16m]_       | \            |              |              |              |              |
       |              |              |              |              | \            |              |              |              |              |
       |              |              |              |              | :cite:`\     |              |              |              |              |
@@ -783,7 +799,7 @@ respectively, i.e. they are not constraining the model.
       |              |              |              |              | nergy_\      |              |              |              |              |
       |              |              |              |              | 2008`        |              |              |              |              |
       +--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+
-      | Direct       | 332          | 1.5          | 1.47         | 15           | 95           | 0            | 100          | 0            |
+      | Direct       | 469          | 2.1          | 1.47         | 15           | 95           | 0            | 100          | 0            |
       | Elec.        | [16n]_       | [16n]_       | \            |              |              |              |              |              |
       |              |              |              | \            |              |              |              |              |              |
       |              |              |              | :cite:`\     |              |              |              |              |              |
@@ -855,13 +871,13 @@ respectively, i.e. they are not constraining the model.
       |            | {inv}`     | {maint}`   | {constr}`  | fetime`    | {p}`       | _e`        | _{th}`     | O_{2,      |
       |            |            |            |            |            |            |            |            | direct}`   |
       +------------+------------+------------+------------+------------+------------+------------+------------+------------+
-      |            | [€         | [€         | [kgCO      | [y]        | [%]        | [%]        | [%]        | [tCO2/     |
-      |            | :sub:`2015`| :sub:`2015`| :sub:`2    |            |            |            |            | MWh        |
+      |            | [USD       | [USD       | [kgCO      | [y]        | [%]        | [%]        | [%]        | [tCO2/     |
+      |            | :sub:`2021`| :sub:`2021`| :sub:`2    |            |            |            |            | MWh        |
       |            | /kW        | /kW        | -eq.`/kW   |            |            |            |            | :sub:`th`  |
       |            | :sub:`th`] | :sub:`th`  | :sub:`th`] |            |            |            |            | ] [154]_   |
       |            |            | /y]        |            |            |            |            |            |            |
       +------------+------------+------------+------------+------------+------------+------------+------------+------------+
-      | HP         | 345        | 12.0       | 174.8      | 25         | 95         | 0          | 400        | 0          |
+      | HP         | 487        | 16.5       | 174.8      | 25         | 95         | 0          | 400        | 0          |
       |            | [155]_     | [156]_     | \          |            |            |            |            |            |
       |            |            |            | :cite:`\   |            |            |            |            |            |
       |            |            |            | wei\       |            |            |            |            |            |
@@ -869,14 +885,14 @@ respectively, i.e. they are not constraining the model.
       |            |            |            | oinvent\   |            |            |            |            |            |
       |            |            |            | _2013`     |            |            |            |            |            |
       +------------+------------+------------+------------+------------+------------+------------+------------+------------+
-      | CHP NG     | 1254       | 37.5       | 490.9      | 25         | 85         | 50         | 40         | 0.500      |
+      | CHP NG     | 1772       | 51.8       | 490.9      | 25         | 85         | 50         | 40         | 0.500      |
       |            | [157]_     | [157]_     | [158]_     | \          |            | [159]_     | [159]_     |            |
       |            |            |            |            | :cite:`\   |            |            |            |            |
       |            |            |            |            | ba\        |            |            |            |            |
       |            |            |            |            | uer_new\   |            |            |            |            |
       |            |            |            |            | _2008`     |            |            |            |            |
       +------------+------------+------------+------------+------------+------------+------------+------------+------------+
-      | CHP        | 1081       | 40.5       | 165.3      | 25         | 85         | 18         | 53         | 0.736      |
+      | CHP        | 1527       | 55.9       | 165.3      | 25         | 85         | 18         | 53         | 0.736      |
       | Wood [160]_| :cite:`\   |            |            | :cite:`\   |            | :cite:`\   | :cite:`\   |            |
       |            | iea_\      |            |            | ove_\      |            | iea_\      | iea_\      |            |
       |            | -_inter\   |            |            | arup_an\   |            | -_inter\   | -_inter\   |            |
@@ -886,7 +902,7 @@ respectively, i.e. they are not constraining the model.
       |            | y_iea_2\   |            |            | _2011`     |            | y_iea_2\   | y_iea_2\   |            |
       |            | 014-1`     |            |            |            |            | 014-1`     | 014-1`     |            |
       +------------+------------+------------+------------+------------+------------+------------+------------+------------+
-      | CHP        | 2928       | 111        | 647.8      | 25         | 85         | 20         | 45         | 0.578      |
+      | CHP        | 4135       | 152.4      | 647.8      | 25         | 85         | 20         | 45         | 0.578      |
       | Waste      |            |            |            | :cite:`\   |            | :cite:`\   | :cite:`\   |            |
       | [160]_     |            |            |            | ove_\      |            | ove_\      | ove_\      |            |
       |            |            |            |            | arup_an\   |            | arup_an\   | arup_an\   |            |
@@ -895,15 +911,15 @@ respectively, i.e. they are not constraining the model.
       |            |            |            |            | _review\   |            | _review\   | _review\   |            |
       |            |            |            |            | _2011`     |            | _2011`     | _2011`     |            |
       +------------+------------+------------+------------+------------+------------+------------+------------+------------+
-      | CHP        | 1374       | 147.9      | 647.8      | 25         | 85         | 13         | 16         | 2.488      |
+      | CHP        | 1941       | 158.0      | 647.8      | 25         | 85         | 13         | 16         | 2.488      |
       | bio.       | [161]_     | [161]_     | [162]_     |            | [161]_     | [161]_     | [161]_     |            |
       | dig.       |            |            |            |            |            |            |            |            |
       +------------+------------+------------+------------+------------+------------+------------+------------+------------+
-      | CHP        | 4537       | 227        | 647.8      | 15         | 85         | 25.4       | 33.5       | 1.164      |
+      | CHP        | 6408       | 312.5      | 647.8      | 15         | 85         | 25.4       | 33.5       | 1.164      |
       | bio.       | [163]_     |            | [162]_     |            |            |            |            |            |
       | hydro.     |            |            |            |            |            |            |            |            |
       +------------+------------+------------+------------+------------+------------+------------+------------+------------+
-      | Boiler     | 58.9       | 1.2        | 12.3       | 17         | 95         | 0          | 92.7       | 0.216      |
+      | Boiler     | 83         | 1.7        | 12.3       | 17         | 95         | 0          | 92.7       | 0.216      |
       | NG         | :cite:`\   |            |            | :cite:`\   |            |            | :cite:`\   |            |
       |            | Moret2\    |            |            | \          |            |            | Moret2\    |            |
       |            | 017PhDT\   |            |            | europ\     |            |            | 017PhDT\   |            |
@@ -912,7 +928,7 @@ respectively, i.e. they are not constraining the model.
       |            |            |            |            | _energy\   |            |            |            |            |
       |            |            |            |            | _2008`     |            |            |            |            |
       +------------+------------+------------+------------+------------+------------+------------+------------+------------+
-      | Boiler     | 115        | 2.3        | 28.9       | 17         | 90         | 0          | 86.4       | 0.451      |
+      | Boiler     | 163        | 3.2        | 28.9       | 17         | 90         | 0          | 86.4       | 0.451      |
       | Wood       | :cite:`\   | :cite:`\   |            | :cite:`\   |            |            | :cite:`\   |            |
       |            | Moret2\    | Moret2\    |            | \          |            |            | Moret2\    |            |
       |            | 017PhDT\   | 017PhDT\   |            | europ\     |            |            | 017PhDT\   |            |
@@ -921,7 +937,7 @@ respectively, i.e. they are not constraining the model.
       |            |            |            |            | _energy\   |            |            |            |            |
       |            |            |            |            | _2008`     |            |            |            |            |
       +------------+------------+------------+------------+------------+------------+------------+------------+------------+
-      | Boiler     | 54.9       | 1.2        | 12.3       | 17         | 95         | 0          | 87.3       | 0.309      |
+      | Boiler     | 77         | 1.7        | 12.3       | 17         | 95         | 0          | 87.3       | 0.309      |
       | Oil        |            |            |            | :cite:`\   |            |            | :cite:`\   |            |
       |            |            |            |            | \          |            |            | Moret2\    |            |
       |            |            |            |            | europ\     |            |            | 017PhDT\   |            |
@@ -930,7 +946,7 @@ respectively, i.e. they are not constraining the model.
       |            |            |            |            | _energy\   |            |            |            |            |
       |            |            |            |            | _2008`     |            |            |            |            |
       +------------+------------+------------+------------+------------+------------+------------+------------+------------+
-      | Geo        | 1500       | 57.0       | 808.8      | 30         | 85         | 0          | 100        | 0          |
+      | Geo        | 2119       | 80.4       | 808.8      | 30         | 85         | 0          | 100        | 0          |
       | thermal    | [165]_     | [165]_     | \          | [165]_     |            |            |            |            |
       | [165]_     |            |            | :cite:`\   |            |            |            |            |            |
       |            |            |            | wei\       |            |            |            |            |            |
@@ -938,7 +954,7 @@ respectively, i.e. they are not constraining the model.
       |            |            |            | oinvent\   |            |            |            |            |            |
       |            |            |            | _2013`     |            |            |            |            |            |
       +------------+------------+------------+------------+------------+------------+------------+------------+------------+
-      | Solar      | 362        | 0.43       | 221.8      | 30         | 10         | 0          | 100        | 0          |
+      | Solar      | 511        | 0.6        | 221.8      | 30         | 10         | 0          | 100        | 0          |
       | thermal    | [166]_     | [166]_     | \          | [166]_     |            |            |            |            |
       | [166]_     |            |            | :cite:`\   |            |            |            |            |            |
       |            |            |            | wei\       |            |            |            |            |            |
@@ -1018,12 +1034,12 @@ respectively, i.e. they are not constraining the model.
       |            | {inv}`     | {maint}`   | {constr}`  | fetime`    | {p}`       | _e`        | _{th}`     |
       |            |            |            |            |            |            |            |            |
       +------------+------------+------------+------------+------------+------------+------------+------------+
-      |            | [€         | [€         | [kgCO      | [y]        | [%]        | [%]        | [%]        |
-      |            | :sub:`2015`| :sub:`2015`| :sub:`2    |            |            |            |            |
+      |            | [USD       | [USD       | [kgCO      | [y]        | [%]        | [%]        | [%]        |
+      |            | :sub:`2021`| :sub:`2021`| :sub:`2    |            |            |            |            |
       |            | /kW        | /kW        | -eq.`/kW   |            |            |            |            |
       |            | :sub:`e`]  | :sub:`e`/y]| :sub:`e`]  |            |            |            |            |
       +------------+------------+------------+------------+------------+------------+------------+------------+
-      | HP         | 492        | 21 [209]_  | 164.9      | 18         | 100        | 0          | 300        |
+      | HP         | 695        | 29.7 [209]_| 164.9      | 18         | 100        | 0          | 300        |
       |            | [207]_     |            | \          | [209]_     |            |            |            |
       |            | [208]_     |            | \          |            |            |            |            |
       |            |            |            | \          |            |            |            |            |
@@ -1034,7 +1050,7 @@ respectively, i.e. they are not constraining the model.
       |            |            |            | ent_2\     |            |            |            |            |
       |            |            |            | 013`       |            |            |            |            |
       +------------+------------+------------+------------+------------+------------+------------+------------+
-      | Thermal    | 316 [210]_ | 9.5 [211]_ | 381.9      | 20         | 100        | 0          | 150        |
+      | Thermal    | 446 [210]_ | 13.0 [211]_| 381.9      | 20         | 100        | 0          | 150        |
       | HP         | [208]_     |            | \          |            |            |            |            |
       |            |            |            | \          |            |            |            |            |
       |            |            |            | \          |            |            |            |            |
@@ -1045,7 +1061,7 @@ respectively, i.e. they are not constraining the model.
       |            |            |            | ent_2\     |            |            |            |            |
       |            |            |            | 013`       |            |            |            |            |
       +------------+------------+------------+------------+------------+------------+------------+------------+
-      | CHP        | 1408       | 92.6       | 1024       | 20         | 100        | 44         | 46         |
+      | CHP        | 1989       | 127.8      | 1024       | 20         | 100        | 44         | 46         |
       | NG [212]_  |            |            |            | \          |            |            |            |
       |            |            |            |            | :cite:`\   |            |            |            |
       |            |            |            |            | b\         |            |            |            |
@@ -1053,10 +1069,10 @@ respectively, i.e. they are not constraining the model.
       |            |            |            |            | new_2\     |            |            |            |
       |            |            |            |            | 008`       |            |            |            |
       +------------+------------+------------+------------+------------+------------+------------+------------+
-      | CHP        | 1          | 82.0       | 1          | 20         | 100        | 39 [215]_  | 43 [215]_  |
-      | Oil        | 306 [213]_ | [213]_     | 024 [214]_ |            |            |            |            |
+      | CHP        | 1844 [213]_| 113.1      | 1          | 20         | 100        | 39 [215]_  | 43 [215]_  |
+      | Oil        |            | [213]_     | 024 [214]_ |            |            |            |            |
       +------------+------------+------------+------------+------------+------------+------------+------------+
-      | FC NG      | 7 242      | 144.8      | 2193       | 20         | 100        | 58 [218]_  | 22 [218]_  |
+      | FC NG      | 10229      | 190.6      | 2193       | 20         | 100        | 58 [218]_  | 22 [218]_  |
       |            | [216]_     | [217]_     | \          | \          |            |            |            |
       |            |            |            | \          | \          |            |            |            |
       |            |            |            | \          | \          |            |            |            |
@@ -1067,7 +1083,7 @@ respectively, i.e. they are not constraining the model.
       |            |            |            | ent_2\     | 008`\      |            |            |            |
       |            |            |            | 013`       |            |            |            |            |
       +------------+------------+------------+------------+------------+------------+------------+------------+
-      | FC H\      | 7242       | 144.8      | 2193       | 20         | 100        | 58         | 22         |
+      | FC H\      | 10229      | 190.6      | 2193       | 20         | 100        | 58         | 22         |
       | :sub:`2`   |            |            |            | \          |            |            |            |
       | [219]_     |            |            |            | \          |            |            |            |
       |            |            |            |            | \          |            |            |            |
@@ -1077,7 +1093,7 @@ respectively, i.e. they are not constraining the model.
       |            |            |            |            | nal_2\     |            |            |            |
       |            |            |            |            | 008`       |            |            |            |
       +------------+------------+------------+------------+------------+------------+------------+------------+
-      | Boiler     | 159        | 5.08       | 4.8        | 17         | 100        | 0          | 90         |
+      | Boiler     | 224        | 6.7        | 4.8        | 17         | 100        | 0          | 90         |
       | NG         | \          | \          | \          | \          |            |            | \          |
       |            | \          | \          | \          | \          |            |            | \          |
       |            | \          | \          | \          | \          |            |            | :cite:`\   |
@@ -1090,7 +1106,7 @@ respectively, i.e. they are not constraining the model.
       |            |            |            |            | rgy_2\     |            |            |            |
       |            |            |            |            | 008`       |            |            |            |
       +------------+------------+------------+------------+------------+------------+------------+------------+
-      | Boiler     | 462        | 16         | 21.1       | 17         | 100        | 0          | 85         |
+      | Boiler     | 653        | 22.8       | 21.1       | 17         | 100        | 0          | 85         |
       | Wood       | \          | \          | [220]_     | \          |            |            | \          |
       |            | \          | \          |            | \          |            |            | \          |
       |            | \          | \          |            | \          |            |            | \          |
@@ -1103,10 +1119,10 @@ respectively, i.e. they are not constraining the model.
       |            | 4-1`       | 4-1`       |            | rgy_2\     |            |            | 4-1`       |
       |            |            |            |            | 008`       |            |            |            |
       +------------+------------+------------+------------+------------+------------+------------+------------+
-      | Coal stove | 462        | 16         | 21.1       | 17         | 100        | 0          | 85         |
+      | Coal stove | 653        | 22.8       | 21.1       | 17         | 100        | 0          | 85         |
       | [18a]_     |            |            |            |            |            |            |            |
       +------------+------------+------------+------------+------------+------------+------------+------------+
-      | Boiler     | 142        | 8.5 [221]_ | 21.1\      | 17         | 100        | 0          | 85         |
+      | Boiler     | 201        | 12.0 [221]_| 21.1\      | 17         | 100        | 0          | 85         |
       | Oil        | \          |            | \          | \          |            |            | \          |
       |            | \          |            | \          | \          |            |            | \          |
       |            | \          |            | \          | \          |            |            | :cite:`\   |
@@ -1119,7 +1135,7 @@ respectively, i.e. they are not constraining the model.
       |            | 011`       |            |            | rgy_2\     |            |            |            |
       |            |            |            |            | 008`       |            |            |            |
       +------------+------------+------------+------------+------------+------------+------------+------------+
-      | Solar      | 719 [222]_ | 8.1 [223]_ | 221.2      | 20         | 11.3\      | 0          | NA         |
+      | Solar      | 1016 [222]_| 11.4 [223]_| 221.2      | 20         | 11.3\      | 0          | NA         |
       | Th.        |            |            | \          | \          | [224]_     |            |            |
       |            |            |            | \          | \          |            |            |            |
       |            |            |            | \          | \          |            |            |            |
@@ -1132,8 +1148,8 @@ respectively, i.e. they are not constraining the model.
       |            |            |            |            | _uk_2\     |            |            |            |
       |            |            |            |            | 009`       |            |            |            |
       +------------+------------+------------+------------+------------+------------+------------+------------+
-      | Direct     | 40 [225]_  | 0          | 1.47       | 15         | 100        | 0          | 100        |
-      | Elec.      |            | .18 [226]_ | \          | \          |            |            |            |
+      | Direct     | 56 [225]_  | 0          | 1.47       | 15         | 100        | 0          | 100        |
+      | Elec.      |            | .3 [226]_  | \          | \          |            |            |            |
       |            |            |            | \          | \          |            |            |            |
       |            |            |            | \          | \          |            |            |            |
       |            |            |            | :cite:`\   | :cite:`\   |            |            |            |
@@ -1256,10 +1272,10 @@ technology to potentially cover the entire demand. The maximum (:math:`f_{max,\%
       :widths: 11 17 24 23 12 8 13
       :name: tab:cooling_technos
 		 
-		  , [€ :sub:`2015`/kW :sub:`e`], [€ :sub:`2015`/kW :sub:`e`/year], [kgCO :sub:`2`-eq./kW :sub:`e`], [year], [%], [%]
-		 Electrical refrigeration cycle, 474, 20.3, 165, 20, 100, 318
-		 Thermal refrigeration cycle, 304, 9.1, 382, 20, 100, 146
-		 Industrial electric cooling, 617, 5.0, 175, 20, 95, 242
+		  , [USD :sub:`2021`/kW :sub:`e`], [USD :sub:`2021`/kW :sub:`e`/year], [kgCO :sub:`2`-eq./kW :sub:`e`], [year], [%], [%]
+		 Electrical refrigeration cycle, 670, 28.6, 165, 20, 100, 318
+		 Thermal refrigeration cycle, 430, 12.9, 382, 20, 100, 146
+		 Industrial electric cooling, 872, 7.1, 175, 20, 95, 242
 		 
 .. [19a]
    Data taken from :cite:`borasio2022deep`
@@ -1280,7 +1296,7 @@ Vehicles' data from the literature are not directly transposable into the
 model. Mobility data are usually given per vehicle, such as a
 vehicle cost or an average occupancy per vehicle. These data from the literature are
 summarised in :numref:`Table %s <tbl:mob_specific_costs_calculation>`.
-
+All cost data are first expressed in € :sub:`2015`. They are converted in USD :sub:`2021` in other tables later on.
 
 .. container::
 
@@ -1390,7 +1406,7 @@ variation between regions: in Brussels it is 10 years. On average, the
 distance is 18 000 km/year. The average age of a car is 8.9 years in
 2016, with a rather strong variation between regions: in Brussels it is
 10 years. Finally, a car drives on average slightly more than one hour
-a day (1h12). By means of simplicity, we ue these data for Colombia.
+a day (1h12). By means of simplicity, we use these data for Colombia.
 
 For public transportation, data for Belgium were collected from various reports
 :cite:`taszka2018analyse,moawad2013light,james2012mass`.
@@ -1440,7 +1456,7 @@ from 2013 and may have overestimated the production in 2015 and 2020.
 From data of :numref:`Table %s <tbl:mob_specific_costs_calculation>`,
 specific parameters for the model are deduced. The specific investment
 cost (:math:`c_{inv}`) is calculated from the vehicle cost, its average speed
-and occupancy, Eq. :eq:`eq:c_inv_for_mob_pass_calculation`.
+and occupancy, Eq. :eq:`eq:c_inv_for_mob_pass_calculation`. The cost is then converted from € :sub:`2015` to USD :sub:`2021`.
 The capacity factor (:math:`c_{p}`) is calculated based on the ratio between
 yearly distance and average speed, Eq. :eq:`eq:c_p_for_mob_pass_calculation`.
 The vehicle capacity is calculated based on the average occupancy and
@@ -1464,56 +1480,56 @@ This technology is added in the following tables.
       | type**    | {inv}`   | {maint}` | wp_{     | p`       | eh.~capa`|
       |           |          |          | constr}` |          |          |
       +-----------+----------+----------+----------+----------+----------+
-      | [€/km     | [€/km    | [€/km    | [kgCO\   | [%]      | [pass-km |
-      | -pass]    | -pass/h] | -pass    | :sub:`2` |          | /h/veh.] |
+      |           | [USD/km  | [USD/km  | [kgCO\   | [%]      | [pass-km |
+      |           | -pass]   | -pass    | :sub:`2` |          | /h/veh.] |
       |           |          | /h/y]    | -eq./km  |          |          |
       |           |          |          | -pass/h] |          |          |
       +-----------+----------+----------+----------+----------+----------+
-      | Gasoline  | 420      | 24       | 342      | 5.1      | 50       |
+      | Gasoline  | 594      | 33.8     | 342      | 5.1      | 50       |
       | car       |          |          |          |          |          |
       +-----------+----------+----------+----------+----------+----------+
-      | Diesel    | 434      | 24       | 346      | 5.1      | 50       |
+      | Diesel    | 614      | 33.8     | 346      | 5.1      | 50       |
       | car       |          |          |          |          |          |
       +-----------+----------+----------+----------+----------+----------+
-      | NG car    | 429      | 24       | 342      | 5.1      | 50       |
+      | NG car    | 606      | 33.8     | 342      | 5.1      | 50       |
       +-----------+----------+----------+----------+----------+----------+
-      | HEV car   | 429      | 34       | 519      | 5.1      | 50       |
+      | HEV car   | 606      | 47.9     | 519      | 5.1      | 50       |
       +-----------+----------+----------+----------+----------+----------+
-      | PHEV car  | 456      | 34       | 519      | 5.1      | 50       |
+      | PHEV car  | 645      | 47.9     | 519      | 5.1      | 50       |
       +-----------+----------+----------+----------+----------+----------+
-      | BEV       | 434      | 10       | 385      | 5.1      | 50       |
+      | BEV       | 613      | 14.1     | 385      | 5.1      | 50       |
       |           | [21c]_   |          |          |          |          |
       +-----------+----------+----------+----------+----------+----------+
-      | FC car    | 672      | 10       | 786      | 5.1      | 50       |
+      | FC car    | 950      | 14.1     | 786      | 5.1      | 50       |
       |           | [21c]_   |          |          |          |          |
       +-----------+----------+----------+----------+----------+----------+
-      | Methanol  | 420      | 24       | 342      | 5.1      | 50       |
+      | Methanol  | 594      | 33.8     | 342      | 5.1      | 50       |
       | car       |          |          |          |          |          |
       | [21b]_    |          |          |          |          |          |
       +-----------+----------+----------+----------+----------+----------+
-      | Gasoline  | 21       | 1.2      | 17       | 5.1      | 10       |
+      | Gasoline  | 30       | 1.7      | 17       | 5.1      | 10       |
       | motorcycle| [21d]_   | [21d]_   |          |          |          |
       +-----------+----------+----------+----------+----------+----------+
-      | Electrical| 35       | 0.8      | 31       | 5.1      | 10       |
+      | Electrical| 49       | 1.1      | 31       | 5.1      | 10       |
       | motorcycle| [21e]_   | [21e]_   |          |          |          |
       +-----------+----------+----------+----------+----------+----------+
-      | Tram and  | 625      | 12.5     | 0        | 34.2     | 4000     |
+      | Tram and  | 883      | 17.6     | 0        | 34.2     | 4000     |
       | metro     |          |          | [21a]_   |          |          |
       +-----------+----------+----------+----------+----------+----------+
-      | Diesel    | 611      | 30.6     | 0        | 29.7     | 360      |
+      | Diesel    | 863      | 43.1     | 0        | 29.7     | 360      |
       | bus       |          |          | [21a]_   |          |          |
       +-----------+----------+----------+----------+----------+----------+
-      | Diesel    | 833      | 33.3     | 0        | 29.7     | 360      |
+      | Diesel    | 1177     | 47.0     | 0        | 29.7     | 360      |
       | HEV bus   |          |          | [21a]_   |          |          |
       +-----------+----------+----------+----------+----------+----------+
-      | Gasoline  | 611      | 30.6     | 0        | 29.7     | 360      |
+      | Gasoline  | 863      | 43.1     | 0        | 29.7     | 360      |
       | bus       |          |          | [21a]_   |          |          |
       +-----------+----------+----------+----------+----------+----------+
-      | NG bus    | 611      | 30.6     | 0 [21a]_ | 29.7     | 360      |
+      | NG bus    | 863      | 43.1     | 0 [21a]_ | 29.7     | 360      |
       +-----------+----------+----------+----------+----------+----------+
-      | FC bus    | 1042     | 31.3     | 0 [21a]_ | 29.7     | 360      |
+      | FC bus    | 1471     | 44.1     | 0 [21a]_ | 29.7     | 360      |
       +-----------+----------+----------+----------+----------+----------+
-      | Train     | 1506     | 54.4     | 0 [21a]_ | 27.5     | 6640     |
+      | Train     | 2127     | 76.6     | 0 [21a]_ | 27.5     | 6640     |
       | pub.      |          |          |          |          |          |
       +-----------+----------+----------+----------+----------+----------+
 
@@ -1653,6 +1669,7 @@ Freight
 The technologies available for freight are trains, trucks and
 boats. Similarly to previous section, the data for freight are
 given per vehicle type. These data are summarised in :numref:`Table %s <tbl:mob_specific_costs_calculation_freight>`.
+All cost data are first expressed in € :sub:`2015`. They are converted in USD :sub:`2021` in other tables later on.
 
 .. container::
 
@@ -1732,11 +1749,10 @@ specific parameters for the model are deduced. Except for the technology
 construction specific GHG emissions (:math:`gwp_{constr}`) where no data was
 found. The specific investment cost (:math:`c_{inv}`) is calculated from the
 vehicle cost, its average speed and occupancy in Eq.
-:eq:`eq:c_inv_for_mob_calculation_fr`.
+:eq:`eq:c_inv_for_mob_calculation_fr`. The cost is then converted from € :sub:`2015` to USD :sub:`2021`.
 The capacity factor (:math:`c_{p}`) is calculated based on the ratio between
 yearly distance and average speed in Eq.
-:eq:`eq:c_p_for_mob_calculation_fr`. The
-vehicle capacity is calculated based on the average occupancy and
+:eq:`eq:c_p_for_mob_calculation_fr`. The vehicle capacity is calculated based on the average occupancy and
 average speed in Eq.
 Eq. :eq:`eq:veh_capa_for_mob_fr`. :numref:`Table %s <tbl:mob_costs_fr>` summarises these information for each
 freight vehicle.
@@ -1755,34 +1771,34 @@ Based on this approach, two technologies have been added: methanol boats and met
       | type**      | {inv}`     | {maint}`    | p`          | eh.~capa`   |
       |             |            |             |             |             |
       +-------------+------------+-------------+-------------+-------------+
-      |             | [€/km-t/h] |[€/km-t/h/y] | [%]         | [t-km/h     |
+      |             | [USD/km-t] |[USD/km-t/y] | [%]         | [t-km/h     |
       |             |            |             |             | /veh.]      |
       |             |            |             |             |             |
       |             |            |             |             |             |
       +-------------+------------+-------------+-------------+-------------+
-      | Freight     | 104        | 2.1         | 34.2        | 38500       |
+      | Freight     | 147        | 2.9         | 34.2        | 38500       |
       | train       |            |             |             |             |
       +-------------+------------+-------------+-------------+-------------+
-      | Boat Diesel | 76         | 3.8         | 11.4        | 36000       |
+      | Boat Diesel | 108        | 5.4         | 11.4        | 36000       |
       +-------------+------------+-------------+-------------+-------------+
-      | Boat NG     | 76         | 3.8         | 11.4        | 36000       |
+      | Boat NG     | 108        | 5.4         | 11.4        | 36000       |
       +-------------+------------+-------------+-------------+-------------+
-      | Boat        | 76         | 3.8         | 11.4        | 36000       |
+      | Boat        | 108        | 5.4         | 11.4        | 36000       |
       | Methanol    |            |             |             |             |
       +-------------+------------+-------------+-------------+-------------+
-      | Truck       | 371        | 18.6        | 9.3         | 450         |
+      | Truck       | 524        | 26.2        | 9.3         | 450         |
       | Diesel      |            |             |             |             |
       +-------------+------------+-------------+-------------+-------------+
-      | Truck       | 371        | 18.6        | 9.3         | 450         |
+      | Truck       | 524        | 26.2        | 9.3         | 450         |
       | Gasoline    |            |             |             |             |
       +-------------+------------+-------------+-------------+-------------+
-      | Truck FC    | 402        | 12.1        | 9.3         | 450         |
+      | Truck FC    | 568        | 17.0        | 9.3         | 450         |
       +-------------+------------+-------------+-------------+-------------+
-      | Truck Elec. | 771        | 23.1        | 9.3         | 450         |
+      | Truck Elec. | 1089       | 32.6        | 9.3         | 450         |
       +-------------+------------+-------------+-------------+-------------+
-      | Truck NG    | 371        | 18.6        | 9.3         | 450         |
+      | Truck NG    | 524        | 26.2        | 9.3         | 450         |
       +-------------+------------+-------------+-------------+-------------+
-      | Truck       | 371        | 18.6        | 9.3         | 450         |
+      | Truck       | 524        | 26.2        | 9.3         | 450         |
       | Methanol    |            |             |             |             |
       +-------------+------------+-------------+-------------+-------------+
 
@@ -1894,47 +1910,47 @@ Similarly to electricity, two of the three feedstocks can be used for other end-
    .. table:: Production of High-Value Chemicals (HVCs) from different feedstocks, in 2035. 
       :name: tab:hvc_prod
    
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      |             | :math:`c_   | :math:`c_   | :math:`life | :math:`c_p` | :math:`\eta_| :math:`\eta_| :math:`\eta_| :math:`CO_  |
-      |             | {inv}`      | {maint}`    | time`       |             | {fuel}`     | {e}`        | {th,ht}`    | {2,direct}` |
-      |             |             |             |             |             |             |             |             | [359]_      |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      |             | [€\ :math:`_| [€\ :math:`_| [y]         | [%]         | [MWh/MWh\   | [MWh/MWh\   | [MWh/MWh\   | [tCO\       |
-      |             | {2015}`/kW\ | {2015}`/kW\ |             |             | :math:`_    | :math:`_    | :math:`_    | :sub:`2`    |
-      |             | :math:`_    | :math:`_    |             |             | {HVC}`]     | {HVC}`]     | {HVC}`]     | /MWh\       |
-      |             | {fuel}`]    | {fuel}`/y]  |             |             |             |             |             | :sub:`e`]   |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      | Oil to HVC  | 395         | 2.1         | 15          | 100         | 1.82        | 0.021       | 0.017       | 0.213       |
-      | :cite:`yan\ |             |             |             |             |             |             |             |             |
-      | g2017comp\  |             |             |             |             |             |             |             |             |
-      | arative,ren\|             |             |             |             |             |             |             |             |
-      | 2009petro\  |             |             |             |             |             |             |             |             |
-      | chemicals`  |             |             |             |             |             |             |             |             |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      | Gas to HVC  | 798         | 20          | 25          | 100         | 2.79        | 0.47        | 0           | 0.299       |
-      | :cite:`\    |             |             |             |             |             |             |             |             |
-      | cruellas\   |             |             |             |             |             |             |             |             |
-      | 2019\       |             |             |             |             |             |             |             |             |
-      | techno`     |             |             |             |             |             |             |             |             |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      | Biomass     | 1743        | 52          | 20          | 100         | 2.38        | 0.029       | 0.052       | 0.669       |
-      | to HVC      |             |             |             |             |             |             |             |             |
-      | :cite:`\    |             |             |             |             |             |             |             |             |
-      | haro\       |             |             |             |             |             |             |             |             |
-      | 2013\       |             |             |             |             |             |             |             |             |
-      | techno\     |             |             |             |             |             |             |             |             |
-      | economic`   |             |             |             |             |             |             |             |             |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      | Methanol    | 697         | 63          | 20          | 100         | 1.24        | 0           | 0.045       | 0.304       |
-      | to HVC      |             |             |             |             |             |             |             |             |
-      | :cite:`\    |             |             |             |             |             |             |             |             |
-      | tsiropoulos\|             |             |             |             |             |             |             |             |
-      | 2018\       |             |             |             |             |             |             |             |             |
-      | emerging,   |             |             |             |             |             |             |             |             |
-      | reyniers\   |             |             |             |             |             |             |             |             |
-      | 2017\       |             |             |             |             |             |             |             |             |
-      | techno`     |             |             |             |             |             |             |             |             |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+      +-------------+---------------+---------------+-------------+-------------+-------------+-------------+-------------+-------------+
+      |             | :math:`c_     | :math:`c_     | :math:`life | :math:`c_p` | :math:`\eta_| :math:`\eta_| :math:`\eta_| :math:`CO_  |
+      |             | {inv}`        | {maint}`      | time`       |             | {fuel}`     | {e}`        | {th,ht}`    | {2,direct}` |
+      |             |               |               |             |             |             |             |             | [359]_      |
+      +-------------+---------------+---------------+-------------+-------------+-------------+-------------+-------------+-------------+
+      |             | [USD\ :math:`_| [USD\ :math:`_| [y]         | [%]         | [MWh/MWh\   | [MWh/MWh\   | [MWh/MWh\   | [tCO\       |
+      |             | {2021}`/kW\   | {2021}`/kW\   |             |             | :math:`_    | :math:`_    | :math:`_    | :sub:`2`    |
+      |             | :math:`_      | :math:`_      |             |             | {HVC}`]     | {HVC}`]     | {HVC}`]     | /MWh\       |
+      |             | {fuel}`]      | {fuel}`/y]    |             |             |             |             |             | :sub:`e`]   |
+      +-------------+---------------+---------------+-------------+-------------+-------------+-------------+-------------+-------------+
+      | Oil to HVC  | 558           | 3.0           | 15          | 100         | 1.82        | 0.021       | 0.017       | 0.213       |
+      | :cite:`yan\ |               |               |             |             |             |             |             |             |
+      | g2017comp\  |               |               |             |             |             |             |             |             |
+      | arative,ren\|               |               |             |             |             |             |             |             |
+      | 2009petro\  |               |               |             |             |             |             |             |             |
+      | chemicals`  |               |               |             |             |             |             |             |             |
+      +-------------+---------------+---------------+-------------+-------------+-------------+-------------+-------------+-------------+
+      | Gas to HVC  | 1127          | 28.1          | 25          | 100         | 2.79        | 0.47        | 0           | 0.299       |
+      | :cite:`\    |               |               |             |             |             |             |             |             |
+      | cruellas\   |               |               |             |             |             |             |             |             |
+      | 2019\       |               |               |             |             |             |             |             |             |
+      | techno`     |               |               |             |             |             |             |             |             |
+      +-------------+---------------+---------------+-------------+-------------+-------------+-------------+-------------+-------------+
+      | Biomass     | 2462          | 73.3          | 20          | 100         | 2.38        | 0.029       | 0.052       | 0.669       |
+      | to HVC      |               |               |             |             |             |             |             |             |
+      | :cite:`\    |               |               |             |             |             |             |             |             |
+      | haro\       |               |               |             |             |             |             |             |             |
+      | 2013\       |               |               |             |             |             |             |             |             |
+      | techno\     |               |               |             |             |             |             |             |             |
+      | economic`   |               |               |             |             |             |             |             |             |
+      +-------------+---------------+---------------+-------------+-------------+-------------+-------------+-------------+-------------+
+      | Methanol    | 985           | 88.5          | 20          | 100         | 1.24        | 0           | 0.045       | 0.304       |
+      | to HVC      |               |               |             |             |             |             |             |             |
+      | :cite:`\    |               |               |             |             |             |             |             |             |
+      | tsiropoulos\|               |               |             |             |             |             |             |             |
+      | 2018\       |               |               |             |             |             |             |             |             |
+      | emerging,   |               |               |             |             |             |             |             |             |
+      | reyniers\   |               |               |             |             |             |             |             |             |
+      | 2017\       |               |               |             |             |             |             |             |             |
+      | techno`     |               |               |             |             |             |             |             |             |
+      +-------------+---------------+---------------+-------------+-------------+-------------+-------------+-------------+-------------+
 
 
 
@@ -1944,39 +1960,39 @@ Similarly to electricity, two of the three feedstocks can be used for other end-
    .. table:: Production of methanol from different feedstocks, in 2035.
       :name: tab:methanol_prod
    
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      |             | :math:`c_   | :math:`c_   | :math:`life | :math:`c_p` | :math:`\eta_| :math:`\eta_| :math:`\eta_| :math:`CO_  |
-      |             | {inv}`      | {maint}`    | time`       |             | {fuel}`     | {e}`        | {th}`       | {2,direct}` |
-      |             |             |             |             |             |             |             |             | [359]_      |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      |             | [€\ :math:`_| [€\ :math:`_| [y]         | [%]         | [%]         | [%]         | [%]         | [tCO\       |
-      |             | {2015}`/kW\ | {2015}`/kW\ |             |             |             |             |             | :sub:`2`    |
-      |             | :math:`_    | :math:`_    |             |             |             |             |             | /MWh\       |
-      |             | {fuel}`]    | {fuel}`/y]  |             |             |             |             |             | :sub:`e`]   |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      | Biomass to  | 2520        | 38.5        | 20          | 85          | 62          | 2           | 22          | 0.236       |
-      | methanol    |             |             |             |             |             |             |             |             |
-      | :cite:`\    |             |             |             |             |             |             |             |             |
-      | DanishEnerg\|             |             |             |             |             |             |             |             |
-      | yAgency2019\|             |             |             |             |             |             |             |             |
-      | a`\         |             |             |             |             |             |             |             |             |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      | Syn.        | 1680        | 84          | 20          | 67          | 0           | 0           | 26.1        | -0.248      |
-      | methanolat\ |             |             |             |             |             |             |             |             |
-      | ion [361]_  |             |             |             |             |             |             |             |             |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      | Methane     | 958.6       | 47.9        | 20          | 1           | 65.4        | 0           | 0           | 0.306       |
-      | to          |             |             |             |             |             |             |             |             |
-      | methanol    |             |             |             |             |             |             |             |             |
-      | :cite:`\    |             |             |             |             |             |             |             |             |
-      | col\        |             |             |             |             |             |             |             |             |
-      | lodi2\      |             |             |             |             |             |             |             |             |
-      | 017de\      |             |             |             |             |             |             |             |             |
-      | monst\      |             |             |             |             |             |             |             |             |
-      | ratin\      |             |             |             |             |             |             |             |             |
-      | g`          |             |             |             |             |             |             |             |             |
-      | [362]_      |             |             |             |             |             |             |             |             |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+      +-------------+---------------+---------------+-------------+-------------+-------------+-------------+-------------+-------------+
+      |             | :math:`c_     | :math:`c_     | :math:`life | :math:`c_p` | :math:`\eta_| :math:`\eta_| :math:`\eta_| :math:`CO_  |
+      |             | {inv}`        | {maint}`      | time`       |             | {fuel}`     | {e}`        | {th}`       | {2,direct}` |
+      |             |               |               |             |             |             |             |             | [359]_      |
+      +-------------+---------------+---------------+-------------+-------------+-------------+-------------+-------------+-------------+
+      |             | [USD\ :math:`_| [USD\ :math:`_| [y]         | [%]         | [%]         | [%]         | [%]         | [tCO\       |
+      |             | {2021}`/kW\   | {2021}`/kW\   |             |             |             |             |             | :sub:`2`    |
+      |             | :math:`_      | :math:`_      |             |             |             |             |             | /MWh\       |
+      |             | {fuel}`]      | {fuel}`/y]    |             |             |             |             |             | :sub:`e`]   |
+      +-------------+---------------+---------------+-------------+-------------+-------------+-------------+-------------+-------------+
+      | Biomass to  | 3559          | 54.4          | 20          | 85          | 62          | 2           | 22          | 0.236       |
+      | methanol    |               |               |             |             |             |             |             |             |
+      | :cite:`\    |               |               |             |             |             |             |             |             |
+      | DanishEnerg\|               |               |             |             |             |             |             |             |
+      | yAgency2019\|               |               |             |             |             |             |             |             |
+      | a`\         |               |               |             |             |             |             |             |             |
+      +-------------+---------------+---------------+-------------+-------------+-------------+-------------+-------------+-------------+
+      | Syn.        | 2372          | 67.2          | 20          | 67          | 0           | 0           | 26.1        | -0.248      |
+      | methanolat\ |               |               |             |             |             |             |             |             |
+      | ion [361]_  |               |               |             |             |             |             |             |             |
+      +-------------+---------------+---------------+-------------+-------------+-------------+-------------+-------------+-------------+
+      | Methane     | 1354          | 59.1          | 20          | 1           | 65.4        | 0           | 0           | 0.306       |
+      | to          |               |               |             |             |             |             |             |             |
+      | methanol    |               |               |             |             |             |             |             |             |
+      | :cite:`\    |               |               |             |             |             |             |             |             |
+      | col\        |               |               |             |             |             |             |             |             |
+      | lodi2\      |               |               |             |             |             |             |             |             |
+      | 017de\      |               |               |             |             |             |             |             |             |
+      | monst\      |               |               |             |             |             |             |             |             |
+      | ratin\      |               |               |             |             |             |             |             |             |
+      | g`          |               |               |             |             |             |             |             |             |
+      | [362]_      |               |               |             |             |             |             |             |             |
+      +-------------+---------------+---------------+-------------+-------------+-------------+-------------+-------------+-------------+
 
 
 
@@ -1986,19 +2002,19 @@ Similarly to electricity, two of the three feedstocks can be used for other end-
    .. table:: Production of ammonia with the Haber Bosch process, in 2035. Data from :cite:t:`ikaheimo2018power`.
       :name: tab:ammonia_prod
    
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      |             | :math:`c_   | :math:`c_   | :math:`life | :math:`c_p` | :math:`\eta_| :math:`\eta_| :math:`\eta_| :math:`CO_  |
-      |             | {inv}`      | {maint}`    | time`       |             | {fuel}`     | {e}`        | {th}`       | {2,direct}` |
-      |             |             |             |             |             |             |             |             | [359]_      |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      |             | [€\ :math:`_| [€\ :math:`_| [y]         | [%]         | [%]         | [%]         | [%]         | [tCO\       |
-      |             | {2015}`/kW\ | {2015}`/kW\ |             |             |             |             |             | :sub:`2`    |
-      |             | :math:`_    | :math:`_    |             |             |             |             |             | /MWh\       |
-      |             | {fuel}`]    | {fuel}`/y]  |             |             |             |             |             | :sub:`e`]   |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      | Haber bosch | 847         | 16.6        | 20          | 85          | 79.8        | 0           |10.7         | 0           |
-      | [30a]_      |             |             |             |             | (NH3)       |             |             |             |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+      +-------------+---------------+---------------+-------------+-------------+-------------+-------------+-------------+-------------+
+      |             | :math:`c_     | :math:`c_     | :math:`life | :math:`c_p` | :math:`\eta_| :math:`\eta_| :math:`\eta_| :math:`CO_  |
+      |             | {inv}`        | {maint}`      | time`       |             | {fuel}`     | {e}`        | {th}`       | {2,direct}` |
+      |             |               |               |             |             |             |             |             | [359]_      |
+      +-------------+---------------+---------------+-------------+-------------+-------------+-------------+-------------+-------------+
+      |             | [USD\ :math:`_| [USD\ :math:`_| [y]         | [%]         | [%]         | [%]         | [%]         | [tCO\       |
+      |             | {2021}`/kW\   | {2021}`/kW\   |             |             |             |             |             | :sub:`2`    |
+      |             | :math:`_      | :math:`_      |             |             |             |             |             | /MWh\       |
+      |             | {fuel}`]      | {fuel}`/y]    |             |             |             |             |             | :sub:`e`]   |
+      +-------------+---------------+---------------+-------------+-------------+-------------+-------------+-------------+-------------+
+      | Haber bosch | 1196          | 23.3          | 20          | 85          | 79.8        | 0           |10.7         | 0           |
+      | [30a]_      |               |               |             |             | (NH3)       |             |             |             |
+      +-------------+---------------+---------------+-------------+-------------+-------------+-------------+-------------+-------------+
 
 .. [30a]
    To produce 1 unit of ammonia, the system uses 1.13 units of H\ :math:`_2` and 0.123 of electricity.
@@ -2090,7 +2106,7 @@ Thus, they aim at maximising the production of hydrogen rather than low
 temperature heat. For this reason, SO-EC appears to be the most promising
 technology and will be implemented in the model. Thus, in this work, the term *Electrolysis*
 refers to SO-EC. :numref:`Table %s <tbl:hydrogen>` contains the
-data for the hydrogen production technologies.
+data for the hydrogen production technologies, where €\ :sub:`2015` have been converted to USD\ :sub:`2021`.
 
 
 .. container::
@@ -2103,19 +2119,19 @@ data for the hydrogen production technologies.
       |               | {inv}`        | {maint}`      | time`         |               | {H2}`         | {2,direct}`   |
       |               |               |               |               |               |               | [32a]_        |
       +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
-      |               | [€\ :math:`_  | [€\ :math:`_  | [y]           | [%]           | [%]           | [tCO\ :sub:`2`|
-      |               | {2015}`/kW\   | {2015}`/kW\   |               |               |               | /MWh\         |
+      |               | [USD\ :math:`_| [USD\ :math:`_| [y]           | [%]           | [%]           | [tCO\ :sub:`2`|
+      |               | {2021}`/kW\   | {2021}`/kW\   |               |               |               | /MWh\         |
       |               | :math:`_      | :math:`_      |               |               |               | :sub:`e`]     |
       |               | {H2}`]        | {H2}`/y]      |               |               |               |               |
       +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
-      | Electrolysis  | 696           | 19.2 [32x]_   | 15 [32x]_     | 90            | 79            | 0             |
+      | Electrolysis  | 983           | 27.0 [32x]_   | 15 [32x]_     | 90            | 79            | 0             |
       | [32b]_        |               |               |               | [32c]_        | [32f]_        |               |
       | :cite:`\      |               |               |               |               |               |               |
       | DanishEnerg\  |               |               |               |               |               |               |
       | yAgency\      |               |               |               |               |               |               |
       | 2019a`        |               |               |               |               |               |               |
       +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
-      | NG            | 681 [32x]_    | 64.4          | 25            | 86            | 73            | 0.273         |
+      | NG            | 962 [32x]_    | 88.8          | 25            | 86            | 73            | 0.273         |
       | reforming     |               |               |               |               |               |               |
       | [32d]_        |               |               |               |               |               |               |
       | :cite:`to\    |               |               |               |               |               |               |
@@ -2124,7 +2140,7 @@ data for the hydrogen production technologies.
       | ronomic\      |               |               |               |               |               |               |
       | _2013`        |               |               |               |               |               |               |
       +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
-      | Biomass       | 2525          | 196           | 25            | 86            | 43            | 0.902         |
+      | Biomass       | 3567          | 251.3         | 25            | 86            | 43            | 0.902         |
       | gasification  |               |               |               |               |               |               |
       | [32e]_        |               |               |               |               |               |               |
       | :cite:`to\    |               |               |               |               |               |               |
@@ -2133,7 +2149,7 @@ data for the hydrogen production technologies.
       | ronomic\      |               |               |               |               |               |               |
       | _2013`        |               |               |               |               |               |               |
       +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
-      | Ammonia       | 681 [32x]_    | 62.9 [32x]_   | 25            | 86            | 66 [32x]_     | 0             |
+      | Ammonia       | 932 [32x]_    | 88.6 [32x]_   | 25            | 86            | 66 [32x]_     | 0             |
       | cracking      |               |               |               |               |               |               |
       | [32g]_        |               |               |               |               |               |               | 
       +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
@@ -2195,47 +2211,47 @@ Finally, a last technology can produce methane from hydrogen and sequestrated CO
    .. table:: Synthetic fuels (except H\ :math:`_2`) conversion technologies (from :cite:`DanishEnergyAgency2019a,Moret2017PhDThesis` or specified), in 2035.
       :name: tbl:sng_pyro
    
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      |             | :math:`c_   | :math:`c_   | :math:`life | :math:`c_p` | :math:`\eta_| :math:`\eta_| :math:`\eta_| :math:`CO_  |
-      |             | {inv}`      | {maint}`    | time`       |             | {fuel}`     | {e}`        | {th}`       | {2,direct}` |
-      |             |             |             |             |             |             |             |             | [359]_      |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      |             | [€\ :math:`_| [€\ :math:`_| [y]         | [%]         | [%]         | [%]         | [%]         | [tCO\       |
-      |             | {2015}`/kW\ | {2015}`/kW\ |             |             |             |             |             | :sub:`2`    |
-      |             | :math:`_    | :math:`_    |             |             |             |             |             | /MWh\       |
-      |             | {fuel}`]    | {fuel}`/y]  |             |             |             |             |             | :sub:`e`]   |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      | Pyrolysis   | 1344        | 67.2        | 25          | 85          | 66.6        | 1.58        | -           | 0.586       |
-      | to LFO      |             |             |             |             |             |             |             |             |
-      | [363]_      |             |             |             |             |             |             |             |             | 
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      | Pyrolysis   | 1365        | 38          | 25          | 85          | 57.4        | 1.58        | -           | 0.586       |
-      | to fuels    |             |             |             |             |             |             |             |             |
-      | [363]_      |             |             |             |             |             |             |             |             |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      | Gasification| 2525        | 178         | 25          | 85          | 65          | 0           | 22          | 0.260       |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      | Biomethana\ | 986         | 88          | 25          | 85          | 29.9        | 0           | 0           | 0.722       |
-      | tion        |             |             |             |             |             |             |             |             |
-      | [360]_      |             |             |             |             |             |             |             |             |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      | Hydrolisis  | 1592        | 112         | 15          | 100         | 42.3        | 0           | 4           | 0.306       |
-      | methanation |             |             |             |             |             |             |             |             |
-      | :cite:`\    |             |             |             |             |             |             |             |             |
-      | gassn\      |             |             |             |             |             |             |             |             |
-      | er201\      |             |             |             |             |             |             |             |             |
-      | 1opti\      |             |             |             |             |             |             |             |             |
-      | mal`        |             |             |             |             |             |             |             |             |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      | Syn.        | 280         | 0.21        | 30          | 86          | 83.3        | 0           | 0           | -0.198      |
-      | methanation |             |             |             |             |             |             |             |             |
-      | :cite:`\    |             |             |             |             |             |             |             |             |
-      | g\          |             |             |             |             |             |             |             |             |
-      | orre2\      |             |             |             |             |             |             |             |             |
-      | 019pr\      |             |             |             |             |             |             |             |             |
-      | oduct\      |             |             |             |             |             |             |             |             |
-      | ion`        |             |             |             |             |             |             |             |             |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+      +-------------+---------------+---------------+-------------+-------------+-------------+-------------+-------------+-------------+
+      |             | :math:`c_     | :math:`c_     | :math:`life | :math:`c_p` | :math:`\eta_| :math:`\eta_| :math:`\eta_| :math:`CO_  |
+      |             | {inv}`        | {maint}`      | time`       |             | {fuel}`     | {e}`        | {th}`       | {2,direct}` |
+      |             |               |               |             |             |             |             |             | [359]_      |
+      +-------------+---------------+---------------+-------------+-------------+-------------+-------------+-------------+-------------+
+      |             | [USD\ :math:`_| [USD\ :math:`_| [y]         | [%]         | [%]         | [%]         | [%]         | [tCO\       |
+      |             | {2021}`/kW\   | {2021}`/kW\   |             |             |             |             |             | :sub:`2`    |
+      |             | :math:`_      | :math:`_      |             |             |             |             |             | /MWh\       |
+      |             | {fuel}`]      | {fuel}`/y]    |             |             |             |             |             | :sub:`e`]   |
+      +-------------+---------------+---------------+-------------+-------------+-------------+-------------+-------------+-------------+
+      | Pyrolysis   | 1899          | 86.1          | 25          | 85          | 66.6        | 1.58        | -           | 0.586       |
+      | to LFO      |               |               |             |             |             |             |             |             |
+      | [363]_      |               |               |             |             |             |             |             |             | 
+      +-------------+---------------+---------------+-------------+-------------+-------------+-------------+-------------+-------------+
+      | Pyrolysis   | 1928          | 53.6          | 25          | 85          | 57.4        | 1.58        | -           | 0.586       |
+      | to fuels    |               |               |             |             |             |             |             |             |
+      | [363]_      |               |               |             |             |             |             |             |             |
+      +-------------+---------------+---------------+-------------+-------------+-------------+-------------+-------------+-------------+
+      | Gasification| 2248          | 153.0         | 25          | 85          | 65          | 0           | 22          | 0.260       |
+      +-------------+---------------+---------------+-------------+-------------+-------------+-------------+-------------+-------------+
+      | Biomethana\ | 1393          | 19.3          | 25          | 85          | 29.9        | 0           | 0           | 0.722       |
+      | tion        |               |               |             |             |             |             |             |             |
+      | [360]_      |               |               |             |             |             |             |             |             |
+      +-------------+---------------+---------------+-------------+-------------+-------------+-------------+-------------+-------------+
+      | Hydrolisis  | 2248          | 153.0         | 15          | 100         | 42.3        | 0           | 4           | 0.306       |
+      | methanation |               |               |             |             |             |             |             |             |
+      | :cite:`\    |               |               |             |             |             |             |             |             |
+      | gassn\      |               |               |             |             |             |             |             |             |
+      | er201\      |               |               |             |             |             |             |             |             |
+      | 1opti\      |               |               |             |             |             |             |             |             |
+      | mal`        |               |               |             |             |             |             |             |             |
+      +-------------+---------------+---------------+-------------+-------------+-------------+-------------+-------------+-------------+
+      | Syn.        | 370           | 94.4          | 30          | 86          | 83.3        | 0           | 0           | -0.198      |
+      | methanation |               |               |             |             |             |             |             |             |
+      | :cite:`\    |               |               |             |             |             |             |             |             |
+      | g\          |               |               |             |             |             |             |             |             |
+      | orre2\      |               |               |             |             |             |             |             |             |
+      | 019pr\      |               |               |             |             |             |             |             |             |
+      | oduct\      |               |               |             |             |             |             |             |             |
+      | ion`        |               |               |             |             |             |             |             |             |
+      +-------------+---------------+---------------+-------------+-------------+-------------+-------------+-------------+-------------+
 
 
 .. [359]
@@ -2307,21 +2323,21 @@ around 0.2 kWh of energy to sequestrate this amount
       :name: tbl:CC_techs
  
  
-      +-------------+-------------+-------------+-------------+-------------------+-------------+-------------+-------------+
-      |             | :math:`c_   | :math:`c_   | :math:`life | :math:`E_e`       | :math:`\eta_| :math:`f_   | :math:`f_   |
-      |             | {inv}`      | {maint}`    | time`       |                   | {CO_2}`     | {min,\%}`   | {max,\%}`   |
-      |             |             |             |             |                   |             |             |             |
-      +-------------+-------------+-------------+-------------+-------------------+-------------+-------------+-------------+
-      |             | [€\ :math:`_| [€\ :math:`_| [y]         | [kWh :math:`_e`/  | [%]         | [%]         | [%]         |
-      |             | {2015}`/kg\ | {2015}`/kg\ |             | kg :math:`_{CO_2}`|             |             |             |
-      |             | :math:`_    | :math:`_    |             |                   |             |             |             |
-      |             | {CO_2}`/h]  | {CO_2}`/h   |             |                   |             |             |             |
-      |             |             | /y]         |             |                   |             |             |             |
-      +-------------+-------------+-------------+-------------+-------------------+-------------+-------------+-------------+
-      | CC Ind.     | 2580        | 64.8        | 40          | 0.233             | 90 [367]_   | 0           | 100         |
-      +-------------+-------------+-------------+-------------+-------------------+-------------+-------------+-------------+
-      | CC Atm.     | 5160 [368]_ | 129.6       | 40          | 1.3               | 100         | 0           | 100         |
-      +-------------+-------------+-------------+-------------+-------------------+-------------+-------------+-------------+
+      +-------------+---------------+---------------+-------------+-------------------+-------------+-------------+-------------+
+      |             | :math:`c_     | :math:`c_     | :math:`life | :math:`E_e`       | :math:`\eta_| :math:`f_   | :math:`f_   |
+      |             | {inv}`        | {maint}`      | time`       |                   | {CO_2}`     | {min,\%}`   | {max,\%}`   |
+      |             |               |               |             |                   |             |             |             |
+      +-------------+---------------+---------------+-------------+-------------------+-------------+-------------+-------------+
+      |             | [USD\ :math:`_| [USD\ :math:`_| [y]         | [kWh :math:`_e`/  | [%]         | [%]         | [%]         |
+      |             | {2021}`/kg\   | {2021}`/kg\   |             | kg :math:`_{CO_2}`|             |             |             |
+      |             | :math:`_      | :math:`_      |             |                   |             |             |             |
+      |             | {CO_2}`/h]    | {CO_2}`/h     |             |                   |             |             |             |
+      |             |               | /y]           |             |                   |             |             |             |
+      +-------------+---------------+---------------+-------------+-------------------+-------------+-------------+-------------+
+      | CC Ind.     | 3644          | 91.3          | 40          | 0.233             | 90 [367]_   | 0           | 100         |
+      +-------------+---------------+---------------+-------------+-------------------+-------------+-------------+-------------+
+      | CC Atm.     | 7288 [368]_   | 180.9         | 40          | 1.3               | 100         | 0           | 100         |
+      +-------------+---------------+---------------+-------------+-------------------+-------------+-------------+-------------+
 
 .. [367]
    We consider that 10% of the CO\ :math:`_2` cannot be collected.
@@ -2355,59 +2371,59 @@ technical performances of each technology.
    .. table:: Storage technologies characteristics in 2035: costs, emissions and lifetime. Abbreviations: batteries (batt.), Battery Electric Vehicule (BEV), centralised (cen.), decentralised (dec.), Lithium-ions (Li-on), Natural Gas (NG), Plug-in Hybrid Electric Vehicle (PHEV), Pumped Hydro Storage (PHS), seasonal (seas.), temperature (temp.) and thermal storage (TS).
       :name: tab:stodatabasic
 
-      +-----------+------------+------------+-----------+-----------+
-      |           | :math:`c_  | :math:`c_  | :math:`gw | :math:`li |
-      |           | {inv}`     | {maint}`   | p_{con    | fetime`   |
-      |           |            |            | str}`     |           |
-      +-----------+------------+------------+-----------+-----------+
-      |           | [€ :math:`_| [€ :math:`_| [kgCO\    | [y]       |
-      |           | {2015}`    | {2015}`    | :sub:`2`  |           |
-      |           | /kWh]      | /kWh/y]    | -eq./kWh] |           |
-      +-----------+------------+------------+-----------+-----------+
-      | Li-on     | 302        | 0.62       | 61.3      | 15 [296]_ |
-      | batt.     | [294]_     | [294]_     | [295]_    |           |
-      +-----------+------------+------------+-----------+-----------+
-      | TS dec.   | 19.0       | 0.13       | 0         | 25        |
-      |           | [300]_     | [300]_     | [297]_    | [300]_    |
-      +-----------+------------+------------+-----------+-----------+
-      | TS seas.  | 0.54       | 0.003      | 0         | 25        |
-      | cen.      | [301]_     | [301]_     | [297]_    | [301]_    |
-      +-----------+------------+------------+-----------+-----------+
-      | TS daily  | 3          | 0.0086     | 0         | 40        |
-      | cen.      | [301]_     | [301]_     | [297]_    | [300]_    |
-      +-----------+------------+------------+-----------+-----------+
-      | TS high   | 28         | 0.28       | 0         | 25        |
-      | temp.     |            |            | [297]_    |           |
-      +-----------+------------+------------+-----------+-----------+
-      | TS cold   | 25         | 0.3        | 0         | 20        |
-      +-----------+------------+------------+-----------+-----------+
-      | Gas       | 0.051      | 0.0013     | 0         | 30        |
-      |           | [302]_     | [302]_     | [297]_    | [302]_    |
-      +-----------+------------+------------+-----------+-----------+
-      | H2        | 6.19       | 0.03       | 0         | 20        |
-      |           | [303]_     | [303]_     | [297]_    | [303]_    |
-      +-----------+------------+------------+-----------+-----------+
-      | Diesel    | 6.35e-3    | 3.97e-4    | 0         | 20        |
-      | [304]_    |            |            | [297]_    |           |
-      +-----------+------------+------------+-----------+-----------+
-      | Gasoline  | 6.35e-3    | 3.97e-4    | 0         | 20        |
-      | [304]_    |            |            | [297]_    |           |
-      +-----------+------------+------------+-----------+-----------+
-      | LFO       | 6.35e-3    | 3.97e-4    | 0         | 20        |
-      | [304]_    |            |            | [297]_    |           |
-      +-----------+------------+------------+-----------+-----------+
-      | Ammonia   | 6.35e-3    | 3.97e-4    | 0         | 20        |
-      | [304]_    |            |            | [297]_    |           |
-      +-----------+------------+------------+-----------+-----------+
-      | Methanol  | 6.35e-3    | 3.97e-4    | 0         | 20        |
-      | [304]_    |            |            | [297]_    |           |
-      +-----------+------------+------------+-----------+-----------+
-      | CO2       | 49.5       | 0.495      | 0         | 20        |
-      | [305]_    | [306]_     |            | [297]_    |           |
-      +-----------+------------+------------+-----------+-----------+
-      | Dam       | 0          | 0          | 0         | 40        |
-      | storage   |            |            |           |           |
-      +-----------+------------+------------+-----------+-----------+
+      +-----------+--------------+--------------+-----------+-----------+
+      |           | :math:`c_    | :math:`c_    | :math:`gw | :math:`li |
+      |           | {inv}`       | {maint}`     | p_{con    | fetime`   |
+      |           |              |              | str}`     |           |
+      +-----------+--------------+--------------+-----------+-----------+
+      |           | [USD :math:`_| [USD :math:`_| [kgCO\    | [y]       |
+      |           | {2021}`      | {2021}`      | :sub:`2`  |           |
+      |           | /kWh]        | /kWh/y]      | -eq./kWh] |           |
+      +-----------+--------------+--------------+-----------+-----------+
+      | Li-on     | 426.5        | 0.66         | 61.3      | 15 [296]_ |
+      | batt.     | [294]_       | [294]_       | [295]_    |           |
+      +-----------+--------------+--------------+-----------+-----------+
+      | TS dec.   | 26.8         | 0.19         | 0         | 25        |
+      |           | [300]_       | [300]_       | [297]_    | [300]_    |
+      +-----------+--------------+--------------+-----------+-----------+
+      | TS seas.  | 0.76         | 0.004        | 0         | 25        |
+      | cen.      | [301]_       | [301]_       | [297]_    | [301]_    |
+      +-----------+--------------+--------------+-----------+-----------+
+      | TS daily  | 4.2          | 0.012        | 0         | 40        |
+      | cen.      | [301]_       | [301]_       | [297]_    | [300]_    |
+      +-----------+--------------+--------------+-----------+-----------+
+      | TS high   | 39.6         | 0.42         | 0         | 25        |
+      | temp.     |              |              | [297]_    |           |
+      +-----------+--------------+--------------+-----------+-----------+
+      | TS cold   | 35.3         | 0.42         | 0         | 20        |
+      +-----------+--------------+--------------+-----------+-----------+
+      | Gas       | 0.071        | 0.0018       | 0         | 30        |
+      |           | [302]_       | [302]_       | [297]_    | [302]_    |
+      +-----------+--------------+--------------+-----------+-----------+
+      | H2        | 8.7          | 0.55         | 0         | 20        |
+      |           | [303]_       | [303]_       | [297]_    | [303]_    |
+      +-----------+--------------+--------------+-----------+-----------+
+      | Diesel    | 8.8e-3       | 5.5 e-4      | 0         | 20        |
+      | [304]_    |              |              | [297]_    |           |
+      +-----------+--------------+--------------+-----------+-----------+
+      | Gasoline  | 8.8e-3       | 5.5e-4       | 0         | 20        |
+      | [304]_    |              |              | [297]_    |           |
+      +-----------+--------------+--------------+-----------+-----------+
+      | LFO       | 8.8e-3       | 5.5e-4       | 0         | 20        |
+      | [304]_    |              |              | [297]_    |           |
+      +-----------+--------------+--------------+-----------+-----------+
+      | Ammonia   | 8.8e-3       | 5.5e-4       | 0         | 20        |
+      | [304]_    |              |              | [297]_    |           |
+      +-----------+--------------+--------------+-----------+-----------+
+      | Methanol  | 8.8e-3       | 5.5e-4       | 0         | 20        |
+      | [304]_    |              |              | [297]_    |           |
+      +-----------+--------------+--------------+-----------+-----------+
+      | CO2       | 69.9         | 0.70         | 0         | 20        |
+      | [305]_    | [306]_       |              | [297]_    |           |
+      +-----------+--------------+--------------+-----------+-----------+
+      | Dam       | 0            | 0            | 0         | 40        |
+      | storage   |              |              |           |           |
+      +-----------+--------------+--------------+-----------+-----------+
 
 
 .. [294]
@@ -2632,16 +2648,20 @@ As a consequence, the estimated cost of the Belgian grid is
 :math:`58.6/1.0679\cdot 11.25/8.24=74.9` b€\ :sub:`2015`. And the extra
 cost is :math:`393/1.0679\approx 367.8` M€\ :sub:`2015`/GW.
 
+We assume that these costs are similar for Colombia and convert them into USD\ :sub:`2021`
+to get a grid cost of 105.8 b USD\ :sub:`2021`/GW
+and an extra reinforcement cost of 518.5 M USD\ :sub:`2021`/GW.
+
 Several data regarding cross-border interconnections are given in Section
 *Electricity imports and exports*. The costs of new High-Voltage
 transfer capacity (HVAC Line) with neighbouring countries are computed to be
 :math:`c_{inv} = 2~\text{€}_{2015}`/kW/km and 
 :math:`c_{maint} = 0.04~\text{€}_{2015}`/kW/km/year, based on :cite:`IEA_HVAC`,
 :cite:`brown_synergies_2018` and :cite:`prina_multi-objective_2020`. By multiplying these
-costs by 766 km (i.e. the distance between Panama City and Bogotá),
+costs by 766 km (i.e. the distance between Panama City and Bogotá) and converting them into USD\ :sub:`2021`,
 we obtain for the technology HVAC in EnergyScope in 2035:
-:math:`c_{inv} = 1532~\text{M€}_{2015}`/GW and 
-:math:`c_{maint} = 30.64~\text{M€}_{2015}`/GW/year.
+:math:`c_{inv} = 2164~\text{M USD}_{2021}`/GW and 
+:math:`c_{maint} = 43.2~\text{M USD}_{2021}`/GW/year.
 We take the distance from capital city to capital city, and not the
 distance from border to border, to grossly reflect the local grid
 reinforcement costs that such new interconnection projects entail.
@@ -2666,18 +2686,12 @@ is expected to be 60 years. DHN losses are assumed to be 5%.
 
 As no relevant data were found for Colombia, the DHN infrastructure cost
 of Switzerland was used. As a consequence, the investment cost
-(:math:`c_{inv}`) is 826 €\ :sub:`2015`/kW\ :sub:`th`.
+(:math:`c_{inv}`) is 1166 USD\ :sub:`2021`/kW\ :sub:`th`.
 
 The lower (:math:`\%_{dhn,min}`) and upper bounds (:math:`\%_{dhn,max}`) for the use of
 DHN are chosen as 0% and 50%, respectively. The latter value is the same as
 the one from :cite:`borasio2022deep` for the case of Italy. Indeed, the population
 density in urban and surburban areas is grossly similar in both countries.
- 
-
-Energy demand reduction cost
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-[TO BE COMPLETED]
 
 
 .. _app:sec:ESTD_CO_CO2_emissions:
