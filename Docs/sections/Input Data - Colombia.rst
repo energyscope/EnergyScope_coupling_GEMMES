@@ -1498,7 +1498,7 @@ This technology is added in the following tables.
       | PHEV car  | 645      | 47.9     | 519      | 5.1      | 50       |
       +-----------+----------+----------+----------+----------+----------+
       | BEV       | 613      | 14.1     | 385      | 5.1      | 50       |
-      |           | [21c]_   |          |          |          |          |
+      |           |          |          |          |          |          |
       +-----------+----------+----------+----------+----------+----------+
       | FC car    | 950      | 14.1     | 786      | 5.1      | 50       |
       |           | [21c]_   |          |          |          |          |
@@ -1541,7 +1541,8 @@ This technology is added in the following tables.
    technology is similar to a gasoline car (except the fuel).
    
 .. [21c]
-   ASK Xavier
+   Departing from the computations described above, this CAPEX value has been increased
+   to be more in line with the values given in :cite:`EC_scen2020` and :cite:`Schnidrig2021`
    
 .. [21d]
    A cost ratio of 5% between gasoline car and gasoline motorcycle is given in
@@ -1576,12 +1577,12 @@ of each vehicle type in 2035. The shares in 2021 are given as well.
       \                     [Wh/km-pass] [Wh/km-pass]    [Wh/km-pass]                 [%]	                      [%]		
       Gasoline car          497  [22b]_  0               0                            100                          33
       Diesel car            435  [22b]_  0               0                            100                          0
-      NG car                543  [22b]_  0               0                            100                          15
+      NG car                345  [22b]_  0               0                            100                          15
       HEV [22c]_            336  [22b]_  0               0                            100                          0
       PHEV [22d]_           138  [22b]_  109 [22b]_      0                            100                          0
-      BEV                   0            195 [22b]_      0                            100                          0
-      FC car                264  [22e]_  0               0                            100                          0
-      Methanol car          497  [22b]_  0               0                            100                          0
+      BEV                   0            161 [22e]_      0                            100                          0
+      FC car                219  [22e]_  0               0                            100                          0
+      Methanol car          460  [22b]_  0               0                            100                          0
       Gasoline motorcycle   149  [22f]_  0               0                            100			   55
       Electrical motorcycle 0 		 55  [22g]_      0			      100			   0
       Tram & Trolley        0            63  [22h]_      0                            50 [22i]_                    0
@@ -1610,9 +1611,8 @@ of each vehicle type in 2035. The shares in 2021 are given as well.
    distance and petrol to cover the remaining 60%.
 
 .. [22e]
-   In FC car are estimated to consume 52.6%
-   more than BEV in 2035, see Table 2.12 in
-   :cite:`national2013transitions`
+   Departing from the work of :cite:`Limpens2021thesis`, these efficiency values have been adapted
+   to be more in line with the values given in :cite:`EC_scen2020` and :cite:`Schnidrig2021`
 
 .. [22f]
    A fuel consumption ratio of 27% between gasoline motorcycle and gasoline car is given in
@@ -2124,14 +2124,14 @@ data for the hydrogen production technologies, where €\ :sub:`2015` have been 
       |               | :math:`_      | :math:`_      |               |               |               | :sub:`e`]     |
       |               | {H2}`]        | {H2}`/y]      |               |               |               |               |
       +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
-      | Electrolysis  | 983           | 27.0 [32x]_   | 15 [32x]_     | 90            | 79            | 0             |
+      | Electrolysis  | 983           | 27.0          | 15            | 90            | 79            | 0             |
       | [32b]_        |               |               |               | [32c]_        | [32f]_        |               |
       | :cite:`\      |               |               |               |               |               |               |
       | DanishEnerg\  |               |               |               |               |               |               |
       | yAgency\      |               |               |               |               |               |               |
       | 2019a`        |               |               |               |               |               |               |
       +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
-      | NG            | 962 [32x]_    | 88.8          | 25            | 86            | 73            | 0.273         |
+      | NG            | 962           | 88.8          | 25            | 86            | 73            | 0.273         |
       | reforming     |               |               |               |               |               |               |
       | [32d]_        |               |               |               |               |               |               |
       | :cite:`to\    |               |               |               |               |               |               |
@@ -2149,7 +2149,7 @@ data for the hydrogen production technologies, where €\ :sub:`2015` have been 
       | ronomic\      |               |               |               |               |               |               |
       | _2013`        |               |               |               |               |               |               |
       +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
-      | Ammonia       | 932 [32x]_    | 88.6 [32x]_   | 25            | 86            | 66 [32x]_     | 0             |
+      | Ammonia       | 932           | 88.6          | 25            | 86            | 66            | 0             |
       | cracking      |               |               |               |               |               |               |
       | [32g]_        |               |               |               |               |               |               | 
       +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
@@ -2180,9 +2180,6 @@ data for the hydrogen production technologies, where €\ :sub:`2015` have been 
 .. [32g]
    Cracking ammonia does not exist at industrial scale. Indeed, ammonia is produced from hydrogen throuth the Haber-Bosch process.
    Thus, we didn't found reliable data and did our own calculation based on Haber bosch process and methane cracking.
-   
-.. [32x]
-   ASK Xavier
 
 
 
