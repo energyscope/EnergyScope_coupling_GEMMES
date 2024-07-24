@@ -7,7 +7,7 @@ May 2024
 
 ## Define the country studied and the time granularity of EnergyScope
 country = 'Colombia'
-EnergyScope_granularity = 'TD'
+EnergyScope_granularity = 'MO'
 nbr_tds = 12
 
 def main():
@@ -19,7 +19,7 @@ def main():
     gdp_current = variables_GEMMES['gdp']
     diff = np.linalg.norm(gdp_current)
     n_iter = 0
-    while(diff > 1 and n_iter < 2): ##################### 
+    while(diff > 1 and n_iter < 1): ##################### 
         gdp_previous = gdp_current
         n_iter += 1
         output_EnergyScope = run_EnergyScope(variables_GEMMES)
@@ -231,6 +231,13 @@ def run_EnergyScope(variables_GEMMES):
     c_op_ampl = apy.DataFrame.from_pandas(c_op_ampl)
     ampl.set_params('c_op', c_op_ampl)
     
+    gwp_cost_ampl = ampl.get_param('gwp_cost').to_list()
+    gwp_cost_ampl = pd.DataFrame(gwp_cost_ampl, columns=['Year', 'Value'])
+    gwp_cost_ampl['Value'] *= en0 # Convert constant USD to constant k COP
+    gwp_cost_ampl.set_index(['Year'], inplace=True)
+    gwp_cost_ampl = apy.DataFrame.from_pandas(gwp_cost_ampl)
+    ampl.set_params('gwp_cost', gwp_cost_ampl)
+    
     ## Run the AMPL optimization problem
     solve_result = ampl.run_ampl()
     ampl.get_results()
@@ -249,7 +256,7 @@ def plot_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     z_Results = ampl_graph.ampl_collector
     # z_Resources = z_Results['Resources'].copy()
     # z_Assets = z_Results['Assets'].copy()
-    z_Cost_breakdown = z_Results['Cost_breakdown'].copy()
+    # z_Cost_breakdown = z_Results['Cost_breakdown'].copy()
     # z_Year_balance = z_Results['Year_balance'].copy()
     # z_gwp_breakdown = z_Results['Gwp_breakdown'].copy()
     
@@ -292,7 +299,7 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     C_inv['Imported'] = 1 - C_inv['Local']
     C_inv[['F','B','G','H']] = [1,0,0,0]
     
-    # C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(['DHN','GRID','HVAC_LINE']),[3,5]] = [0,1] # These costs supported by the PRIVATE SECTOR, actually (not by the state - grid costs for households are quite volatile, according to DNP)
+    # C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(['DHN','GRID','HVAC_LINE','H2_INFRASTRUCTURE']),[3,5]] = [0,1] # These costs supported by the PRIVATE SECTOR, actually (not by the state - grid costs for households are quite volatile, according to DNP)
     
     list_private_mob_tech = ['MOTORCYCLE','CAR_GASOLINE','CAR_DIESEL','CAR_NG','CAR_METHANOL','CAR_HEV','CAR_PHEV','MOTORCYCLE_ELECTRIC','CAR_BEV','CAR_FUEL_CELL']
     C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(list_private_mob_tech),[4,7]] = [0,1] # Private mobility costs are supported by households
@@ -332,7 +339,7 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     C_maint.rename(columns = {'C_op_phase_tech_non_annualised':'Value'}, inplace = True)
     C_maint['Local'] = 1
     C_maint['Imported'] = 1 - C_maint['Local']
-    C_maint.drop(['NUCLEAR','DAM_STORAGE','BEV_BATT','EFFICIENCY'], level='Technologies', inplace=True)
+    C_maint.drop(['NUCLEAR','DAM_STORAGE','BEV_BATT','EFFICIENCY','H2_INFRASTRUCTURE'], level='Technologies', inplace=True)
     C_maint[['F','B','G','H']] = C_inv.iloc[~C_inv.index.get_level_values('Phases').isin(['2015_2020']),[4,5,6,7]].values        
     
     # C_op is annualised - we need to get a non-annualised version of it

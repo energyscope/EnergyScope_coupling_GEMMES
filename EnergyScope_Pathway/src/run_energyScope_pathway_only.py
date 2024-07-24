@@ -201,7 +201,7 @@ def plot_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     
     a_website = "https://www.google.com"
     webbrowser.open_new(a_website)
-    # ampl_graph.graph_cost()
+    ampl_graph.graph_cost()
     # ampl_graph.graph_gwp_per_sector()
     # ampl_graph.graph_cost_inv_phase_tech()
     # ampl_graph.graph_cost_return()

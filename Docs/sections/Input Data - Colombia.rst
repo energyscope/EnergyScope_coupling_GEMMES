@@ -204,8 +204,8 @@ not landfill (composting, recycling) and paper cardboard. Finally, *biofuels* ar
       :widths: 15 15 15 15
       :name: tab:renewableResourcesPotentialIn2035
 
-		bioethanol , 7.2 [7a]_ , 100 [7b]_ , [TWh]
-		biodiesel , 2.5 [7a]_ , 100 [7b]_ , [TWh]
+		bioethanol , 7.2 [7a]_ , 50 [7b]_ , [TWh]
+		biodiesel , 2.5 [7a]_ , 50 [7b]_ , [TWh]
 		woody biomass , 34.3 [7c]_ , 24.6 [7d]_ , [TWh]
 		wet biomass , 0 , 29.9 [7d]_ , [TWh]
 		non-renewable waste, 0 , 10.3 [7e]_ , [TWh]
@@ -214,7 +214,7 @@ not landfill (composting, recycling) and paper cardboard. Finally, *biofuels* ar
       Data obtained from :cite:`IEA_2023` and slightly adapted for calibration purpose.
    
    .. [7b]
-      Reliable data for the local potential of bio-fuels could not be obtained. Thus, a reasonable order of magnitude of 100 TWh was chosen for both biodiesel and bioethanol. Using the energy content of biodiesel and bioethanol from :cite:`noauthor_conversion_nodate` and a yield of 4 t/ha, we compute that fully utilizing this biomass potential would amount to covering 5% of Colombia's surface with crops for biofuel production. In 2021, 40% of Colombia's surface was dedicated to agriculture.
+      Reliable data for the local potential of bio-fuels could not be obtained. Thus, a reasonable order of magnitude of 50 TWh was chosen for both biodiesel and bioethanol. Using the energy content of biodiesel and bioethanol from :cite:`noauthor_conversion_nodate` and a yield of 4 t/ha, we compute that fully utilizing this biomass potential would amount to covering 2.5% of Colombia's surface with crops for biofuel production. In 2021, 40% of Colombia's surface was dedicated to agriculture.
 
    .. [7c]
       Endogenous computation, based on the data of the EUDs and technologies in 2021. This value matches grossly the primary solid biomass data for year 2019 given in :cite:`IEA_world_energy_balances`.
