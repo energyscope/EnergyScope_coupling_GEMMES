@@ -417,10 +417,13 @@ subject to extra_grid {y in YEARS_WND diff YEAR_ONE}:
 	F [y,"GRID"] = 1 +  (c_grid_extra / c_inv[y,"GRID"]) *(    (F [y, "WIND_ONSHORE"] + F [y, "WIND_OFFSHORE"] + F [y, "PV"]      )
 					                                     - (f_min [y,"WIND_ONSHORE"] + f_min [y,"WIND_OFFSHORE"] + f_min [y,"PV"]) );
 
-
 # [Eq. 22] DHN: assigning a cost to the network
 subject to extra_dhn  {y in YEARS_WND diff YEAR_ONE}:
 	F [y, "DHN"] = sum {j in TECHNOLOGIES diff STORAGE_TECH: layers_in_out [y, j,"HEAT_LOW_T_DHN"] > 0} (layers_in_out [y, j,"HEAT_LOW_T_DHN"] * F [y, j]);
+
+# [Eq. 22bis] Assigning a cost to the hydrogen network (transport and distribution, including terminals for export of e-fuels)
+subject to set_h2_infra  {y in YEARS_WND diff YEAR_ONE}:
+	F [y, "H2_INFRASTRUCTURE"] = F [y, "H2_ELECTROLYSIS"];
 
 ## Additional constraints
 #------------------------

@@ -1,21 +1,21 @@
 
-Presolve eliminates 972433 constraints and 626459 variables.
+Presolve eliminates 972436 constraints and 626461 variables.
 "option presolve 10;" used, but "option presolve 6;" would suffice.
 Adjusted problem:
-319124 variables, all linear
-584801 constraints, all linear; 1848180 nonzeros
-	392646 equality constraints
-	192155 inequality constraints
+319414 variables, all linear
+585092 constraints, all linear; 1849050 nonzeros
+	392648 equality constraints
+	192444 inequality constraints
 1 linear objective; 1 nonzero.
 
 presolve results:
-	variables omitted:	626459
-	constraints omitted:	972433
+	variables omitted:	626461
+	constraints omitted:	972436
 	ranges relaxed:		34521
-	bounds improved:	624748
+	bounds improved:	624750
 	constraint_drop_tol breakpoints: 0, 0, 20776.729964049387
 	nba cycles:		5
-	bound row scans:	375679
+	bound row scans:	375970
 	row-scan updates:	42649
 Gurobi 11.0.1:   pre:dual = -1
   alg:method = 2
@@ -23,26 +23,26 @@ Gurobi 11.0.1:   pre:dual = -1
   pre:passes = 3
   bar:convtol = 1e-06
   pre:solve = -1
-Gurobi 11.0.1: optimal solution; objective 59120.12129
+Gurobi 11.0.1: optimal solution; objective 61195.76413
 0 simplex iterations
-116 barrier iterations
+111 barrier iterations
  
 ------------ WARNINGS ------------
 WARNING:  "Tolerance violations"
   Type                         MaxAbs [Name]   MaxRel [Name]
-* variable bounds              1E-01           3E-03         
-* expr '_linrange'             4E-01           2E-03         
+* variable bounds              5E-02           1E-03         
+* expr '_linrange'             2E-01           1E-03         
 *: Using the solver's aux variable values.
 Documentation: mp.ampl.com/modeling-tools.html#automatic-solution-check.
 solve_result = solved
 
 solve_result_num = 0
 
-_solve_elapsed_time = 53.71
+_solve_elapsed_time = 54.8747
 
-TotalCost 59120.12129090958
+TotalCost 61195.76412790993
 Carbon_cost 0
-GWP_op 1500.121771225986
+GWP_op 1500.053904952919
 carbon_price 0
 --------------SAVING COSTS -----------
 --------------SAVING RESOURCES -----------

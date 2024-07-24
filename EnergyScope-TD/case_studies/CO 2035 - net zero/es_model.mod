@@ -337,6 +337,10 @@ subject to extra_grid:
 subject to extra_dhn:
 	F ["DHN"] = sum {j in TECHNOLOGIES diff STORAGE_TECH: layers_in_out [j,"HEAT_LOW_T_DHN"] > 0} (layers_in_out [j,"HEAT_LOW_T_DHN"] * F [j]);
 
+# [Eq. 22bis] Assigning a cost to the hydrogen network (transport and distribution, including terminals for export of e-fuels)
+subject to set_h2_infra:
+	F ["H2_INFRASTRUCTURE"] = F ["H2_ELECTROLYSIS"];
+
 ## Additional constraints
 #------------------------
 

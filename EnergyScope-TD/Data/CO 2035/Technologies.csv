@@ -89,6 +89,7 @@ Mobility;Freight;Truck fuel cell (hydrogen);TRUCK_FUEL_CELL;568.0944;17.015079;0
 Mobility;Freight;Truck electric;TRUCK_ELEC;1089.1137;32.606361;0;15;0.092592593;0;1;0;1000000000000000;
 Mobility;Freight;Truck gas;TRUCK_NG;524.1548;26.164032;0;15;0.092592593;0;1;0;1000000000000000;
 Infrastructure;Infrastructure;Efficiency mesures in energy system;EFFICIENCY;0;0;0;1;1;0;1;0;1000000000000000;
+Infrastructure;Infrastructure;cost for transportation and distribution of hydrogen;H2_INFRASTRUCTURE;2225;0;0;60;1;0;1;0;1000000000000000;
 Infrastructure;Infrastructure;Distric heating network;DHN;1166.4707;0;0;60;1;0;1;0;1000000000000000;
 Infrastructure;Infrastructure;Electrical grid cost;GRID ;105815.4778;0;0;80;1;0;1;0;1000000000000000;
 Infrastructure;Infrastructure;Cost for increasing the import capacity of the electrical grid;HVAC_LINE;2163.7927;43.193208;0;40;1;0;1;0;1.5;
