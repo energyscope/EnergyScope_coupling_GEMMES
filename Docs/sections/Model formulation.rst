@@ -419,8 +419,8 @@ the independent and dependent variables, respectively.
       |                      |                      | availability of each |
       |                      |                      | resource             |
       +----------------------+----------------------+----------------------+
-      | :math:`c_{op}(res)`  | [M€\                 | Specific cost of     |
-      |                      | :math:`_{2015}`/GWh] | resource             |
+      | :math:`c_{op}(res)`  | [M USD/GWh]          | Specific cost of     |
+      |                      |                      | resource             |
       +----------------------+----------------------+----------------------+
       | :math:`veh_{capa}`   | [km-pass/h/veh.] [a]_| Mobility capacity    |
       |                      |                      | per vehicle (veh.)   |
@@ -442,10 +442,10 @@ the independent and dependent variables, respectively.
       |                      |                      | technology/resource  |
       |                      |                      | i.                   |
       +----------------------+----------------------+----------------------+
-      | :math:`c_            | [M€\ :math:`_{2015}` | Technology specific  |
+      | :math:`c_            | [M USD\              | Technology specific  |
       | {inv}(tech)`         | /GW] [c]_ [b]_       | investment cost      |
       +----------------------+----------------------+----------------------+
-      | :math:`c_{maint}     | [M€\ :math:`_{2015}` | Technology specific  |
+      | :math:`c_{maint}     | [M USD               | Technology specific  |
       | (tech)`              | /GW/y]               | yearly maintenance   |
       |                      | [c]_ [b]_            | cost                 |
       +----------------------+----------------------+----------------------+
@@ -503,8 +503,8 @@ the independent and dependent variables, respectively.
       | motorcycle}`         |                      | motorcycles in       |
       |                      |                      | private mobility     |
       +----------------------+----------------------+----------------------+
-      | :math:`c_            | [M€\                 | Cost to reinforce    |
-      | {grid,extra}`        | :math:`_{2015}`/GW]  | the grid per GW of   |
+      | :math:`c_            | [M USD/GW            | Cost to reinforce    |
+      | {grid,extra}`        |                      | the grid per GW of   |
       |                      |                      | installed            |
       |                      |                      | intermittent         |
       |                      |                      | renewable            |
@@ -641,18 +641,18 @@ the independent and dependent variables, respectively.
       |                      |                      | :math:`l \notin`     |
       |                      |                      | *EUT*                |
       +----------------------+----------------------+----------------------+
-      | :math:`\textbf{C}_   | [M€\ :sub:`2015`/y]  | Total annual cost of |
+      | :math:`\textbf{C}_   | [M USD/y]            | Total annual cost of |
       | {\textbf{tot}}`      |                      | the energy system    |
       +----------------------+----------------------+----------------------+
-      | :math:`\textbf{C}_   | [M€\ :sub:`2015`]    | Total                |
+      | :math:`\textbf{C}_   | [M USD]              | Total                |
       | {\textbf{inv}}(      |                      | investment cost      |
       | tech)`               |                      | of technology        |
       +----------------------+----------------------+----------------------+
-      | :math:`\textbf{C}_   | [M€\ :sub:`2015`/y]  | Yearly maintenance   |
+      | :math:`\textbf{C}_   | [M USD/y]            | Yearly maintenance   |
       | {\textbf{maint}}(    |                      | cost of technology   |
       | tech)`               |                      |                      |
       +----------------------+----------------------+----------------------+
-      | :math:`\textbf{C}_   | [M€\ :sub:`2015`/y]  | Total cost of        |
+      | :math:`\textbf{C}_   | [M USD/y]            | Total cost of        |
       | {\textbf{op}}(       |                      | resource             |
       | res)`                |                      |                      |
       +----------------------+----------------------+----------------------+
@@ -996,6 +996,10 @@ Networks
 .. math::
     \textbf{F} (DHN) = \sum_{j \in \text{TECH} \setminus {STO} | f(j,\text{HeatLowTDHN}) >0} f(j,\text{HeatLowTDHN}) \cdot \textbf{F} (j) 
     :label: eq:DHNCost
+    
+.. math::
+    \textbf{F} (H_{2,infrastructure}) = \textbf{F} (H_{2,electrolysis})
+    :label: eq:h2_network
 
 Eq. :eq:`eq:loss` calculates network losses as a share
 (:math:`\%_{\text{net}_{loss}}`) of the total energy transferred through the network. As
@@ -1005,11 +1009,13 @@ Eqs. :eq:`eq:mult_grid` - :eq:`eq:DHNCost`
 define the extra investment for networks. Integration of intermittent RE
 implies additional investment costs for the electricity grid
 (:math:`c_{grid,ewtra}`). For example, the reinforcement of the electricity
-grid is estimated to be 358 millions €\ :sub:`2015` per Gigawatt of
+grid is estimated to be 518.5 million USD\ :sub:`2021` per Gigawatt of
 intermittent renewable capacity installed (see 
 `Data for the grid <#ssec:app1_grid:>`__ for details).
 Eq. :eq:`eq:DHNCost` links the size of DHN to the total
 size of the installed centralized energy conversion technologies.
+Finally, Eq. :eq:`eq:h2_network` links the size of the hydrogen
+network to the installed capacity for hydrogen production.
 
 Additional Constraints
 ^^^^^^^^^^^^^^^^^^^^^^

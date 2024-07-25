@@ -352,8 +352,8 @@ for partially compensating for the planned decrease in fossil fuels' exports. Fo
 hydrogen, methane, ammonia and methanol. In the model's code, they are designated with the appendix 'RE' to distinguish them from 
 their fossil-based counterparts.
 
-The Belgian Hydrogen Import Coalition computed a projection of the import prices of e-fuels from international markets for the year 2035 :cite:`H2coalition2020shipping`. They indicate that 80% of this selling price would correspond to production cost, while the rest would correspond
-to shipping and energy conversion costs and losses. Thus, the revenue of an e-fuel exporter like Colombia would be equal to 80% of the
+The Belgian Hydrogen Import Coalition computed a projection of the import prices of e-fuels from international markets for the year 2035 :cite:`H2coalition2020shipping`. They indicate that 85% of this selling price would correspond to production cost, local transmission and local terminalling cost. The rest would correspond
+to shipping and remote terminalling. Thus, the revenue of an e-fuel exporter like Colombia would be equal to 85% of the
 computed import price. The corresponding values are indicated in :numref:`Table %s <tab:prices_resources_efuels>`.
 
 .. container::
@@ -364,16 +364,16 @@ computed import price. The corresponding values are indicated in :numref:`Table 
       :name: tab:prices_resources_efuels
 		
 		 , [USD\ :sub:`2021`/MWh :sub:`fuel`] [12a]_ , [USD\ :sub:`2021`/MWh :sub:`fuel`] [12b]_
-		green hydrogen , 126.6 , 101.3
-		e-methane , / , 101.3
-		e-ammonia , 87.4 , 69.9
-		e-methanol , 119.9 , 95.9
+		green hydrogen , 126.6 , 107.6
+		e-methane , / , 107.6
+		e-ammonia , 87.4 , 74.3
+		e-methanol , 119.9 , 101.9
 
 .. [12a]
    Taken as equal to the import price of e-fuels from international market, computed by :cite:`H2coalition2020shipping`.
    
 .. [12b]
-   Estimated as 80% of the import price.
+   Estimated as 85% of the import price.
    
 
 .. _sec:app1_end_uses:
@@ -2078,21 +2078,21 @@ characteristics of these technologies in year 2035.
       :name: tbl:hydrogen_techs_danish
 
 
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      |             | :math:`c_   | :math:`c_   | :math:`life | :math:`\eta_| :math:`\eta_| :math:`\eta_| :math:`\eta_|
-      |             | {inv}`      | {maint}`    | time`       | e`          | {h.t.}`     | {H2}`       | {l.t.}`     |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      |             | [€\ :math:`_| [€\ :math:`_| [y]         | [%]         | [%]         | [%]         | [%]         |
-      |             | {2015}`/kW\ | {2015}`/kW\ |             |             |             |             |             |
-      |             | :math:`_    | :math:`_    |             |             |             |             |             |
-      |             | {H_2}`]     | {H_2}`/y]   |             |             |             |             |             |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      | PEM-EC      | 870         | 40          | 15          | -100        |             | 63          | 12          |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      | A-EC        | 806         | 43          | 25          | -100        |             | 67          | 11          |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-      | SO-EC       | 696         | 21          | 23          | -85         | -15         | 79          | 1.5         |
-      +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+      +-------------+---------------+---------------+-------------+-------------+-------------+-------------+-------------+
+      |             | :math:`c_     | :math:`c_     | :math:`life | :math:`\eta_| :math:`\eta_| :math:`\eta_| :math:`\eta_|
+      |             | {inv}`        | {maint}`      | time`       | e`          | {h.t.}`     | {H2}`       | {l.t.}`     |
+      +-------------+---------------+---------------+-------------+-------------+-------------+-------------+-------------+
+      |             | [USD\ :math:`_| [USD\ :math:`_| [y]         | [%]         | [%]         | [%]         | [%]         |
+      |             | {2015}`/kW\   | {2015}`/kW\   |             |             |             |             |             |
+      |             | :math:`_      | :math:`_      |             |             |             |             |             |
+      |             | {H_2}`]       | {H_2}`/y]     |             |             |             |             |             |
+      +-------------+---------------+---------------+-------------+-------------+-------------+-------------+-------------+
+      | PEM-EC      | 870           | 40            | 15          | -100        |             | 63          | 12          |
+      +-------------+---------------+---------------+-------------+-------------+-------------+-------------+-------------+
+      | A-EC        | 806           | 43            | 25          | -100        |             | 67          | 11          |
+      +-------------+---------------+---------------+-------------+-------------+-------------+-------------+-------------+
+      | SO-EC       | 696           | 21            | 23          | -85         | -15         | 79          | 1.5         |
+      +-------------+---------------+---------------+-------------+-------------+-------------+-------------+-------------+
 
 
 
@@ -2470,8 +2470,8 @@ technical performances of each technology.
    Lifetime and maintenance cost based on own calculation.
 
 .. [306]
-   Units: **c\ inv** [€\ \ :sub:`2015`/tCO\ \ :sub:`2`],
-   **c\ op** [€\ \ :sub:`2015`/tCO\ \ :sub:`2`/y]
+   Units: **c\ inv** [USD\ \ :sub:`2015`/tCO\ \ :sub:`2`],
+   **c\ op** [USD\ \ :sub:`2015`/tCO\ \ :sub:`2`/y]
 
 
 Estimation for the gas storage is based on an existing facility using
@@ -2689,6 +2689,21 @@ The lower (:math:`\%_{dhn,min}`) and upper bounds (:math:`\%_{dhn,max}`) for the
 DHN are chosen as 0% and 50%, respectively. The latter value is the same as
 the one from :cite:`borasio2022deep` for the case of Italy. Indeed, the population
 density in urban and surburban areas is grossly similar in both countries.
+
+Hydrogen network
+~~~~~~~~~~~~~~~~
+
+Producing and using green hydrogen comes with the development of a local hydrogen network.
+:cite:`plazas_nino_2024` computed the total cost of the hydrogen system. According 
+to their results, the cost for the transportation and distribution of hydrogen,
+including infrastructure for maritime export, is roughly equal to the cost of green hydrogen’s 
+production.
+
+Thus, the total investment cost for green hydrogen production is computed, taking into account 
+the values in EnergyScope of the investment cost for renewable electricity production and its
+conversion into hydrogen. This total cost of production amounts to 2225 USD/kW :math:`_{electrolyser}`. Thus, a technology called 
+"H2 infrastructure" is included, whose capacity is constrained to be equal to the installed
+capacity of electrolysers, whose investment cost is 2225 USD/kW and whose other costs are null.
 
 
 .. _app:sec:ESTD_CO_CO2_emissions:
