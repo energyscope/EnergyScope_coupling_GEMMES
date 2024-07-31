@@ -68,7 +68,7 @@ YEAR_2050	100000 # 1500
 
 param gwp_cost := 			# [2021 USD/ktCO2-eq.]																																																																																																													
 YEAR_2015	0 																																																																																																																
-YEAR_2020	0.005																																																																																																																
+YEAR_2020	0 #0.005																																																																																																																
 YEAR_2025	0.009																																																																																																																
 YEAR_2030	0.013																																																																																																										
 YEAR_2035	0.018																																																																																																														
@@ -81,11 +81,11 @@ param efuels_export_bound :=            # [GWh/year]
 YEAR_2015	0 																																																																																																																
 YEAR_2020	0																																																																																																																
 YEAR_2025	0 #0 # 5060 																																																																																																																
-YEAR_2030	INFINITY #42240 # 24000  # 25000 																																																																																																											
-YEAR_2035	INFINITY #84480 # 65000  # 50000 																																																																																																																
-YEAR_2040	INFINITY #126720 # 110000 # 100000 																																																																																																																
-YEAR_2045	INFINITY #168960 # 190000 # 300000																																																																																																																
-YEAR_2050	INFINITY #211200 # 270000 # 500000																																																																																																																
+YEAR_2030	0 #INFINITY #42240 # 24000  # 25000 																																																																																																											
+YEAR_2035	0 #INFINITY #84480 # 65000  # 50000 																																																																																																																
+YEAR_2040	0 #INFINITY #126720 # 110000 # 100000 																																																																																																																
+YEAR_2045	0 #INFINITY #168960 # 190000 # 300000																																																																																																																
+YEAR_2050	0 #INFINITY #211200 # 270000 # 500000																																																																																																																
 ;
 
 # Part [2.4]																																																																																																																	

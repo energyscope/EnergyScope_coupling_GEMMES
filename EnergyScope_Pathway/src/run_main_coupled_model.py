@@ -235,6 +235,8 @@ def run_EnergyScope(variables_GEMMES):
     gwp_cost_ampl = pd.DataFrame(gwp_cost_ampl, columns=['Year', 'Value'])
     gwp_cost_ampl['Value'] *= en0 # Convert constant USD to constant k COP
     gwp_cost_ampl.set_index(['Year'], inplace=True)
+    gwp_cost_ampl = gwp_cost_ampl.round(3)
+    gwp_cost_ampl.to_csv('CO2_costs_COP.csv')
     gwp_cost_ampl = apy.DataFrame.from_pandas(gwp_cost_ampl)
     ampl.set_params('gwp_cost', gwp_cost_ampl)
     
@@ -426,13 +428,13 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     year_balance_bis = pd.merge(year_balance, shares_LTH, on='merge_index_2')
     year_balance_bis.index = year_balance.index
     year_balance.loc[year_balance.index.get_level_values('Elements').isin(list_LTH_tech),['F','B','G','H']] = year_balance_bis.loc[year_balance_bis.index.get_level_values('Elements').isin(list_LTH_tech),['F_y','B_y','G_y','H_y']].values
+    year_balance_carbon_tax = year_balance.copy()
     
     year_balance = year_balance[year_balance['F']<0.999]
     year_balance = year_balance.loc[:, year_balance.columns.isin(['ELECTRICITY','LOCAL_GAS','WASTE','WET_BIOMASS','WOOD','DIESEL','GASOLINE','H2','METHANOL','B','G','H'])]
     year_balance.loc[year_balance['ELECTRICITY']>0,'ELECTRICITY'] = np.nan
     year_balance = year_balance.abs()
     year_balance.drop(columns=['H2','METHANOL'], inplace=True) #### Negligible amount
-    
     
     # Reconstruct prices of resources
     
@@ -488,7 +490,6 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     year_balance_elec = year_balance_elec.loc[year_balance_elec['ELECTRICITY']>=0]
     year_balance_elec = year_balance_elec.groupby(level=[0]).sum()
     prices_resources['ELECTRICITY'] = Cost_elec_approx.values / year_balance_elec['ELECTRICITY']
-    
       
     # Compute the cost of each resource use for each techno    
     year_balance = pd.merge(year_balance, prices_resources, on='Years')
@@ -529,8 +530,51 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     output_for_GEMMES['opex_H_CO'] += C_op_to_add['H']
     
     
+    ### Compute the carbon tax on the different sectors
+    
+    list_emissive_resources = ['LOCAL_COAL','LOCAL_GAS','IMPORTED_GAS','WASTE','WET_BIOMASS','WOOD','DIESEL','GASOLINE','LFO']
+    n_emissive_resources = len(list_emissive_resources)
+    year_balance_carbon_tax = year_balance_carbon_tax.loc[:, year_balance_carbon_tax.columns.isin(list_emissive_resources+['F','B','G','H'])] # We neglect the carbon tax on electricity imports
+    year_balance_carbon_tax = year_balance_carbon_tax.abs()
+    
+    year_balance_biofuels = year_balance_carbon_tax.copy()
+    year_balance_biofuels = year_balance_biofuels.iloc[year_balance_biofuels.index.get_level_values('Elements').isin(['BIODIESEL','BIOETHANOL'])]
+    year_balance_biofuels = year_balance_biofuels.loc[:, year_balance_biofuels.columns.isin(['DIESEL','GASOLINE'])] 
+    year_balance_biofuels = year_balance_biofuels.groupby(level=[0]).sum()
+
+    year_balance_carbon_tax.drop(list_emissive_resources+['BIODIESEL','BIOETHANOL'],level='Elements',inplace=True)
+    year_balance_carbon_tax[['gwp_op_DIESEL', 'gwp_op_GASOLINE', 'gwp_op_LFO', 'gwp_op_COAL', 'gwp_op_GAS', 'gwp_op_WASTE', 'gwp_op_WET_BIOMASS', 'gwp_op_WOOD']] = [0.3148, 0.3448, 0.3115, 0.4014, 0.2666, 0.1501, 0.0118, 0.0118]
+    
+    year_balance_carbon_tax_sum = year_balance_carbon_tax.groupby(level=[0]).sum()
+    year_balance_carbon_tax_sum = year_balance_carbon_tax_sum.loc[:, year_balance_carbon_tax_sum.columns.isin(['DIESEL','GASOLINE'])] 
+    year_balance_biofuels = 1 - year_balance_biofuels / year_balance_carbon_tax_sum
+    year_balance_carbon_tax = pd.merge(year_balance_carbon_tax, year_balance_biofuels, on='Years')
+    year_balance_carbon_tax[['gwp_op_DIESEL','gwp_op_GASOLINE']] *= year_balance_carbon_tax[['DIESEL_y','GASOLINE_y']].values
+    year_balance_carbon_tax.iloc[:,0:n_emissive_resources-1] *= year_balance_carbon_tax.iloc[:,n_emissive_resources+3:2*n_emissive_resources+2].values
+    year_balance_carbon_tax = year_balance_carbon_tax.iloc[:,0:n_emissive_resources+3]
+    year_balance_carbon_tax.fillna(0,inplace=True)
+    year_balance_carbon_tax['total_CO2'] = year_balance_carbon_tax.iloc[:,0:n_emissive_resources-1].sum(axis=1)
+    co2_costs = pd.read_csv('CO2_costs_COP.csv')
+    co2_costs.rename(columns={'Year':'Years'}, inplace=True)
+    co2_costs = co2_costs.iloc[1:]
+    co2_costs.set_index('Years', inplace=True)
+    year_balance_carbon_tax = pd.merge(year_balance_carbon_tax, co2_costs, on='Years')
+    year_balance_carbon_tax['CO2_F'] = year_balance_carbon_tax['total_CO2'] * year_balance_carbon_tax['F'] * year_balance_carbon_tax['Value']
+    year_balance_carbon_tax['CO2_B'] = year_balance_carbon_tax['total_CO2'] * year_balance_carbon_tax['B'] * year_balance_carbon_tax['Value']
+    year_balance_carbon_tax['CO2_G'] = year_balance_carbon_tax['total_CO2'] * year_balance_carbon_tax['G'] * year_balance_carbon_tax['Value']
+    year_balance_carbon_tax['CO2_H'] = year_balance_carbon_tax['total_CO2'] * year_balance_carbon_tax['H'] * year_balance_carbon_tax['Value']
+    year_balance_carbon_tax = year_balance_carbon_tax.iloc[:,n_emissive_resources+5:]
+    year_balance_carbon_tax = year_balance_carbon_tax.groupby(level=[0]).sum()
+    # Go from yearly costs to phase costs
+    year_balance_carbon_tax_shift = year_balance_carbon_tax.copy()
+    year_balance_carbon_tax_shift = year_balance_carbon_tax_shift.shift(1)
+    year_balance_carbon_tax = (year_balance_carbon_tax + year_balance_carbon_tax_shift) / 2   
+    year_balance_carbon_tax = year_balance_carbon_tax.iloc[1:]
+    
+    
     # Apply a corrective factor so that the total energy system cost fits the actual cost given by DNP
     output_for_GEMMES *= corrective_factor
+    year_balance_carbon_tax *= corrective_factor
     output_for_GEMMES['ikefCO'] = (C_inv['Capa'] * C_inv['Local']    * C_inv['F']).groupby(level=[0]).sum()
     output_for_GEMMES['ikefM']  = (C_inv['Capa'] * C_inv['Imported'] * C_inv['F']).groupby(level=[0]).sum()
     output_for_GEMMES['ikebCO'] = (C_inv['Capa'] * C_inv['Local']    * C_inv['B']).groupby(level=[0]).sum()
@@ -578,9 +622,15 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     output_for_GEMMES['sigmamceh'] = output_for_GEMMES['opex_H_M'] / output_for_GEMMES['ceh']
     output_for_GEMMES['pieM'] = 1 / variables_GEMMES_2021['en']
     output_for_GEMMES['xrec'] = output_for_GEMMES['exports_CO'] / variables_GEMMES_2021['en']
+    output_for_GEMMES['CTf'] = 0
+    output_for_GEMMES['CTb'] = 0
+    output_for_GEMMES['CTg'] = 0
+    output_for_GEMMES['CTh'] = 0
+    n = len(output_for_GEMMES.columns)
+    output_for_GEMMES.iloc[1:,n-4:n] += year_balance_carbon_tax.values   
     output_for_GEMMES = output_for_GEMMES.round(3)
     aggregated_costs = output_for_GEMMES.copy()
-    aggregated_costs = aggregated_costs[['capex_F_CO', 'capex_F_M', 'capex_B_CO', 'capex_B_M', 'capex_G_CO', 'capex_G_M', 'capex_H_CO', 'capex_H_M', 'opex_F_CO', 'opex_F_M', 'opex_B_CO','opex_B_M', 'opex_G_CO', 'opex_G_M', 'opex_H_CO', 'opex_H_M', 'exports_CO']]
+    aggregated_costs = aggregated_costs[['capex_F_CO', 'capex_F_M', 'capex_B_CO', 'capex_B_M', 'capex_G_CO', 'capex_G_M', 'capex_H_CO', 'capex_H_M', 'opex_F_CO', 'opex_F_M', 'opex_B_CO','opex_B_M', 'opex_G_CO', 'opex_G_M', 'opex_H_CO', 'opex_H_M', 'exports_CO', 'CTf', 'CTb', 'CTg', 'CTh']]
     aggregated_costs.to_csv('Energy_system_costs_aggregated.csv')
     output_for_GEMMES.drop(columns=['capex_F_CO', 'capex_F_M', 'ikefCO', 'ikefM'], inplace=True)
     output_for_GEMMES.drop(columns=['capex_B_CO', 'capex_B_M', 'ikebCO', 'ikebM'], inplace=True)

@@ -677,3 +677,5 @@ subject to Gwp_tot_cost_calculation:
 minimize  TotalTransitionCost: C_tot_capex + C_tot_opex + Gwp_tot_cost - export_revenues_tot ;#sum {y in YEARS} TotalCost [y];
 # subject to New_totalTransitionCost_calculation :
 # 	TotalTransitionCost = C_tot_capex + C_tot_opex;
+
+
