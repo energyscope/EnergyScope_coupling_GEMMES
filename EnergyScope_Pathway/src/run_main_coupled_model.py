@@ -37,7 +37,7 @@ def main():
     if plot_GEMMES:
         plt.close('all')
         # plot_GEMMES_outputs_fig1(variables_GEMMES.iloc[20:,:])
-        plot_GEMMES_outputs_fig4(variables_GEMMES.iloc[40:,:], output_EnergyScope[0])
+        plot_GEMMES_outputs_fig4(variables_GEMMES.iloc[40:,:])
     if csv_GEMMES:
         variables_GEMMES_to_output = variables_GEMMES.copy()
         variables_GEMMES_to_output = variables_GEMMES_to_output[::10]
@@ -65,7 +65,7 @@ def run_GEMMES():
     newParms = newParms._replace(tauvat=0.1089564*1.02)
     newParms = newParms._replace(fi3=0.45)
     newParms = newParms._replace(sigmaxnSpeed=0.48)
-    newParms = newParms._replace(reducXrO=0.044)
+    newParms = newParms._replace(reducXrO=0.06)
     
     ## Fix the trajectories of exogenous variables
     Costs_ES_per_phase = pd.read_csv('Energy_system_costs.csv')
@@ -77,8 +77,8 @@ def run_GEMMES():
 
     Thetas = pd.read_csv('Thetas.csv')
     Thetas.drop(columns=['Unnamed: 0'], inplace=True)
-
     samplesExogVar = pd.concat([Costs_ES_per_year,Thetas], axis=1)
+    # samplesExogVar = Thetas # for GEMMES without an energy sector
     samplesExogVar.columns = np.arange(len(samplesExogVar.columns))
 
     ## Run the GEMMES model
@@ -271,7 +271,7 @@ def plot_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     # ampl_graph.graph_cost_op_phase()
 
     # ampl_graph.graph_layer()
-    # ampl_graph.graph_gwp()
+    ampl_graph.graph_gwp()
     # ampl_graph.graph_tech_cap()
     # ampl_graph.graph_total_cost_per_year()
     # ampl_graph.graph_load_factor()
@@ -535,7 +535,6 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     list_emissive_resources = ['LOCAL_COAL','LOCAL_GAS','IMPORTED_GAS','WASTE','WET_BIOMASS','WOOD','DIESEL','GASOLINE','LFO']
     n_emissive_resources = len(list_emissive_resources)
     year_balance_carbon_tax = year_balance_carbon_tax.loc[:, year_balance_carbon_tax.columns.isin(list_emissive_resources+['F','B','G','H'])] # We neglect the carbon tax on electricity imports
-    year_balance_carbon_tax = year_balance_carbon_tax.abs()
     
     year_balance_biofuels = year_balance_carbon_tax.copy()
     year_balance_biofuels = year_balance_biofuels.iloc[year_balance_biofuels.index.get_level_values('Elements').isin(['BIODIESEL','BIOETHANOL'])]
@@ -547,7 +546,7 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     
     year_balance_carbon_tax_sum = year_balance_carbon_tax.groupby(level=[0]).sum()
     year_balance_carbon_tax_sum = year_balance_carbon_tax_sum.loc[:, year_balance_carbon_tax_sum.columns.isin(['DIESEL','GASOLINE'])] 
-    year_balance_biofuels = 1 - year_balance_biofuels / year_balance_carbon_tax_sum
+    year_balance_biofuels = 1 - year_balance_biofuels / year_balance_carbon_tax_sum.abs()
     year_balance_carbon_tax = pd.merge(year_balance_carbon_tax, year_balance_biofuels, on='Years')
     year_balance_carbon_tax[['gwp_op_DIESEL','gwp_op_GASOLINE']] *= year_balance_carbon_tax[['DIESEL_y','GASOLINE_y']].values
     year_balance_carbon_tax.iloc[:,0:n_emissive_resources-1] *= year_balance_carbon_tax.iloc[:,n_emissive_resources+3:2*n_emissive_resources+2].values
@@ -565,6 +564,11 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     year_balance_carbon_tax['CO2_H'] = year_balance_carbon_tax['total_CO2'] * year_balance_carbon_tax['H'] * year_balance_carbon_tax['Value']
     year_balance_carbon_tax = year_balance_carbon_tax.iloc[:,n_emissive_resources+5:]
     year_balance_carbon_tax = year_balance_carbon_tax.groupby(level=[0]).sum()
+    # Remove the negative carbon tax in 2050 for producing green gas
+    neg_carbon_tax = year_balance_carbon_tax.loc['YEAR_2050','CO2_F']
+    year_balance_carbon_tax.loc['YEAR_2050','CO2_F'] -= neg_carbon_tax
+    year_balance_carbon_tax.loc['YEAR_2050','CO2_G'] += neg_carbon_tax
+    year_balance_carbon_tax = year_balance_carbon_tax.abs()
     # Go from yearly costs to phase costs
     year_balance_carbon_tax_shift = year_balance_carbon_tax.copy()
     year_balance_carbon_tax_shift = year_balance_carbon_tax_shift.shift(1)
@@ -724,7 +728,7 @@ def plot_GEMMES_outputs_fig1(variables_GEMMES):
     plt.grid(True, color="#93a1a1", alpha=0.3)
     plt.figure()
 
-def plot_GEMMES_outputs_fig4(variables_GEMMES, output_directory):
+def plot_GEMMES_outputs_fig4(variables_GEMMES):
     plt.figure()
     plt.plot(variables_GEMMES['time'], variables_GEMMES['yedot']/variables_GEMMES['ye'], label='a - Real GDP growth rate')
     plt.legend(loc='lower right', fancybox=True, shadow=True)

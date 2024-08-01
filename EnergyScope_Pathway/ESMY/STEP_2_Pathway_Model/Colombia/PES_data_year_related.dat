@@ -68,7 +68,7 @@ YEAR_2050	100000 # 1500
 
 param gwp_cost := 			# [2021 USD/ktCO2-eq.]																																																																																																													
 YEAR_2015	0 																																																																																																																
-YEAR_2020	0 #0.005																																																																																																																
+YEAR_2020	0.005																																																																																																																
 YEAR_2025	0.009																																																																																																																
 YEAR_2030	0.013																																																																																																										
 YEAR_2035	0.018																																																																																																														
