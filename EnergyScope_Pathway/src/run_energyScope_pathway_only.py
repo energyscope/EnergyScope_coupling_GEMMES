@@ -6,18 +6,13 @@ May 2024
 """
 
 import os, sys
-from os import system
 from pathlib import Path
 import webbrowser
 import time
-import multiprocessing as mp
 import pickle as pkl
 import pandas as pd
 import numpy as np
 import amplpy as apy
-from collections import namedtuple
-import cppimport
-import time
 import matplotlib.pyplot as plt
 
 ## Define the country studied and the time granularity of EnergyScope
@@ -26,6 +21,8 @@ EnergyScope_granularity = 'MO'
 nbr_tds = 12
 
 curr_dir = Path(os.path.dirname(__file__))
+pymodPath = os.path.abspath(os.path.join(curr_dir.parent,'pylib'))
+sys.path.insert(0, pymodPath)
 
 ESMY_path = os.path.join(curr_dir.parent,'ESMY')
 EnergyScope_model_path = os.path.join(ESMY_path,'STEP_2_Pathway_Model')
@@ -98,7 +95,7 @@ ampl_options = {'show_stats': 1,
 
 
 def main():
-    plot_EnergyScope = True  
+    plot_EnergyScope = False  
     csv_EnergyScope  = True
 
     output_EnergyScope = run_EnergyScope()

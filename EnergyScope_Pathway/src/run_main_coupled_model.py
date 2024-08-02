@@ -12,23 +12,21 @@ nbr_tds = 12
 
 def main():
     plot_EnergyScope = True  
-    csv_EnergyScope  = True
+    csv_EnergyScope  = False
     plot_GEMMES = True
     csv_GEMMES = True
     variables_GEMMES = run_GEMMES()
     gdp_current = variables_GEMMES['gdp']
     diff = np.linalg.norm(gdp_current)
     n_iter = 0
-    while(diff > 1 and n_iter < 1): ##################### 
+    while(diff > 0.1 and n_iter>0): ##################### 
         gdp_previous = gdp_current
         n_iter += 1
         output_EnergyScope = run_EnergyScope(variables_GEMMES)
         compute_energy_system_costs(output_EnergyScope[0], output_EnergyScope[1], variables_GEMMES)
         variables_GEMMES = run_GEMMES()
         gdp_current = variables_GEMMES['gdp']
-        diff = np.linalg.norm(gdp_current-gdp_previous) 
-    time.sleep(1)
-    print('Number of iterations before convergence between the two models: ', n_iter)
+        diff = np.linalg.norm((gdp_current-gdp_previous)/gdp_previous)   ########## Prendre plutôt la norme infinie (max. des valeurs absolues)
     
     if plot_EnergyScope:
         plot_EnergyScope_outputs(output_EnergyScope[0], output_EnergyScope[1])
@@ -42,6 +40,8 @@ def main():
         variables_GEMMES_to_output = variables_GEMMES.copy()
         variables_GEMMES_to_output = variables_GEMMES_to_output[::10]
         variables_GEMMES_to_output.to_csv(os.path.join(EnergyScope_case_study_path,'GEMMES_output.csv'))
+    
+    print('Number of iterations before convergence between the two models: ', n_iter)
     
     # plt.figure()
     # plt.plot(variables_GEMMES['time'], variables_GEMMES['ip'], label='ip')
@@ -271,7 +271,7 @@ def plot_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     # ampl_graph.graph_cost_op_phase()
 
     # ampl_graph.graph_layer()
-    ampl_graph.graph_gwp()
+    # ampl_graph.graph_gwp()
     # ampl_graph.graph_tech_cap()
     # ampl_graph.graph_total_cost_per_year()
     # ampl_graph.graph_load_factor()

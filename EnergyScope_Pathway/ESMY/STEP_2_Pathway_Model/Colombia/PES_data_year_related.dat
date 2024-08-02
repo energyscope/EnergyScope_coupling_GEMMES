@@ -68,13 +68,13 @@ YEAR_2050	100000 # 1500
 
 param gwp_cost := 			# [2021 USD/ktCO2-eq.]																																																																																																													
 YEAR_2015	0 																																																																																																																
-YEAR_2020	0.005																																																																																																																
+YEAR_2020	0 #0.005																																																																																																																
 YEAR_2025	0.009																																																																																																																
 YEAR_2030	0.013																																																																																																										
 YEAR_2035	0.018																																																																																																														
 YEAR_2040	0.022																																																																																																																
 YEAR_2045	0.026																																																																																																																
-YEAR_2050	0.3
+YEAR_2050	0.03
 ;
 
 param efuels_export_bound :=            # [GWh/year]

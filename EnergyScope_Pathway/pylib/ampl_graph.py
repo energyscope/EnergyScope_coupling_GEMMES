@@ -14,7 +14,6 @@ import pandas as pd
 import plotly.io as pio
 from pandas.api.types import CategoricalDtype
 pio.templates.default = 'simple_white'
-# pio.kaleido.scope.mathjax = None
 import numpy as np
 
 import os,sys
