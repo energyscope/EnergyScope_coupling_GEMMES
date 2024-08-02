@@ -19,7 +19,7 @@ def main():
     gdp_current = variables_GEMMES['gdp']
     diff = np.linalg.norm(gdp_current)
     n_iter = 0
-    while(diff > 0.1 and n_iter>0): ##################### 
+    while(diff > 0.1 and n_iter < 0): ##################### 
         gdp_previous = gdp_current
         n_iter += 1
         output_EnergyScope = run_EnergyScope(variables_GEMMES)
@@ -65,14 +65,21 @@ def run_GEMMES():
     newParms = newParms._replace(tauvat=0.1089564*1.02)
     newParms = newParms._replace(fi3=0.45)
     newParms = newParms._replace(sigmaxnSpeed=0.48)
-    newParms = newParms._replace(reducXrO=0.06)
+    newParms = newParms._replace(reducXrO=0.085)
     
     ## Fix the trajectories of exogenous variables
     Costs_ES_per_phase = pd.read_csv('Energy_system_costs.csv')
     Costs_ES_per_phase.drop(columns=['Phases'], inplace=True)
-
     Costs_ES_per_year = pd.DataFrame(np.repeat(Costs_ES_per_phase.values, 5, axis=0))
     Costs_ES_per_year = Costs_ES_per_year.loc[2:,:]
+    index_list_mid  = [3,8,13,18,23,28]
+    index_list_up_1   = [x - 1 for x in index_list_mid]
+    index_list_down_1 = [x + 1 for x in index_list_mid]    
+    index_list_up_2   = [x - 2 for x in index_list_mid]
+    index_list_down_2 = [x + 2 for x in index_list_mid]  
+    Costs_ES_per_year.iloc[index_list_mid,:] = (Costs_ES_per_year.iloc[index_list_up_2,:].values + Costs_ES_per_year.iloc[index_list_down_2,:].values) / 2
+    Costs_ES_per_year.iloc[index_list_up_1,:] = (Costs_ES_per_year.iloc[index_list_up_2,:].values + Costs_ES_per_year.iloc[index_list_mid,:].values) / 2
+    Costs_ES_per_year.iloc[index_list_down_1,:] = (Costs_ES_per_year.iloc[index_list_mid,:].values + Costs_ES_per_year.iloc[index_list_down_2,:].values) / 2
     Costs_ES_per_year.reset_index(drop=True, inplace=True)
 
     Thetas = pd.read_csv('Thetas.csv')
@@ -82,7 +89,7 @@ def run_GEMMES():
     samplesExogVar.columns = np.arange(len(samplesExogVar.columns))
 
     ## Run the GEMMES model
-    variables_GEMMES = solveGEMMES(solvePy=solvePy, samplesExogVar=samplesExogVar, parms=newParms, solver="dopri", atol=1e-4, rtol=0, fac=0.85, facMin=0.1, facMax=4, nStepMax=300, hInit=0.025, hMin=0.025/100, hMax=0.2)
+    variables_GEMMES = solveGEMMES(solvePy=solvePy, samplesExogVar=samplesExogVar, parms=newParms, solver="dopri", atol=1e-1, rtol=0, fac=0.85, facMin=0.1, facMax=4, nStepMax=30000, hInit=0.025, hMin=0.025/10000, hMax=0.2) # atol=1e-4, nStepMax=300, hMin=0.025/100
     variables_GEMMES.index = variables_GEMMES.index.round(1)
 
     ## Save the projection for EUDs for EnergyScope
@@ -276,7 +283,7 @@ def plot_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     # ampl_graph.graph_total_cost_per_year()
     # ampl_graph.graph_load_factor()
     # df_unused = ampl_graph.graph_load_factor_2()
-    # ampl_graph.graph_new_old_decom()
+    ampl_graph.graph_new_old_decom()
     ampl_graph.graph_resource()
 
 def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMMES):
