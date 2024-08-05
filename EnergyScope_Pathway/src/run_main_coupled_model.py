@@ -11,22 +11,22 @@ EnergyScope_granularity = 'MO'
 nbr_tds = 12
 
 def main():
-    plot_EnergyScope = True  
-    csv_EnergyScope  = True
+    plot_EnergyScope = False  
+    csv_EnergyScope  = False
     plot_GEMMES = True
     csv_GEMMES = True
     variables_GEMMES = run_GEMMES()
     gdp_current = variables_GEMMES['gdp']
     diff = np.linalg.norm(gdp_current)
     n_iter = 0
-    while(diff > 0.01): ##################### 
+    while(diff > 0.01): 
         gdp_previous = gdp_current
         n_iter += 1
         output_EnergyScope = run_EnergyScope(variables_GEMMES)
         compute_energy_system_costs(output_EnergyScope[0], output_EnergyScope[1], variables_GEMMES)
         variables_GEMMES = run_GEMMES()
         gdp_current = variables_GEMMES['gdp']
-        diff = ((gdp_current-gdp_previous).abs()/gdp_previous).max()   ########## Prendre plutôt la norme infinie (max. des valeurs absolues)
+        diff = ((gdp_current-gdp_previous).abs()/gdp_previous).max()
     
     if plot_EnergyScope:
         plot_EnergyScope_outputs(output_EnergyScope[0], output_EnergyScope[1])
