@@ -7,7 +7,7 @@ May 2024
 
 ## Define the country studied and the time granularity of EnergyScope
 country = 'Colombia'
-EnergyScope_granularity = 'MO'
+EnergyScope_granularity = 'TD'
 nbr_tds = 12
 
 def main():
@@ -19,7 +19,7 @@ def main():
     gdp_current = variables_GEMMES['gdp']
     diff = np.linalg.norm(gdp_current)
     n_iter = 0
-    while(diff > 0.01): 
+    while(diff > 0.01 and n_iter<0): 
         gdp_previous = gdp_current
         n_iter += 1
         output_EnergyScope = run_EnergyScope(variables_GEMMES)
@@ -38,8 +38,9 @@ def main():
         plot_GEMMES_outputs_fig4(variables_GEMMES.iloc[40:,:])
     if csv_GEMMES:
         variables_GEMMES_to_output = variables_GEMMES.copy()
+        variables_GEMMES_to_output.to_csv(os.path.join(EnergyScope_case_study_path,'GEMMES_output_long.csv'))
         variables_GEMMES_to_output = variables_GEMMES_to_output[::10]
-        variables_GEMMES_to_output.to_csv(os.path.join(EnergyScope_case_study_path,'GEMMES_output.csv'))
+        variables_GEMMES_to_output.to_csv(os.path.join(EnergyScope_case_study_path,'GEMMES_output_short.csv'))
     
     print('Number of iterations before convergence between the two models: ', n_iter)
     
@@ -57,15 +58,7 @@ def run_GEMMES():
     namedParms = namedtuple("namedParms", parmsNames)
     # build named parms vector using the parmsNamed structure and loading parms values from C++
     newParms = namedParms(*solvePy.parms())
-    newParms = newParms._replace(sigmaxnpNew=1.2)
-    newParms = newParms._replace(kappa03=0.03526333*1.05)
-    newParms = newParms._replace(tauf=0.1859935*1.02)
-    newParms = newParms._replace(taub=0.1222547*1.02)
-    newParms = newParms._replace(tauw=0.08986282*1.02)
-    newParms = newParms._replace(tauvat=0.1089564*1.02)
-    newParms = newParms._replace(fi3=0.45)
-    newParms = newParms._replace(sigmaxnSpeed=0.48)
-    newParms = newParms._replace(reducXrO=0.054)
+    newParms = newParms._replace(reducXrO=0.055)
     
     ## Fix the trajectories of exogenous variables
     Costs_ES_per_phase = pd.read_csv('Energy_system_costs.csv')
@@ -94,9 +87,9 @@ def run_GEMMES():
 
     ## Save the projection for EUDs for EnergyScope
     df_EUD = pd.read_csv('EUD_template.csv')
-    share_elec_cst_H = 0.66
-    share_elec_cst_S = 0.57
-    share_elec_cst_F = 0.76
+    share_elec_cst_H = 0.765
+    share_elec_cst_S = 0.765
+    share_elec_cst_F = 0.765
     list_years = [2021,2026,2031,2036,2041,2046,2051]
     list_EUDs = [df_EUD.copy()] * 7
     for i in range(7):
@@ -278,7 +271,7 @@ def plot_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     # ampl_graph.graph_cost_op_phase()
 
     # ampl_graph.graph_layer()
-    # ampl_graph.graph_gwp()
+    ampl_graph.graph_gwp()
     # ampl_graph.graph_tech_cap()
     # ampl_graph.graph_total_cost_per_year()
     # ampl_graph.graph_load_factor()
