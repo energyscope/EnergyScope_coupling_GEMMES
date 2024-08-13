@@ -21,7 +21,7 @@ Electricity;Electricity;Parabolic trough power block;PT_POWER_BLOCK;1472.530329;
 Electricity;Electricity;Solar tower power block;ST_POWER_BLOCK;1082.917443;88.8111;0;25;1;0;1;0;1000000000000000;
 Electricity;Electricity;Wind onshore;WIND_ONSHORE;1426.5213;23.711154;622.85;30;1;0;1;0;7.3;
 Electricity;Electricity;Wind offshore;WIND_OFFSHORE;1773.0812;71.274432;622.85;30;1;0;1;0;48.8;
-Electricity;Electricity;Hydro dam;HYDRO_DAM;3116.1722;31.1617;1692.88;40;1;0;1;9.336;51.2;
+Electricity;Electricity;Hydro dam;HYDRO_DAM;3116.1722;31.1617;1692.88;40;1;0;1;13.4;21.2;
 Electricity;Electricity;Hydro river;HYDRO_RIVER;2825.1675;28.2522;1262.82;40;1;0;1;3.777;27.8;
 Electricity;Electricity;Tidal;TIDAL;4041.6099;250.9266;0;20;1;0;1;0;0;
 Electricity;Electricity;Wave;WAVE;2691.1173;59.2074;0;20;1;0;1;0;0;
@@ -119,7 +119,7 @@ Storage;Electricity storage;Batteries;BATT_LI;426.544;0.6594;61.3;15;1;0;1;0;100
 Storage;Electricity storage;Compressed air energy storage;CAES;54.893718;4.482846;0;50;1;0;1;0;0;
 Storage;Electricity storage;Batteries of electric cars;BEV_BATT;0;0;0;1;1;0;1;0;1000000000000000;
 Storage;Electricity storage;Batteries of plug-in hybrid cars;PHEV_BATT;0;0;0;1;1;0;1;0;1000000000000000;
-Storage;Electricity storage;Hydro dam storage;DAM_STORAGE;0;0;0;40;1;0;1;20868.8550091445;114447.876656834;
+Storage;Electricity storage;Hydro dam storage;DAM_STORAGE;0;0;0;40;1;0;1;"29;953.1552188";47388.5739282203;
 Storage;Electricity storage;Pumped hydro storage;PHS;83.049;0;8.33;50;1;0;1;0;0;
 Storage;Thermal storage;Decentralised direct elec;TS_DEC_DIRECT_ELEC ;26.7932;0.1876;0;25;1;0;1;0;1000000000000000;
 Storage;Thermal storage;Decentralised electrical heat pumps;TS_DEC_HP_ELEC ;26.7932;0.1876;0;25;1;0;1;0;1000000000000000;
