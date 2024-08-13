@@ -58,7 +58,7 @@ def run_GEMMES():
     namedParms = namedtuple("namedParms", parmsNames)
     # build named parms vector using the parmsNamed structure and loading parms values from C++
     newParms = namedParms(*solvePy.parms())
-    newParms = newParms._replace(reducXrO=0.055)
+    newParms = newParms._replace(betaen=4.0) # release tension on the exchange rate
     
     ## Fix the trajectories of exogenous variables
     Costs_ES_per_phase = pd.read_csv('Energy_system_costs.csv')
@@ -270,9 +270,9 @@ def plot_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     # ampl_graph.graph_cost_return()
     # ampl_graph.graph_cost_op_phase()
 
-    # ampl_graph.graph_layer()
+    ampl_graph.graph_layer()
     ampl_graph.graph_gwp()
-    # ampl_graph.graph_tech_cap()
+    ampl_graph.graph_tech_cap()
     # ampl_graph.graph_total_cost_per_year()
     # ampl_graph.graph_load_factor()
     # df_unused = ampl_graph.graph_load_factor_2()
@@ -632,6 +632,11 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     output_for_GEMMES['CTh'] = 0
     n = len(output_for_GEMMES.columns)
     output_for_GEMMES.iloc[1:,n-4:n] += year_balance_carbon_tax.values   
+    output_for_GEMMES['reducXrO'] = 0.085
+    output_for_GEMMES.loc['2030_2035','reducXrO'] = 0.055
+    output_for_GEMMES.loc['2035_2040','reducXrO'] = 0.055
+    output_for_GEMMES.loc['2040_2045','reducXrO'] = 0.045
+    output_for_GEMMES.loc['2045_2050','reducXrO'] = 0.045
     output_for_GEMMES = output_for_GEMMES.round(3)
     aggregated_costs = output_for_GEMMES.copy()
     aggregated_costs = aggregated_costs[['capex_F_CO', 'capex_F_M', 'capex_B_CO', 'capex_B_M', 'capex_G_CO', 'capex_G_M', 'capex_H_CO', 'capex_H_M', 'opex_F_CO', 'opex_F_M', 'opex_B_CO','opex_B_M', 'opex_G_CO', 'opex_G_M', 'opex_H_CO', 'opex_H_M', 'exports_CO', 'CTf', 'CTb', 'CTg', 'CTh']]

@@ -429,7 +429,7 @@ then adapted through the calibration process to match the CO\ :math:`_2` emissio
 time, unlike space heating which is spread over the year according to :math:`\%_{sh}`. We define process heat as the high temperature heat required in some
 industrial processes. This heat cannot be supplied by technologies such as heat pumps or thermal solar.
 
-Similarly, the aggregated EUD for space cooling and its sectoral decomposition was taken from :cite:`plazas_nino_2023`. The values for process cooling were obtained from Departamento Nacional de Planeación (DNP), the Colombian National Planning Department. Again, process cooling is supposed to be fixed through time, unlike space cooling which is spread over the year according to :math:`\%_{sc}`. 
+Similarly, the aggregated EUD for space cooling and its sectoral decomposition was taken from :cite:`plazas_nino_2023`. The values for process cooling were retrieved from :cite:`upme_process_cooling_2024`. Again, process cooling is supposed to be fixed through time, unlike space cooling which is spread over the year according to :math:`\%_{sc}`. 
 
 The time series :math:`\%_{sh}` and :math:`\%_{sc}` are based on our own computations, following the method
 described in :cite:`borasio2022deep`. As explained in the supplementary material of :cite:`borasio2022deep`, *"hourly time series of energy demand for space
