@@ -124,7 +124,7 @@ param state_of_charge_ev {EVs_BATT,HOURS} >= 0, default 0; # Minimum state of ch
 param c_grid_extra >=0; # Cost to reinforce the grid due to IRE penetration [Meuros/GW of (PV + Wind)].
 param import_capacity >= 0; # Maximum electricity import capacity [GW]
 param export_capacity >= 0; # Maximum electricity export capacity [GW]
-param solar_area_rooftop >= 0; # Maximum land available for solar deployement on rooftops [km2]
+param solar_area_rooftop >= 0; # Maximum area available for solar deployement on rooftops [km2]
 param solar_area_ground >= 0; # Maximum land available for solar deployement on the ground [km2]
 param solar_area_ground_high_irr >= 0; # Maximum land available for solar deployement on the ground in locations with high irradiance [km2]
 param sm_max >= 0 default 4; # Maximum solar multiple for csp plants
@@ -170,6 +170,9 @@ var GWP_constr {TECHNOLOGIES} >= 0; # GWP_constr [ktCO2-eq.]: Total emissions of
 var GWP_op {RESOURCES} >= 0; #  GWP_op [ktCO2-eq.]: Total yearly emissions of the resources [ktCO2-eq./y]
 var Network_losses {END_USES_TYPES, HOURS, TYPICAL_DAYS} >= 0; # Net_loss [GW]: Losses in the networks (normally electricity grid and DHN)
 var Storage_level {STORAGE_TECH, PERIODS} >= 0; # Sto_level [GWh]: Energy stored at each period
+var Max_Heat_Demand >= 0;
+var Import_constant {RES_IMPORT_CONSTANT} >= 0;
+var Export_constant {EXPORT_E_FUELS} >= 0;
 
 #############################################
 ###      CONSTRAINTS Eqs [2.1-2.39]       ###
@@ -273,11 +276,6 @@ subject to capacity_factor {j in TECHNOLOGIES}:
 subject to resource_availability {i in RESOURCES}:
 	sum {t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]} (F_t [i, h, td] * t_op [h, td]) <= avail [i];
 
-# [Eq. 2.12-bis] Constant flow of import for resources listed in SET RES_IMPORT_CONSTANT
-var Import_constant {RES_IMPORT_CONSTANT} >= 0;
-subject to resource_constant_import { i in RES_IMPORT_CONSTANT, h in HOURS, td in TYPICAL_DAYS}:
-	F_t [i, h, td] * t_op [h, td] = Import_constant [i];
-
 ## Layers
 #--------
 
@@ -323,10 +321,6 @@ subject to storage_layer_out {j in STORAGE_TECH, l in LAYERS, h in HOURS, td in 
 subject to limit_energy_to_power_ratio {j in STORAGE_TECH diff {"BEV_BATT","PHEV_BATT"}, l in LAYERS, h in HOURS, td in TYPICAL_DAYS}:
 	Storage_in [j, l, h, td] * storage_charge_time[j] + Storage_out [j, l, h, td] * storage_discharge_time[j] <=  F [j] * storage_availability[j];
 
-# [Eq. 2.19-bis] limit the Energy to power ratio for EV batteries
-subject to limit_energy_to_power_ratio_bis {i in V2G, j in EVs_BATT_OF_V2G[i], l in LAYERS, h in HOURS, td in TYPICAL_DAYS}:
-	Storage_in [j, l, h, td] * storage_charge_time[j] + (Storage_out [j, l, h, td] + layers_in_out[i,"ELECTRICITY"]* F_t [i, h, td]) * storage_discharge_time[j]  <= ( F [j] - F_t [i,h,td] / vehicule_capacity [i] * batt_per_car[i] ) * storage_availability[j];
-
 ## Networks
 #----------------
 
@@ -342,6 +336,10 @@ subject to extra_grid:
 # [Eq. 2.22] DHN: assigning a cost to the network equal to the power capacity connected to the grid
 subject to extra_dhn:
 	F ["DHN"] = sum {j in TECHNOLOGIES diff STORAGE_TECH: layers_in_out [j,"HEAT_LOW_T_DHN"] > 0} (layers_in_out [j,"HEAT_LOW_T_DHN"] * F [j]);
+
+# [Eq. 22bis] Assigning a cost to the hydrogen network (transport and distribution, including terminals for export of e-fuels)
+subject to set_h2_infra:
+	F ["H2_INFRASTRUCTURE"] = F ["H2_ELECTROLYSIS"];
 
 ## Additional constraints
 #------------------------
@@ -364,8 +362,8 @@ subject to operating_strategy_mobility_freight{j in TECHNOLOGIES_OF_END_USES_CAT
 subject to Freight_shares :
 	Share_freight_train + Share_freight_road + Share_freight_boat = 1; # Should not be required (redundant)... But kept for security
 
-
-## Thermal solar & thermal storage:
+## Decentralised heat production
+#-------------------------------
 
 # [Eq. 2.27] relation between decentralised thermal solar power and capacity via period capacity factor.
 subject to thermal_solar_capacity_factor {j in TECHNOLOGIES_OF_END_USES_TYPE["HEAT_LOW_T_DECEN"] diff {"DEC_SOLAR"}, h in HOURS, td in TYPICAL_DAYS}:
@@ -381,7 +379,8 @@ subject to decentralised_heating_balance  {j in TECHNOLOGIES_OF_END_USES_TYPE["H
 		= Shares_lowT_dec[j] * (end_uses_input["HEAT_LOW_T_HW"] / total_time + end_uses_input["HEAT_LOW_T_SH"] * heating_time_series [h, td] / t_op [h, td]);
 
 
-## EV storage :
+## Vehicle-to-grid
+#-----------------
 
 # [Eq. 2.30] Compute the equivalent size of V2G batteries based on the installed capacity, the capacity per vehicles and the battery capacity per EVs technology
 subject to EV_storage_size {j in V2G, i in EVs_BATT_OF_V2G[j]}:
@@ -391,102 +390,118 @@ subject to EV_storage_size {j in V2G, i in EVs_BATT_OF_V2G[j]}:
 subject to EV_storage_for_V2G_demand {j in V2G, i in EVs_BATT_OF_V2G[j], h in HOURS, td in TYPICAL_DAYS}:
 	Storage_out [i,"ELECTRICITY",h,td] >=  - layers_in_out[j,"ELECTRICITY"]* F_t [j, h, td];
 
-# [Eq. 2.31-bis]  Impose a minimum state of charge at some hours of the day:
+# [Eq. 2.32] Limit the energy-to-power ratio for EV batteries
+subject to limit_energy_to_power_ratio_bis {i in V2G, j in EVs_BATT_OF_V2G[i], l in LAYERS, h in HOURS, td in TYPICAL_DAYS}:
+	Storage_in [j, l, h, td] * storage_charge_time[j] + (Storage_out [j, l, h, td] + layers_in_out[i,"ELECTRICITY"]* F_t [i, h, td]) * storage_discharge_time[j]  <= ( F [j] - F_t [i,h,td] / vehicule_capacity [i] * batt_per_car[i] ) * storage_availability[j];
+
+
+# [Eq. 2.33]  Impose a minimum state of charge at some hours of the day:
 subject to ev_minimum_state_of_charge {j in V2G, i in EVs_BATT_OF_V2G[j],  t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]}:
 	Storage_level [i, t] >=  F [i] * state_of_charge_ev [i, h];
 
-## Peak demand :
+## Peak demand
+#-------------
 
-# [Eq. 2.32] Peak in decentralized heating
+# [Eq. 2.34] Peak in decentralized heating
 subject to peak_lowT_dec {j in TECHNOLOGIES_OF_END_USES_TYPE["HEAT_LOW_T_DECEN"] diff {"DEC_SOLAR"}, h in HOURS, td in TYPICAL_DAYS}:
 	F [j] >= peak_sh_factor * F_t [j, h, td] ;
 
-# [Eq. 2.33] Calculation of max heat demand in DHN (1st constraint required to linearised the max function)
-var Max_Heat_Demand >= 0;
+# [Eq. 2.35] Calculation of max heat demand in DHN (1st constraint required to linearised the max function)
 subject to max_dhn_heat_demand {h in HOURS, td in TYPICAL_DAYS}:
 	Max_Heat_Demand >= End_uses ["HEAT_LOW_T_DHN", h, td];
 # Peak in DHN
 subject to peak_lowT_dhn:
 	sum {j in TECHNOLOGIES_OF_END_USES_TYPE ["HEAT_LOW_T_DHN"], i in STORAGE_OF_END_USES_TYPES["HEAT_LOW_T_DHN"]} (F [j] + F[i]/storage_discharge_time[i]) >= peak_sh_factor * Max_Heat_Demand;
 
-# [Eq. TODO] Peak in space cooling
+# [Eq. 2.36] Peak in space cooling
 subject to peak_space_cooling {j in TECHNOLOGIES_OF_END_USES_TYPE["SPACE_COOLING"], h in HOURS, td in TYPICAL_DAYS}:
 	F [j] >= peak_sc_factor * F_t [j, h, td] ;
 
-## Adaptation for the case study: Constraints needed for the application to Switzerland (not needed in standard LP formulation)
-#-----------------------------------------------------------------------------------------------------------------------
+## Adaptation for the case study
+#-------------------------------
 
-# [Eq. 2.34]  constraint to reduce the GWP subject to Minimum_gwp_reduction :
+# [Eq. 2.37]  constraint to reduce the GWP subject to Minimum_gwp_reduction :
 subject to Minimum_GWP_reduction :
 	TotalGWP <= gwp_limit;
 
-# [Eq. 2.35] Minimum share of RE in primary energy supply
+# [Eq. 2.38] Minimum share of RE in primary energy supply
 subject to Minimum_RE_share :
 	sum {j in RE_RESOURCES, t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]} F_t [j, h, td] * t_op [h, td]
 	>=	re_share_primary *
 	sum {j in RESOURCES, t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]} F_t [j, h, td] * t_op [h, td]	;
 
-# [Eq. 2.36] Definition of min/max output of each technology as % of total output in a given layer.
+# [Eq. 2.39] Definition of min/max output of each technology as % of total output in a given layer.
 subject to f_max_perc {eut in END_USES_TYPES, j in TECHNOLOGIES_OF_END_USES_TYPE[eut]}:
 	sum {t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]} (F_t [j,h,td] * t_op[h,td]) <= fmax_perc [j] * sum {j2 in TECHNOLOGIES_OF_END_USES_TYPE[eut], t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]} (F_t [j2, h, td] * t_op[h,td]);
 subject to f_min_perc {eut in END_USES_TYPES, j in TECHNOLOGIES_OF_END_USES_TYPE[eut]}:
 	sum {t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]} (F_t [j,h,td] * t_op[h,td]) >= fmin_perc [j] * sum {j2 in TECHNOLOGIES_OF_END_USES_TYPE[eut], t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]} (F_t [j2, h, td] * t_op[h,td]);
 
+# [Eq. 2.40] Maximum share of motorcycles in private passenger mobility
 subject to f_max_perc_motorcycle:
 	sum {t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]} (F_t ["MOTORCYCLE",h,td] * t_op[h,td] + F_t ["MOTORCYCLE_ELECTRIC",h,td] * t_op[h,td]) <= share_private_motorcycle_max * sum {j2 in TECHNOLOGIES_OF_END_USES_TYPE["MOB_PRIVATE"], t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]} (F_t [j2, h, td] * t_op[h,td]);
 
-# [Eq. 2.37] Energy efficiency is a fixed cost
+# [Eq. 2.41] Energy efficiency is a fixed cost
 subject to extra_efficiency:
 	F ["EFFICIENCY"] = 1 / (1 + i_rate);
 
-# [Eq. 2.38] Limit electricity import capacity
+# [Eq. 2.42] Limit electricity import capacity
 subject to max_elec_import {h in HOURS, td in TYPICAL_DAYS}:
 	F_t ["ELECTRICITY", h, td] * t_op [h, td] <= import_capacity + F["HVAC_LINE"];
 
+# [Eq. 2.43] Limit electricity export capacity
 subject to max_elec_export {h in HOURS, td in TYPICAL_DAYS}:
 	F_t ["ELEC_EXPORT", h, td] * t_op [h, td] <= export_capacity + F["HVAC_LINE"];
+	
+# [Eq. 2.44] Constant flow of import for resources listed in SET RES_IMPORT_CONSTANT
+subject to resource_constant_import { i in RES_IMPORT_CONSTANT, h in HOURS, td in TYPICAL_DAYS}:
+	F_t [i, h, td] * t_op [h, td] = Import_constant [i];
+	
+# [Eq. 2.45] Constant flow of export of e-fuels
+subject to resource_constant_export { i in EXPORT_E_FUELS, h in HOURS, td in TYPICAL_DAYS}:
+	F_t [i, h, td] * t_op [h, td] = Export_constant [i];
 	
 #subject to lim_e_fuels_export:
 #	sum {i in EXPORT_E_FUELS, t in PERIODS, h in HOUR_OF_PERIOD[t], td in TYPICAL_DAY_OF_PERIOD[t]} (F_t [i, h, td] * t_op [h, td]) <= 100000;
 	
-var Export_constant {EXPORT_E_FUELS} >= 0;
-subject to resource_constant_export { i in EXPORT_E_FUELS, h in HOURS, td in TYPICAL_DAYS}:
-	F_t [i, h, td] * t_op [h, td] = Export_constant [i];
-
-## Variant equations for hydro dams
-# [Eq. 40] Seasonal storage in hydro dams.
+## Equations for hydro dams
+# [Eq. 46] Seasonal storage in hydro dams.
 # Capacity of DAM_STORAGE is proportional to capacity of HYDRO_DAM
 subject to storage_level_hydro_dams:
 	F ["DAM_STORAGE"] <= f_min ["DAM_STORAGE"] + (f_max ["DAM_STORAGE"]-f_min ["DAM_STORAGE"]) * (F ["HYDRO_DAM"] - f_min ["HYDRO_DAM"])/(f_max ["HYDRO_DAM"]-f_min ["HYDRO_DAM"]);
 
-# [Eq. 41] Hydro dams can store the input energy and restore it at any time. Hence, inlet is the input river and outlet is bounded by max capacity
+# [Eq. 47] Hydro dams can store the input energy and restore it at any time. Hence, inlet is the input river and outlet is bounded by max capacity
 subject to impose_hydro_dams_inflow {h in HOURS, td in TYPICAL_DAYS}:
 	Storage_in ["DAM_STORAGE", "ELECTRICITY", h, td] = F_t ["HYDRO_DAM", h, td];
 
-# [Eq. 42] Hydro dams production is lower than installed F capacity:
+# [Eq. 48] Hydro dams production is lower than installed F capacity:
 subject to limit_hydro_dams_output {h in HOURS, td in TYPICAL_DAYS}:
 	Storage_out ["DAM_STORAGE", "ELECTRICITY", h, td] <= F ["HYDRO_DAM"];
 
-# [Eq. TODO] Limit surface area for solar
+# [Eq. 49]	
+# Limit on solar multiple of csp plants (by definition, sm = (F_coll*eta_pb)/F_pb
+subject to sm_limit_solar_tower:
+	-F["ST_COLLECTOR"] / layers_in_out ["ST_POWER_BLOCK", "ST_HEAT"] <= sm_max * F["ST_POWER_BLOCK"];
+
+# [Eq. 50]
+subject to sm_limit_parabolic_trough:
+	-F["PT_COLLECTOR"] / layers_in_out ["PT_POWER_BLOCK", "PT_HEAT"] <= sm_max * F["PT_POWER_BLOCK"];
+
+# [Eq. 51] Limit surface area for rooftop solar
 subject to solar_area_rooftop_limited:
 	(F["PV_ROOFTOP"])/power_density_pv +(F["DEC_SOLAR"]+F["DHN_SOLAR"])/power_density_solar_thermal <= solar_area_rooftop;
 
+# [Eq. 52] Limit surface area for land solar
 subject to solar_area_ground_limited:
 	(F["PV_UTILITY"])/power_density_pv
-		- (layers_in_out ["PT_POWER_BLOCK", "PT_HEAT"]*F["PT_COLLECTOR"]+layers_in_out ["ST_POWER_BLOCK", "ST_HEAT"]*F["ST_COLLECTOR"])/power_density_pv
+		- (F["PT_COLLECTOR"]/layers_in_out ["PT_POWER_BLOCK", "PT_HEAT"]+F["ST_COLLECTOR"]/layers_in_out ["ST_POWER_BLOCK", "ST_HEAT"])/power_density_pv
 <= solar_area_ground;
 
+# [Eq. 53] Limit high-irradiation land surface area for CSP plants
 subject to solar_area_ground_high_irr_limited:
-	-(layers_in_out ["PT_POWER_BLOCK", "PT_HEAT"]*F["PT_COLLECTOR"]
-		+layers_in_out ["ST_POWER_BLOCK", "ST_HEAT"]*F["ST_COLLECTOR"])/power_density_pv
+	-(F["PT_COLLECTOR"]/layers_in_out ["PT_POWER_BLOCK", "PT_HEAT"]
+		+F["ST_COLLECTOR"]/layers_in_out ["ST_POWER_BLOCK", "ST_HEAT"])/power_density_pv
 <= solar_area_ground_high_irr;
 
-# Limit on solar multiple of csp plants (by definition, sm = (F_coll*eta_pb)/F_pb
-subject to sm_limit_solar_tower:
-	layers_in_out ["ST_POWER_BLOCK", "ST_HEAT"] * F["ST_COLLECTOR"] <= sm_max * F["ST_POWER_BLOCK"];
-
-subject to sm_limit_parabolic_trough:
-	layers_in_out ["PT_POWER_BLOCK", "ST_HEAT"] * F["PT_COLLECTOR"] <= sm_max * F["PT_POWER_BLOCK"];
 
 ##########################
 ### OBJECTIVE FUNCTION ###

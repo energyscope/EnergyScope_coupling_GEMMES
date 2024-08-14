@@ -22,7 +22,7 @@ Electricity;Electricity;Solar tower power block;ST_POWER_BLOCK;1082.917443;88.81
 Electricity;Electricity;Wind onshore;WIND_ONSHORE;1355.9014;22.5213672;622.85;30;1;0;1;0;7.3;
 Electricity;Electricity;Wind offshore;WIND_OFFSHORE;1610.6555;64.11752607;622.85;30;1;0;1;0;48.8;
 Electricity;Electricity;Hydro dam;HYDRO_DAM;3116.1722;31.1617;1692.88;40;1;0;1;13.4;21.2;
-Electricity;Electricity;Hydro river;HYDRO_RIVER;2825.1675;28.2522;1262.82;40;1;0;1;3.777;27.8;
+Electricity;Electricity;Hydro river;HYDRO_RIVER;2825.1675;28.2522;1262.82;40;1;0;1;3.777;3.8;
 Electricity;Electricity;Tidal;TIDAL;4041.6099;250.9266;0;20;1;0;1;0;0;
 Electricity;Electricity;Wave;WAVE;2691.1173;59.2074;0;20;1;0;1;0;0;
 Electricity;Electricity;Geothermal power plant;GEOTHERMAL;9854.9315;183.0828;24929.09;30;0.86;0;1;0;1.2;

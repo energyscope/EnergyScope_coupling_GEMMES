@@ -1,50 +1,47 @@
 
-Presolve eliminates 945066 constraints and 608022 variables.
+Presolve eliminates 972448 constraints and 626471 variables.
 "option presolve 10;" used, but "option presolve 6;" would suffice.
 Adjusted problem:
-318836 variables, all linear
-584798 constraints, all linear; 1845588 nonzeros
-	392934 equality constraints
-	191864 inequality constraints
+319404 variables, all linear
+585080 constraints, all linear; 1847294 nonzeros
+	392638 equality constraints
+	192442 inequality constraints
 1 linear objective; 1 nonzero.
 
 presolve results:
-	variables omitted:	608022
-	constraints omitted:	945066
-	ranges relaxed:		33945
-	bounds improved:	606311
-	constraint_drop_tol breakpoints: 0, 0, 20779.633732464572
+	variables omitted:	626471
+	constraints omitted:	972448
+	ranges relaxed:		34523
+	bounds improved:	624760
+	constraint_drop_tol breakpoints: 0, 0, 16442.519999690863
 	nba cycles:		5
-	bound row scans:	375683
-	row-scan updates:	42632
-Gurobi 10.0.3:   pre:dual = -1
+	bound row scans:	375669
+	row-scan updates:	41497
+Gurobi 11.0.1:   pre:dual = -1
   alg:method = 2
   bar:crossover = 0
   pre:passes = 3
   bar:convtol = 1e-06
   pre:solve = -1
-Gurobi 10.0.3: optimal solution; objective 63253.02989
+Gurobi 11.0.1: optimal solution; objective 61954.34862
 0 simplex iterations
-71 barrier iterations
+66 barrier iterations
  
 ------------ WARNINGS ------------
-WARNING:  "Solution Check"
-     [ sol:chk:feastol=1e-06, :feastolrel=1e-06, :inttol=1e-05,
-       :round='', :prec='' ]
-Algebraic expression violations:
-  - 26 original expression(s) of type ':linrange',
-        up to 5E-05 (abs)
- 
- 
+WARNING:  "Tolerance violations"
+  Type                         MaxAbs [Name]   MaxRel [Name]
+* expr '_linrange'             6E-04           -             
+*: Using the solver's aux variable values.
+Documentation: mp.ampl.com/modeling-tools.html#automatic-solution-check.
 solve_result = solved
 
 solve_result_num = 0
 
-_solve_elapsed_time = 44.3064
+_solve_elapsed_time = 28.1991
 
-TotalCost 63253.02989277642
+TotalCost 61954.34862151626
 Carbon_cost 0
-GWP_op 47743.00000696394
+GWP_op 37645.00008860709
 carbon_price 0
 --------------SAVING COSTS -----------
 --------------SAVING RESOURCES -----------

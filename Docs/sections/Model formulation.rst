@@ -536,11 +536,14 @@ the independent and dependent variables, respectively.
       |                      |                      | multiple for CSP     |
       |                      |                      | plants               |
       +----------------------+----------------------+----------------------+
-      | :math:`powerDensity  | [GW/km\ :math:`^2`]  | Maximum power        |    
+      | :math:`power\_density| [GW/km\ :math:`^2`]  | Maximum power        |    
       | _{pv}`               |                      | irradiance for PV    |
       +----------------------+----------------------+----------------------+
-      | :math:`powerDensity  | [GW/km\ :math:`^2`]  | Maximum power        |
-      | _{solar,thermal}`    |                      | irradiance for solar |
+      | :math:`power\_density| [GW/km\ :math:`^2`]  | Maximum power        |    
+      | _{csp}`              |                      | irradiance for CSP   |
+      +----------------------+----------------------+----------------------+
+      | :math:`power\_density| [GW/km\ :math:`^2`]  | Maximum power        | 
+      | _{solar~thermal}`    |                      | irradiance for solar |
       |                      |                      | thermal              |
       +----------------------+----------------------+----------------------+
 .. [a]
@@ -1404,13 +1407,13 @@ The link between the 3 elements is kept into a "realistic" range thanks to Equat
     :label: eq:solarAreaRooftopLimited
 
 .. math::
-    \frac{\textbf{F}(PV~Utility)}{power\_density_{pv}} - \frac{\textbf{F}(ST~Collector) \cdot f(ST~Power~Block, ST~Heat)}{power\_density_{csp}}\\
-    - \frac{\textbf{F}(PT~Collector) \cdot f(PT~Power~Block, PT~Heat)}{power\_density_{csp}}  \leq solar_{area,ground}
+    \frac{\textbf{F}(PV~Utility)}{power\_density_{pv}} - \frac{\textbf{F}(ST~Collector)}{f(ST~Power~Block, ST~Heat) \cdot power\_density_{csp}}\\
+    - \frac{\textbf{F}(PT~Collector)}{f(PT~Power~Block, PT~Heat) \cdot power\_density_{csp}}\leq solar_{area,ground}
     :label: eq:solarAreaLandLimited
     
 .. math::
-    - \frac{\textbf{F}(ST~Collector) \cdot f(ST~Power~Block, ST~Heat)}{power\_density_{csp}}\\
-    - \frac{\textbf{F}(PT~Collector) \cdot f(PT~Power~Block, PT~Heat)}{power\_density_{csp}}  \leq solar_{area,ground,high~irr}
+    - \frac{\textbf{F}(ST~Collector)}{f(ST~Power~Block, ST~Heat)\cdot power\_density_{csp}}\\
+    - \frac{\textbf{F}(PT~Collector)}{f(PT~Power~Block, PT~Heat) \cdot power\_density_{csp}}  \leq solar_{area,ground,high~irr}
     :label: eq:solarAreaGroundHighIrrLimited
 
 In this version of EnergyScope, the upper limit for the deployment of solar technologies is
@@ -1425,10 +1428,9 @@ Eq. :eq:`eq:solarAreaRooftopLimited` imposes a constraint on the available rooft
 Eq. :eq:`eq:solarAreaLandLimited`, does the same for ground area. Finally, eq. :eq:`eq:solarAreaGroundHighIrrLimited`
 proceeds similarly for ground area with high irradiation, suitable for the installation of CSP plants
 (i.e. with a Direct Normal Irradiation (DNI) superior to 1800 [kWh/m\ :math:`^2`/year]).
-The area limitation is applied on the *Collector* element of the CSP. This constraint is then transferred to 
-*Storage* and *Power Block*, namely via eqs :eq:`eq:limit_solar_mulitple_ST` and :eq:`eq:limit_solar_mulitple_PT`.
-Note that in eqs. :eq:`eq:solarAreaLandLimited` - :eq:`eq:solarAreaGroundHighIrrLimited`, the terms associated
-to CSP are counted as positive (the minus signs are present to compensate for the negative signs of :math:`f(\cdot)`).
+The area limitation is applied on the *Collector* element of the CSP. The capacity of the *Collector* (which produces heat) is then transformed into the equivalent
+electrical power capacity in eqs :eq:`eq:solarAreaLandLimited` - :eq:`eq:solarAreaGroundHighIrrLimited`, using the heat-electricity conversion efficiency of the *Power block*.
+Indeed, the :math:`power\_density_{csp}` is expressed in electrical GW, not in thermal GW. Note that in eqs. :eq:`eq:solarAreaLandLimited` - :eq:`eq:solarAreaGroundHighIrrLimited`, the terms associated with CSP are counted as positive (the minus signs are present to compensate for the negative signs of :math:`f(\cdot)`).
 
 .. _ssec_estd_implementation:
 

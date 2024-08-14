@@ -105,7 +105,7 @@ Solar, wind, hydro and geothermal
       :name: tab:renewableTechPotentialIn2035
    
       hydro dam , 8.14 [5b]_ , 51.2 [5c]_ , [GW]
-      hydro river , 3.78 [5b]_ , 27.8 [5c]_ , [GW]
+      hydro river , 3.78 [5b]_ , 3.8 [5c]_ , [GW]
       rooftop PV , 0.12 , :math:`\approx`\ 100 [5d]_ , [GW]
       utility scale PV , 0 , :math:`\approx`\ 700 [5d]_ , [GW]
       onshore wind , 0.02 , 7.3 [5e]_ , [GW]
@@ -158,7 +158,7 @@ As described by eqs. :eq:`eq:solarAreaRooftopLimited` - :eq:`eq:solarAreaGroundH
       ":math:`sm_{max}`", "4 [6c]_ ", ":math:`[-]`"
       
    .. [6a]
-      Computed based on the open-source database from :cite:`dupont_2020`, available at https://github.com/EliseDup/WorldEROI.
+      Computed based on the open-source database from :cite:`dupont_2020`, available at https://github.com/EliseDup/WorldEROI. All the area with high irradiation is located in the department of La Guajira.
       
    .. [6b]
       Data from :cite:`dupont_2020` (mono-silicon PV).
@@ -530,8 +530,10 @@ Hidroituango power plant (1.2 GW according to :cite:`IEA_2023`), which was compl
 		 Onshore wind, 1427 [14d]_, 23.7 [14d]_, 623, 30 [14f]_, 27 [14g]_
 		 Offshore wind, 1773 [14d]_, 71.3 [14d]_, 623, 30 [14f]_, 50 [14h]_
 		 Geothermal, 10576 [14i]_, 196.5 [14i]_, 24929, 30, 86 [14j]_
-		 CSP PT, 1473 [14k]_, 88.3 [14k]_, 0 [14m]_ , 25, 32 [14l]_
-		 CSP ST, 1083 [14k]_, 88.8 [14k]_, 0 [14m]_ , 25, 32 [14l]_
+		 CSP PT collector, 6350 [14l]_ , 88.3 [14l]_ , 0 [14m]_ , 25, 83 [14n]_
+		 CSP ST collector, 7777 [14l]_ , 88.8 [14l]_ , 0 [14m]_ , 25, 83 [14n]_
+		 CSP PT power block, 1473 [14l]_ , 88.3 [14l]_ , 0 [14m]_ , 25, 33 [14o]_
+		 CSP ST power block, 1083 [14l]_ , 88.8 [14l]_ , 0 [14m]_ , 25, 33 [14o]_
 		 Biomass central, 2364 [14d]_, 98.6 [14d]_, 332, 35, 87
 		 
 .. [14aa]
@@ -572,12 +574,19 @@ Hidroituango power plant (1.2 GW according to :cite:`IEA_2023`), which was compl
    evolution through time is the one from :cite:`CSP_IEA`, assuming an identical evolution as the one of the LCOE.
    These data are cross-checked with the ones of the Figure 4 of :cite:`boretti_techno_economic_2021` and of the 
    Figure 2 of :cite:`viebahn_potential_2011`.
-   
+
 .. [14l]
-   This value of :math:`c_{p}` is the mean value of the :math:`c_{p,t}` time series computed below.
+   Data collected by :cite:`dommisse2020modelling`.  
    
 .. [14m]
    Not computed yet. To be completed in the near future.
+   
+.. [14n]
+   Value obtained after running EnergyScope on the Colombian case study. The high capacity factor obtained is due to the heat storage associated with the CSP.
+   
+.. [14o]
+   This value of :math:`c_{p}` is the mean value of the :math:`c_{p,t}` time series computed below.  
+   
  
 
 :numref:`Table %s <tab:elec_prod_re>` includes the values of the yearly capacity factor (:math:`c_p`) of technologies.
@@ -2421,6 +2430,12 @@ technical performances of each technology.
       | Dam       | 0            | 0            | 0         | 40        |
       | storage   |              |              |           |           |
       +-----------+--------------+--------------+-----------+-----------+
+      | PT        | 52.1 [307]_  | 0.5 [307]_   | 0         | 25        |
+      | storage   |              |              |           |           |
+      +-----------+--------------+--------------+-----------+-----------+
+      | ST        | 26.9 [307]_  | 0.3 [307]_   | 0         | 25        |
+      | storage   |              |              |           |           |
+      +-----------+--------------+--------------+-----------+-----------+
 
 
 .. [294]
@@ -2472,6 +2487,11 @@ technical performances of each technology.
 .. [306]
    Units: **c\ inv** [USD\ \ :sub:`2015`/tCO\ \ :sub:`2`],
    **c\ op** [USD\ \ :sub:`2015`/tCO\ \ :sub:`2`/y]
+   
+.. [307]
+   Data collected by :cite:`dommisse2020modelling`.
+   
+   
 
 
 Estimation for the gas storage is based on an existing facility using
@@ -2553,6 +2573,11 @@ will be similar to the one of the Lille Torup project.
       +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
       | Dam storage   | 1             | 0.99          | 1             | 1             | 0             | 1             |
       +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
+      | PT storage    | 0.99          | 0.99          | 1.33          | 1.33          | 3.55e-4       | 1             |
+      +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
+      | ST storage    | 0.99          | 0.99          | 1.33          | 1.33          | 3.55e-4       | 1             |
+      +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
+      
 
 
 .. [326]
