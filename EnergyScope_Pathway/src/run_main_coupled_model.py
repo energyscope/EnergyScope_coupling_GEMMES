@@ -7,11 +7,11 @@ May 2024
 
 ## Define the country studied and the time granularity of EnergyScope
 country = 'Colombia'
-EnergyScope_granularity = 'TD'
+EnergyScope_granularity = 'MO'
 nbr_tds = 12
 
 def main():
-    plot_EnergyScope = False  
+    plot_EnergyScope = True  
     csv_EnergyScope  = False
     plot_GEMMES = True
     csv_GEMMES = True
@@ -19,7 +19,7 @@ def main():
     gdp_current = variables_GEMMES['gdp']
     diff = np.linalg.norm(gdp_current)
     n_iter = 0
-    while(diff > 0.01 and n_iter<0): 
+    while(diff > 0.01 and n_iter<1): 
         gdp_previous = gdp_current
         n_iter += 1
         output_EnergyScope = run_EnergyScope(variables_GEMMES)
@@ -264,15 +264,15 @@ def plot_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     
     # a_website = "https://www.google.com"
     # webbrowser.open_new(a_website)
-    # ampl_graph.graph_cost()
+    ampl_graph.graph_cost()
     # ampl_graph.graph_gwp_per_sector()
     # ampl_graph.graph_cost_inv_phase_tech()
     # ampl_graph.graph_cost_return()
     # ampl_graph.graph_cost_op_phase()
 
-    ampl_graph.graph_layer()
+    # ampl_graph.graph_layer()
     ampl_graph.graph_gwp()
-    ampl_graph.graph_tech_cap()
+    # ampl_graph.graph_tech_cap()
     # ampl_graph.graph_total_cost_per_year()
     # ampl_graph.graph_load_factor()
     # df_unused = ampl_graph.graph_load_factor_2()
@@ -633,10 +633,11 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     n = len(output_for_GEMMES.columns)
     output_for_GEMMES.iloc[1:,n-4:n] += year_balance_carbon_tax.values   
     output_for_GEMMES['reducXrO'] = 0.085
-    output_for_GEMMES.loc['2030_2035','reducXrO'] = 0.055
-    output_for_GEMMES.loc['2035_2040','reducXrO'] = 0.055
-    output_for_GEMMES.loc['2040_2045','reducXrO'] = 0.045
-    output_for_GEMMES.loc['2045_2050','reducXrO'] = 0.045
+    output_for_GEMMES.loc['2015_2020','reducXrO'] = 0.025
+    # output_for_GEMMES.loc['2030_2035','reducXrO'] = 0.055
+    # output_for_GEMMES.loc['2035_2040','reducXrO'] = 0.055
+    # output_for_GEMMES.loc['2040_2045','reducXrO'] = 0.045
+    # output_for_GEMMES.loc['2045_2050','reducXrO'] = 0.045
     output_for_GEMMES = output_for_GEMMES.round(3)
     aggregated_costs = output_for_GEMMES.copy()
     aggregated_costs = aggregated_costs[['capex_F_CO', 'capex_F_M', 'capex_B_CO', 'capex_B_M', 'capex_G_CO', 'capex_G_M', 'capex_H_CO', 'capex_H_M', 'opex_F_CO', 'opex_F_M', 'opex_B_CO','opex_B_M', 'opex_G_CO', 'opex_G_M', 'opex_H_CO', 'opex_H_M', 'exports_CO', 'CTf', 'CTb', 'CTg', 'CTh']]
@@ -742,7 +743,7 @@ def plot_GEMMES_outputs_fig4(variables_GEMMES):
     plt.figure()
     
     plt.figure()
-    plt.plot(variables_GEMMES['time'], (variables_GEMMES['x']-variables_GEMMES['im'])/variables_GEMMES['gdp'], label='b - Trade Balance (% GDP)')
+    plt.plot(variables_GEMMES['time'], (variables_GEMMES['x']-variables_GEMMES['im'])/variables_GEMMES['gdp'], label='b - Trade Balance (% gdp)')
     plt.legend(loc='lower right', fancybox=True, shadow=True)
     plt.grid(True, color="#93a1a1", alpha=0.3)
     plt.savefig(os.path.join(EnergyScope_case_study_path,'graphs_GEMMES/b - Trade Balance (% GDP).png'), format='png')
@@ -805,7 +806,7 @@ def plot_GEMMES_outputs_fig4(variables_GEMMES):
     plt.figure()
     
     plt.figure()
-    plt.plot(variables_GEMMES['time'], variables_GEMMES['IA']/variables_GEMMES['GDP'], label='k - Current Account (%GDP)')
+    plt.plot(variables_GEMMES['time'], variables_GEMMES['IA']/variables_GEMMES['GDP'], label='k - Income Account of the Current Account (%GDP)')
     plt.legend(loc='upper left', fancybox=True, shadow=True)
     plt.grid(True, color="#93a1a1", alpha=0.3)
     plt.savefig(os.path.join(EnergyScope_case_study_path,'graphs_GEMMES/k - Current Account (%GDP).png'), format='png')
