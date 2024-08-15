@@ -264,14 +264,14 @@ def plot_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     
     # a_website = "https://www.google.com"
     # webbrowser.open_new(a_website)
-    ampl_graph.graph_cost()
+    # ampl_graph.graph_cost()
     # ampl_graph.graph_gwp_per_sector()
     # ampl_graph.graph_cost_inv_phase_tech()
     # ampl_graph.graph_cost_return()
     # ampl_graph.graph_cost_op_phase()
 
     # ampl_graph.graph_layer()
-    ampl_graph.graph_gwp()
+    # ampl_graph.graph_gwp()
     # ampl_graph.graph_tech_cap()
     # ampl_graph.graph_total_cost_per_year()
     # ampl_graph.graph_load_factor()
@@ -303,10 +303,10 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     
     # C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(['DHN','GRID','HVAC_LINE','H2_INFRASTRUCTURE']),[3,5]] = [0,1] # These costs supported by the PRIVATE SECTOR, actually (not by the state - grid costs for households are quite volatile, according to DNP)
     
-    list_private_mob_tech = ['MOTORCYCLE','CAR_GASOLINE','CAR_DIESEL','CAR_NG','CAR_METHANOL','CAR_HEV','CAR_PHEV','MOTORCYCLE_ELECTRIC','CAR_BEV','CAR_FUEL_CELL']
+    list_private_mob_tech = ['MOTORCYCLE','CAR_GASOLINE','CAR_GASOLINE_BIS','CAR_DIESEL','CAR_NG','CAR_METHANOL','CAR_HEV','CAR_PHEV','MOTORCYCLE_ELECTRIC','CAR_BEV','CAR_FUEL_CELL']
     C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(list_private_mob_tech),[4,7]] = [0,1] # Private mobility costs are supported by households
     
-    list_public_mob_tech = ['TRAMWAY_TROLLEY','BUS_COACH_DIESEL','BUS_COACH_GASOLINE','BUS_COACH_HYDIESEL','BUS_COACH_CNG_STOICH','BUS_COACH_FC_HYBRIDH2','TRAIN_PUB']
+    list_public_mob_tech = ['TRAMWAY_TROLLEY','BUS_COACH_DIESEL','BUS_COACH_DIESEL_BIS','BUS_COACH_GASOLINE','BUS_COACH_HYDIESEL','BUS_COACH_CNG_STOICH','BUS_COACH_FC_HYBRIDH2','TRAIN_PUB']
     C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(list_public_mob_tech),[4,6]] = [0,1] # Public mobility costs are supported by the State
     
     shares_cooling = pd.read_csv('shares_cooling.csv')
@@ -604,18 +604,18 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     output_for_GEMMES['sigmamkeg'] = output_for_GEMMES['ikegM'] / output_for_GEMMES['ikeg']
     output_for_GEMMES['sigmamkeh'] = output_for_GEMMES['ikehM'] / output_for_GEMMES['ikeh']
     # Adjust the repartitions pke / ike so that the ike's have the same order of magnitude as ikf in GEMMES
-    output_for_GEMMES['pkefCO'] *= 254.3531
-    output_for_GEMMES['pkefM']  *= 254.3531
-    output_for_GEMMES['ikef']   /= 254.3531
-    output_for_GEMMES['pkebCO'] *= 47.92296
-    output_for_GEMMES['pkebM']  *= 47.92296
-    output_for_GEMMES['ikeb']   /= 47.92296
-    output_for_GEMMES['pkegCO'] *= 34.85306
-    output_for_GEMMES['pkegM']  *= 34.85306
-    output_for_GEMMES['ikeg']   /= 34.85306
-    output_for_GEMMES['pkehCO'] *= 95.84592
-    output_for_GEMMES['pkehM']  *= 95.84592
-    output_for_GEMMES['ikeh']   /= 95.84592
+    output_for_GEMMES['pkefCO'] *= 254
+    output_for_GEMMES['pkefM']  *= 254
+    output_for_GEMMES['ikef']   /= 254
+    output_for_GEMMES['pkebCO'] *= 2.4
+    output_for_GEMMES['pkebM']  *= 2.4
+    output_for_GEMMES['ikeb']   /= 2.4
+    output_for_GEMMES['pkegCO'] *= 34.9
+    output_for_GEMMES['pkegM']  *= 34.9
+    output_for_GEMMES['ikeg']   /= 34.9
+    output_for_GEMMES['pkehCO'] *= 95.8
+    output_for_GEMMES['pkehM']  *= 95.8
+    output_for_GEMMES['ikeh']   /= 95.8
     output_for_GEMMES['icef'] = output_for_GEMMES['opex_F_CO'] + output_for_GEMMES['opex_F_M']
     output_for_GEMMES['sigmamicef'] = output_for_GEMMES['opex_F_M'] / output_for_GEMMES['icef']
     output_for_GEMMES['iceb'] = output_for_GEMMES['opex_B_CO'] + output_for_GEMMES['opex_B_M']
@@ -634,10 +634,10 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     output_for_GEMMES.iloc[1:,n-4:n] += year_balance_carbon_tax.values   
     output_for_GEMMES['reducXrO'] = 0.085
     output_for_GEMMES.loc['2015_2020','reducXrO'] = 0.025
-    # output_for_GEMMES.loc['2030_2035','reducXrO'] = 0.055
-    # output_for_GEMMES.loc['2035_2040','reducXrO'] = 0.055
-    # output_for_GEMMES.loc['2040_2045','reducXrO'] = 0.045
-    # output_for_GEMMES.loc['2045_2050','reducXrO'] = 0.045
+    output_for_GEMMES.loc['2030_2035','reducXrO'] = 0.055
+    output_for_GEMMES.loc['2035_2040','reducXrO'] = 0.055
+    output_for_GEMMES.loc['2040_2045','reducXrO'] = 0.055
+    output_for_GEMMES.loc['2045_2050','reducXrO'] = 0.055
     output_for_GEMMES = output_for_GEMMES.round(3)
     aggregated_costs = output_for_GEMMES.copy()
     aggregated_costs = aggregated_costs[['capex_F_CO', 'capex_F_M', 'capex_B_CO', 'capex_B_M', 'capex_G_CO', 'capex_G_M', 'capex_H_CO', 'capex_H_M', 'opex_F_CO', 'opex_F_M', 'opex_B_CO','opex_B_M', 'opex_G_CO', 'opex_G_M', 'opex_H_CO', 'opex_H_M', 'exports_CO', 'CTf', 'CTb', 'CTg', 'CTh']]
