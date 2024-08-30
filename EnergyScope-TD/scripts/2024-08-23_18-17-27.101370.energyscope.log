@@ -1,0 +1,9 @@
+24/08/23 18:17:27 [INFO    ] (import_data): Importing data files from /home/piejacques/Bureau/EnergyScope_coupling_GEMMES/EnergyScope-TD/Data/CO 2021
+24/08/23 18:17:27 [INFO    ] (kmedoid_clustering): Starting kmedoid clustering of typical days based on /home/piejacques/Bureau/EnergyScope_coupling_GEMMES/EnergyScope-TD/energyscope/preprocessing/td_selection/data.dat
+24/08/23 18:17:27 [INFO    ] (kmedoid_clustering): Running kmedoid clustering
+24/08/23 18:17:35 [INFO    ] (kmedoid_clustering): End of kmedoid clustering
+24/08/23 18:17:35 [INFO    ] (print_data): Printing ESTD_data.dat
+24/08/23 18:17:35 [INFO    ] (print_data): Printing ESTD_12TD.dat
+24/08/23 18:17:35 [INFO    ] (run_es): Running EnergyScope
+24/08/23 18:18:02 [INFO    ] (run_es): End of run
+24/08/23 18:18:02 [INFO    ] (read_outputs): Reading outputs from: /home/piejacques/Bureau/EnergyScope_coupling_GEMMES/EnergyScope-TD/case_studies/CO 2021/output

@@ -122,7 +122,7 @@ Solar, wind, hydro and geothermal
       :cite:`IEA_2023` gives an installed hydropower capacity of 11.91 GW in 2021. We split it between hydro dam and hydro river according to percentages received from Departamento Nacional de Planeación (DNP), the Colombian National Planning Department.
       
    .. [5c]
-      Data from :cite:`plazas_nino_2023`.
+      Data from :cite:`plazas_nino_2024`.
       
    .. [5d]
       The real constraint on solar potential is not a constraint on installable capacity, but a constraint on available area, as described below.

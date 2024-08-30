@@ -125,8 +125,8 @@ class AmplGraph:
     def graph_resource(self):
         
         order_entry = ['ELECTRICITY','GASOLINE','DIESEL','LFO','IMPORTED_COAL', 'LOCAL_COAL',
-                       'LOCAL_GAS','IMPORTED_GAS','URANIUM','WOOD','WET_BIOMASS', 'BIOETHANOL', 'BIODIESEL', 'WASTE',
-                       'RES_SOLAR','RES_WIND',
+                       'LOCAL_GAS','IMPORTED_GAS','WOOD','WET_BIOMASS', 'BIOETHANOL', 'BIODIESEL', 'WASTE',
+                       'RES_HYDRO','RES_SOLAR','RES_WIND',
                        'AMMONIA_RE','METHANOL_RE','H2_RE']
         
         pio.renderers.default = 'browser'
@@ -159,18 +159,22 @@ class AmplGraph:
         
         fig.for_each_trace(lambda trace: trace.update(fillcolor = trace.line.color))
         fig.update_traces(mode='none')
-        fig.update_xaxes(categoryorder='array', categoryarray= sorted(df_to_plot['Years'].unique()))
-        plt.legend(bbox_to_anchor=(1.04, 1), loc="upper left")
+        x_labels = df_to_plot['Years'].unique()
+        x_labels = pd.to_numeric(x_labels)
+        fig.update_xaxes(categoryorder='array', categoryarray= sorted(x_labels))
+        # plt.legend(bbox_to_anchor=(1.04, 1), loc="upper left")
         pio.show(fig)
         
         title = "<b>Primary energy supply</b><br>[TWh]"
         
-        # temp = df_to_plot.groupby(['Years']).sum()
-        # yvals = [0,min(round(temp['Res'])),max(round(temp['Res']))]
+        temp = df_to_plot.set_index(['Years','Resources'])
+        temp = temp.groupby(['Years']).sum()
+        temp['Res'] = pd.to_numeric(temp['Res'])       
+        yvals = [0,min(temp['Res'].round(0)),max(temp['Res'].round(0))]
         
-        # self.custom_fig(fig,title,yvals)
-        # fig.write_image(self.outdir+"Resources.pdf", width=1200, height=550)
+        self.custom_fig(fig,title,yvals)
         fig.write_html(self.outdir+"Resources.html")
+        fig.write_image(self.outdir+"Resources.pdf", width=1200, height=550)
         plt.close()
     
     def graph_gwp(self):
