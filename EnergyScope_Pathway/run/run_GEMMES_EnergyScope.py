@@ -5,47 +5,55 @@ September 2024
 @authors: Pierre Jacques, Xavier Rixhon, Stanislas Augier
 """
 
+## Define which model you want to run: GEMMES, EnergyScope or the coupling of the two
+# mode = 'GEMMES_only'
+mode = 'EnergyScope_only'
+# mode = 'GEMMES-EnergyScope'
+
 ## Define the country studied and the time granularity of EnergyScope
-country = 'Colombia'
-EnergyScope_granularity = 'MO'
+country = 'Colombia'            # Choose between Colombia and Turkey
+EnergyScope_granularity = 'MO'  # MO = Monthly resolution, TD = Typical Day (hourly resolution - takes much more time to run)
 nbr_tds = 12
 
+## Define which results you want to save and/or plot
+plot_EnergyScope = True  
+csv_EnergyScope  = True
+plot_GEMMES = True
+csv_GEMMES = True
+
 def main():
-    plot_EnergyScope = True  
-    csv_EnergyScope  = False
-    plot_GEMMES = False
-    csv_GEMMES = True
-    variables_GEMMES = run_GEMMES()
-    gdp_current = variables_GEMMES['gdp']
-    diff = np.linalg.norm(gdp_current)
-    n_iter = 1
-    while(diff > 0.01 and n_iter<2): 
-        gdp_previous = gdp_current
-        n_iter += 1
-        output_EnergyScope = run_EnergyScope(variables_GEMMES)
-        compute_energy_system_costs(output_EnergyScope[0], output_EnergyScope[1], variables_GEMMES)
+    if mode=='GEMMES_only':
+        variables_GEMMES = run_GEMMES()
+    elif mode=='EnergyScope_only':
+        output_EnergyScope = run_EnergyScope()
+    else: # coupling between the two models
         variables_GEMMES = run_GEMMES()
         gdp_current = variables_GEMMES['gdp']
-        diff = ((gdp_current-gdp_previous).abs()/gdp_previous).max()
+        diff = np.linalg.norm(gdp_current)
+        n_iter = 1
+        while(diff > 0.01 and n_iter<2): ######## Delete the second condition
+            gdp_previous = gdp_current
+            n_iter += 1
+            output_EnergyScope = run_EnergyScope()
+            compute_energy_system_costs(output_EnergyScope[0], output_EnergyScope[1], variables_GEMMES)
+            variables_GEMMES = run_GEMMES()
+            gdp_current = variables_GEMMES['gdp']
+            diff = ((gdp_current-gdp_previous).abs()/gdp_previous).max()
     
-    if plot_EnergyScope:
+    if plot_EnergyScope and mode!='GEMMES_only':
         plot_EnergyScope_outputs(output_EnergyScope[0], output_EnergyScope[1])
-    if csv_EnergyScope:
+    if csv_EnergyScope and mode!='GEMMES_only':
         EnergyScope_output_csv(output_EnergyScope[0], output_EnergyScope[1])
-    if plot_GEMMES:
+    if plot_GEMMES and mode!='EnergyScope_only':
         plot_GEMMES_outputs(variables_GEMMES.iloc[20:,:])
-    if csv_GEMMES:
+    if csv_GEMMES and mode!='EnergyScope_only':
         variables_GEMMES_to_output = variables_GEMMES.copy()
         variables_GEMMES_to_output.to_csv(os.path.join(EnergyScope_case_study_path,'GEMMES_output_long.csv'))
         variables_GEMMES_to_output = variables_GEMMES_to_output[::10]
         variables_GEMMES_to_output.to_csv(os.path.join(EnergyScope_case_study_path,'GEMMES_output_short.csv'))
     
-    print('Number of iterations before convergence between the two models: ', n_iter)
-    
-    # plt.figure()
-    # plt.plot(variables_GEMMES['time'], variables_GEMMES['ip'], label='ip')
-    # plt.legend(loc='upper right', fancybox=True, shadow=True)
-    # plt.grid(True, color="#93a1a1", alpha=0.3)
+    if mode=='GEMMES-EnergyScope':
+        print('Number of iterations before convergence between the two models: ', n_iter)
 
     
 def run_GEMMES():
@@ -59,7 +67,6 @@ def run_GEMMES():
     newParms = newParms._replace(betaen=4.0) # release tension on the exchange rate
     # newParms = newParms._replace(alphapO=0.06)
     # newParms = newParms._replace(alphapwtr=0.04)
-    
     
     ## Fix the trajectories of exogenous variables
     Costs_ES_per_phase = pd.read_csv('Energy_system_costs.csv')
@@ -141,10 +148,12 @@ def run_GEMMES():
     i_rate.reset_index(inplace=True)
     i_rate.rename(columns={'index':'Phase'}, inplace=True)
     i_rate.to_csv('i_rate.csv', index=False)
+    en = variables_GEMMES['en'].round(3)
+    en.to_csv('exchange_rate.csv')
 
     return variables_GEMMES
     
-def run_EnergyScope(variables_GEMMES):
+def run_EnergyScope():
     n_year_opti = 30 # We optimize over the entire transition period, from 2021 to 2051
     
     ## Define the AMPL optimization problem
@@ -158,12 +167,16 @@ def run_EnergyScope(variables_GEMMES):
     ampl_pre.remaining_update(0)
     ampl = AmplObject(mod_1_path, mod_2_path, dat_path, ampl_options, type_model=EnergyScope_granularity)
     
-    ## Read the input data from GEMMES
+    ## Read and integrate in EnergyScope the input data from GEMMES
+    
+    # Include the discount rate given by GEMMES
     i_rate = pd.read_csv('i_rate.csv')
     i_rate['i_rate'] = i_rate['i_rate'] * (i_rate['i_rate']>=0) 
     i_rate['i_rate'] += 1e-4
     i_rate.set_index('Phase', inplace=True)
     phases_ES = ['2015_2020', '2020_2025', '2025_2030', '2030_2035', '2035_2040', '2040_2045', '2045_2050']
+    
+    # Include the energy demand given by GEMMES
     for j in range(len(phases_ES)):
         ampl.set_params('i_rate',{(phases_ES[j]):i_rate.iloc[j,0]})
     EUD_2021 = pd.read_csv('EUD_2021.csv')
@@ -188,20 +201,25 @@ def run_EnergyScope(variables_GEMMES):
         series_list.append(pd.Series(EUD_dict[j].values.flatten(), index=[index0, index1, index2]))   
     eud_series_full = pd.concat(series_list)
     eud_ampl = apy.DataFrame.from_pandas(eud_series_full)
-    ampl.set_params('end_uses_demand_year', eud_ampl)                  
-    # print(ampl.get_param('end_uses_demand_year'))
+    ampl.set_params('end_uses_demand_year', eud_ampl)
     
+    # Distinguish between imported and locally-produced content for each technology. Imported content is subject to exchange rate fluctuations.
     c_inv_ampl = ampl.get_param('c_inv').to_list()
     c_inv_ampl = pd.DataFrame(c_inv_ampl, columns=['Year', 'Technologies', 'Value'])
+    # Read for reach technology, what fraction of it is locally produced in terms of added value
     Technos_local_fraction = pd.read_csv('Technos_information.csv')
     Technos_local_fraction.drop(columns='Lifetime', inplace=True)
     c_inv_ampl = pd.merge(c_inv_ampl, Technos_local_fraction, on='Technologies', how='left')
     c_inv_ampl.fillna(0, inplace=True)
-    en0 = 3.74424417 # k COP / USD 2021
+    en0 = 3.74424417 # Exchange rate value at the start year of 2021, given in k COP / USD 2021
+    # Include the evolution of the exchange rate given by GEMMES
+    en = pd.read_csv('exchange_rate.csv')
+    en.set_index('Unnamed: 0', inplace=True)
     en_yearly = pd.DataFrame(index=year_list, columns=['en'])
     list_years = [2019,2021,2026,2031,2036,2041,2046,2051]
     for i in range(8):
-        en_yearly.iloc[i,0] = variables_GEMMES.loc[(variables_GEMMES.index>=list_years[i]) & (variables_GEMMES.index<list_years[i]+1), 'en'].mean()
+        en_yearly.iloc[i,0] = en.loc[(en.index>=list_years[i]) & (en.index<list_years[i]+1), 'en'].mean()
+    # Only the evolution of the exchange rate, not its initial value, influences the optimization problem in EnergyScope
     en_yearly = en_yearly / en_yearly.loc['YEAR_2020'] 
     en_yearly.reset_index(inplace=True)
     en_yearly.rename(columns={'index': 'Year'}, inplace=True)
@@ -257,8 +275,6 @@ def run_EnergyScope(variables_GEMMES):
 def plot_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     ampl_graph = AmplGraph(EnergyScope_output_file, ampl_0, case_study)
     
-    # a_website = "https://www.google.com"
-    # webbrowser.open_new(a_website)
     # ampl_graph.graph_cost()
     # ampl_graph.graph_gwp_per_sector()
     # ampl_graph.graph_cost_inv_phase_tech()
@@ -823,18 +839,22 @@ import cppimport
 import time
 import matplotlib.pyplot as plt
 
+## Add the relevant paths to be able to access all necessary python codes
 curr_dir = Path(os.path.dirname(__file__))
-
 pymodPath = os.path.abspath(os.path.join(curr_dir.parent,'pylib'))
+
+# Add path to GEMMES codes
 GEMMES_path = os.path.abspath(os.path.join(Path(__file__).parents[3], 'ColombiaEnergyScope'))
 Cpp_path = os.path.join(GEMMES_path, 'SourceCode/cppCode')
 sys.path.insert(0, pymodPath)
 sys.path.insert(0, Cpp_path)
-sys.path.insert(0, Cpp_path + "/src")
+sys.path.insert(0, Cpp_path + "/run")
 
+# Add path to EnergyScope codes
 ESMY_path = os.path.join(curr_dir.parent,'ESMY')
 EnergyScope_model_path = os.path.join(ESMY_path,'STEP_2_Pathway_Model')
 
+# Load packages to be able to manipulate AMPL objects in python
 from solve_GEMMES import solveGEMMES
 from ampl_object import AmplObject
 from ampl_preprocessor import AmplPreProcessor
@@ -856,8 +876,7 @@ else:
     mod_1_path = [os.path.join(EnergyScope_model_path,'PESTD_model.mod'),
             os.path.join(EnergyScope_model_path,'PESTD_store_variables.mod'),
             os.path.join(EnergyScope_model_path,'PES_store_variables.mod')]
-    mod_2_path = [os.path.join(EnergyScope_model_path,'PESTD_initialise_2020.mod'),
-              os.path.join(EnergyScope_model_path,'fix.mod')]
+    mod_2_path = [os.path.join(EnergyScope_model_path,'fix.mod')]
     dat_path = [os.path.join(EnergyScope_model_path,country+'/PESTD_data_all_years.dat'),
                 os.path.join(EnergyScope_model_path,country+'/PESTD_{}TD.dat'.format(nbr_tds))]
 
