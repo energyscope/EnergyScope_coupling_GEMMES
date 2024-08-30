@@ -99,7 +99,7 @@ set BOILERS	:=	IND_BOILER_GAS	IND_BOILER_WOOD	IND_BOILER_OIL	IND_BOILER_COAL	IND
 # -----------------------------																														
 																														
 ## PARAMETERS presented in Table 2.																														
-param i_rate :=     # part [2.7.4]
+param r_discount :=     # part [2.7.4]
 2015_2020 0.064																														
 2020_2025 0.064																														
 2025_2030 0.064																														

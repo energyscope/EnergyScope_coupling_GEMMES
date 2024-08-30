@@ -99,7 +99,7 @@ param c_p_t {TECHNOLOGIES, PERIODS} >= 0, <= 1 default 1; # capacity factor of e
 ## Parameters added to define scenarios and technologies [Table 2]
 param end_uses_demand_year {YEARS, END_USES_INPUT, SECTORS} >= 0 default 0; # end_uses_year [GWh]: table end-uses demand vs sectors (input to the model). Yearly values. [Mpkm] or [Mtkm] for passenger or freight mobility.
 param end_uses_input {y in YEARS, i in END_USES_INPUT} := sum {s in SECTORS} (end_uses_demand_year [y,i,s]); # end_uses_input (Figure 1.4) [GWh]: total demand for each type of end-uses across sectors (yearly energy) as input from the demand-side model. [Mpkm] or [Mtkm] for passenger or freight mobility.
-param i_rate {PHASE} > 0 default 0.015; # discount rate [-]: real discount rate
+param r_discount {PHASE} > 0 default 0.015; # discount rate [-]: real discount rate
 param re_share_primary {YEARS} >= 0 default 0; # re_share [-]: minimum share of primary energy coming from RE
 param gwp_limit {YEARS} >= 0 default 0;    # [ktCO2-eq./year] maximum gwp emissions allowed.
 param efuels_export_bound {YEARS} >= 0 default 0;    # [GWh/year]
@@ -132,8 +132,8 @@ param layers_in_out {YEARS,RESOURCES union TECHNOLOGIES diff STORAGE_TECH , LAYE
 param c_inv {YEARS,TECHNOLOGIES} >= 0 default 0; # Specific investment cost [Meuros/GW].[Meuros/GWh] for STORAGE_TECH
 param c_maint {YEARS,TECHNOLOGIES} >= 0 default 0; # O&M cost [MCHF/GW/year]: O&M cost does not include resource (fuel) cost. [MCHF/GWh/year] for STORAGE_TECH
 param lifetime {YEARS,TECHNOLOGIES} >= 0 default 0; # n: lifetime [years]
-param i_rate_mean := ( i_rate["2015_2020"] + i_rate["2020_2025"] + i_rate["2025_2030"] + i_rate["2030_2035"] + i_rate["2035_2040"] + i_rate["2040_2045"] + i_rate["2045_2050"] ) / 7;
-param tau {y in YEARS, i in TECHNOLOGIES} := i_rate_mean * (1 + i_rate_mean)^lifetime [y,i] / (((1 + i_rate_mean)^lifetime [y,i]) - 1); # Annualisation factor ([-]) for each different technology [Eq. 2]
+param r_discount_mean := ( r_discount["2015_2020"] + r_discount["2020_2025"] + r_discount["2025_2030"] + r_discount["2030_2035"] + r_discount["2035_2040"] + r_discount["2040_2045"] + r_discount["2045_2050"] ) / 7;
+param tau {y in YEARS, i in TECHNOLOGIES} := r_discount_mean * (1 + r_discount_mean)^lifetime [y,i] / (((1 + r_discount_mean)^lifetime [y,i]) - 1); # Annualisation factor ([-]) for each different technology [Eq. 2]
 param gwp_constr {YEARS, TECHNOLOGIES} >= 0 default 0; # GWP emissions associated to the construction of technologies [ktCO2-eq./GW]. Refers to [GW] of main output
 param gwp_op {YEARS, RESOURCES} >= 0 default 0; # GWP emissions associated to the use of resources [ktCO2-eq./GWh]. Includes extraction/production/transportation and combustion
 param c_p {YEARS, TECHNOLOGIES} >= 0, <= 1 default 1; # yearly capacity factor of each technology [-], defined on annual basis. Different than 1 if sum {t in PERIODS} F_t (t) <= c_p * F
@@ -160,7 +160,7 @@ param gwp_cost {YEARS} >=0 default 0; #Cost related to the gwp emissions
 param total_time := sum {t in PERIODS} (t_op [t]); # added just to simplify equations
 
 # NEW
-param annualised_factor {p in PHASE} := if p="2015_2020" then 1/((1 + i_rate[p])^2.5) else annualised_factor[member(PHASE_NUMBER[p]-1,PHASE)] * 1/((1 +i_rate[member(PHASE_NUMBER[p]-1,PHASE)])^2.5) * 1/((1 + i_rate[p])^2.5); # Annualisation factor for each different technology 	   
+param annualised_factor {p in PHASE} := if p="2015_2020" then 1/((1 + r_discount[p])^2.5) else annualised_factor[member(PHASE_NUMBER[p]-1,PHASE)] * 1/((1 +r_discount[member(PHASE_NUMBER[p]-1,PHASE)])^2.5) * 1/((1 + r_discount[p])^2.5); # Annualisation factor for each different technology 	   
 
 
 #################################

@@ -7,8 +7,8 @@ September 2024
 
 ## Define which model you want to run: GEMMES, EnergyScope or the coupling of the two
 # mode = 'GEMMES_only'
-mode = 'EnergyScope_only'
-# mode = 'GEMMES-EnergyScope'
+# mode = 'EnergyScope_only'
+mode = 'GEMMES-EnergyScope'
 
 ## Define the country studied and the time granularity of EnergyScope
 country = 'Colombia'            # Choose between Colombia and Turkey
@@ -129,7 +129,7 @@ def run_GEMMES():
         list_variables_GEMMES.append(variables_GEMMES.loc[(variables_GEMMES.index>=list_years[i]) & (variables_GEMMES.index<list_years[i+1])].mean())
     shares_LTH = pd.DataFrame(index=list_phases, columns=['F','B','G','H'])
     shares_cooling = pd.DataFrame(index=list_phases, columns=['B','G','H'])
-    i_rate = pd.DataFrame(index=list_phases, columns=['i_rate'])
+    r_discount = pd.DataFrame(index=list_phases, columns=['r_discount'])
     for i in range(7):
         shares_LTH.loc[list_phases[i],'F'] = round((list_variables_GEMMES[i].loc['HLTSH_F'] + list_variables_GEMMES[i].loc['HLTHW_F']) / list_variables_GEMMES[i].loc['LTH_tot'], 3)
         shares_LTH.loc[list_phases[i],'B'] = round(list_variables_GEMMES[i].loc['HLTSH_B'] / list_variables_GEMMES[i].loc['LTH_tot'], 3)
@@ -138,16 +138,16 @@ def run_GEMMES():
         shares_cooling.loc[list_phases[i],'B'] = round(list_variables_GEMMES[i].loc['SC_B'] / list_variables_GEMMES[i].loc['SC_tot'], 3)
         shares_cooling.loc[list_phases[i],'G'] = round(list_variables_GEMMES[i].loc['SC_G'] / list_variables_GEMMES[i].loc['SC_tot'], 3)
         shares_cooling.loc[list_phases[i],'H'] = round(list_variables_GEMMES[i].loc['SC_H'] / list_variables_GEMMES[i].loc['SC_tot'], 3)
-        i_rate.loc[list_phases[i],'i_rate'] = round(list_variables_GEMMES[i].loc['ip'], 3) #- list_variables_GEMMES[i].loc['pDot'] / list_variables_GEMMES[i].loc['p'], 3)   
+        r_discount.loc[list_phases[i],'r_discount'] = round(list_variables_GEMMES[i].loc['ip'], 3) #- list_variables_GEMMES[i].loc['pDot'] / list_variables_GEMMES[i].loc['p'], 3)   
     shares_LTH.reset_index(inplace=True)
     shares_LTH.rename(columns={'index':'Phase'}, inplace=True)
     shares_LTH.to_csv('shares_LTH.csv', index=False)
     shares_cooling.reset_index(inplace=True)
     shares_cooling.rename(columns={'index':'Phase'}, inplace=True)
     shares_cooling.to_csv('shares_cooling.csv', index=False)
-    i_rate.reset_index(inplace=True)
-    i_rate.rename(columns={'index':'Phase'}, inplace=True)
-    i_rate.to_csv('i_rate.csv', index=False)
+    r_discount.reset_index(inplace=True)
+    r_discount.rename(columns={'index':'Phase'}, inplace=True)
+    r_discount.to_csv('r_discount.csv', index=False)
     en = variables_GEMMES['en'].round(3)
     en.to_csv('exchange_rate.csv')
 
@@ -170,15 +170,15 @@ def run_EnergyScope():
     ## Read and integrate in EnergyScope the input data from GEMMES
     
     # Include the discount rate given by GEMMES
-    i_rate = pd.read_csv('i_rate.csv')
-    i_rate['i_rate'] = i_rate['i_rate'] * (i_rate['i_rate']>=0) 
-    i_rate['i_rate'] += 1e-4
-    i_rate.set_index('Phase', inplace=True)
+    r_discount = pd.read_csv('r_discount.csv')
+    r_discount['r_discount'] = r_discount['r_discount'] * (r_discount['r_discount']>=0) 
+    r_discount['r_discount'] += 1e-4
+    r_discount.set_index('Phase', inplace=True)
     phases_ES = ['2015_2020', '2020_2025', '2025_2030', '2030_2035', '2035_2040', '2040_2045', '2045_2050']
     
     # Include the energy demand given by GEMMES
     for j in range(len(phases_ES)):
-        ampl.set_params('i_rate',{(phases_ES[j]):i_rate.iloc[j,0]})
+        ampl.set_params('r_discount',{(phases_ES[j]):r_discount.iloc[j,0]})
     EUD_2021 = pd.read_csv('EUD_2021.csv')
     EUD_2026 = pd.read_csv('EUD_2026.csv')
     EUD_2031 = pd.read_csv('EUD_2031.csv')

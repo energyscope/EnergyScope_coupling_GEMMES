@@ -39,7 +39,7 @@ The conversion from €\ :sub:`2015` to USD\ :sub:`2021` is performed via Eq. :e
     c_{inv} [\text{USD}_{2021}] = \frac{\text{CEPCI}_{2021} \ [\text{USD}_{2021}]}{\text{CEPCI}_{2015} \ [\text{USD}_{2015}]} \cdot \frac{\text{USD}_{2015}}{\text{€}_{2015}} \cdot c_{inv} [\text{€}_{2015}]
     :label: eqn:currency_conv_1
 
-Where the historical exchange rate for 2015, :math:`\frac{\text{USD}_{2015}}{\text{€}_{2015}}`, is equal to 1.11 :cite:`BancoRepublica2024` and the CEPCI
+Where the historical exchange rate for 2015, :math:`\frac{\text{USD}_{2015}}{\text{€}_{2015}}`, is equal to 1.11 :cite:`ecb2015` and the CEPCI
 :cite:`chemical_engineering_chemical_2016` is an index
 taking into account the evolution of the equipment cost. The CEPCI values for recent years, extracted from :cite:`CEPCI`, are
 given in :numref:`Table %s <tbl:cepci>`.
