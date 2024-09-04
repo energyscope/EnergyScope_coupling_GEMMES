@@ -15,7 +15,7 @@ country = 'Colombia'            # Choose between Colombia and Turkey
 EnergyScope_granularity = 'MO'  # MO = Monthly resolution, TD = Typical Day (hourly resolution - takes much more time to run)
 nbr_tds = 12
 
-## Define which results you want to save and/or plot
+## Define which results to save and/or plot
 plot_EnergyScope = True  
 csv_EnergyScope  = True
 plot_GEMMES = True
@@ -31,7 +31,7 @@ def main():
         gdp_current = variables_GEMMES['gdp']
         diff = np.linalg.norm(gdp_current)
         n_iter = 1
-        while(diff > 0.01 and n_iter<2): ######## Delete the second condition
+        while(diff > 0.01 and n_iter<3):
             gdp_previous = gdp_current
             n_iter += 1
             output_EnergyScope = run_EnergyScope()
@@ -208,7 +208,7 @@ def run_EnergyScope():
     c_inv_ampl = pd.DataFrame(c_inv_ampl, columns=['Year', 'Technologies', 'Value'])
     # Read for reach technology, what fraction of it is locally produced in terms of added value
     Technos_local_fraction = pd.read_csv('Technos_information.csv')
-    Technos_local_fraction.drop(columns='Lifetime', inplace=True)
+    Technos_local_fraction.drop(columns=['Lifetime','Included_in_real_cost_2021'], inplace=True)
     c_inv_ampl = pd.merge(c_inv_ampl, Technos_local_fraction, on='Technologies', how='left')
     c_inv_ampl.fillna(0, inplace=True)
     en0 = 3.74424417 # Exchange rate value at the start year of 2021, given in k COP / USD 2021
@@ -304,7 +304,7 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     C_inv.drop(['DAM_STORAGE','BEV_BATT','EFFICIENCY'], level='Technologies', inplace=True)
     
     Technos_local_fraction = pd.read_csv('Technos_information.csv')
-    Technos_local_fraction.drop(columns='Lifetime', inplace=True)
+    Technos_local_fraction.drop(columns=['Lifetime','Included_in_real_cost_2021'], inplace=True)
     C_inv.reset_index(inplace=True)
     C_inv = pd.merge(C_inv, Technos_local_fraction, on='Technologies')
     C_inv.set_index(['Phases','Technologies'], inplace=True)
@@ -352,7 +352,7 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     C_maint.rename(columns = {'C_op_phase_tech_non_annualised':'Value'}, inplace = True)
     C_maint['Local'] = 1
     C_maint['Imported'] = 1 - C_maint['Local']
-    C_maint.drop(['NUCLEAR','DAM_STORAGE','BEV_BATT','EFFICIENCY','H2_INFRASTRUCTURE'], level='Technologies', inplace=True)
+    C_maint.drop(['NUCLEAR','DAM_STORAGE','BEV_BATT','EFFICIENCY'], level='Technologies', inplace=True)
     C_maint[['F','B','G','H']] = C_inv.iloc[~C_inv.index.get_level_values('Phases').isin(['2015_2020']),[4,5,6,7]].values        
     
     # C_op is annualised - we need to get a non-annualised version of it
@@ -400,28 +400,33 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     Cost_breakdown_non_annualised_bis['C_op_M'] = Cost_breakdown_non_annualised_bis['C_op'] * Cost_breakdown_non_annualised_bis['Imported']
     Cost_breakdown_non_annualised_bis = Cost_breakdown_non_annualised_bis.sum()
     Cost_breakdown_non_annualised_bis.drop(index=['C_inv','C_maint_CO','C_maint_M','C_op','Local','Imported'], inplace=True)
-    Technos_lifetime = pd.read_csv('Technos_information.csv')
-    Technos_lifetime.rename(columns={'Technologies':'Elements'}, inplace=True)
-    Cost_breakdown_non_annualised = pd.merge(Cost_breakdown_non_annualised, Technos_lifetime, on='Elements')
+    Technos_information = pd.read_csv('Technos_information.csv')
+    Technos_information.rename(columns={'Technologies':'Elements'}, inplace=True)
+    Cost_breakdown_non_annualised = pd.merge(Cost_breakdown_non_annualised, Technos_information, on='Elements')
     Cost_breakdown_non_annualised['C_inv_per_year'] = Cost_breakdown_non_annualised['C_inv'] / Cost_breakdown_non_annualised['Lifetime']
+    Cost_breakdown_non_annualised['C_inv_per_year_in_real_cost_2021'] = Cost_breakdown_non_annualised['C_inv_per_year'] * Cost_breakdown_non_annualised['Included_in_real_cost_2021']
     Cost_breakdown_non_annualised.set_index('Elements', inplace=True)
     Cost_breakdown_non_annualised = Cost_breakdown_non_annualised.sum()
-    Cost_breakdown_non_annualised.drop(index=['C_inv','C_op','Local','Lifetime'], inplace=True)
+    Cost_breakdown_2021_for_comparison_with_real_cost = Cost_breakdown_non_annualised.copy()
+    Cost_breakdown_non_annualised.drop(index=['C_inv','C_op','Local','Lifetime','Included_in_real_cost_2021','C_inv_per_year_in_real_cost_2021'], inplace=True)
+    Cost_breakdown_2021_for_comparison_with_real_cost.drop(index=['C_inv','C_op','Local','Lifetime','Included_in_real_cost_2021','C_inv_per_year'], inplace=True)
     Cost_breakdown_non_annualised = pd.concat([Cost_breakdown_non_annualised, Cost_breakdown_non_annualised_bis])
+    Cost_breakdown_2021_for_comparison_with_real_cost = pd.concat([Cost_breakdown_2021_for_comparison_with_real_cost, Cost_breakdown_non_annualised_bis])
     Cost_breakdown_non_annualised = Cost_breakdown_non_annualised.round(1)
     # Cost_breakdown_non_annualised.to_csv('Enegy_system_cost_2021.csv')  
 
     output_for_GEMMES.iloc[0,0:8] = Cost_breakdown_non_annualised['C_inv_per_year'] * output_for_GEMMES.iloc[0,0:8] / output_for_GEMMES.iloc[0,0:8].sum() * 5 # We multiply the yearly investment by the number of years in the phase
     output_for_GEMMES.loc['2015_2020',['opex_F_CO','opex_B_CO','opex_G_CO','opex_H_CO']] = Cost_breakdown_non_annualised[['C_maint_CO', 'C_op_CO']].sum() * output_for_GEMMES.loc['2020_2025',['opex_F_CO','opex_B_CO','opex_G_CO','opex_H_CO']] / output_for_GEMMES.loc['2020_2025',['opex_F_CO','opex_B_CO','opex_G_CO','opex_H_CO']].sum() * 5
     output_for_GEMMES.loc['2015_2020',['opex_F_M','opex_B_M','opex_G_M','opex_H_M']] = Cost_breakdown_non_annualised[['C_maint_M', 'C_op_M']].sum() * output_for_GEMMES.loc['2020_2025',['opex_F_M','opex_B_M','opex_G_M','opex_H_M']] / output_for_GEMMES.loc['2020_2025',['opex_F_M','opex_B_M','opex_G_M','opex_H_M']].sum() * 5
+    Cost_breakdown_2021_for_comparison_with_real_cost = Cost_breakdown_2021_for_comparison_with_real_cost.sum() * 5 # Transform the yearly cost into a cost per phase
     
     variables_GEMMES_2021 = variables_GEMMES.loc[(variables_GEMMES.index>=2021) & (variables_GEMMES.index<2022)].mean()
     
     Real_energy_system_cost_2021 = 33.323773083 # billion 2021 COP, according to DNP
-    corrective_factor = Real_energy_system_cost_2021 / ( variables_GEMMES_2021['p'] * output_for_GEMMES.loc['2015_2020'].sum() ) # The corrective factor also allows to transform the phase costs into yearly costs (division by 5 included in the factor)
+    corrective_factor = Real_energy_system_cost_2021 / ( variables_GEMMES_2021['p'] * Cost_breakdown_2021_for_comparison_with_real_cost ) # The corrective factor also allows to transform the phase costs into yearly costs (division by 5 included in the factor)
     
     
-    ### Add to C_op the money paid by B,G,H to F for buying the fuels and electricity
+    ## Add to C_op the money paid by B,G,H to F for buying the fuels and electricity
     
     year_balance = z_Results['Year_balance'].copy()
     
@@ -583,6 +588,7 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     # Go from yearly costs to phase costs
     year_balance_carbon_tax_shift = year_balance_carbon_tax.copy()
     year_balance_carbon_tax_shift = year_balance_carbon_tax_shift.shift(1)
+    year_balance_carbon_tax_shift.iloc[0,:] = year_balance_carbon_tax.iloc[0,:].values
     year_balance_carbon_tax = (year_balance_carbon_tax + year_balance_carbon_tax_shift) / 2   
     year_balance_carbon_tax = year_balance_carbon_tax.iloc[1:]
     
@@ -636,7 +642,7 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     output_for_GEMMES['ceh'] = output_for_GEMMES['opex_H_CO'] + output_for_GEMMES['opex_H_M']
     output_for_GEMMES['sigmamceh'] = output_for_GEMMES['opex_H_M'] / output_for_GEMMES['ceh']
     output_for_GEMMES['pieM'] = 1 / variables_GEMMES_2021['en']
-    output_for_GEMMES['xrec'] = output_for_GEMMES['exports_CO'] / variables_GEMMES_2021['en']
+    output_for_GEMMES['xef'] = output_for_GEMMES['exports_CO'] / variables_GEMMES_2021['en']
     output_for_GEMMES['CTf'] = 0
     output_for_GEMMES['CTb'] = 0
     output_for_GEMMES['CTg'] = 0
@@ -655,7 +661,7 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     output_for_GEMMES = output_for_GEMMES.round(3)
     aggregated_costs = output_for_GEMMES.copy()
     aggregated_costs = aggregated_costs[['capex_F_CO', 'capex_F_M', 'capex_B_CO', 'capex_B_M', 'capex_G_CO', 'capex_G_M', 'capex_H_CO', 'capex_H_M', 'opex_F_CO', 'opex_F_M', 'opex_B_CO','opex_B_M', 'opex_G_CO', 'opex_G_M', 'opex_H_CO', 'opex_H_M', 'exports_CO', 'CTf', 'CTb', 'CTg', 'CTh']]
-    aggregated_costs.to_csv('Energy_system_costs_aggregated.csv')
+    aggregated_costs.to_csv('Energy_system_costs_aggregated.csv') # This file is not used in the coupling with GEMMES. However, it provides easier to read information to analyse the costs of the energy system.
     output_for_GEMMES.drop(columns=['capex_F_CO', 'capex_F_M', 'ikefCO', 'ikefM'], inplace=True)
     output_for_GEMMES.drop(columns=['capex_B_CO', 'capex_B_M', 'ikebCO', 'ikebM'], inplace=True)
     output_for_GEMMES.drop(columns=['capex_G_CO', 'capex_G_M', 'ikegCO', 'ikegM'], inplace=True)
@@ -811,7 +817,7 @@ def plot_GEMMES_outputs(variables_GEMMES):
     plt.figure()
     # plt.plot(variables_GEMMES['time'], variables_GEMMES['X'], label='Exports')
     plt.plot(variables_GEMMES['time'], variables_GEMMES['xrO']*variables_GEMMES['pO']*variables_GEMMES['en'], label='Fossil fuels exports')
-    plt.plot(variables_GEMMES['time'], variables_GEMMES['xrec']*variables_GEMMES['prec']*variables_GEMMES['en'], label='Renewable energy carriers exports')
+    plt.plot(variables_GEMMES['time'], variables_GEMMES['xef']*variables_GEMMES['pef']*variables_GEMMES['en'], label='Renewable energy carriers exports')
     plt.legend(loc='upper left', fancybox=True, shadow=True)
     plt.grid(True, color="#93a1a1", alpha=0.3)
     plt.figure()
