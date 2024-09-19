@@ -1003,6 +1003,10 @@ Networks
 .. math::
     \textbf{F} (H_{2,infrastructure}) = \textbf{F} (H_{2,electrolysis})
     :label: eq:h2_network
+    
+.. math::
+    \textbf{F} (ChargingStations) = \textbf{F} (CAR_{BEV})
+    :label: eq:charging_stations
 
 Eq. :eq:`eq:loss` calculates network losses as a share
 (:math:`\%_{\text{net}_{loss}}`) of the total energy transferred through the network. As
@@ -1018,7 +1022,8 @@ intermittent renewable capacity installed (see
 Eq. :eq:`eq:DHNCost` links the size of DHN to the total
 size of the installed centralized energy conversion technologies.
 Finally, Eq. :eq:`eq:h2_network` links the size of the hydrogen
-network to the installed capacity for hydrogen production.
+network to the installed capacity for hydrogen production and :eq:`eq:charging_stations`
+does the same for the infrastructure of charging stations and electrical vehicles.
 
 Additional Constraints
 ^^^^^^^^^^^^^^^^^^^^^^

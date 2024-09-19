@@ -31,11 +31,11 @@ def main():
         gdp_current = variables_GEMMES['gdp']
         diff = np.linalg.norm(gdp_current)
         n_iter = 1
-        while(diff > 0.01 and n_iter<3):
+        while(diff > 0.01 and n_iter<2): ###############"
             gdp_previous = gdp_current
             n_iter += 1
             output_EnergyScope = run_EnergyScope()
-            compute_energy_system_costs(output_EnergyScope[0], output_EnergyScope[1], variables_GEMMES)
+            post_process_outputs_EnergyScope(output_EnergyScope[0], output_EnergyScope[1], variables_GEMMES)
             variables_GEMMES = run_GEMMES()
             gdp_current = variables_GEMMES['gdp']
             diff = ((gdp_current-gdp_previous).abs()/gdp_previous).max()
@@ -290,7 +290,7 @@ def plot_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     # ampl_graph.graph_new_old_decom()
     ampl_graph.graph_resource()
 
-def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMMES):
+def post_process_outputs_EnergyScope(EnergyScope_output_file, ampl_0, variables_GEMMES):
     ampl_graph = AmplGraph(EnergyScope_output_file, ampl_0, case_study)
     z_Results = ampl_graph.ampl_collector
     
@@ -303,6 +303,7 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     C_inv['Capa'] = New_old_decom['F_new']
     C_inv.drop(['DAM_STORAGE','BEV_BATT','EFFICIENCY'], level='Technologies', inplace=True)
     
+    ## For each technology, divide its investment costs between local and imported
     Technos_local_fraction = pd.read_csv('Technos_information.csv')
     Technos_local_fraction.drop(columns=['Lifetime','Included_in_real_cost_2021'], inplace=True)
     C_inv.reset_index(inplace=True)
@@ -312,21 +313,26 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     C_inv['Imported'] = 1 - C_inv['Local']
     C_inv[['F','B','G','H']] = [1,0,0,0]
     
-    # C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(['DHN','GRID','HVAC_LINE','H2_INFRASTRUCTURE']),[3,5]] = [0,1] # These costs supported by the PRIVATE SECTOR, actually (not by the state - grid costs for households are quite volatile, according to DNP)
-    
+    ## For each technology, assign its investment costs across GEMMES' economic sectors
+    # Infrastructure
+    C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(['GRID','H2_INFRASTRUCTURE']),[4,6]] = [0.8,0.2] # Infrastructure costs are splitted between the private and public sectors
+    C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(['DHN']),[4,6]] = [0.7,0.3]
+    C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(['HVAC_LINE']),[4,6]] = [0.65,0.35]
+    C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(['CHARGING_STATION']),[4,6,7]] = [0,0.5,0.5]
+    # private mobility
     list_private_mob_tech = ['MOTORCYCLE','CAR_GASOLINE','CAR_GASOLINE_BIS','CAR_DIESEL','CAR_NG','CAR_METHANOL','CAR_HEV','CAR_PHEV','MOTORCYCLE_ELECTRIC','CAR_BEV','CAR_FUEL_CELL']
     C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(list_private_mob_tech),[4,7]] = [0,1] # Private mobility costs are supported by households
-    
+    # public mobility
     list_public_mob_tech = ['TRAMWAY_TROLLEY','BUS_COACH_DIESEL','BUS_COACH_DIESEL_BIS','BUS_COACH_GASOLINE','BUS_COACH_HYDIESEL','BUS_COACH_CNG_STOICH','BUS_COACH_FC_HYBRIDH2','TRAIN_PUB']
-    C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(list_public_mob_tech),[4,6]] = [0,1] # Public mobility costs are supported by the State
-    
+    C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(list_public_mob_tech),[4,6]] = [0,1] # Public mobility costs are supported by the State 
+    # cooling
     shares_cooling = pd.read_csv('shares_cooling.csv')
     shares_cooling.set_index('Phase',inplace=True)
     list_cooling_tech = ['DEC_ELEC_COLD','DEC_THHP_GAS_COLD']
     C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(list_cooling_tech),4] = 0
     C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(['DEC_ELEC_COLD']),[5,6,7]] = shares_cooling.values
-    C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(['DEC_THHP_GAS_COLD']),[5,6,7]] = shares_cooling.values
-    
+    C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(['DEC_THHP_GAS_COLD']),[5,6,7]] = shares_cooling.values 
+    # Low-temperature heating
     C_inv['merge_index'] = C_inv.index.get_level_values('Phases')
     shares_LTH = pd.read_csv('shares_LTH.csv')
     shares_LTH.set_index('Phase',inplace=True)
@@ -337,7 +343,7 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     C_inv.iloc[C_inv.index.get_level_values('Technologies').isin(list_LTH_tech),[4,5,6,7]] = C_inv_bis.iloc[C_inv_bis.index.get_level_values('Technologies').isin(list_LTH_tech),[9,10,11,12]].values
     C_inv.drop(columns=['merge_index'],inplace=True)
     
-    # Transform C_inv into capital investments, prices and import propensities for each economic sector in GEMMES
+    ## Summarise in one data frame the division of investment costs between local and imported and between the different economic sectors
     output_for_GEMMES = pd.DataFrame(index=C_inv.index.get_level_values(0).unique())
     output_for_GEMMES['capex_F_CO'] = (C_inv['Value'] * C_inv['Local']    * C_inv['F']).groupby(level=[0]).sum()
     output_for_GEMMES['capex_F_M']  = (C_inv['Value'] * C_inv['Imported'] * C_inv['F']).groupby(level=[0]).sum()
@@ -348,14 +354,16 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     output_for_GEMMES['capex_H_CO'] = (C_inv['Value'] * C_inv['Local']    * C_inv['H']).groupby(level=[0]).sum()
     output_for_GEMMES['capex_H_M']  = (C_inv['Value'] * C_inv['Imported'] * C_inv['H']).groupby(level=[0]).sum()    
     
+    ## For each technology, divide its maintenance costs between local and imported and between the different economic sectors
     C_maint = z_Results['C_op_phase_tech_non_annualised']
     C_maint.rename(columns = {'C_op_phase_tech_non_annualised':'Value'}, inplace = True)
-    C_maint['Local'] = 1
+    C_maint['Local'] = 1 # All maintenance costs are supposed to be local since they consist mainly of labour costs 
     C_maint['Imported'] = 1 - C_maint['Local']
     C_maint.drop(['NUCLEAR','DAM_STORAGE','BEV_BATT','EFFICIENCY'], level='Technologies', inplace=True)
     C_maint[['F','B','G','H']] = C_inv.iloc[~C_inv.index.get_level_values('Phases').isin(['2015_2020']),[4,5,6,7]].values        
     
-    # C_op is annualised - we need to get a non-annualised version of it
+    ## Classify resources between local, imported and exported
+    # C_op computed by EnergyScope is annualised, unlike C_inv. We need to get a non-annualised version of it
     annualised_factor = pd.DataFrame(index=z_Results['C_inv_phase'].index, data=z_Results['C_inv_phase'].values / z_Results['C_inv_phase_non_annualised'].values )
     annualised_factor['merge_index'] = annualised_factor.index
     C_op = z_Results['C_op_phase_res'].copy()
@@ -375,6 +383,7 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     C_op['Imported'] = 1 - C_op['Local'] -  C_op['Exported']
     C_op[['F','B','G','H']] = [1,0,0,0]
     
+    ## Summarise in one data frame the division between local, imported and exported resources. All resource costs are assigned to the private sector.
     output_for_GEMMES['opex_F_CO'] = (C_maint['Value'] * C_maint['Local'] * C_maint['F']).groupby(level=[0]).sum() + (C_op['Value'] * C_op['Local'] * C_op['F']).groupby(level=[0]).sum()
     output_for_GEMMES['opex_F_M']  = (C_maint['Value'] * C_maint['Imported'] * C_maint['F']).groupby(level=[0]).sum() + (C_op['Value'] * C_op['Imported'] * C_op['F']).groupby(level=[0]).sum()
     output_for_GEMMES['opex_B_CO'] = (C_maint['Value'] * C_maint['Local'] * C_maint['B']).groupby(level=[0]).sum() + (C_op['Value'] * C_op['Local'] * C_op['B']).groupby(level=[0]).sum()
@@ -386,7 +395,7 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     output_for_GEMMES['exports_CO'] = (C_op['Value'] * C_op['Exported']).groupby(level=[0]).sum()
     output_for_GEMMES.loc['2015_2020','exports_CO'] = 0
 
-    # Reconstruct the costs for the first phase based on YEAR_2020 data
+    ## Reconstruct the costs for the first phase based on YEAR_2020 data
     Cost_breakdown_non_annualised = z_Results['Cost_breakdown_non_annualised']
     Cost_breakdown_non_annualised = Cost_breakdown_non_annualised[Cost_breakdown_non_annualised.index.get_level_values('Years').isin(['YEAR_2020'])]
     Cost_breakdown_non_annualised.rename(columns={'C_maint':'C_maint_CO'}, inplace=True)
@@ -414,46 +423,46 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     Cost_breakdown_2021_for_comparison_with_real_cost = pd.concat([Cost_breakdown_2021_for_comparison_with_real_cost, Cost_breakdown_non_annualised_bis])
     Cost_breakdown_non_annualised = Cost_breakdown_non_annualised.round(1)
     # Cost_breakdown_non_annualised.to_csv('Enegy_system_cost_2021.csv')  
-
     output_for_GEMMES.iloc[0,0:8] = Cost_breakdown_non_annualised['C_inv_per_year'] * output_for_GEMMES.iloc[0,0:8] / output_for_GEMMES.iloc[0,0:8].sum() * 5 # We multiply the yearly investment by the number of years in the phase
     output_for_GEMMES.loc['2015_2020',['opex_F_CO','opex_B_CO','opex_G_CO','opex_H_CO']] = Cost_breakdown_non_annualised[['C_maint_CO', 'C_op_CO']].sum() * output_for_GEMMES.loc['2020_2025',['opex_F_CO','opex_B_CO','opex_G_CO','opex_H_CO']] / output_for_GEMMES.loc['2020_2025',['opex_F_CO','opex_B_CO','opex_G_CO','opex_H_CO']].sum() * 5
     output_for_GEMMES.loc['2015_2020',['opex_F_M','opex_B_M','opex_G_M','opex_H_M']] = Cost_breakdown_non_annualised[['C_maint_M', 'C_op_M']].sum() * output_for_GEMMES.loc['2020_2025',['opex_F_M','opex_B_M','opex_G_M','opex_H_M']] / output_for_GEMMES.loc['2020_2025',['opex_F_M','opex_B_M','opex_G_M','opex_H_M']].sum() * 5
     Cost_breakdown_2021_for_comparison_with_real_cost = Cost_breakdown_2021_for_comparison_with_real_cost.sum() * 5 # Transform the yearly cost into a cost per phase
     
+    ## Compute a corrective factor to fit the costs from EnergyScope to the real cost of the energy system given by DNP
     variables_GEMMES_2021 = variables_GEMMES.loc[(variables_GEMMES.index>=2021) & (variables_GEMMES.index<2022)].mean()
-    
     Real_energy_system_cost_2021 = 33.323773083 # billion 2021 COP, according to DNP
     corrective_factor = Real_energy_system_cost_2021 / ( variables_GEMMES_2021['p'] * Cost_breakdown_2021_for_comparison_with_real_cost ) # The corrective factor also allows to transform the phase costs into yearly costs (division by 5 included in the factor)
     
     
-    ## Add to C_op the money paid by B,G,H to F for buying the fuels and electricity
-    
+    ## Add to the resource costs of households, government and banks the bills that they pay for buying fuels and electricity to private firms
+    # year_balance indicates the resources consumed or produced by each technology for each year
     year_balance = z_Results['Year_balance'].copy()
-    
+    # Add to year_balance the ownership of technologies by the different economic sectors
     year_balance[['F','B','G','H']] = [1,0,0,0]
     year_balance.loc[year_balance.index.get_level_values('Elements').isin(list_private_mob_tech),['F','H']] = [0,1]
     year_balance.loc[year_balance.index.get_level_values('Elements').isin(list_public_mob_tech),['F','G']] = [0,1]
     year_balance.loc[year_balance.index.get_level_values('Elements').isin(list_cooling_tech),['F']] = 0
+    # Define the ownership of cooling technologies
     if('DEC_ELEC_COLD' in year_balance.index.get_level_values('Elements')):
         year_balance.loc[year_balance.index.get_level_values('Elements').isin(['DEC_ELEC_COLD']),['B','G','H']] = shares_cooling.values
     if('DEC_THHP_GAS_COLD' in year_balance.index.get_level_values('Elements')):
         year_balance.loc[year_balance.index.get_level_values('Elements').isin(['DEC_THHP_GAS_COLD']),['B','G','H']] = shares_cooling.iloc[1:,:].values
-    
+    # Define the ownership of heating technologies
     year_balance['merge_index_2'] = year_balance.index.get_level_values('Years')
     shares_LTH['merge_index_2'] = year_balance['merge_index_2'].unique()
     year_balance_bis = pd.merge(year_balance, shares_LTH, on='merge_index_2')
     year_balance_bis.index = year_balance.index
     year_balance.loc[year_balance.index.get_level_values('Elements').isin(list_LTH_tech),['F','B','G','H']] = year_balance_bis.loc[year_balance_bis.index.get_level_values('Elements').isin(list_LTH_tech),['F_y','B_y','G_y','H_y']].values
     year_balance_carbon_tax = year_balance.copy()
-    
+    # Restrict year_balance to the resources actually bought by households, government and banks
     year_balance = year_balance[year_balance['F']<0.999]
     year_balance = year_balance.loc[:, year_balance.columns.isin(['ELECTRICITY','LOCAL_GAS','WASTE','WET_BIOMASS','WOOD','DIESEL','GASOLINE','H2','METHANOL','B','G','H'])]
     year_balance.loc[year_balance['ELECTRICITY']>0,'ELECTRICITY'] = np.nan
     year_balance = year_balance.abs()
-    year_balance.drop(columns=['H2','METHANOL'], inplace=True) #### Negligible amount
+    # Neglect hydrogen and methanol since their buying by households, government and banks represents negligible amounts of money
+    year_balance.drop(columns=['H2','METHANOL'], inplace=True) 
     
-    # Reconstruct prices of resources
-    
+    # Reconstruct the prices of resources
     year_balance_tot = z_Results['Year_balance'].copy()
     list_resources = ['LOCAL_GAS','IMPORTED_GAS','WASTE','WET_BIOMASS','WOOD','DIESEL','GASOLINE']
     list_resources_with_elec = list_resources + ['ELECTRICITY']
@@ -461,21 +470,20 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     year_balance_tot = year_balance_tot.loc[:, year_balance_tot.columns.isin(list_resources_with_elec)]
     year_balance_tot = year_balance_tot.iloc[year_balance_tot.index.get_level_values('Elements').isin(list_resources)]
     year_balance_tot = year_balance_tot.groupby(level=[0]).sum()
-    
     Cost_breakdown = z_Results['Cost_breakdown'].copy()
     Cost_breakdown_res = Cost_breakdown.iloc[Cost_breakdown.index.get_level_values('Elements').isin(list_resources_with_elec)]
     Cost_breakdown_res = pd.pivot_table(Cost_breakdown_res, values='C_op', index=['Years'], columns=['Elements'])
     Cost_breakdown_res['LOCAL_GAS'] = Cost_breakdown_res['LOCAL_GAS'] + Cost_breakdown_res['IMPORTED_GAS']
     Cost_breakdown_res.drop(columns=['IMPORTED_GAS'], inplace=True)
-    
     prices_resources = Cost_breakdown_res.div(year_balance_tot)
     
-    # Construct a price for locally produced electricity
+    # Construct a price for locally produced electricity based on the electricity mix
     technos_res_elec = ['CCGT','IMPORTED_COAL_CENTRAL','LOCAL_COAL_CENTRAL','PV','WIND_ONSHORE','WIND_OFFSHORE','HYDRO_DAM','HYDRO_RIVER','GEOTHERMAL','GRID','HVAC_LINE','IMPORTED_GAS','LOCAL_GAS','IMPORTED_COAL','LOCAL_COAL']
     Cost_elec_approx = Cost_breakdown.iloc[Cost_breakdown.index.get_level_values('Elements').isin(technos_res_elec)]
     year_balance_elec = z_Results['Year_balance'].copy()
     year_balance_elec = year_balance_elec[['IMPORTED_COAL','LOCAL_COAL','LOCAL_GAS','ELECTRICITY']]
     Cost_elec_approx['perc_for_elec'] = np.nan
+    # perc_for_elec represents, for each resource, the fraction that is devoted to electricity production
     if('IMPORTED_COAL_CENTRAL' in year_balance_elec.index.get_level_values('Elements').to_list()):
         Cost_elec_approx.loc[Cost_elec_approx.index.get_level_values('Elements').isin(['IMPORTED_COAL']),'perc_for_elec'] = year_balance_elec.loc[year_balance_elec.index.get_level_values('Elements').isin(['IMPORTED_COAL_CENTRAL']),'IMPORTED_COAL'].values / year_balance_elec.loc[year_balance_elec.index.get_level_values('Elements').isin(['IMPORTED_COAL']),'IMPORTED_COAL'].values
     if('LOCAL_COAL_CENTRAL' in year_balance_elec.index.get_level_values('Elements').to_list()):
@@ -497,7 +505,6 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     temp_imported_gas.drop(columns=['perc_for_elec'], inplace=True)
     Cost_elec_approx.loc[Cost_elec_approx.index.get_level_values('Elements').isin(['LOCAL_GAS']),'perc_for_elec']    = temp_local_gas.values
     Cost_elec_approx.loc[Cost_elec_approx.index.get_level_values('Elements').isin(['IMPORTED_GAS']),'perc_for_elec'] = temp_imported_gas.values
-    
     Cost_elec_approx.loc[:,'C_op'] = Cost_elec_approx['C_op'] * Cost_elec_approx['perc_for_elec']
     Cost_elec_approx.loc[:,'C_op'] = Cost_elec_approx.loc[:,'C_op'].abs()
     Cost_elec_approx.drop(columns=['perc_for_elec'],inplace=True)
@@ -507,10 +514,9 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     year_balance_elec = year_balance_elec.groupby(level=[0]).sum()
     prices_resources['ELECTRICITY'] = Cost_elec_approx.values / year_balance_elec['ELECTRICITY']
       
-    # Compute the cost of each resource use for each techno    
+    # Multiply the quantities of resources used by the resources' prices to obtain the cost of fuels and electricity bought by households, government and banks
     year_balance = pd.merge(year_balance, prices_resources, on='Years')
     year_balance.iloc[:,0:n_resources-1] = year_balance.iloc[:,0:n_resources-1].values * year_balance.iloc[:,n_resources+2:].values
-    
     year_balance = year_balance.iloc[:,0:n_resources+2]
     year_balance['total_cost'] = year_balance.iloc[:,0:n_resources-1].sum(axis=1)
     year_balance = year_balance.iloc[:,n_resources-1:n_resources+3]
@@ -520,16 +526,17 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     year_balance = year_balance.groupby(level=[0]).sum()
     year_balance = year_balance.iloc[:,4:] 
     year_balance['C_op_tot'] = Cost_breakdown.groupby(level=[0]).sum()['C_op']
+    # Go from yearly costs to phase costs
     year_balance_shift = year_balance.copy()
     year_balance_shift = year_balance_shift.shift(1)
-    # Go from yearly costs to phase costs
     year_balance_2021 = year_balance.iloc[0]
     year_balance = (year_balance + year_balance_shift) / 2 
     year_balance.loc['YEAR_2020'] = year_balance_2021
+    # We compute the fraction of the total cost of resources which corresponds to fuels and electricity bought by households, government and banks
     year_balance['B % C_op'] = year_balance['cost_B'] / year_balance['C_op_tot']
     year_balance['G % C_op'] = year_balance['cost_G'] / year_balance['C_op_tot']
     year_balance['H % C_op'] = year_balance['cost_H'] / year_balance['C_op_tot']
-    
+    # This total cost's fraction is multiplied by the total cost excluding exports
     C_op_minus_exports = C_op.copy()
     C_op_minus_exports['Value'] = C_op_minus_exports['Value'] * (1 - C_op_minus_exports['Exported'])
     C_op_to_add = C_op_minus_exports['Value'].groupby(level=[0]).sum().to_frame()
@@ -540,26 +547,22 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     C_op_to_add['G'] = year_balance['G % C_op'].values * C_op_to_add['Value'].values
     C_op_to_add['H'] = year_balance['H % C_op'].values * C_op_to_add['Value'].values
     
-    # Add to C_op the money paid by B,G,H to F for buying the fuels and electricity
+    # The bills that households, government and banks pay for buying fuels and electricity to private firms are finally added to the reference dataframe
     output_for_GEMMES['opex_B_CO'] += C_op_to_add['B']
     output_for_GEMMES['opex_G_CO'] += C_op_to_add['G']
     output_for_GEMMES['opex_H_CO'] += C_op_to_add['H']
     
     
-    ### Compute the carbon tax on the different sectors
-    
+    ## Compute the carbon tax on the different sectors
     list_emissive_resources = ['LOCAL_COAL','LOCAL_GAS','IMPORTED_GAS','WASTE','WET_BIOMASS','WOOD','DIESEL','GASOLINE','LFO']
     n_emissive_resources = len(list_emissive_resources)
     year_balance_carbon_tax = year_balance_carbon_tax.loc[:, year_balance_carbon_tax.columns.isin(list_emissive_resources+['F','B','G','H'])] # We neglect the carbon tax on electricity imports
-    
     year_balance_biofuels = year_balance_carbon_tax.copy()
     year_balance_biofuels = year_balance_biofuels.iloc[year_balance_biofuels.index.get_level_values('Elements').isin(['BIODIESEL','BIOETHANOL'])]
     year_balance_biofuels = year_balance_biofuels.loc[:, year_balance_biofuels.columns.isin(['DIESEL','GASOLINE'])] 
     year_balance_biofuels = year_balance_biofuels.groupby(level=[0]).sum()
-
     year_balance_carbon_tax.drop(list_emissive_resources+['BIODIESEL','BIOETHANOL'],level='Elements',inplace=True)
     year_balance_carbon_tax[['gwp_op_DIESEL', 'gwp_op_GASOLINE', 'gwp_op_LFO', 'gwp_op_COAL', 'gwp_op_GAS', 'gwp_op_WASTE', 'gwp_op_WET_BIOMASS', 'gwp_op_WOOD']] = [0.3148, 0.3448, 0.3115, 0.4014, 0.2666, 0.1501, 0.0118, 0.0118]
-    
     year_balance_carbon_tax_sum = year_balance_carbon_tax.groupby(level=[0]).sum()
     year_balance_carbon_tax_sum = year_balance_carbon_tax_sum.loc[:, year_balance_carbon_tax_sum.columns.isin(['DIESEL','GASOLINE'])] 
     year_balance_biofuels = 1 - year_balance_biofuels / year_balance_carbon_tax_sum.abs()
@@ -593,9 +596,10 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     year_balance_carbon_tax = year_balance_carbon_tax.iloc[1:]
     
     
-    # Apply a corrective factor so that the total energy system cost fits the actual cost given by DNP
+    ## Apply the corrective factor so that the total energy system cost from EnergyScope fits the real cost of the energy system given by DNP
     output_for_GEMMES *= corrective_factor
     year_balance_carbon_tax *= corrective_factor
+    # Re-write all costs according to a subdivision appropriate for GEMMES' equations
     output_for_GEMMES['ikefCO'] = (C_inv['Capa'] * C_inv['Local']    * C_inv['F']).groupby(level=[0]).sum()
     output_for_GEMMES['ikefM']  = (C_inv['Capa'] * C_inv['Imported'] * C_inv['F']).groupby(level=[0]).sum()
     output_for_GEMMES['ikebCO'] = (C_inv['Capa'] * C_inv['Local']    * C_inv['B']).groupby(level=[0]).sum()
@@ -648,20 +652,23 @@ def compute_energy_system_costs(EnergyScope_output_file, ampl_0, variables_GEMME
     output_for_GEMMES['CTg'] = 0
     output_for_GEMMES['CTh'] = 0
     n = len(output_for_GEMMES.columns)
-    output_for_GEMMES.iloc[1:,n-4:n] += year_balance_carbon_tax.values   
+    output_for_GEMMES.iloc[1:,n-4:n] += year_balance_carbon_tax.values  
+    
+    ## Specifiy the values of other exogenous variables for GEMMES, not directly related to EnergyScope
     output_for_GEMMES['reducXrO'] = 0.085
     output_for_GEMMES.loc['2015_2020','reducXrO'] = 0.025
     output_for_GEMMES.loc[['2030_2035','2035_2040','2040_2045','2045_2050'],'reducXrO'] = 0.055
+    # Play with iwst, v1 and iota0 to create a shock in interest rates
     output_for_GEMMES['iwst'] = 0.023175727
-    # output_for_GEMMES.loc[['2025_2030','2030_2035','2035_2040','2040_2045','2045_2050'],'iwst'] += 0.01
+    # output_for_GEMMES.loc[['2025_2030','2030_2035','2035_2040','2040_2045','2045_2050'],'iwst'] += 0.01 # shock on foreign interest rate
     output_for_GEMMES['v1'] = 0.008543549
-    # output_for_GEMMES.loc[['2025_2030','2030_2035','2035_2040','2040_2045','2045_2050'],'v1'] *= 1.2
+    # output_for_GEMMES.loc[['2025_2030','2030_2035','2035_2040','2040_2045','2045_2050'],'v1'] *= 1.2 # reaction of international markets in terms of risk perception of Colombia's government bonds 
     output_for_GEMMES['iota0'] = 0.04852755
-    # output_for_GEMMES.loc[['2025_2030','2030_2035','2035_2040','2040_2045','2045_2050'],'iota0'] += 0.01
+    # output_for_GEMMES.loc[['2025_2030','2030_2035','2035_2040','2040_2045','2045_2050'],'iota0'] += 0.01 # shock on domestic interest rate
     output_for_GEMMES = output_for_GEMMES.round(3)
     aggregated_costs = output_for_GEMMES.copy()
     aggregated_costs = aggregated_costs[['capex_F_CO', 'capex_F_M', 'capex_B_CO', 'capex_B_M', 'capex_G_CO', 'capex_G_M', 'capex_H_CO', 'capex_H_M', 'opex_F_CO', 'opex_F_M', 'opex_B_CO','opex_B_M', 'opex_G_CO', 'opex_G_M', 'opex_H_CO', 'opex_H_M', 'exports_CO', 'CTf', 'CTb', 'CTg', 'CTh']]
-    aggregated_costs.to_csv('Energy_system_costs_aggregated.csv') # This file is not used in the coupling with GEMMES. However, it provides easier to read information to analyse the costs of the energy system.
+    # aggregated_costs.to_csv('Energy_system_costs_aggregated.csv') # This file is not used in the coupling with GEMMES. However, it provides easier to read information to analyse the costs of the energy system.
     output_for_GEMMES.drop(columns=['capex_F_CO', 'capex_F_M', 'ikefCO', 'ikefM'], inplace=True)
     output_for_GEMMES.drop(columns=['capex_B_CO', 'capex_B_M', 'ikebCO', 'ikebM'], inplace=True)
     output_for_GEMMES.drop(columns=['capex_G_CO', 'capex_G_M', 'ikegCO', 'ikegM'], inplace=True)
@@ -914,7 +921,7 @@ EnergyScope_case_study_path = os.path.join(EnergyScope_output_path,case_study)
 ## Options for ampl and gurobi (optimization within EnergyScope)
 gurobi_options = ['predual=-1',
                 'method = 2', # 2 is for barrier method
-                'crossover=0', #-1 let gurobi decide
+                'crossover=0',
                 'prepasses = 3',
                 'barconvtol=1e-6',
                 'presolve=-1'] # Not a good idea to put it to 0 if the model is too big

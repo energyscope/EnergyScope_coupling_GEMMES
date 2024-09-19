@@ -104,16 +104,16 @@ Solar, wind, hydro and geothermal
       :widths: 15 15 15 15
       :name: tab:renewableTechPotentialIn2035
    
-      hydro dam , 8.14 [5b]_ , 51.2 [5c]_ , [GW]
-      hydro river , 3.78 [5b]_ , 3.8 [5c]_ , [GW]
-      rooftop PV , 0.12 , :math:`\approx`\ 100 [5d]_ , [GW]
-      utility scale PV , 0 , :math:`\approx`\ 700 [5d]_ , [GW]
-      onshore wind , 0.02 , 7.3 [5e]_ , [GW]
-      offshore wind , 0 , 48.8 [5f]_ , [GW]
-      geothermal , 0 ,  1.2 [5g]_ , [GW]
-      CSP parabolic trough , 0 , 13 [5d]_, [GW]
-      CSP solar tower , 0 , 13 [5d]_, [GW]
-      biomass central , 0.21 , ~ [5h]_, [GW]
+      hydro dam , 8.14 [5b]_ , 21.2 [5c]_ , [GW]
+      hydro river , 3.78 [5b]_ , 3.78 [5c]_ , [GW]
+      rooftop PV , 0.12 , :math:`\approx`\ 100 [5e]_ , [GW]
+      utility scale PV , 0 , :math:`\approx`\ 700 [5e]_ , [GW]
+      onshore wind , 0.02 , 7.3 [5f]_ , [GW]
+      offshore wind , 0 , 48.8 [5g]_ , [GW]
+      geothermal , 0 ,  1.2 [5h]_ , [GW]
+      CSP parabolic trough , 0 , 13 [5e]_, [GW]
+      CSP solar tower , 0 , 13 [5e]_, [GW]
+      biomass central , 0.21 , ~ [5i]_, [GW]
 
    .. [5a]
       Data from :cite:`IEA_2023`, unless otherwise specified.
@@ -122,21 +122,21 @@ Solar, wind, hydro and geothermal
       :cite:`IEA_2023` gives an installed hydropower capacity of 11.91 GW in 2021. We split it between hydro dam and hydro river according to percentages received from Departamento Nacional de Planeación (DNP), the Colombian National Planning Department.
       
    .. [5c]
-      Data from :cite:`plazas_nino_2024`.
+      Values from the scenario "Full Hydrogen Economy" in :cite:`plazas_nino_2024`.
       
-   .. [5d]
+   .. [5e]
       The real constraint on solar potential is not a constraint on installable capacity, but a constraint on available area, as described below.
 
-   .. [5e]
+   .. [5f]
       This potential corresponds to the 2050 target for onshore wind energy of the country's long-term development strategy (E2050 Colombia), as given in :cite:`IEA_2023`. This potential is in the same order of magnitude as the one indicated in :cite:`RE_potential_2023`.
 
-   .. [5f]
+   .. [5g]
       Sum of the potentials for fixed offshore wind and floating offshore wind indicated in :cite:`RE_potential_2023`. This potential is in the same order of magnitude as the one we computed using the methodology and open-source database from :cite:`dupont_2018`, available at https://github.com/EliseDup/WorldEROI.
       
-   .. [5g]
+   .. [5h]
       Data from :cite:`plazas_nino_2023`. This potential is in line with the one indicated in :cite:`RE_potential_2023`.
       
-   .. [5h]
+   .. [5i]
       No constraint on the number of GW installable. The real constraint is on the availability of woody biomass (see below).
         
 
@@ -208,7 +208,7 @@ not landfill (composting, recycling) and paper cardboard. Finally, *biofuels* ar
 		biodiesel , 2.5 [7a]_ , 50 [7b]_ , [TWh]
 		woody biomass , 34.3 [7c]_ , 24.6 [7d]_ , [TWh]
 		wet biomass , 0 , 29.9 [7d]_ , [TWh]
-		non-renewable waste, 0 , 10.3 [7e]_ , [TWh]
+		non-renewable waste, 0 , 5.7 [7e]_ , [TWh]
    
    .. [7a]
       Data obtained from :cite:`IEA_2023` and slightly adapted for calibration purpose.
@@ -223,7 +223,7 @@ not landfill (composting, recycling) and paper cardboard. Finally, *biofuels* ar
       :cite:`Magne2024` performed a detailed assessment of the renewable biomass potential of all countries in South America. The corresponding data for Colombia were thus retrieved: the "forestry" potential gave the potential for woody biomass and the "agro-industrial" and "municipal waste" potentials were added to give the wet biomass potential.
 
    .. [7e] 
-      Data obtained from Departamento Nacional de Planeación (DNP), the Colombian National Planning Department
+      According to :cite:`IDEAM2023`, Colombia annually produces around 1.5 million tons of non-renewable waste. We multiply this figure by an energy content of 13.7 MJ/kg (taken from :cite:`usEnergy_2019`) to obtain the total potential.
       
 The corresponding price and GHG emissions are given in :numref:`Table %s <tab:prices_resources_biomass>`. Two metrics are proposed for GHG emissions:
 one accounting for the impact associated with extraction, transportation and
@@ -510,8 +510,8 @@ modelled in EnergyScope Colombia, together with their sources. The data for :mat
 given in :numref:`Table %s <tab:renewableTechPotentialIn2035>` ("max. potential"). The :math:`f_{min}`
 values for renewable electricity technologies in 2035 are equal to their installed capacity in 2021,
 already given in :numref:`Table %s <tab:renewableTechPotentialIn2035>`. Regarding hydro dam however, the value for
-:math:`f_{min}` in 2035 is equal to the installed capacity in 2021 to which is added the capacity of the 
-Hidroituango power plant (1.2 GW according to :cite:`IEA_2023`), which was completed in 2022. The maximum (:math:`f_{max,\%}`) and minimum
+:math:`f_{min}` in 2035 is equal to the installed capacity in 2021, to which is added the capacity of the 
+Hidroituango power plant currently under construction (2.4 GW). The maximum (:math:`f_{max,\%}`) and minimum
 (:math:`f_{min,\%}`) shares are imposed to 0 and 100% respectively, i.e. they are not constraining the model.
 
 .. container::
@@ -568,12 +568,6 @@ Hidroituango power plant (1.2 GW according to :cite:`IEA_2023`), which was compl
    
 .. [14j]
    Data from :cite:`association_des_entreprises_electriques_suisses_aes_electricite_2012`
-	
-.. [14k]
-   The cost and its repartition between :math:`c_{inv}`	and :math:`c_{maint}` is taken from :cite:`CSP_IRENA`. The
-   evolution through time is the one from :cite:`CSP_IEA`, assuming an identical evolution as the one of the LCOE.
-   These data are cross-checked with the ones of the Figure 4 of :cite:`boretti_techno_economic_2021` and of the 
-   Figure 2 of :cite:`viebahn_potential_2011`.
 
 .. [14l]
    Data collected by :cite:`dommisse2020modelling`.  
@@ -2730,6 +2724,14 @@ conversion into hydrogen. This total cost of production amounts to 2225 USD/kW :
 "H2 infrastructure" is included, whose capacity is constrained to be equal to the installed
 capacity of electrolysers, whose investment cost is 2225 USD/kW and whose other costs are null.
 
+Charging stations for electrical vehicles
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+According to the computations from :cite:`kerlero2024road`, the infrastructure costs for the charge
+of electrical vehicles are equal to 20% of the cost of the vehicles themselves. In our case, it means
+that electrical cars require an infrastructure investment of 123 USD/km-pass. Thus, a technology called 
+"CHARGING STATION" is included, whose capacity is constrained to be equal to the installed
+capacity of CAR BEV, whose investment cost is 123 USD/km-pass and whose other costs are null.
 
 .. _app:sec:ESTD_CO_CO2_emissions:
 

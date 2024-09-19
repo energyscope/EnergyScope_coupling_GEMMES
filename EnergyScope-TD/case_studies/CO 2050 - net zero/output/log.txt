@@ -1,48 +1,49 @@
 
-Presolve eliminates 972436 constraints and 626461 variables.
-"option presolve 10;" used, but "option presolve 6;" would suffice.
+Presolve eliminates 972440 constraints and 626463 variables.
+"option presolve 10;" used, but "option presolve 5;" would suffice.
 Adjusted problem:
-319414 variables, all linear
-585092 constraints, all linear; 1849050 nonzeros
-	392648 equality constraints
-	192444 inequality constraints
+319704 variables, all linear
+585381 constraints, all linear; 1849629 nonzeros
+	392649 equality constraints
+	192732 inequality constraints
 1 linear objective; 1 nonzero.
 
 presolve results:
-	variables omitted:	626461
-	constraints omitted:	972436
-	ranges relaxed:		34521
-	bounds improved:	624750
-	constraint_drop_tol breakpoints: 0, 0, 20776.729964049387
-	nba cycles:		5
-	bound row scans:	375970
-	row-scan updates:	42649
+	variables omitted:	626463
+	constraints omitted:	972440
+	ranges relaxed:		34522
+	bounds improved:	624752
+	constraint_drop_tol breakpoints: 0, 0, 16442.519999758137
+	nba cycles:		4
+	bound row scans:	376256
+	row-scan updates:	42622
+The license for this solver will expire in 12.3 days.
 Gurobi 11.0.1:   pre:dual = -1
   alg:method = 2
   bar:crossover = 0
   pre:passes = 3
   bar:convtol = 1e-06
   pre:solve = -1
-Gurobi 11.0.1: optimal solution; objective 61195.76413
+Gurobi 11.0.1: optimal solution; objective 85506.55109
 0 simplex iterations
-111 barrier iterations
+138 barrier iterations
  
 ------------ WARNINGS ------------
 WARNING:  "Tolerance violations"
   Type                         MaxAbs [Name]   MaxRel [Name]
-* variable bounds              5E-02           1E-03         
-* expr '_linrange'             2E-01           1E-03         
+* variable bounds              2E-06           -             
+* expr '_linrange'             2E-03           -             
 *: Using the solver's aux variable values.
 Documentation: mp.ampl.com/modeling-tools.html#automatic-solution-check.
 solve_result = solved
 
 solve_result_num = 0
 
-_solve_elapsed_time = 50.0968
+_solve_elapsed_time = 56.3335
 
-TotalCost 61195.76412790993
+TotalCost 85506.55108904469
 Carbon_cost 0
-GWP_op 1500.053904952919
+GWP_op 1500.000001578475
 carbon_price 0
 --------------SAVING COSTS -----------
 --------------SAVING RESOURCES -----------

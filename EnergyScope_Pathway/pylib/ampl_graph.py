@@ -170,7 +170,7 @@ class AmplGraph:
         temp = df_to_plot.set_index(['Years','Resources'])
         temp = temp.groupby(['Years']).sum()
         temp['Res'] = pd.to_numeric(temp['Res'])       
-        yvals = [0,min(temp['Res'].round(0)),max(temp['Res'].round(0))]
+        yvals = [0,round(temp.loc['2020','Res']),round(temp.loc['2050','Res'])]
         
         self.custom_fig(fig,title,yvals)
         fig.write_html(self.outdir+"Resources.html")

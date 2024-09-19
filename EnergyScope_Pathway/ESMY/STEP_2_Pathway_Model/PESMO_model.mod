@@ -420,6 +420,10 @@ subject to extra_dhn  {y in YEARS_WND diff YEAR_ONE}:
 # [Eq. 22bis] Assigning a cost to the hydrogen network (transport and distribution, including terminals for export of e-fuels)
 subject to set_h2_infra  {y in YEARS_WND diff YEAR_ONE}:
 	F [y, "H2_INFRASTRUCTURE"] = F [y, "H2_ELECTROLYSIS"];
+	
+# [Eq. 22tris] Assigning a cost to the electrical charging network for electric vehicles
+subject to set_charging_station  {y in YEARS_WND diff YEAR_ONE}:
+	F [y, "CHARGING_STATION"] = F [y, "CAR_BEV"];
 
 ## Additional constraints
 #------------------------
