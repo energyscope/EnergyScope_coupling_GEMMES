@@ -28,17 +28,40 @@ def main():
         output_EnergyScope = run_EnergyScope()
     else: # coupling between the two models
         variables_GEMMES = run_GEMMES()
-        gdp_current = variables_GEMMES['gdp']
-        diff = np.linalg.norm(gdp_current)
+        # The convergence criterion requires to look at all End-Use Demands
+        El    = [variables_GEMMES['El_F'], variables_GEMMES['El_B'], variables_GEMMES['El_G'], variables_GEMMES['El_H']]
+        HHT   = [variables_GEMMES['HHT_F']]
+        HLTSH = [variables_GEMMES['HLTSH_F'], variables_GEMMES['HLTSH_B'], variables_GEMMES['HLTSH_G'], variables_GEMMES['HLTSH_H']]
+        HLTHW = [variables_GEMMES['HLTHW_F'], variables_GEMMES['HLTHW_H']]
+        PC    = [variables_GEMMES['PC_F']]
+        SC    = [variables_GEMMES['SC_B'], variables_GEMMES['SC_G'], variables_GEMMES['SC_H']]
+        MP    = [variables_GEMMES['MP_H']]
+        MF    = [variables_GEMMES['MF_F']]
+        NE    = [variables_GEMMES['NE_F']]
+        EUD_current = [El, HHT, HLTSH, HLTHW, PC, SC, MP, MF, NE]
+        diff = 1
         n_iter = 1
-        while(diff > 0.01 and n_iter<2): ###############"
-            gdp_previous = gdp_current
+        while(diff > 0.03 and n_iter<2): ################
+            EUD_previous = EUD_current
             n_iter += 1
             output_EnergyScope = run_EnergyScope()
             post_process_outputs_EnergyScope(output_EnergyScope[0], output_EnergyScope[1], variables_GEMMES)
             variables_GEMMES = run_GEMMES()
-            gdp_current = variables_GEMMES['gdp']
-            diff = ((gdp_current-gdp_previous).abs()/gdp_previous).max()
+            El    = [variables_GEMMES['El_F'], variables_GEMMES['El_B'], variables_GEMMES['El_G'], variables_GEMMES['El_H']]
+            HHT   = [variables_GEMMES['HHT_F']]
+            HLTSH = [variables_GEMMES['HLTSH_F'], variables_GEMMES['HLTSH_B'], variables_GEMMES['HLTSH_G'], variables_GEMMES['HLTSH_H']]
+            HLTHW = [variables_GEMMES['HLTHW_F'], variables_GEMMES['HLTHW_H']]
+            PC    = [variables_GEMMES['PC_F']]
+            SC    = [variables_GEMMES['SC_B'], variables_GEMMES['SC_G'], variables_GEMMES['SC_H']]
+            MP    = [variables_GEMMES['MP_H']]
+            MF    = [variables_GEMMES['MF_F']]
+            NE    = [variables_GEMMES['NE_F']]
+            EUD_current = [El, HHT, HLTSH, HLTHW, PC, SC, MP, MF, NE]
+            diff = 0
+            for i in range(len(EUD_current)):
+                row = EUD_current[i]
+                for j in range(len(row)):
+                    diff = max(diff, ((EUD_current[i][j]-EUD_previous[i][j]).abs()/EUD_previous[i][j]).max())
     
     if plot_EnergyScope and mode!='GEMMES_only':
         plot_EnergyScope_outputs(output_EnergyScope[0], output_EnergyScope[1])
@@ -64,7 +87,7 @@ def run_GEMMES():
     namedParms = namedtuple("namedParms", parmsNames)
     # build named parms vector using the parmsNamed structure and loading parms values from C++
     newParms = namedParms(*solvePy.parms())
-    newParms = newParms._replace(betaen=4.0) # release tension on the exchange rate
+    newParms = newParms._replace(betaen=4.0) # to release tension on the exchange rate
     # newParms = newParms._replace(alphapO=0.06)
     # newParms = newParms._replace(alphapwtr=0.04)
     
@@ -86,7 +109,7 @@ def run_GEMMES():
     Thetas = pd.read_csv('Thetas.csv')
     Thetas.drop(columns=['Unnamed: 0'], inplace=True)
     samplesExogVar = pd.concat([Costs_ES_per_year,Thetas], axis=1)
-    # samplesExogVar = Thetas # for GEMMES without an energy sector
+    # samplesExogVar = pd.concat([Costs_ES_per_year.iloc[:,30],Thetas], axis=1) # for GEMMES without an energy sector
     samplesExogVar.columns = np.arange(len(samplesExogVar.columns))
 
     ## Run the GEMMES model
@@ -657,7 +680,7 @@ def post_process_outputs_EnergyScope(EnergyScope_output_file, ampl_0, variables_
     ## Specifiy the values of other exogenous variables for GEMMES, not directly related to EnergyScope
     output_for_GEMMES['reducXrO'] = 0.085
     output_for_GEMMES.loc['2015_2020','reducXrO'] = 0.025
-    output_for_GEMMES.loc[['2030_2035','2035_2040','2040_2045','2045_2050'],'reducXrO'] = 0.055
+    # output_for_GEMMES.loc[['2030_2035','2035_2040','2040_2045','2045_2050'],'reducXrO'] = 0.055
     # Play with iwst, v1 and iota0 to create a shock in interest rates
     output_for_GEMMES['iwst'] = 0.023175727
     # output_for_GEMMES.loc[['2025_2030','2030_2035','2035_2040','2040_2045','2045_2050'],'iwst'] += 0.01 # shock on foreign interest rate
