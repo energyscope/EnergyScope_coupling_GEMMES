@@ -41,7 +41,7 @@ def main():
         EUD_current = [El, HHT, HLTSH, HLTHW, PC, SC, MP, MF, NE]
         diff = 1
         n_iter = 1
-        while(diff > 0.03 and n_iter<2): ################
+        while(diff > 0.01): ################
             EUD_previous = EUD_current
             n_iter += 1
             output_EnergyScope = run_EnergyScope()
@@ -77,7 +77,7 @@ def main():
     
     if mode=='GEMMES-EnergyScope':
         print('Number of iterations before convergence between the two models: ', n_iter)
-
+    
     
 def run_GEMMES():
     ## Change parameters values in GEMMES according to scenario definition
@@ -109,7 +109,7 @@ def run_GEMMES():
     Thetas = pd.read_csv('Thetas.csv')
     Thetas.drop(columns=['Unnamed: 0'], inplace=True)
     samplesExogVar = pd.concat([Costs_ES_per_year,Thetas], axis=1)
-    # samplesExogVar = pd.concat([Costs_ES_per_year.iloc[:,30],Thetas], axis=1) # for GEMMES without an energy sector
+    # samplesExogVar = pd.concat([Costs_ES_per_year.iloc[:,[26,30]],Thetas], axis=1) # for GEMMES without an energy sector
     samplesExogVar.columns = np.arange(len(samplesExogVar.columns))
 
     ## Run the GEMMES model
