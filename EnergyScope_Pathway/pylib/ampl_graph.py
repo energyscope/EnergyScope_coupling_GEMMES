@@ -165,7 +165,7 @@ class AmplGraph:
         # plt.legend(bbox_to_anchor=(1.04, 1), loc="upper left")
         pio.show(fig)
         
-        title = "<b>Primary energy supply</b><br>[TWh]"
+        title = "<b>End-use energy consumption</b><br>[TWh]"
         
         temp = df_to_plot.set_index(['Years','Resources'])
         temp = temp.groupby(['Years']).sum()

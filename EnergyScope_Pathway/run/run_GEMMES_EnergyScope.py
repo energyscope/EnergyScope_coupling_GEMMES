@@ -18,7 +18,7 @@ nbr_tds = 12
 ## Define which results to save and/or plot
 plot_EnergyScope = True  
 csv_EnergyScope  = True
-plot_GEMMES = True
+plot_GEMMES = False
 csv_GEMMES = True
 
 def main():
@@ -41,11 +41,12 @@ def main():
         EUD_current = [El, HHT, HLTSH, HLTHW, PC, SC, MP, MF, NE]
         diff = 1
         n_iter = 1
-        while(diff > 0.01): ################
+        diff_list = [0]
+        while(diff > 0.03 and n_iter < 3): ################
             EUD_previous = EUD_current
             n_iter += 1
             output_EnergyScope = run_EnergyScope()
-            post_process_outputs_EnergyScope(output_EnergyScope[0], output_EnergyScope[1], variables_GEMMES)
+            post_process_EnergyScope_outputs(output_EnergyScope[0], output_EnergyScope[1], variables_GEMMES)
             variables_GEMMES = run_GEMMES()
             El    = [variables_GEMMES['El_F'], variables_GEMMES['El_B'], variables_GEMMES['El_G'], variables_GEMMES['El_H']]
             HHT   = [variables_GEMMES['HHT_F']]
@@ -62,6 +63,7 @@ def main():
                 row = EUD_current[i]
                 for j in range(len(row)):
                     diff = max(diff, ((EUD_current[i][j]-EUD_previous[i][j]).abs()/EUD_previous[i][j]).max())
+            diff_list.append(diff)
     
     if plot_EnergyScope and mode!='GEMMES_only':
         plot_EnergyScope_outputs(output_EnergyScope[0], output_EnergyScope[1])
@@ -77,6 +79,7 @@ def main():
     
     if mode=='GEMMES-EnergyScope':
         print('Number of iterations before convergence between the two models: ', n_iter)
+        print('Convergence values: ', diff_list)
     
     
 def run_GEMMES():
@@ -88,7 +91,8 @@ def run_GEMMES():
     # build named parms vector using the parmsNamed structure and loading parms values from C++
     newParms = namedParms(*solvePy.parms())
     newParms = newParms._replace(betaen=4.0) # to release tension on the exchange rate
-    # newParms = newParms._replace(alphapO=0.06)
+    # newParms = newParms._replace(alphapO=0.06) # Uncomment for the scenario with lower oil price
+    # newParms = newParms._replace(alphapO=0.06) # Uncomment for the scenario with higher oil price
     # newParms = newParms._replace(alphapwtr=0.04)
     
     ## Fix the trajectories of exogenous variables
@@ -313,7 +317,7 @@ def plot_EnergyScope_outputs(EnergyScope_output_file, ampl_0):
     # ampl_graph.graph_new_old_decom()
     ampl_graph.graph_resource()
 
-def post_process_outputs_EnergyScope(EnergyScope_output_file, ampl_0, variables_GEMMES):
+def post_process_EnergyScope_outputs(EnergyScope_output_file, ampl_0, variables_GEMMES):
     ampl_graph = AmplGraph(EnergyScope_output_file, ampl_0, case_study)
     z_Results = ampl_graph.ampl_collector
     
@@ -451,10 +455,10 @@ def post_process_outputs_EnergyScope(EnergyScope_output_file, ampl_0, variables_
     output_for_GEMMES.loc['2015_2020',['opex_F_M','opex_B_M','opex_G_M','opex_H_M']] = Cost_breakdown_non_annualised[['C_maint_M', 'C_op_M']].sum() * output_for_GEMMES.loc['2020_2025',['opex_F_M','opex_B_M','opex_G_M','opex_H_M']] / output_for_GEMMES.loc['2020_2025',['opex_F_M','opex_B_M','opex_G_M','opex_H_M']].sum() * 5
     Cost_breakdown_2021_for_comparison_with_real_cost = Cost_breakdown_2021_for_comparison_with_real_cost.sum() * 5 # Transform the yearly cost into a cost per phase
     
-    ## Compute a corrective factor to fit the costs from EnergyScope to the real cost of the energy system given by DNP
+    ## Compute a adjustment factor to fit the costs from EnergyScope to the real cost of the energy system given by DNP
     variables_GEMMES_2021 = variables_GEMMES.loc[(variables_GEMMES.index>=2021) & (variables_GEMMES.index<2022)].mean()
     Real_energy_system_cost_2021 = 33.323773083 # billion 2021 COP, according to DNP
-    corrective_factor = Real_energy_system_cost_2021 / ( variables_GEMMES_2021['p'] * Cost_breakdown_2021_for_comparison_with_real_cost ) # The corrective factor also allows to transform the phase costs into yearly costs (division by 5 included in the factor)
+    adjustment_factor = Real_energy_system_cost_2021 / ( variables_GEMMES_2021['p'] * Cost_breakdown_2021_for_comparison_with_real_cost ) # The adjustment factor also allows to transform the phase costs into yearly costs (division by 5 included in the factor)
     
     
     ## Add to the resource costs of households, government and banks the bills that they pay for buying fuels and electricity to private firms
@@ -619,9 +623,9 @@ def post_process_outputs_EnergyScope(EnergyScope_output_file, ampl_0, variables_
     year_balance_carbon_tax = year_balance_carbon_tax.iloc[1:]
     
     
-    ## Apply the corrective factor so that the total energy system cost from EnergyScope fits the real cost of the energy system given by DNP
-    output_for_GEMMES *= corrective_factor
-    year_balance_carbon_tax *= corrective_factor
+    ## Apply the adjustment factor so that the total energy system cost from EnergyScope fits the real cost of the energy system given by DNP
+    output_for_GEMMES *= adjustment_factor
+    year_balance_carbon_tax *= adjustment_factor
     # Re-write all costs according to a subdivision appropriate for GEMMES' equations
     output_for_GEMMES['ikefCO'] = (C_inv['Capa'] * C_inv['Local']    * C_inv['F']).groupby(level=[0]).sum()
     output_for_GEMMES['ikefM']  = (C_inv['Capa'] * C_inv['Imported'] * C_inv['F']).groupby(level=[0]).sum()
@@ -680,7 +684,7 @@ def post_process_outputs_EnergyScope(EnergyScope_output_file, ampl_0, variables_
     ## Specifiy the values of other exogenous variables for GEMMES, not directly related to EnergyScope
     output_for_GEMMES['reducXrO'] = 0.085
     output_for_GEMMES.loc['2015_2020','reducXrO'] = 0.025
-    # output_for_GEMMES.loc[['2030_2035','2035_2040','2040_2045','2045_2050'],'reducXrO'] = 0.055
+    output_for_GEMMES.loc[['2030_2035','2035_2040','2040_2045','2045_2050'],'reducXrO'] = 0.055 # comment this line for the baseline scenario, in which there is no energy transition
     # Play with iwst, v1 and iota0 to create a shock in interest rates
     output_for_GEMMES['iwst'] = 0.023175727
     # output_for_GEMMES.loc[['2025_2030','2030_2035','2035_2040','2040_2045','2045_2050'],'iwst'] += 0.01 # shock on foreign interest rate
