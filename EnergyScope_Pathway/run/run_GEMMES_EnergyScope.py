@@ -42,7 +42,7 @@ def main():
         diff = 1
         n_iter = 1
         diff_list = [0]
-        while(diff > 0.03 and n_iter < 3): ################
+        while(diff > 0.03):
             EUD_previous = EUD_current
             n_iter += 1
             output_EnergyScope = run_EnergyScope()
@@ -91,9 +91,9 @@ def run_GEMMES():
     # build named parms vector using the parmsNamed structure and loading parms values from C++
     newParms = namedParms(*solvePy.parms())
     newParms = newParms._replace(betaen=4.0) # to release tension on the exchange rate
-    # newParms = newParms._replace(alphapO=0.06) # Uncomment for the scenario with lower oil price
-    # newParms = newParms._replace(alphapO=0.06) # Uncomment for the scenario with higher oil price
-    # newParms = newParms._replace(alphapwtr=0.04)
+    # newParms = newParms._replace(alphapO=0)      # Uncomment for the scenario with lower oil price
+    # newParms = newParms._replace(alphapO=0.06)   # Uncomment for the scenario with higher oil price
+    # newParms = newParms._replace(alphapwtr=0.04) # Uncomment for an alternative scenario with greenflation, not presented in the paper
     
     ## Fix the trajectories of exogenous variables
     Costs_ES_per_phase = pd.read_csv('Energy_system_costs.csv')
@@ -685,6 +685,7 @@ def post_process_EnergyScope_outputs(EnergyScope_output_file, ampl_0, variables_
     output_for_GEMMES['reducXrO'] = 0.085
     output_for_GEMMES.loc['2015_2020','reducXrO'] = 0.025
     output_for_GEMMES.loc[['2030_2035','2035_2040','2040_2045','2045_2050'],'reducXrO'] = 0.055 # comment this line for the baseline scenario, in which there is no energy transition
+    
     # Play with iwst, v1 and iota0 to create a shock in interest rates
     output_for_GEMMES['iwst'] = 0.023175727
     # output_for_GEMMES.loc[['2025_2030','2030_2035','2035_2040','2040_2045','2045_2050'],'iwst'] += 0.01 # shock on foreign interest rate
