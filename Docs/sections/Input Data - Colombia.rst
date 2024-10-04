@@ -487,6 +487,10 @@ Non-energy EUD value in 2021 is taken from :cite:`IEA_2023`. We assume it to be 
 Discount rate and interest rate
 -------------------------------
 
+The discount rate represents the temporal preference between present and future financial value. In EnergyScope, the discount rate is used
+for annualising investment costs and hence allow to compare them with yearly costs in the future. For the case of Colombia, a discount rate
+of 6.4% is used, following :cite:`plazas_nino_2023`.
+
 .. _app:ESTD_CO_data_technologies:
 
 Technologies
