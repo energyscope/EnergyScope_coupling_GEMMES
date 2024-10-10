@@ -62,8 +62,6 @@ setup.py
 .eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/_integration/__pycache__/pyproject_reading.cpython-311.pyc
 .eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/_integration/__pycache__/setuptools.cpython-311.pyc
 .eggs/setuptools_scm-8.0.4-py3.11.egg/setuptools_scm/_integration/__pycache__/toml.cpython-311.pyc
-Data/_Results.pkl
-Data/misc_doc.json
 Data/CO 2021/Demand.csv
 Data/CO 2021/END_USES_CATEGORIES.csv
 Data/CO 2021/Layers_in_out.csv
@@ -95,7 +93,6 @@ Data/CO 2035/Old/Storage_eff_out.csv
 Data/CO 2035/Old/Technologies.csv
 Data/CO 2035/Old/Time_series.csv
 Data/CO 2035/Old/misc.json
-Data/CO 2050/.~lock.Layers_in_out.csv#
 Data/CO 2050/Demand.csv
 Data/CO 2050/END_USES_CATEGORIES.csv
 Data/CO 2050/Layers_in_out.csv
@@ -170,7 +167,6 @@ case_studies/CO 2021/ESTD_12TD.dat
 case_studies/CO 2021/ESTD_data.dat
 case_studies/CO 2021/ESTD_main.run
 case_studies/CO 2021/es_model.mod
-case_studies/CO 2021/output/assets.txt
 case_studies/CO 2021/output/cost_breakdown.txt
 case_studies/CO 2021/output/gwp_breakdown.txt
 case_studies/CO 2021/output/log.txt
@@ -243,7 +239,9 @@ case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_HEAT_HI
 case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_HEAT_LOW_T_DECEN.txt
 case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_HEAT_LOW_T_DHN.txt
 case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_HVC.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_IMPORTED_COAL.txt
 case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_LFO.txt
+case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_LOCAL_COAL.txt
 case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_METHANOL.txt
 case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_MOB_FREIGHT_BOAT.txt
 case_studies/CO 2035 - CO2 constraint minus 60%/output/hourly_data/layer_MOB_FREIGHT_RAIL.txt
@@ -268,7 +266,6 @@ case_studies/CO 2035 - net zero/ESTD_12TD.dat
 case_studies/CO 2035 - net zero/ESTD_data.dat
 case_studies/CO 2035 - net zero/ESTD_main.run
 case_studies/CO 2035 - net zero/es_model.mod
-case_studies/CO 2035 - net zero/output/.~lock.assets.txt#
 case_studies/CO 2035 - net zero/output/assets.txt
 case_studies/CO 2035 - net zero/output/cost_breakdown.txt
 case_studies/CO 2035 - net zero/output/gwp_breakdown.txt
@@ -292,7 +289,9 @@ case_studies/CO 2035 - net zero/output/hourly_data/layer_HEAT_HIGH_T.txt
 case_studies/CO 2035 - net zero/output/hourly_data/layer_HEAT_LOW_T_DECEN.txt
 case_studies/CO 2035 - net zero/output/hourly_data/layer_HEAT_LOW_T_DHN.txt
 case_studies/CO 2035 - net zero/output/hourly_data/layer_HVC.txt
+case_studies/CO 2035 - net zero/output/hourly_data/layer_IMPORTED_COAL.txt
 case_studies/CO 2035 - net zero/output/hourly_data/layer_LFO.txt
+case_studies/CO 2035 - net zero/output/hourly_data/layer_LOCAL_COAL.txt
 case_studies/CO 2035 - net zero/output/hourly_data/layer_METHANOL.txt
 case_studies/CO 2035 - net zero/output/hourly_data/layer_MOB_FREIGHT_BOAT.txt
 case_studies/CO 2035 - net zero/output/hourly_data/layer_MOB_FREIGHT_RAIL.txt
@@ -364,10 +363,6 @@ case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_WET_BIOMASS.tx
 case_studies/CO 2035 - no CO2 constraint/output/hourly_data/layer_WOOD.txt
 case_studies/CO 2035 - no CO2 constraint/output/sankey/input2sankey.csv
 case_studies/CO 2035 - no CO2 constraint/output/sankey/python_generated_sankey.html
-case_studies/CO 2050/ESTD_12TD.dat
-case_studies/CO 2050/ESTD_data.dat
-case_studies/CO 2050/ESTD_main.run
-case_studies/CO 2050/es_model.mod
 case_studies/CO 2050 - net zero/ESTD_12TD.dat
 case_studies/CO 2050 - net zero/ESTD_data.dat
 case_studies/CO 2050 - net zero/ESTD_main.run
@@ -466,52 +461,6 @@ case_studies/CO 2050 - no CO2 constraint/output/hourly_data/layer_WET_BIOMASS.tx
 case_studies/CO 2050 - no CO2 constraint/output/hourly_data/layer_WOOD.txt
 case_studies/CO 2050 - no CO2 constraint/output/sankey/input2sankey.csv
 case_studies/CO 2050 - no CO2 constraint/output/sankey/python_generated_sankey.html
-case_studies/CO 2050/output/assets.txt
-case_studies/CO 2050/output/cost_breakdown.txt
-case_studies/CO 2050/output/gwp_breakdown.txt
-case_studies/CO 2050/output/log.txt
-case_studies/CO 2050/output/losses.txt
-case_studies/CO 2050/output/resources_breakdown.txt
-case_studies/CO 2050/output/sto_year.txt
-case_studies/CO 2050/output/year_balance.txt
-case_studies/CO 2050/output/hourly_data/energy_stored.txt
-case_studies/CO 2050/output/hourly_data/layer_AMMONIA.txt
-case_studies/CO 2050/output/hourly_data/layer_CO2_ATM.txt
-case_studies/CO 2050/output/hourly_data/layer_CO2_CAPTURED.txt
-case_studies/CO 2050/output/hourly_data/layer_CO2_INDUSTRY.txt
-case_studies/CO 2050/output/hourly_data/layer_COAL.txt
-case_studies/CO 2050/output/hourly_data/layer_DIESEL.txt
-case_studies/CO 2050/output/hourly_data/layer_ELECTRICITY.txt
-case_studies/CO 2050/output/hourly_data/layer_GAS.txt
-case_studies/CO 2050/output/hourly_data/layer_GASOLINE.txt
-case_studies/CO 2050/output/hourly_data/layer_H2.txt
-case_studies/CO 2050/output/hourly_data/layer_HEAT_HIGH_T.txt
-case_studies/CO 2050/output/hourly_data/layer_HEAT_LOW_T_DECEN.txt
-case_studies/CO 2050/output/hourly_data/layer_HEAT_LOW_T_DHN.txt
-case_studies/CO 2050/output/hourly_data/layer_HVC.txt
-case_studies/CO 2050/output/hourly_data/layer_IMPORTED_COAL.txt
-case_studies/CO 2050/output/hourly_data/layer_LFO.txt
-case_studies/CO 2050/output/hourly_data/layer_LOCAL_COAL.txt
-case_studies/CO 2050/output/hourly_data/layer_METHANOL.txt
-case_studies/CO 2050/output/hourly_data/layer_MOB_FREIGHT_BOAT.txt
-case_studies/CO 2050/output/hourly_data/layer_MOB_FREIGHT_RAIL.txt
-case_studies/CO 2050/output/hourly_data/layer_MOB_FREIGHT_ROAD.txt
-case_studies/CO 2050/output/hourly_data/layer_MOB_PRIVATE.txt
-case_studies/CO 2050/output/hourly_data/layer_MOB_PUBLIC.txt
-case_studies/CO 2050/output/hourly_data/layer_PROCESS_COOLING.txt
-case_studies/CO 2050/output/hourly_data/layer_PT_HEAT.txt
-case_studies/CO 2050/output/hourly_data/layer_RES_GEO.txt
-case_studies/CO 2050/output/hourly_data/layer_RES_HYDRO.txt
-case_studies/CO 2050/output/hourly_data/layer_RES_SOLAR.txt
-case_studies/CO 2050/output/hourly_data/layer_RES_WIND.txt
-case_studies/CO 2050/output/hourly_data/layer_SPACE_COOLING.txt
-case_studies/CO 2050/output/hourly_data/layer_ST_HEAT.txt
-case_studies/CO 2050/output/hourly_data/layer_URANIUM.txt
-case_studies/CO 2050/output/hourly_data/layer_WASTE.txt
-case_studies/CO 2050/output/hourly_data/layer_WET_BIOMASS.txt
-case_studies/CO 2050/output/hourly_data/layer_WOOD.txt
-case_studies/CO 2050/output/sankey/input2sankey.csv
-case_studies/CO 2050/output/sankey/python_generated_sankey.html
 case_studies/CO compute TDs for PESTD/ESTD_12TD.dat
 case_studies/CO compute TDs for PESTD/ESTD_data.dat
 case_studies/CO compute TDs for PESTD/ESTD_main.run
@@ -641,7 +590,9 @@ case_studies/TK 2035 - net zero/output/hourly_data/layer_HEAT_HIGH_T.txt
 case_studies/TK 2035 - net zero/output/hourly_data/layer_HEAT_LOW_T_DECEN.txt
 case_studies/TK 2035 - net zero/output/hourly_data/layer_HEAT_LOW_T_DHN.txt
 case_studies/TK 2035 - net zero/output/hourly_data/layer_HVC.txt
+case_studies/TK 2035 - net zero/output/hourly_data/layer_IMPORTED_COAL.txt
 case_studies/TK 2035 - net zero/output/hourly_data/layer_LFO.txt
+case_studies/TK 2035 - net zero/output/hourly_data/layer_LOCAL_COAL.txt
 case_studies/TK 2035 - net zero/output/hourly_data/layer_METHANOL.txt
 case_studies/TK 2035 - net zero/output/hourly_data/layer_MOB_FREIGHT_BOAT.txt
 case_studies/TK 2035 - net zero/output/hourly_data/layer_MOB_FREIGHT_RAIL.txt
@@ -840,7 +791,6 @@ energyscope/preprocessing/utils/__pycache__/print_dat.cpython-38.pyc
 energyscope/preprocessing/utils/__pycache__/print_run.cpython-310.pyc
 energyscope/preprocessing/utils/__pycache__/print_run.cpython-311.pyc
 energyscope/preprocessing/utils/__pycache__/print_run.cpython-38.pyc
-scripts/2024-07-01_12-15-47.691946.energyscope.log
-scripts/2024-07-01_12-16-45.287674.energyscope.log
+scripts/2024-09-18_19-37-31.796171.energyscope.log
 scripts/config_ref.yaml
 scripts/run_energyscope.py

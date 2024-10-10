@@ -9,23 +9,23 @@ Category;Subcategory;Technologies name;Technologies param;c_inv;c_maint;gwp_cons
 [ktonCO2_eq/GWh]
 [ktonCO2_eq/(Mkmpass/h)]
 [ktonCO2_eq/(Mtonkm/h)]";[years];[];[];[];[GW];[GW];
-Electricity;Electricity;Nuclear;NUCLEAR;6844.0959;145.100421;707.88;60;0.843906;0;1;4.8;7.2;
-Electricity;Electricity;Combined cycle gas turbine;CCGT;1090.3566;27.813381;183.79;25;0.85;0;1;0;1000000000000000;
-Electricity;Electricity;Amonia combined cycle gas turbine;CCGT_AMMONIA ;1090.3566;27.559635;183.79;25;0.961538462;0;1;0;1000000000000000;
-Electricity;Electricity;Coal power plant;IMPORTED_COAL_CENTRAL;3554.5944;41.5016;331.6;35;0.868;0;1;0;0;
-Electricity;Electricity;Lignite power plant;LOCAL_COAL_CENTRAL;3554.5944;41.5016;331.6;35;0.856;0;1;0;1000000000000000;
+Electricity;Electricity;Nuclear;NUCLEAR;8750.617;145.100421;707.88;60;0.843906;0;1;4.8;7.2;
+Electricity;Electricity;Combined cycle gas turbine;CCGT;875.062;27.813381;183.79;25;0.85;0;1;0;1000000000000000;
+Electricity;Electricity;Amonia combined cycle gas turbine;CCGT_AMMONIA ;875.062;27.559635;183.79;25;0.961538462;0;1;0;1000000000000000;
+Electricity;Electricity;Coal power plant;IMPORTED_COAL_CENTRAL;1283.424;41.5016;331.6;35;0.868;0;1;0;0;
+Electricity;Electricity;Lignite power plant;LOCAL_COAL_CENTRAL;1400.099;64.563;331.6;35;0.856;0;1;0;1000000000000000;
 Electricity;Electricity;Biomass power plant;BIOMASS_TO_POWER;2364.095094;98.594418;331.6;35;0.868;0;1;0;1000000000000000;
 Electricity;Electricity;Photovoltaic rooftop;PV_ROOFTOP;1040.203533;13.716381;2081.43;25;1;0;1;5.995;130;
 Electricity;Electricity;Photovoltaic utility scale;PV_UTILITY;473.7181;11.883771;2081.43;25;1;0;1;0;1400;
 Electricity;Electricity;Parabolic trough power block;PT_POWER_BLOCK;1472.530329;88.317705;0;25;1;0;1;0;1000000000000000;
 Electricity;Electricity;Solar tower power block;ST_POWER_BLOCK;1082.917443;88.8111;0;25;1;0;1;0;1000000000000000;
-Electricity;Electricity;Wind onshore;WIND_ONSHORE;1426.5213;23.711154;622.85;30;1;0;1;7.591;48;
-Electricity;Electricity;Wind offshore;WIND_OFFSHORE;1773.0812;71.274432;622.85;30;1;0;1;0;66.21;
-Electricity;Electricity;Hydro dam;HYDRO_DAM;5921.72679;29.6037;1692.88;40;1;0;1;15.677;19.943;
-Electricity;Electricity;Hydro river;HYDRO_RIVER;7111.823724;71.105268;1262.82;40;1;0;1;12.826;16.317;
+Electricity;Electricity;Wind onshore;WIND_ONSHORE;947.191;23.711154;622.85;30;1;0;1;7.591;48;
+Electricity;Electricity;Wind offshore;WIND_OFFSHORE;1176.907;71.274432;622.85;30;1;0;1;0;66.21;
+Electricity;Electricity;Hydro dam;HYDRO_DAM;2333.498;11.667;1692.88;40;1;0;1;15.677;19.943;
+Electricity;Electricity;Hydro river;HYDRO_RIVER;1750.123;8.167;1262.82;40;1;0;1;12.826;16.317;
 Electricity;Electricity;Tidal;TIDAL;4041.6099;250.9266;0;20;1;0;1;0;0;
 Electricity;Electricity;Wave;WAVE;2691.1173;59.2074;0;20;1;0;0;0;0;
-Electricity;Electricity;Geothermal power plant;GEOTHERMAL;10576.031;196.4792;24929.09;30;0.86;0;1;1.2;4.2;
+Electricity;Electricity;Geothermal power plant;GEOTHERMAL;3738.12932903665;138.656;24929.09;30;0.86;0;1;1.2;4.2;
 Heat;Heat high temperature;Cogeneration gas (industry);IND_COGEN_GAS;1988.6978;127.8316;1024.32;25;0.85;0;1;0;1000000000000000;
 Heat;Heat high temperature;Cogeneration wood (industry);IND_COGEN_WOOD;1526.5049;55.8892;165.33;25;0.85;0;1;0;1000000000000000;
 Heat;Heat high temperature;Cogeneration waste (industry);IND_COGEN_WASTE;4135.3157;152.4492;647.82;25;0.85;0;1;0;1000000000000000;
@@ -121,7 +121,7 @@ Storage;Electricity storage;Compressed air energy storage;CAES;54.893718;4.48284
 Storage;Electricity storage;Batteries of electric cars;BEV_BATT;0;0;0;1;1;0;1;0;1000000000000000;
 Storage;Electricity storage;Batteries of plug-in hybrid cars;PHEV_BATT;0;0;0;1;1;0;1;0;1000000000000000;
 Storage;Electricity storage;Hydro dam storage;DAM_STORAGE;0;0;0;40;1;0;1;7054.65;8974.35;
-Storage;Electricity storage;Pumped hydro storage;PHS;83.049;0;8.33;50;1;0;1;0;91;
+Storage;Electricity storage;Pumped hydro storage;PHS;129.662;0;8.33;50;1;0;1;0;91;
 Storage;Thermal storage;Decentralised direct elec;TS_DEC_DIRECT_ELEC ;26.7932;0.1876;0;25;1;0;1;0;1000000000000000;
 Storage;Thermal storage;Decentralised electrical heat pumps;TS_DEC_HP_ELEC ;26.7932;0.1876;0;25;1;0;1;0;1000000000000000;
 Storage;Thermal storage;Decentralised thermal heat pumps gas;TS_DEC_THHP_GAS ;26.7932;0.1876;0;25;1;0;1;0;1000000000000000;

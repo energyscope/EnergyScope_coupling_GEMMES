@@ -1,47 +1,47 @@
 
-Presolve eliminates 959270 constraints and 618022 variables.
+Presolve eliminates 959277 constraints and 618027 variables.
 "option presolve 10;" used, but "option presolve 5;" would suffice.
 Adjusted problem:
-326397 variables, all linear
-596800 constraints, all linear; 1871361 nonzeros
-	397913 equality constraints
-	198887 inequality constraints
+326976 variables, all linear
+597380 constraints, all linear; 1872809 nonzeros
+	397915 equality constraints
+	199465 inequality constraints
 1 linear objective; 1 nonzero.
 
 presolve results:
-	variables omitted:	618022
-	constraints omitted:	959270
+	variables omitted:	618027
+	constraints omitted:	959277
 	ranges relaxed:		44408
-	bounds improved:	615779
-	constraint_drop_tol breakpoints: 0, 0, 7021.151751316723
+	bounds improved:	615784
+	constraint_drop_tol breakpoints: 0, 0, 7020.737664622885
 	nba cycles:		4
-	bound row scans:	385723
-	row-scan updates:	55722
-Gurobi 11.0.1:   pre:dual = -1
+	bound row scans:	386592
+	row-scan updates:	56227
+Gurobi 11.0.3:   pre:dual = -1
   alg:method = 2
   bar:crossover = 0
   pre:passes = 3
   bar:convtol = 1e-06
   pre:solve = -1
-Gurobi 11.0.1: optimal solution; objective 174748.7079
+Gurobi 11.0.3: optimal solution; objective 179880.429
 0 simplex iterations
-82 barrier iterations
+63 barrier iterations
  
 ------------ WARNINGS ------------
 WARNING:  "Tolerance violations"
   Type                         MaxAbs [Name]   MaxRel [Name]
-* expr '_linrange'             1E-03           -             
+* algebraic con(s)             4E-04           -             
 *: Using the solver's aux variable values.
 Documentation: mp.ampl.com/modeling-tools.html#automatic-solution-check.
 solve_result = solved
 
 solve_result_num = 0
 
-_solve_elapsed_time = 35.369
+_solve_elapsed_time = 44.0827
 
-TotalCost 174748.7079460491
+TotalCost 179880.4290077641
 Carbon_cost 0
-GWP_op 1500.000047829333
+GWP_op 1500.000065813619
 carbon_price 0
 --------------SAVING COSTS -----------
 --------------SAVING RESOURCES -----------

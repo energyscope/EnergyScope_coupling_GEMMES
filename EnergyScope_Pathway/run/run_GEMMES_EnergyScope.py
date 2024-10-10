@@ -7,11 +7,11 @@ September 2024
 
 ## Define which model you want to run: GEMMES, EnergyScope or the coupling of the two
 # mode = 'GEMMES_only'
-# mode = 'EnergyScope_only'
-mode = 'GEMMES-EnergyScope'
+mode = 'EnergyScope_only'
+# mode = 'GEMMES-EnergyScope'
 
 ## Define the country studied and the time granularity of EnergyScope
-country = 'Colombia'            # Choose between Colombia and Turkey
+country = 'Turkey'              # Choose between Colombia and Turkey
 EnergyScope_granularity = 'MO'  # MO = Monthly resolution, TD = Typical Day (hourly resolution - takes much more time to run)
 nbr_tds = 12
 
