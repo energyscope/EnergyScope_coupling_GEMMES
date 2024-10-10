@@ -12,9 +12,15 @@ The primary objective is to provide data for modelling a prospective Turkish ene
 Additionally, we provide the necessary data to reproduce the historical Turkish energy system for the year 2019,
 serving as a validation of EnergyScope's accuracy in modeling this intricate system.
 
-Since many data are common between the Colombian and Turkish case studies, we will only present
+Since many data are common between the Colombian and Turkish case studies, we only present
 the data and assumptions that differ between the two. If nothing is indicated, the same data and assumptions as for
 Colombia can be used.
+
+Like for Colombia, all costs are expressed as constant US Dollars for the year 2021 (USD\ :sub:`2021`). Costs which were initially
+expressed in €\ :sub:`2015` were converted using the historical exchange rate for 2015 equal to 1.11 :cite:`ecb2015`.
+The evolution of the cost from 2015 to 2021 for *technologies* is computed using the CEPCI, like for Colombia. However, the evolution
+of the cost from 2015 to 2021 for *resources* is computed using the evolution of fuel costs for the case of Cyprus (as a proxi for Turkey),
+with data from :cite:`IEA_oil_prices`.
 
 .. _app:sec:ESTD_TK_resources:
 
@@ -140,19 +146,19 @@ Biomass and non-renewable waste
       
 In order to compute the potentials for woody biomass and wet biomass, we take from :cite:`Biomass_Atlas_2017` the base potentials in 2030, defined by the authors as the sustainable (thus conservative) technical potential. The values expressed in kt dry mass were taken. Then, these kt dry mass were converted into energy units using a LHV of 18 [MJ/kg] for wet biomass and 19 [MJ/kg] for woody biomass. These values of LHV are the average values of the corresponding biomass types, extracted from :cite:`Phyllis2`.
 
-Prices and GHG emissions of biomass resources given in :numref:`Table %s <tab:prices_resources_biomass_TK>` ... source ...
+The corresponding costs for 2035 and GHG emissions are given in :numref:`Table %s <tab:costs_resources_biomass_TK>`.
 
 .. container::
 
-   .. csv-table:: Price and GHG emissions of biomass and waste resources.
+   .. csv-table:: Cost and GHG emissions of biomass and waste resources, in 2035.
       :header: **Resources** , **c**:sub:`op` , **gwp**:sub:`op` [42a]_ , **CO**:sub:`2direct` [42b]_
       :widths: 15 15 15 15
-      :name: tab:prices_resources_biomass_TK
+      :name: tab:costs_resources_biomass_TK
 		
-		 , [€\ :sub:`2015`/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`]
-		woody biomass , 32.8 , 12 , 390
-		wet biomass , 5.8 , 12 , 390
-		non-renewable waste, 8.1 , 150 , 260 [42c]_
+		 , [USD\ :sub:`2021`/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`]
+		woody biomass , 33.9 [42c]_, 12 , 390
+		wet biomass , 3.5 [42d]_, 12 , 390
+		non-renewable waste, 28.1 , 150 , 260 [42e]_
 
 .. [42a]
    GWP100a-IPCC2013 metric: impact associated to extraction, transportation and combustion. Note that this metric accounts for negative 
@@ -162,36 +168,34 @@ Prices and GHG emissions of biomass resources given in :numref:`Table %s <tab:pr
    Direct emissions related to combustion :cite:`Quaschning2015`. These data are not used in EnergyScope Turkey (since the capacity of technology CCS_industrial is set to zero), but they help us to check that the calibration of EnergyScope to the 2019 Turkish energy system is correct.
 
 .. [42c]
+   Taken as 85% of the cost for Belgium, in accordance with :cite:`Biomass_Atlas_2017`.
+   
+.. [42d]
+   Taken as 50% of the cost for Belgium, in accordance with :cite:`Biomass_Atlas_2017`.
+
+.. [42e]
    Assuming that the energy content can be assimilated to plastics.
 
 
-Imported resources
-------------------
+Domestic fossil resources
+-------------------------
 
-A certain share of coal (and gas) is produced domestically ... :cite:`IEA_TK_2021`
-
-Imported resources include coal, hydrocarbons (natural gas, gasoline, diesel, light fuel oil), bio-fuels and uranium.
-
-No constraint regarding the availability of imported resources, since the cost-optimization already does the trick ?
-
-Prices and GHG emissions given in :numref:`Table %s <tab:prices_imported_resources_TK>` ... source ...
+Around 10% of Turkish oil consumption and 1% of gas consumption were covered by domestic supply in 2019 :cite:`IEA_TK_2021`. 
+As a matter of simplicity, we assume that all oil and gas consumed in Turkey is imported. We thus neglect the new gas fields
+which were recently discovered and might enter in operation in the coming decade. The only domestic fossil fuel resource considered
+in EnergyScope is therefore coal. Local Turkish coal is typically low-quality lignite. Machines using local coal are therefore differentiated from
+machines using imported coal in terms of cost and efficiency (see below). :numref:`Table %s <tab:costs_local_fossil_TK>` gives the cost and
+GHG emissions associated to domestic Turkish coal.
 
 .. container::
 
-   .. csv-table:: Price and GHG emissions of domestically produced fossil fuels, in 2035. Abbreviations: Liquid Fuel Oil (LFO).
+   .. csv-table:: Cost and GHG emissions of domestically produced fossil fuels, in 2035.
       :header: **Resources** , **c**:sub:`op` , **gwp**:sub:`op` [43a]_ , **CO**:sub:`2direct` [43b]_
       :widths: 15 15 15 15
-      :name: tab:prices_imported_resources_TK
+      :name: tab:costs_local_fossil_TK
 		
-		 , [€\ :sub:`2015`/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`]
-		coal , 17.7 , 401 , 360
-		natural gas , 44.3 , 267 , 200
-		gasoline , 82.4 , 345 , 250
-		diesel , 79.7 , 315 , 260 [43c]_
-		LFO , 60.2 , 312 , 260
-		bioethanol , 111.3 , 0 , 250
-		biodiesel , 120.1 , 0 , 270
-		uranium, 3.9, 4, 0
+		 , [USD\ :sub:`2021`/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`]
+		local coal , 8.6 [43c]_ , 389 [43d]_, 434 [43d]_
 
 .. [43a]
    GWP100a-IPCC2013 metric: impact associated to extraction, transportation and combustion. Note that this metric accounts for negative 
@@ -199,8 +203,49 @@ Prices and GHG emissions given in :numref:`Table %s <tab:prices_imported_resourc
    
 .. [43b]
    Direct emissions related to combustion from :cite:`Quaschning2015`, unless specified otherwise. These data are not used in EnergyScope Turkey (since the capacity of technology CCS_industrial is set to zero), but they help us to check that the calibration of EnergyScope to the 2019 Turkish energy system of is correct.
+
+.. [43c]
+   Computed based on data from :cite:`KAT2023101538`
    
-.. [43c] Emission intensity taken from :cite:`TK_CO2_2020` (year 2018)
+.. [43d]
+   Computed based on data from :cite:`KAT2023101538`, which indicate that domestic Turkish coal is 18% more emissive than imported coal.
+   
+
+Imported resources
+------------------
+
+Imported resources include coal, hydrocarbons (natural gas, gasoline, diesel, light fuel oil), bio-fuels and uranium. No constraint is set regarding their 
+availability. Their costs in 2035 and GHG emissions are given in :numref:`Table %s <tab:costs_imported_resources_TK>`.
+
+.. container::
+
+   .. csv-table:: Cost and GHG emissions of imported resources, in 2035. Abbreviations: Liquid Fuel Oil (LFO).
+      :header: **Resources** , **c**:sub:`op` , **gwp**:sub:`op` [43a]_ , **CO**:sub:`2direct` [43b]_
+      :widths: 15 15 15 15
+      :name: tab:costs_imported_resources_TK
+		
+		 , [USD\ :sub:`2021`/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`]
+		coal , 12.2 [43c]_, 401 , 360
+		natural gas , 24.3 [43e]_, 267 , 200
+		gasoline , 59.8 [43f]_, 345 , 250
+		diesel , 65.9 [43f]_, 315 , 260 [43x]_
+		LFO , 39.8 [43f]_, 312 , 260
+		bioethanol , 133.4 [43g]_, 0 , 250
+		biodiesel , 148.5 [43g]_, 0 , 260
+		uranium, 4.7, 4, 0
+   
+.. [43e] 
+   Figure 9.5 from :cite:`IEA_TK_2021` indicates that the costs (excluding taxes) of gas in Turkey and Belgium were the same for industry, but 2.5 lower for households in Turkey in 2019.
+   The cost of gas is therefore taken as 70% of the Belgian cost.
+   
+.. [43f] 
+   Figure 8.10 from :cite:`IEA_TK_2021` indicates that the costs (excluding taxes) of gasoline, diesel and LFO in Turkey and Belgium were practically the same in 2019. Hence, the Belgian costs are used.
+
+.. [43g] 
+   Taken as equal to Belgian costs.
+
+.. [43x] 
+   Emission intensity taken from :cite:`TK_CO2_2020` (year 2018)
 
 
 Electricity imports and exports
@@ -226,25 +271,27 @@ The availability of the cross-border electricity imports and exports, when defin
       Value inspired from the interconnection projects described in :cite:t:`IEA_TK_2021`.
 
 
-
-Prices and GHG emissions given in :numref:`Table %s <tab:prices_elec_import_export_TK>` ... source ...
+The costs and GHG emissions of electricity imports and exports are given in :numref:`Table %s <tab:costs_elec_import_export_TK>`.
 
 .. container::
 
-   .. csv-table:: Price and GHG emissions associated to electricity imports and exports, in 2035. Abbreviations: Electricity (elec.).
+   .. csv-table:: Cost and GHG emissions associated to electricity imports and exports, in 2035. Abbreviations: Electricity (elec.).
       :header: **Resources** , **c**:sub:`op` , **gwp**:sub:`op` , **CO**:sub:`2direct`
       :widths: 15 15 15 15
-      :name: tab:prices_elec_import_export_TK
+      :name: tab:costs_elec_import_export_TK
 		
-		 , [€\ :sub:`2015`/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`]
-		elec imports , 84.3 , 413 [45a]_ , 0
-		elec exports , 75.9 [45b]_ , 0 , 0
+		 , [USD\ :sub:`2021`/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`]
+		elec imports , 102.6 [45b]_, 206 [45a]_ , 0
+		elec exports , 92.4 [45c]_ , 0 , 0
 
-.. [45a] This value is based on the CO :sub:`2` intensity of the EU electricity grid. Indeed, :cite:t:`IEA_TK_2021` indicates
-   that in 2019, most of the electricity imports of Turkey came from Bulgaria, which is part of the European grid.
-   
+.. [45a] This value is based on the CO :sub:`2` intensity of the EU electricity grid and its projected decrease, in line with the EU's Climate objectives.
+         Indeed, :cite:t:`IEA_TK_2021` indicates that in 2019, most of the electricity imports of Turkey came from Bulgaria, which is part of the European grid.
+
 .. [45b]
-   The price of electricity exports is assumed to be equal to 90% of the price of electricity imports, to account for cross-border tariffs.
+   Taken equal as the Belgian cost.
+    
+.. [45c]
+   The cost of electricity exports is assumed to be equal to 90% of the cost of electricity imports, to account for cross-border tariffs.
 
 
 .. _sec:app1_end_uses_TK:
@@ -335,11 +382,6 @@ Non-energy
 Non-energy EUD value in 2019 is taken from :cite:t:`IEA_world_energy_balances_TK`. We assume it to be uniformly spread over the
 8760 hours of the year.
 
-.. _app:discount_and_interest_rates_TK:
-
-Discount rate and interest rate
--------------------------------
-
 .. _app:ESTD_TK_data_technologies:
 
 Technologies
@@ -373,16 +415,16 @@ already given in :numref:`Table %s <tab:renewableTechPotentialIn2035_TK>`. The m
       :widths: 19 18 24 23 15 15 15
       :name: tab:elec_prod_re_TK
 		 
-		  , [€ :sub:`2015`/kW :sub:`e`], [€ :sub:`2015`/kW :sub:`e`/year], [kgCO :sub:`2`-eq./kW :sub:`e`], [year], [%], [%]
-		 Hydro dam, 4201 [47b]_, 21.0 [47b]_, 1693, 40 [47b]_, 35.6 [47c]_ , 35.6 [47u]_
-		 Hydro river, 5045 [47b]_, 50.4 [47b]_, 1263, 40 [47b]_, 35.6 [47c]_ , 44.0 [47v]_
-		 Rooftop PV, 738 [47d]_, 9.7 [47d]_, 2081, 40 [47d]_, 17.6 [47c]_ , 17.0 [47w]_
-		 Utility scale PV, 335 [47d]_, 8.4 [47d]_, 2081, 40 [47d]_, 17.6 [47c]_ , 19.0 [47w]_
-		 Onshore wind, 1010 [47d]_, 16.8 [47d]_, 623, 30 [47f]_, 33.5 [47c]_ , 34.8
-		 Offshore wind, 1255 [47d]_, 50.6 [47d]_, 623, 30 [47f]_, 41.2 , 41.2
-		 Geothermal, 7488 [47i]_, 142.3 [47i]_, 24929, 30, 86 [47j]_ , 86 [47j]_
-		 CSP PT, 1045 [47k]_, 62.7 [47k]_, 0 [47m]_ , 25, 23.7 [47l]_ , 23.7 [47l]_
-		 CSP ST, 768 [47k]_, 63.0 [47k]_, 0 [47m]_ , 25, 23.7 [47l]_ , 23.7 [47l]_
+		  , [USD\ :sub:`2021`/MWh :sub:`fuel`], [USD\ :sub:`2021`/MWh :sub:`fuel`], [kgCO :sub:`2`-eq./kW :sub:`e`], [year], [%], [%]
+		 Hydro dam, 2333 [47e]_, 11.7 [47e]_, 1693, 40 [47b]_, 35.6 [47c]_ , 35.6 [47g]_
+		 Hydro river, 1750 [47e]_, 8.2 [47e]_, 1263, 40 [47b]_, 35.6 [47c]_ , 44.0 [47h]_
+		 Rooftop PV, 1040 [47d]_, 13.7 [47d]_, 2081, 40 [47d]_, 17.6 [47c]_ , 17.0 [47i]_
+		 Utility scale PV, 474 [47d]_, 11.9 [47d]_, 2081, 40 [47d]_, 17.6 [47c]_ , 19.0 [47i]_
+		 Onshore wind, 947 [47e]_, 23.7 [47d]_, 623, 30 [47f]_, 33.5 [47c]_ , 34.8
+		 Offshore wind, 1177 [47e]_, 71.3 [47d]_, 623, 30 [47f]_, 41.2 , 41.2
+		 Geothermal, 3738 [47e]_, 138.7 [47e]_, 24929, 30, 86 [47j]_ , 86 [47j]_
+		 CSP PT, 1473 [47k]_, 88.3 [47k]_, 0 [47m]_ , 25, 23.7 [47l]_ , 23.7 [47l]_
+		 CSP ST, 1083 [47k]_, 88.8 [47k]_, 0 [47m]_ , 25, 23.7 [47l]_ , 23.7 [47l]_
 		 
 .. [47a]
    Data from :cite:`weidema_ecoinvent_2013`
@@ -393,23 +435,23 @@ already given in :numref:`Table %s <tab:renewableTechPotentialIn2035_TK>`. The m
 .. [47c]
    Computed using the installed capacity reported in :cite:`TK_gov_RE` and the yearly electricity generation given by :cite:t:`IEA_TK_2021`
 
-.. [47u]
-   Taken as equal to the value in 2019
-   
-.. [47v]
-   Value taken from :cite:`CCDR_TK`
-
 .. [47d]
    Data from :cite:`Danish_energy_agency_2023`
    
-.. [47w]
-   Retrieved from the open-source database from :cite:`dupont_2020`, available at https://github.com/EliseDup/WorldEROI
+.. [47e]
+   Data taken from :cite:`KAT2023101538` and converted from 2019 to 2021 USD using the CEPCI  
    
 .. [47f]
    Data taken from :cite:`association_des_entreprises_electriques_suisses_aes_energie_2013`
    
+.. [47g]
+   Taken as equal to the value in 2019
+   
+.. [47h]
+   Value taken from :cite:`CCDR_TK`
+   
 .. [47i]
-   ORC cycle at 6 km depth for electricity generation. Based on Table 17 of :cite:`Carlsson2014`. We took the reference case in 2030
+   Retrieved from the open-source database from :cite:`dupont_2020`, available at https://github.com/EliseDup/WorldEROI	
    
 .. [47j]
    Data from :cite:`association_des_entreprises_electriques_suisses_aes_electricite_2012`
@@ -424,11 +466,12 @@ already given in :numref:`Table %s <tab:renewableTechPotentialIn2035_TK>`. The m
    This value of :math:`c_{p}` is the mean value of the :math:`c_{p,t}` time series computed below.
    
 .. [47m]
-   Not computed yet. To be completed in the near future.		
+   Not computed yet. To be completed in the near future.	
+   
 
 
 :numref:`Table %s <tab:elec_prod_re_TK>` includes the values of the yearly capacity factor (:math:`c_p`) of technologies.
-As described in the Model Formulation Section, the values of :math:`c_p` for intermittent renewables is in fact equal to one, while
+As described in the Model Formulation Section, the value of :math:`c_p` for intermittent renewables is in fact equal to one, while
 it is the value of their hourly load factor, :math:`c_{p,t}`, which is binding. The value of :math:`c_p` given in 
 :numref:`Table %s <tab:elec_prod_re_TK>` for intermittent renewables is in fact the mean value of :math:`c_{p,t}` over the year.
 The yearly profile (which sums up to one) of :math:`c_{p,t}` for intermittent renewables is computed as follows.
@@ -486,11 +529,12 @@ to be installed between those two bounds.
       :widths: 11 17 24 22 12 8 8 8 14
       :name: tab:elec_prod_nre_TK
 		 
-		  , [€ :sub:`2015`/kW :sub:`e`], [€ :sub:`2015`/kW :sub:`e`/year], [kgCO :sub:`2`-eq./kW :sub:`e`], [year], [%], [%], [%], [tCO2/MWh :sub:`e`]
-		 CCGT, 772 [48d]_, 19.7 [48d]_, 184, 25, 85, 53 [48e]_ , 53 [48e]_, 0.377
-		 CCGT ammonia [48f]_, 772, 19.6, 184, 25, 59, 50, 50, 0
-		 Coal central, 3246 [48g]_, 49.0 [48g]_, 332, 35, 86 [48b]_, 32 [48h]_, 40 [48e]_, 0.9
-		 Nuclear, 4846 [48i]_ , 103 :cite:`iea_-_international_energy_agency_iea_2014-1` , 708, 60 :cite:`association_des_enterprises_electriques_suisses_energie_2014` , 84 [48j]_ , 37, 37 , 0
+		  , [USD\ :sub:`2021`/kW :sub:`e`], [USD\ :sub:`2021`/kW :sub:`e`/year], [kgCO :sub:`2`-eq./kW :sub:`e`], [year], [%], [%], [tCO2/MWh :sub:`e`]
+		 CCGT, 875 [48d]_, 27.8 [48d]_, 184, 25, 85, 53 [48e]_ , 53 [48e]_, 0.377
+		 CCGT ammonia [48f]_, 875, 27.8, 184, 25, 59, 50, 50, 0
+		 Local coal central, 1400 [48d]_, 64.6 [48d]_, 332, 35, 86 [48b]_, 39 [48h]_, 39 [48h]_, 0.9
+		 Imported coal central, 1283 [48d]_, 41.5 [48g]_, 332, 35, 86 [48b]_, 45 [48e]_, 45 [48e]_, 0.9
+		 Nuclear, 8751 [48d]_ , 145.1 [48k]_ , 708, 60 [48i]_ , 84 [48j]_ , 37, 37 , 0
 		 
 .. [48a]
    Data from :cite:`weidema_ecoinvent_2013`
@@ -504,7 +548,7 @@ to be installed between those two bounds.
    on resource used and specific emissions given in Table 9.
    
 .. [48d]
-   Data from :cite:`iea_-_international_energy_agency_iea_2014-1`   
+   Data taken from :cite:`KAT2023101538` and converted from 2019 to 2021 USD using the CEPCI   
    
 .. [48e] 
    Computed based on Background Note 4, p. 22 of :cite:`CCDR_TK`
@@ -528,28 +572,18 @@ to be installed between those two bounds.
    since the coal mined locally in Turkey is low-quality lignite.
 
 .. [48i]
-   Investment cost: 3431 €\ \ :sub:`2015`/kW\ \ :math:`_{\text{e}}`
-   :cite:`iea_-_international_energy_agency_iea_2014-1` +
-   dismantling cost in Switzerland: 1415    €\ \ :sub:`2015`/kW\ \ :math:`_{\text{e}}`
-   :cite:`swissnuclear_financement_????`.
+   Data from :cite:`association_des_enterprises_electriques_suisses_energie_2014`
 
 .. [48j]
    Data for the year 2012 from :cite:`swiss_federal_office_of_energy_sfoe_swiss_2014` 
+   
+.. [48k]
+   Data from :cite:`iea_-_international_energy_agency_iea_2014-1`
 
 According to :cite:`IEA_TK_2021`, electricity generation in 2019 in Turkey was of 304.3 [TWh],
 among which 37.2% from coal, 29.2% from hydro, 18.7% from natural gas, 7.2% from wind, 3.5% from solar
-and 4% from geothermal, biomass and waste. This amounts to installing the following capacities in EnergyScope
-for non-renewable electricity technologies:
-
-.. container::
-
-   .. csv-table:: Installed capacities of non-renewable electricity generation technologies in 2019.
-      :header: **Technology**, **Installed capacity** [GW]
-      :widths: 20 20
-      :name: tab:intalled_capa_elec_nre_TK
-		 
-		CCGT, 27.0 
-		Coal central, 16.1
+and 4% from geothermal, biomass and waste. The installed capacities of CCGT, local coal central
+and imported coal central are calibrated based on this information.
 
 
 Heating and cogeneration
@@ -566,13 +600,13 @@ data from :cite:`Brockway_2024`, we can determine that the following capacities 
       :widths: 20 20
       :name: tab:intalled_capa_heating_TK
 		 
-		Industrial boiler NG, 7.5
+		Industrial boiler NG, 7.4
 		Industrial boiler coal, 3.0
 		DHN CHP NG, 1.7
-		DHN boiler wood, 8.1
+		DHN boiler wood, 5.9
 		Decentralized HP, 5.0
-		Decentralized boiler NG, 52.2
-		Decentralized boiler oil, 17.4
+		Decentralized boiler NG, 28.3
+		Decentralized boiler oil, 23.3
 		Coal stove, 15.0
 
 Similarly to intermittent renewable electricity technologies, the time series for :math:`c_{p,t}` for solar thermal facilities must be computed.
@@ -719,8 +753,8 @@ for these potential projects are taken from :cite:`PHS_TK` and summarised in :nu
       :widths: 15 15 15 25 10 10 10 10 10
       :name: tab:stodatabasic_TK
 
-		 , [:math:`\text{€}_{2015}`/kWh], [:math:`\text{€}_{2015}`/kWh/y], [kgCO :sub:`2`-eq/kWh], [%], [%], [h], [y], [GWh]
-		 PHS, 58.8, 0 [55a]_, 8.33 [55b]_, 7 [55c]_, 86.6 [55d]_, 86.6 [55d]_, 50 [55e]_, 91 [55f]_
+		 , [USD\ :sub:`2021`/kWh], [USD\ :sub:`2021``/kWh/y], [kgCO :sub:`2`-eq/kWh], [%], [%], [h], [y], [GWh]
+		 PHS, 129.7 [55c]_, 0 [55a]_, 8.33 [55b]_, 7 [55c]_, 86.6 [55d]_, 86.6 [55d]_, 50 [55e]_, 91 [55f]_
 		 
 
 .. [55a]
@@ -731,7 +765,7 @@ for these potential projects are taken from :cite:`PHS_TK` and summarised in :nu
    :cite:`Limpens2019,Moret2017PhDThesis`.
 
 .. [55c]
-   :cite:`PHS_TK`
+   Data from :cite:`PHS_TK`
    
 .. [55d]
    A round-trip efficiency of 75% (i.e. :math:`0.866^2`) is taken, identical to the one of the Coo-Trois-Ponts hydroelectric power station in Belgium.
@@ -778,18 +812,13 @@ DHN are chosen as 2% and 50%, respectively. These values are the same as
 the ones from :cite:`borasio2022deep` for the case of Italy. Indeed, the population
 density in urban and surburban areas is grossly similar in Italy and in Turkey.
 
-Energy demand reduction cost
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-[TO BE COMPLETED]
-
 
 .. _app:sec:ESTD_CO_CO2_emissions_TK:
 
 GHG emissions
 =============
 
-As already explicited in :numref:`Table %s <tab:prices_imported_resources_TK>`, two CO :sub:`2`-eq
+As already explicited in :numref:`Table %s <tab:costs_imported_resources_TK>`, two CO :sub:`2`-eq
 emissions metrics are used: CO :sub:`2,direct` and gwp :sub:`op`. The first one relates to 
 the direct emissions associated with the fuels' combustion, while the second one is the
 GWP100a-IPCC2013 metric: it covers emissions associated to extraction, transportation and combustion.
@@ -816,32 +845,36 @@ oil using the shares (0.43,0.24,0.33) of the year 2018 given in :cite:`IEA_TK_20
       :name: tab:2019_CO2_check
 		
 		 , [GWh] , [tCO :sub:`2`-eq/MWh :sub:`fuel`] , [MtCO :sub:`2`-eq] , [MtCO :sub:`2`-eq]
-		coal , 457 078 , 0.36 , 164.5 , 158.5
-		natural gas , 453 821 , 0.20 , 90.8 , 88.2
-		gasoline , 13 015 , 0.25 , 3.3, 3.6 [90b]_
-		diesel , 214 907 , 0.26 , 55.9 , 62.6 [90b]_
-		LFO , 180 767 , 0.26 , 47.0 , 52.7 [90b]_
-		woody biomass , 40 000 , 0.40 , 16.0 , ~ [90c]_
-		non-renewable waste , 121 , 0.26 , 0.03 , ~ [90c]_
+		local coal , 281 514 , 0.39 , 109.6 , 110.3 [90b]_
+		imported coal , 144 877, 0.33 , 47.9 , 48.2 [90b]_
+		natural gas , 440 926 , 0.20 , 88.2 , 88.2
+		gasoline , 13 015 , 0.25 , 3.3, 3.3 [90c]_
+		diesel , 214 907 , 0.26 , 55.9 , 57.1 [90c]_
+		LFO , 220 204 , 0.26 , 57.3 , 58.5 [90c]_
+		woody biomass , 40 000 , 0.39 , 15.6 , ~ [90d]_
+		non-renewable waste , 121 , 0.26 , 0.03 , ~ [90d]_
 
 .. [90a]
-   Obtained after running EnergyScope with the 2019 data 
+   Obtained after running EnergyScope TD with the 2019 data .
 
 .. [90b]
-   The historical emissions for gasoline, diesel and LFO are aggregated. We disaggregate them according to the proportions from the EnergyScope simulation for year 2019.
+   The historical emissions for local and imported coal are aggregated. We disaggregate them according to the proportions from the EnergyScope simulation for year 2019.
 
 .. [90c]
+   The historical emissions for gasoline, diesel and LFO are aggregated. We disaggregate them according to the proportions from the EnergyScope simulation for year 2019.
+
+.. [90d]
    Not included in the scope of :cite:`TK_CO2_2023`
 
 According to :cite:`TK_CO2_2023`, the total CO :sub:`2`-eq emissions from fossil fuels in Turkey were of 365.6 MtCO :sub:`2`-eq in 2019.
 The sum of the values simulated with EnergyScope for fossil fuels (excluding woody biomass and waste) and given in
-:numref:`Table %s <tab:2019_CO2_check>` is 379.6 MtCO :sub:`2`-eq. The difference between the two is less than 4% and is therefore acceptable.
+:numref:`Table %s <tab:2019_CO2_check>` is 362.1 MtCO :sub:`2`-eq. The difference between the two is of only 1% and is therefore acceptable.
 
 
 Setting a gwp limit for the year 2035
 -------------------------------------
 
-The gwp :sub:`op` computed by EnergyScope for the 2019 Turkish energy system is of 434 MtCO :sub:`2`-eq. It is broken down by
+The gwp :sub:`op` computed by EnergyScope for the 2019 Turkish energy system is of 435 MtCO :sub:`2`-eq. It is broken down by
 resource type in :numref:`Table %s <tab:2019_gwp>`.
 
 .. container::
@@ -852,14 +885,15 @@ resource type in :numref:`Table %s <tab:2019_gwp>`.
       :name: tab:2019_gwp
 		
 		 , [GWh] , [tCO :sub:`2`-eq/MWh :sub:`fuel`] , [MtCO :sub:`2`-eq]
-		coal , 457 078 , 0.40 , 183.5
-		natural gas , 453 821 , 0.27 , 121.0
+		local coal , 281 514 , 0.43 , 122.2
+		imported coal, 144 877 , 0.37 , 53.4
+		natural gas , 440 926 , 0.27 , 117.6
 		gasoline , 13 015 , 0.34 , 4.5
 		diesel , 214 907 , 0.31 , 67.7
-		LFO , 180 767 , 0.31 , 56.3
+		LFO , 220 204 , 0.31 , 68.6
 		woody biomass , 40 000 , 0.01 , 0.5
 		non-renewable waste , 121, 0.15 , 0.02
-		electricity imports, 2 210, 0.41, 0.9
+		electricity imports, 558, 0.41, 0.2
 		electricity exports, 0, 0, 0
 
 .. [91a]

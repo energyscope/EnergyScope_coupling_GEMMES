@@ -225,7 +225,7 @@ not landfill (composting, recycling) and paper cardboard. Finally, *biofuels* ar
    .. [7e] 
       According to :cite:`IDEAM2023`, Colombia annually produces around 1.5 million tons of non-renewable waste. We multiply this figure by an energy content of 13.7 MJ/kg (taken from :cite:`usEnergy_2019`) to obtain the total potential.
       
-The corresponding price and GHG emissions are given in :numref:`Table %s <tab:prices_resources_biomass>`. Two metrics are proposed for GHG emissions:
+The corresponding cost for year 2035 and GHG emissions are given in :numref:`Table %s <tab:costs_resources_biomass>`. Two metrics are proposed for GHG emissions:
 one accounting for the impact associated with extraction, transportation and
 combustion (based on GWP100a-IPCC2013 :cite:`Moret2017PhDThesis`); the other accounting
 only for direct emissions related to combustion (based on :cite:t:`Quaschning2015`). The first metric
@@ -233,10 +233,10 @@ is used when imposing constraints on the energy system's total emissions; the se
 
 .. container::
 
-   .. csv-table:: Price and GHG emissions of biomass and waste resources.
+   .. csv-table:: Cost and GHG emissions of biomass and waste resources.
       :header: **Resources** , **c**:sub:`op` [8a]_ , **gwp**:sub:`op` [8b]_ , **CO**:sub:`2direct`
       :widths: 15 15 15 15
-      :name: tab:prices_resources_biomass
+      :name: tab:costs_resources_biomass
 		
 		 , [USD\ :sub:`2021`/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`]
 		bioethanol , 88.2 , 0 , 250
@@ -264,15 +264,15 @@ A large share of fossil fuels used in Colombia is produced and refined domestica
 
 The availability of all fossil fuel resources is set to a value high enough to allow unlimited use in the model, except for local natural gas. Its availability in 2035 is set to to 13 TWh, based on :cite:`wtw2023`.
 
-:numref:`Table %s <tab:prices_resources_fossil>` therefore gives the prices and GHG emissions associated with both domestic and imported fossil fuels in Colombia. Imported coal is included,
+:numref:`Table %s <tab:costs_resources_fossil>` therefore gives the costs and GHG emissions associated with both domestic and imported fossil fuels in Colombia. Imported coal is included,
 even though the model never selects it given the lower cost and unbounded potential of local coal.
 
 .. container::
 
-   .. csv-table:: Price and GHG emissions of domestically produced and imported fossil fuels, in 2035. Abbreviations: Liquid Fuel Oil (LFO).
+   .. csv-table:: Cost and GHG emissions of domestically produced and imported fossil fuels, in 2035. Abbreviations: Liquid Fuel Oil (LFO).
       :header: **Resources** , **c**:sub:`op` [9a]_  , **gwp**:sub:`op` [9b]_ , **CO**:sub:`2direct` [9c]_
       :widths: 15 15 15 15
-      :name: tab:prices_resources_fossil
+      :name: tab:costs_resources_fossil
 		
 		 , [USD\ :sub:`2021`/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`]
 		local coal , 7.3 , 401 , 360
@@ -281,7 +281,7 @@ even though the model never selects it given the lower cost and unbounded potent
 		imported natural gas , 39.0 , 267 , 200
 		local gasoline , 44.1 , 345 , 250
 		local diesel , 23.7 , 315 , 270
-		local LFO , 30.0 , 312 , 280
+		local LFO , 30.0 , 312 , 260
 
 .. [9a]
    Computed based on the supplementary data of the PEN 2050 :cite:`PEN2050`.
@@ -320,14 +320,14 @@ The availability of the cross-border electricity imports and exports, when defin
    .. [10c]
       Value inspired from the interconnection projects described in :cite:`IEA_2023`.
 
-The corresponding prices and GHG emissions are given in :numref:`Table %s <tab:prices_elec_import_export>`.
+The corresponding costs and GHG emissions are given in :numref:`Table %s <tab:costs_elec_import_export>`.
 
 .. container::
 
-   .. csv-table:: Price and GHG emissions associated to electricity imports and exports, in 2035. Abbreviations: Electricity (elec.).
+   .. csv-table:: Cost and GHG emissions associated to electricity imports and exports, in 2035. Abbreviations: Electricity (elec.).
       :header: **Resources** , **c**:sub:`op` , **gwp**:sub:`op` [11a]_ , **CO**:sub:`2direct`
       :widths: 15 15 15 15
-      :name: tab:prices_elec_import_export
+      :name: tab:costs_elec_import_export
 		
 		 , [USD\ :sub:`2021`/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`] , [kgCO :sub:`2`-eq/MWh :sub:`fuel`]
 		elec imports , 42.9 [11b]_ , 206 , 0
@@ -340,7 +340,7 @@ The corresponding prices and GHG emissions are given in :numref:`Table %s <tab:p
    Computed based on the supplementary data of the PEN 2050 :cite:`PEN2050`.
    
 .. [11c]
-   The price of electricity exports is assumed to be equal to 90% of the price of electricity imports, to account for cross-border tariffs.
+   The costs of electricity exports is assumed to be equal to 90% of the costs of electricity imports, to account for cross-border tariffs.
    
 
 Export of electrofuels
@@ -352,16 +352,16 @@ for partially compensating for the planned decrease in fossil fuels' exports. Fo
 hydrogen, methane, ammonia and methanol. In the model's code, they are designated with the appendix 'RE' to distinguish them from 
 their fossil-based counterparts.
 
-The Belgian Hydrogen Import Coalition computed a projection of the import prices of e-fuels from international markets for the year 2035 :cite:`H2coalition2020shipping`. They indicate that 85% of this selling price would correspond to production cost, local transmission and local terminalling cost. The rest would correspond
+The Belgian Hydrogen Import Coalition computed a projection of the import costs of e-fuels from international markets for the year 2035 :cite:`H2coalition2020shipping`. They indicate that 85% of the selling price would correspond to production cost, local transmission and local terminalling cost. The rest would correspond
 to shipping and remote terminalling. Thus, the revenue of an e-fuel exporter like Colombia would be equal to 85% of the
-computed import price. The corresponding values are indicated in :numref:`Table %s <tab:prices_resources_efuels>`.
+computed import cost. The corresponding values are indicated in :numref:`Table %s <tab:costs_resources_efuels>`.
 
 .. container::
 
-   .. csv-table:: Price and GHG emissions associated to electricity imports and exports, in 2035. Abbreviations: Electricity (elec.).
+   .. csv-table:: Cost and GHG emissions associated to electricity imports and exports, in 2035. Abbreviations: Electricity (elec.).
       :header: **Resources** , **c**:sub:`op` **(import)** , **c**:sub:`op` **(export)**
       :widths: 15 15 15
-      :name: tab:prices_resources_efuels
+      :name: tab:costs_resources_efuels
 		
 		 , [USD\ :sub:`2021`/MWh :sub:`fuel`] [12a]_ , [USD\ :sub:`2021`/MWh :sub:`fuel`] [12b]_
 		green hydrogen , 126.6 , 107.6
@@ -370,10 +370,10 @@ computed import price. The corresponding values are indicated in :numref:`Table 
 		e-methanol , 119.9 , 101.9
 
 .. [12a]
-   Taken as equal to the import price of e-fuels from international market, computed by :cite:`H2coalition2020shipping`.
+   Taken as equal to the import cost of e-fuels from international market, computed by :cite:`H2coalition2020shipping`.
    
 .. [12b]
-   Estimated as 85% of the import price.
+   Estimated as 85% of the import cost.
    
 
 .. _sec:app1_end_uses:
@@ -2742,7 +2742,7 @@ capacity of CAR BEV, whose investment cost is 123 USD/km-pass and whose other co
 GHG emissions
 =============
 
-As already explicited in :numref:`Table %s <tab:prices_resources_fossil>`, two CO :sub:`2`-eq
+As already explicited in :numref:`Table %s <tab:costs_resources_fossil>`, two CO :sub:`2`-eq
 emissions metrics are used: CO :sub:`2,direct` and gwp :sub:`op`. The first one relates to 
 the direct emissions associated with the fuels' combustion, while the second one is the
 GWP100a-IPCC2013 metric: it covers emissions associated to extraction, transportation and combustion.
