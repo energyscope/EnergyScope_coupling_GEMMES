@@ -3,16 +3,16 @@
 Category;Subcategory;parameter name;avail;gwp_op;c_op;CO2_op;Comment
 Non-renewable;Other non-renewable;ELECTRICITY;2210;0.413;0.07757;0;
 Non-renewable;Fossil fuel;GASOLINE;1000000000000000;0.3448;0.078574;0.25;
-Non-renewable;Fossil fuel;DIESEL;272000;0.3148;0.078492;0.27;
+Non-renewable;Fossil fuel;DIESEL;272000;0.3148;0.078492;0.26;
 Renewable;Biofuel;BIOETHANOL;619;0;0.146805;0.25;
-Renewable;Biofuel;BIODIESEL;1330;0;0.162469;0.27;
+Renewable;Biofuel;BIODIESEL;1330;0;0.162469;0.26;
 Non-renewable;Fossil fuel;LFO;1000000000000000;0.3115;0.056113;0.26;
 Non-renewable;Fossil fuel;GAS;0;0.2666;0.028658;0.2;
 Renewable;Biofuel;IMPORTED_GAS;1000000000000000;0.2666;0.028658;0.2;
 Renewable;Biomass;WOOD;40000;0.0118;0.031165;0.39;
 Renewable;Biomass;WET_BIOMASS;0;0.0118;0.003216;0.39;
-Non-renewable;Fossil fuel;IMPORTED_COAL;1000000000000000;0.368539389;0;0.3305286;
-Non-renewable;Fossil fuel;LOCAL_COAL;1000000000000000;0.434258604;0;0.3894696;
+Non-renewable;Fossil fuel;IMPORTED_COAL;1000000000000000;0.368539389;0.014329;0.3305286;
+Non-renewable;Fossil fuel;LOCAL_COAL;1000000000000000;0.434258604;0.0101735653629815;0.3894696;
 Non-renewable;Other non-renewable;URANIUM;0;0.0039;0.004718;0;
 Non-renewable;Other non-renewable;WASTE;121;0.1501;0.025788;0.26;
 Non-renewable;Other non-renewable;H2;0;0.36380236;0.094501;0;
