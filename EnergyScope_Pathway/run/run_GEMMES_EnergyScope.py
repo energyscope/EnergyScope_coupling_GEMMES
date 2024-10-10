@@ -11,7 +11,7 @@ mode = 'EnergyScope_only'
 # mode = 'GEMMES-EnergyScope'
 
 ## Define the country studied and the time granularity of EnergyScope
-country = 'Turkey'              # Choose between Colombia and Turkey
+country = 'Turkey'                  # Choose between Colombia and Turkey
 EnergyScope_granularity = 'MO'  # MO = Monthly resolution, TD = Typical Day (hourly resolution - takes much more time to run)
 nbr_tds = 12
 
@@ -198,47 +198,52 @@ def run_EnergyScope():
     
     # Include the discount rate given by GEMMES
     r_discount = pd.read_csv('r_discount.csv')
-    r_discount['r_discount'] = r_discount['r_discount'] * (r_discount['r_discount']>=0) 
-    r_discount['r_discount'] += 1e-4
+    r_discount['r_discount'] = r_discount['r_discount'] * (r_discount['r_discount']>=0) # We cannot have a negative discount rate
+    r_discount['r_discount'] += 1e-4  # We cannot have a zero discount rate
     r_discount.set_index('Phase', inplace=True)
     phases_ES = ['2015_2020', '2020_2025', '2025_2030', '2030_2035', '2035_2040', '2040_2045', '2045_2050']
-    
-    # Include the energy demand given by GEMMES
+    year_list = ['YEAR_2015', 'YEAR_2020', 'YEAR_2025', 'YEAR_2030', 'YEAR_2035', 'YEAR_2040', 'YEAR_2045', 'YEAR_2050'] 
     for j in range(len(phases_ES)):
         ampl.set_params('r_discount',{(phases_ES[j]):r_discount.iloc[j,0]})
-    EUD_2021 = pd.read_csv('EUD_2021.csv')
-    EUD_2026 = pd.read_csv('EUD_2026.csv')
-    EUD_2031 = pd.read_csv('EUD_2031.csv')
-    EUD_2036 = pd.read_csv('EUD_2036.csv')
-    EUD_2041 = pd.read_csv('EUD_2041.csv')
-    EUD_2046 = pd.read_csv('EUD_2046.csv')
-    EUD_2051 = pd.read_csv('EUD_2051.csv')
-    EUD_2015 = EUD_2021.copy()
-    EUD_dict = {0:EUD_2015, 1:EUD_2021, 2:EUD_2026, 3:EUD_2031, 4:EUD_2036, 5:EUD_2041, 6:EUD_2046, 7:EUD_2051}
-    year_list = ['YEAR_2015', 'YEAR_2020', 'YEAR_2025', 'YEAR_2030', 'YEAR_2035', 'YEAR_2040', 'YEAR_2045', 'YEAR_2050']                  
-    series_list = []
-    for j in np.arange(2,len(EUD_dict)):
-        EUD_dict[j].set_index('parameter_name', inplace=True)
-        EUD_dict[j].drop(columns=['Category','Subcategory','Units'], inplace=True) 
-        m = EUD_dict[j].shape[0]
-        n = EUD_dict[j].shape[1] 
-        index0 = np.array([year_list[j]] * m * n)
-        index1 = np.array(np.repeat(EUD_dict[j].index.to_list(), n))
-        index2 = np.array(EUD_dict[j].columns.to_list() * m)
-        series_list.append(pd.Series(EUD_dict[j].values.flatten(), index=[index0, index1, index2]))   
-    eud_series_full = pd.concat(series_list)
-    eud_ampl = apy.DataFrame.from_pandas(eud_series_full)
-    ampl.set_params('end_uses_demand_year', eud_ampl)
+        
+    # Include the energy demand given by GEMMES
+    if mode=='GEMMES-EnergyScope':
+        EUD_2021 = pd.read_csv('EUD_2021.csv')
+        EUD_2026 = pd.read_csv('EUD_2026.csv')
+        EUD_2031 = pd.read_csv('EUD_2031.csv')
+        EUD_2036 = pd.read_csv('EUD_2036.csv')
+        EUD_2041 = pd.read_csv('EUD_2041.csv')
+        EUD_2046 = pd.read_csv('EUD_2046.csv')
+        EUD_2051 = pd.read_csv('EUD_2051.csv')
+        EUD_2015 = EUD_2021.copy()
+        EUD_dict = {0:EUD_2015, 1:EUD_2021, 2:EUD_2026, 3:EUD_2031, 4:EUD_2036, 5:EUD_2041, 6:EUD_2046, 7:EUD_2051}         
+        series_list = []
+        for j in np.arange(2,len(EUD_dict)):
+            EUD_dict[j].set_index('parameter_name', inplace=True)
+            EUD_dict[j].drop(columns=['Category','Subcategory','Units'], inplace=True) 
+            m = EUD_dict[j].shape[0]
+            n = EUD_dict[j].shape[1] 
+            index0 = np.array([year_list[j]] * m * n)
+            index1 = np.array(np.repeat(EUD_dict[j].index.to_list(), n))
+            index2 = np.array(EUD_dict[j].columns.to_list() * m)
+            series_list.append(pd.Series(EUD_dict[j].values.flatten(), index=[index0, index1, index2]))   
+        eud_series_full = pd.concat(series_list)
+        eud_ampl = apy.DataFrame.from_pandas(eud_series_full)
+        ampl.set_params('end_uses_demand_year', eud_ampl)
     
     # Distinguish between imported and locally-produced content for each technology. Imported content is subject to exchange rate fluctuations.
     c_inv_ampl = ampl.get_param('c_inv').to_list()
     c_inv_ampl = pd.DataFrame(c_inv_ampl, columns=['Year', 'Technologies', 'Value'])
     # Read for reach technology, what fraction of it is locally produced in terms of added value
-    Technos_local_fraction = pd.read_csv('Technos_information.csv')
-    Technos_local_fraction.drop(columns=['Lifetime','Included_in_real_cost_2021'], inplace=True)
+    if country=='Colombia':
+        Technos_local_fraction = pd.read_csv('Technos_information_CO.csv')
+        Technos_local_fraction.drop(columns=['Lifetime','Included_in_real_cost_2021'], inplace=True)
+        en0 = 3.74424417 # Exchange rate value at the start year of 2021, given in k COP / USD
+    elif country=='Turkey':
+        Technos_local_fraction = pd.read_csv('Technos_information_TK.csv')
+        en0 = 5.36731    # Exchange rate value at the start year of 2019, given in TL / USD
     c_inv_ampl = pd.merge(c_inv_ampl, Technos_local_fraction, on='Technologies', how='left')
     c_inv_ampl.fillna(0, inplace=True)
-    en0 = 3.74424417 # Exchange rate value at the start year of 2021, given in k COP / USD 2021
     # Include the evolution of the exchange rate given by GEMMES
     en = pd.read_csv('exchange_rate.csv')
     en.set_index('Unnamed: 0', inplace=True)
@@ -251,7 +256,7 @@ def run_EnergyScope():
     en_yearly.reset_index(inplace=True)
     en_yearly.rename(columns={'index': 'Year'}, inplace=True)
     c_inv_ampl = pd.merge(c_inv_ampl, en_yearly, on='Year', how='left')
-    c_inv_ampl['Value'] *= en0 # Convert constant USD to constant k COP
+    c_inv_ampl['Value'] *= en0 # Convert constant USD to constant k COP or cosntant TL
     c_inv_ampl['Value'] = ( c_inv_ampl['Value']*c_inv_ampl['Local'] + c_inv_ampl['Value']*c_inv_ampl['en']*(1-c_inv_ampl['Local']) ) # The imported fraction of goods is subject to exchange rate's fluctuations
     c_inv_ampl.drop(columns=['Local', 'en'], inplace=True)
     c_inv_ampl.set_index(['Year', 'Technologies'], inplace=True)
@@ -261,16 +266,19 @@ def run_EnergyScope():
     # We assume that all maintenance costs are local costs
     c_maint_ampl = ampl.get_param('c_maint').to_list()
     c_maint_ampl = pd.DataFrame(c_maint_ampl, columns=['Year', 'Technologies', 'Value'])
-    c_maint_ampl['Value'] *= en0 # Convert constant USD to constant k COP
+    c_maint_ampl['Value'] *= en0 # Convert constant USD to constant k COP or constant TL
     c_maint_ampl.set_index(['Year', 'Technologies'], inplace=True)
     c_maint_ampl = apy.DataFrame.from_pandas(c_maint_ampl)
     ampl.set_params('c_maint', c_maint_ampl)
     
     c_op_ampl = ampl.get_param('c_op').to_list()
     c_op_ampl = pd.DataFrame(c_op_ampl, columns=['Year', 'Resources', 'Value'])
-    Non_local_resources = ['URANIUM', 'H2', 'ELECTRICITY', 'AMMONIA_RE', 'METHANOL_RE', 'IMPORTED_COAL', 'METHANOL', 'H2_RE', 'AMMONIA', 'ELEC_EXPORT', 'IMPORTED_GAS', 'H2_EXPORT', 'GAS_RE_EXPORT', 'AMMONIA_EXPORT', 'METHANOL_EXPORT']
+    if country=='Colombia':
+        Non_local_resources = ['URANIUM', 'H2', 'ELECTRICITY', 'AMMONIA_RE', 'METHANOL_RE', 'IMPORTED_COAL', 'METHANOL', 'H2_RE', 'AMMONIA', 'ELEC_EXPORT', 'IMPORTED_GAS', 'H2_EXPORT', 'GAS_RE_EXPORT', 'AMMONIA_EXPORT', 'METHANOL_EXPORT']
+    elif country=='Turkey':
+        Non_local_resources = ['URANIUM', 'H2', 'ELECTRICITY', 'AMMONIA_RE', 'METHANOL_RE', 'IMPORTED_COAL', 'GASOLINE', 'DIESEL', 'LFO', 'BIOETHANOL', 'BIODIESEL', 'METHANOL', 'H2_RE', 'AMMONIA', 'ELEC_EXPORT', 'IMPORTED_GAS', 'H2_EXPORT', 'GAS_RE_EXPORT', 'AMMONIA_EXPORT', 'METHANOL_EXPORT']
     c_op_ampl = pd.merge(c_op_ampl, en_yearly, on='Year', how='left')
-    c_op_ampl['Value'] *= en0 # Convert constant USD to constant k COP
+    c_op_ampl['Value'] *= en0 # Convert constant USD to constant k COP or constant TL
     c_op_ampl.loc[c_op_ampl['Resources'].isin(Non_local_resources),'Value'] *= np.array(c_op_ampl.loc[c_op_ampl['Resources'].isin(Non_local_resources),'en'].astype(float).values).round(4) # The imported resources are subject to exchange rate's fluctuations
     c_op_ampl.drop(columns=['en'], inplace=True)
     c_op_ampl.set_index(['Year', 'Resources'], inplace=True)
@@ -279,7 +287,7 @@ def run_EnergyScope():
     
     gwp_cost_ampl = ampl.get_param('gwp_cost').to_list()
     gwp_cost_ampl = pd.DataFrame(gwp_cost_ampl, columns=['Year', 'Value'])
-    gwp_cost_ampl['Value'] *= en0 # Convert constant USD to constant k COP
+    gwp_cost_ampl['Value'] *= en0 # Convert constant USD to constant k COP or constant TL
     gwp_cost_ampl.set_index(['Year'], inplace=True)
     gwp_cost_ampl = gwp_cost_ampl.round(3)
     gwp_cost_ampl.to_csv('CO2_costs_COP.csv')
