@@ -31,7 +31,7 @@ extraction, transportation and combustion. In addition, data for fuel
 combustion are taken from :cite:t:`Quaschning2015`.
 
 Regarding the costs, they are all expressed in *real*\  [2]_ US Dollars for the year 2021 (USD\ :sub:`2021`).
-If not specified, USD refers to USD\ :sub:`2021`. Unless indicated otherwise, the costs are the same as in
+If not specified, USD refers to USD\ :sub:`2021`. When no value is given, the costs are the same as in
 the other versions of EnergyScope, except that they are expressed in USD\ :sub:`2021` instead of €\ :sub:`2015`.
 The conversion from €\ :sub:`2015` to USD\ :sub:`2021` is performed via Eq. :eq:`eqn:currency_conv_1`. 
 
@@ -2754,7 +2754,7 @@ Calibration of EnergyScope to the 2021 energy system
 ----------------------------------------------------
 
 After having found values for all parameters of the model, as described in the previous sections, it
-is time to verify that the model's simulation of the 2021 Colombian energy system is coherent with historical
+is time to verify that the model simulation of the 2021 Colombian energy system is coherent with historical
 data. A practical check is to verify that CO :sub:`2`-eq emissions match. Indeed, CO :sub:`2`-eq
 emissions derive from the laws of natural sciences and are independent of the economic assumptions chosen.
 They therefore give a more objective metric for comparison purposes.
@@ -2772,14 +2772,14 @@ given in :numref:`Table %s <tab:2021_CO2_check>`.
       :name: tab:2021_CO2_check
 		
 		 , [GWh] , [tCO :sub:`2`-eq/MWh :sub:`fuel`] , [MtCO :sub:`2`-eq] , [MtCO :sub:`2`-eq]
-		coal , 40 990 , 0.36 , 14.8 , 14
-		natural gas , 76 295 , 0.20 , 15.3 , 18
-		gasoline , 69 438 , 0.25 , 15.9, 17.7 [37c]_
-		diesel , 70 949 , 0.27 , 19.2 , 19.5 [37c]_
-		LFO , 40 769 , 0.26 , 10.6 , 10.8 [37c]_
+		coal , 41 005 , 0.36 , 14.8 , 14
+		natural gas , 79 660 , 0.20 , 15.9 , 18
+		gasoline , 63 438 , 0.25 , 15.9, 16.7 [37c]_
+		diesel , 70 949 , 0.27 , 19.2 , 20.1 [37c]_
+		LFO , 40 769 , 0.26 , 10.6 , 11.1 [37c]_
 		bio-ethanol , 6 179 , 0.25 , 1.5 , ~ [37d]_
 		bio-diesel , 2 540 , 0.27 , 0.7 , ~ [37d]_
-		woody biomass , 38 357 , 0.39 , 15.0 , ~ [37d]_
+		woody biomass , 38 880 , 0.39 , 15.2 , ~ [37d]_
 
 .. [37a]
    Obtained after running EnergyScope with the 2021 data. 
@@ -2812,14 +2812,14 @@ resource type in :numref:`Table %s <tab:2021_gwp>`.
       :name: tab:2021_gwp
 		
 		 , [GWh] , [tCO :sub:`2`-eq/MWh :sub:`fuel`] , [MtCO :sub:`2`-eq]
-		coal , 40 990 , 0.40 , 16.5
-		natural gas , 76 295 , 0.27 , 20.3
+		coal , 41 005 , 0.40 , 16.5
+		natural gas , 79 660 , 0.27 , 21.2
 		gasoline , 63 438 , 0.34 , 21.9
 		diesel , 70 949 , 0.31 , 22.3
 		LFO , 40 769 , 0.31 , 12.7
 		bio-ethanol , 6 179 , 0 , 0
 		bio-diesel , 2 540 , 0 , 0
-		woody biomass , 38 357 , 0.01 , 0.5
+		woody biomass , 38 880 , 0.01 , 0.5
 
 .. [38a]
    Obtained after running EnergyScope with the 2021 data. 
