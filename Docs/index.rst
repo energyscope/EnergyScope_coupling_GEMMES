@@ -3,9 +3,9 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-The EnergyScope model
-=====================
-EnergyScope is an open-source, whole-energy system model for national or regional energy systems. The model optimises the design and hourly operation of the energy system over a target year.
+The EnergyScope Typical Day model
+=================================
+EnergyScope Typical Day (ESTD) is an open-source, whole-energy system model for national or regional energy systems. The model optimises the design and hourly operation of the energy system over a target year.
 
 
 .. .. figure:: /images/estd_graphical_abstract.png
@@ -13,7 +13,7 @@ EnergyScope is an open-source, whole-energy system model for national or regiona
    :name: fig:graphical_abstract
    :width: 16cm
 
-EnergyScope is developed by EPFL (Switzerland) and UCLouvain (Belgium).
+EnergyScope Typical Day is developed by EPFL (Switzerland) and UCLouvain (Belgium).
 This documentation introduces the version of EnergyScope applied to Colombia and Turkey. The main performances of EnergyScope are detailed in the :doc:`/sections/Overview` Section. The :doc:`/sections/Releases` Section gives more information on the various versions of the model, as well as applications and acknowledgments. Section :doc:`/sections/Model formulation` presents the structure and equations of the model, which apply both for the Colombian and Turkish case studies.
 Finally, Sections :doc:`/sections/Input Data - Colombia` and :doc:`/sections/Input Data - Turkey` present the data, sources and assumptions specific to each case study.
 
@@ -21,7 +21,7 @@ Finally, Sections :doc:`/sections/Input Data - Colombia` and :doc:`/sections/Inp
 Downloading EnergyScope
 =======================
 
-The public version of EnergyScope can be downloaded in the Releases section or from its github repository (using the Clone or Download button on the right side of the screen): https://github.com/energyscope/EnergyScope
+The public version of EnergyScope Typical Day can be downloaded in the Releases section or from its github repository (using the Clone or Download button on the right side of the screen): https://github.com/energyscope/EnergyScope
 
 One might be interested by two different versions:
 
