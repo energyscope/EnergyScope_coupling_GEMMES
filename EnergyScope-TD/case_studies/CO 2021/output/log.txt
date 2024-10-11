@@ -1,1 +1,48 @@
-<BREAK>
+
+Presolve eliminates 1115881 constraints and 705555 variables.
+"option presolve 10;" used, but "option presolve 11;" might work better.
+Adjusted problem:
+239448 variables, all linear
+440774 constraints, all linear; 1369213 nonzeros
+	320437 equality constraints
+	120337 inequality constraints
+1 linear objective; 1 nonzero.
+
+Setting $presolve_fixeps >= 4.36e-07 could change presolve results.
+
+presolve results:
+	variables omitted:	705267
+	constraints omitted:	1115881
+	ranges relaxed:		11568
+	bounds improved:	706046
+	constraint_drop_tol breakpoints: 0, 0, 4.173043478375542
+	nba cycles:		9
+	bound row scans:	273241
+	row-scan updates:	34072
+Gurobi 11.0.3:   pre:dual = -1
+  alg:method = 2
+  bar:crossover = 0
+  pre:passes = 3
+  bar:convtol = 1e-06
+  pre:solve = -1
+Gurobi 11.0.3: optimal solution; objective 67363.12426
+0 simplex iterations
+35 barrier iterations
+solve_result = solved
+
+solve_result_num = 0
+
+_solve_elapsed_time = 10.2311
+
+TotalCost 67363.12426199342
+Carbon_cost 0
+GWP_op 94057.00682326875
+carbon_price 0
+--------------SAVING COSTS -----------
+--------------SAVING RESOURCES -----------
+--------------SAVING GWP -----------
+--------------SAVING Losses -----------
+--------------SAVING ASSETS -----------
+--------------SAVING STORAGE -----------
+--------------SAVING LAYERS -----------
+--------- SAVING SANKEY --------

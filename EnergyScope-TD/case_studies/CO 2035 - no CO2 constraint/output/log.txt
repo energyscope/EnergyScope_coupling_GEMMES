@@ -1,51 +1,47 @@
 
-Presolve eliminates 972437 constraints and 626463 variables.
-"option presolve 10;" used, but "option presolve 6;" would suffice.
+Presolve eliminates 972450 constraints and 626473 variables.
+"option presolve 10;" used, but "option presolve 5;" would suffice.
 Adjusted problem:
-319121 variables, all linear
-585085 constraints, all linear; 1847596 nonzeros
-	392930 equality constraints
-	192155 inequality constraints
+319694 variables, all linear
+585371 constraints, all linear; 1848451 nonzeros
+	392639 equality constraints
+	192732 inequality constraints
 1 linear objective; 1 nonzero.
 
 presolve results:
-	variables omitted:	626463
-	constraints omitted:	972437
-	ranges relaxed:		34521
-	bounds improved:	624752
-	constraint_drop_tol breakpoints: 0, 0, 20776.729964049387
-	nba cycles:		5
-	bound row scans:	375963
-	row-scan updates:	41763
-The license for this solver will expire in 7.3 days.
-Gurobi 10.0.3:   pre:dual = -1
+	variables omitted:	626473
+	constraints omitted:	972450
+	ranges relaxed:		34522
+	bounds improved:	624762
+	constraint_drop_tol breakpoints: 0, 0, 16442.519999758137
+	nba cycles:		4
+	bound row scans:	375952
+	row-scan updates:	41467
+Gurobi 11.0.3:   pre:dual = -1
   alg:method = 2
   bar:crossover = 0
   pre:passes = 3
   bar:convtol = 1e-06
   pre:solve = -1
-Gurobi 10.0.3: optimal solution; objective 50949.82558
+Gurobi 11.0.3: optimal solution; objective 59412.82492
 0 simplex iterations
-87 barrier iterations
+75 barrier iterations
  
 ------------ WARNINGS ------------
-WARNING:  "Solution Check"
-     [ sol:chk:feastol=1e-06, :feastolrel=1e-06, :inttol=1e-05,
-       :round='', :prec='' ]
-Algebraic expression violations:
-  - 25 original expression(s) of type ':linrange',
-        up to 1E-04 (abs)
- 
- 
+WARNING:  "Tolerance violations"
+  Type                         MaxAbs [Name]   MaxRel [Name]
+* algebraic con(s)             3E-05           -             
+*: Using the solver's aux variable values.
+Documentation: mp.ampl.com/modeling-tools.html#automatic-solution-check.
 solve_result = solved
 
 solve_result_num = 0
 
-_solve_elapsed_time = 51.8393
+_solve_elapsed_time = 41.9857
 
-TotalCost 50949.82557673353
+TotalCost 59412.82491979843
 Carbon_cost 0
-GWP_op 44527.06783559892
+GWP_op 103405.7365625829
 carbon_price 0
 --------------SAVING COSTS -----------
 --------------SAVING RESOURCES -----------

@@ -1,47 +1,47 @@
 
-Presolve eliminates 972448 constraints and 626471 variables.
-"option presolve 10;" used, but "option presolve 6;" would suffice.
+Presolve eliminates 972450 constraints and 626473 variables.
+"option presolve 10;" used, but "option presolve 5;" would suffice.
 Adjusted problem:
-319404 variables, all linear
-585080 constraints, all linear; 1847294 nonzeros
-	392638 equality constraints
-	192442 inequality constraints
+319694 variables, all linear
+585371 constraints, all linear; 1848451 nonzeros
+	392639 equality constraints
+	192732 inequality constraints
 1 linear objective; 1 nonzero.
 
 presolve results:
-	variables omitted:	626471
-	constraints omitted:	972448
-	ranges relaxed:		34523
-	bounds improved:	624760
-	constraint_drop_tol breakpoints: 0, 0, 16442.519999690863
-	nba cycles:		5
-	bound row scans:	375669
-	row-scan updates:	41497
-Gurobi 11.0.1:   pre:dual = -1
+	variables omitted:	626473
+	constraints omitted:	972450
+	ranges relaxed:		34522
+	bounds improved:	624762
+	constraint_drop_tol breakpoints: 0, 0, 16442.519999758137
+	nba cycles:		4
+	bound row scans:	375955
+	row-scan updates:	41470
+Gurobi 11.0.3:   pre:dual = -1
   alg:method = 2
   bar:crossover = 0
   pre:passes = 3
   bar:convtol = 1e-06
   pre:solve = -1
-Gurobi 11.0.1: optimal solution; objective 61954.34862
+Gurobi 11.0.3: optimal solution; objective 61958.35466
 0 simplex iterations
-66 barrier iterations
+70 barrier iterations
  
 ------------ WARNINGS ------------
 WARNING:  "Tolerance violations"
   Type                         MaxAbs [Name]   MaxRel [Name]
-* expr '_linrange'             6E-04           -             
+* algebraic con(s)             2E-06           -             
 *: Using the solver's aux variable values.
 Documentation: mp.ampl.com/modeling-tools.html#automatic-solution-check.
 solve_result = solved
 
 solve_result_num = 0
 
-_solve_elapsed_time = 28.1991
+_solve_elapsed_time = 37.361
 
-TotalCost 61954.34862151626
+TotalCost 61958.35466285969
 Carbon_cost 0
-GWP_op 37645.00008860709
+GWP_op 37623.00000034873
 carbon_price 0
 --------------SAVING COSTS -----------
 --------------SAVING RESOURCES -----------
