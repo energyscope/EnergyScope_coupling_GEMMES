@@ -81,11 +81,11 @@ param efuels_export_bound :=            # [GWh/year]
 YEAR_2015	0 																																																																																																																
 YEAR_2020	0																																																																																																																
 YEAR_2025	0																																																																																																																
-YEAR_2030	INFINITY																																																																																																											
-YEAR_2035	INFINITY 																																																																																																																
-YEAR_2040	INFINITY 																																																																																																																
-YEAR_2045	INFINITY																																																																																																																
-YEAR_2050	INFINITY																																																																																																																
+YEAR_2030	0 # INFINITY																																																																																																											
+YEAR_2035	0 # INFINITY 																																																																																																																
+YEAR_2040	0 # INFINITY 																																																																																																																
+YEAR_2045	0 # INFINITY																																																																																																																
+YEAR_2050	0 # INFINITY																																																																																																																
 ;
 
 # Part [2.4]																																																																																																																	

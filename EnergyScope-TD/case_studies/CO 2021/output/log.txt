@@ -25,18 +25,25 @@ Gurobi 11.0.3:   pre:dual = -1
   pre:passes = 3
   bar:convtol = 1e-06
   pre:solve = -1
-Gurobi 11.0.3: optimal solution; objective 67363.12426
+Gurobi 11.0.3: optimal solution; objective 51211.19882
 0 simplex iterations
-35 barrier iterations
+34 barrier iterations
+ 
+------------ WARNINGS ------------
+WARNING:  "Tolerance violations"
+  Type                         MaxAbs [Name]   MaxRel [Name]
+* algebraic con(s)             3E-05           -             
+*: Using the solver's aux variable values.
+Documentation: mp.ampl.com/modeling-tools.html#automatic-solution-check.
 solve_result = solved
 
 solve_result_num = 0
 
-_solve_elapsed_time = 10.2311
+_solve_elapsed_time = 10.3983
 
-TotalCost 67363.12426199342
+TotalCost 51211.19881860889
 Carbon_cost 0
-GWP_op 94057.00682326875
+GWP_op 95112.63099844665
 carbon_price 0
 --------------SAVING COSTS -----------
 --------------SAVING RESOURCES -----------

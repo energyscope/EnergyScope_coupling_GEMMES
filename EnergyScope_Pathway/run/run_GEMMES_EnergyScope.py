@@ -7,11 +7,11 @@ September 2024
 
 ## Define which model you want to run: GEMMES, EnergyScope or the coupling of the two
 # mode = 'GEMMES_only'
-mode = 'EnergyScope_only'
-# mode = 'GEMMES-EnergyScope'
+# mode = 'EnergyScope_only'
+mode = 'GEMMES-EnergyScope'
 
 ## Define the country studied and the time granularity of EnergyScope
-country = 'Turkey'                  # Choose between Colombia and Turkey
+country = 'Colombia'                  # Choose between Colombia and Turkey
 EnergyScope_granularity = 'MO'  # MO = Monthly resolution, TD = Typical Day (hourly resolution - takes much more time to run)
 nbr_tds = 12
 
@@ -42,7 +42,7 @@ def main():
         diff = 1
         n_iter = 1
         diff_list = [0]
-        while(diff > 0.03):
+        while(diff > 0.03 and n_iter<4): ###############
             EUD_previous = EUD_current
             n_iter += 1
             output_EnergyScope = run_EnergyScope()
@@ -339,7 +339,7 @@ def post_process_EnergyScope_outputs(EnergyScope_output_file, ampl_0, variables_
     C_inv.drop(['DAM_STORAGE','BEV_BATT','EFFICIENCY'], level='Technologies', inplace=True)
     
     ## For each technology, divide its investment costs between local and imported
-    Technos_local_fraction = pd.read_csv('Technos_information.csv')
+    Technos_local_fraction = pd.read_csv('Technos_information_CO.csv')
     Technos_local_fraction.drop(columns=['Lifetime','Included_in_real_cost_2021'], inplace=True)
     C_inv.reset_index(inplace=True)
     C_inv = pd.merge(C_inv, Technos_local_fraction, on='Technologies')
@@ -444,7 +444,7 @@ def post_process_EnergyScope_outputs(EnergyScope_output_file, ampl_0, variables_
     Cost_breakdown_non_annualised_bis['C_op_M'] = Cost_breakdown_non_annualised_bis['C_op'] * Cost_breakdown_non_annualised_bis['Imported']
     Cost_breakdown_non_annualised_bis = Cost_breakdown_non_annualised_bis.sum()
     Cost_breakdown_non_annualised_bis.drop(index=['C_inv','C_maint_CO','C_maint_M','C_op','Local','Imported'], inplace=True)
-    Technos_information = pd.read_csv('Technos_information.csv')
+    Technos_information = pd.read_csv('Technos_information_CO.csv')
     Technos_information.rename(columns={'Technologies':'Elements'}, inplace=True)
     Cost_breakdown_non_annualised = pd.merge(Cost_breakdown_non_annualised, Technos_information, on='Elements')
     Cost_breakdown_non_annualised['C_inv_per_year'] = Cost_breakdown_non_annualised['C_inv'] / Cost_breakdown_non_annualised['Lifetime']
@@ -465,7 +465,7 @@ def post_process_EnergyScope_outputs(EnergyScope_output_file, ampl_0, variables_
     
     ## Compute a adjustment factor to fit the costs from EnergyScope to the real cost of the energy system given by DNP
     variables_GEMMES_2021 = variables_GEMMES.loc[(variables_GEMMES.index>=2021) & (variables_GEMMES.index<2022)].mean()
-    Real_energy_system_cost_2021 = 33.323773083 # billion 2021 COP, according to DNP
+    Real_energy_system_cost_2021 = 33323.773083 # billion 2021 COP, according to DNP
     adjustment_factor = Real_energy_system_cost_2021 / ( variables_GEMMES_2021['p'] * Cost_breakdown_2021_for_comparison_with_real_cost ) # The adjustment factor also allows to transform the phase costs into yearly costs (division by 5 included in the factor)
     
     

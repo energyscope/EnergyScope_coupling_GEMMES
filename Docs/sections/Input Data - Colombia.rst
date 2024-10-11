@@ -2773,13 +2773,13 @@ given in :numref:`Table %s <tab:2021_CO2_check>`.
 		
 		 , [GWh] , [tCO :sub:`2`-eq/MWh :sub:`fuel`] , [MtCO :sub:`2`-eq] , [MtCO :sub:`2`-eq]
 		coal , 41 005 , 0.36 , 14.8 , 14
-		natural gas , 75 719 , 0.20 , 15.3 , 18
+		natural gas , 79 660 , 0.20 , 15.9 , 18
 		gasoline , 63 438 , 0.25 , 15.9, 16.7 [37c]_
 		diesel , 70 949 , 0.27 , 19.2 , 20.1 [37c]_
 		LFO , 40 769 , 0.26 , 10.6 , 11.1 [37c]_
 		bio-ethanol , 6 179 , 0.25 , 1.5 , ~ [37d]_
 		bio-diesel , 2 540 , 0.27 , 0.7 , ~ [37d]_
-		woody biomass , 38 466 , 0.39 , 15.0 , ~ [37d]_
+		woody biomass , 38 880 , 0.39 , 15.2 , ~ [37d]_
 
 .. [37a]
    Obtained after running EnergyScope with the 2021 data. 
@@ -2813,13 +2813,13 @@ resource type in :numref:`Table %s <tab:2021_gwp>`.
 		
 		 , [GWh] , [tCO :sub:`2`-eq/MWh :sub:`fuel`] , [MtCO :sub:`2`-eq]
 		coal , 41 005 , 0.40 , 16.5
-		natural gas , 75 719 , 0.27 , 20.2
+		natural gas , 79 660 , 0.27 , 21.2
 		gasoline , 63 438 , 0.34 , 21.9
 		diesel , 70 949 , 0.31 , 22.3
 		LFO , 40 769 , 0.31 , 12.7
 		bio-ethanol , 6 179 , 0 , 0
 		bio-diesel , 2 540 , 0 , 0
-		woody biomass , 38 466 , 0.01 , 0.5
+		woody biomass , 38 880 , 0.01 , 0.5
 
 .. [38a]
    Obtained after running EnergyScope with the 2021 data. 

@@ -1,6 +1,0 @@
-24/10/11 17:13:26 [INFO    ] (import_data): Importing data files from /home/pjacques/Desktop/PhD/EnergyScope_GEMMES_coupling/EnergyScope-TD/Data/CO 2035
-24/10/11 17:13:26 [INFO    ] (print_data): Printing ESTD_data.dat
-24/10/11 17:13:26 [INFO    ] (print_data): Printing ESTD_12TD.dat
-24/10/11 17:13:26 [INFO    ] (run_es): Running EnergyScope
-24/10/11 17:14:35 [INFO    ] (run_es): End of run
-24/10/11 17:14:36 [INFO    ] (read_outputs): Reading outputs from: /home/pjacques/Desktop/PhD/EnergyScope_GEMMES_coupling/EnergyScope-TD/case_studies/CO 2035 - net zero/output
