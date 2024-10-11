@@ -12,7 +12,11 @@ mode = 'GEMMES-EnergyScope'
 
 ## Define the country studied and the time granularity of EnergyScope
 country = 'Colombia'                  # Choose between Colombia and Turkey
+<<<<<<< HEAD
 EnergyScope_granularity = 'MO'  # MO = Monthly resolution, TD = Typical Day (hourly resolution - takes much more time to run)
+=======
+EnergyScope_granularity = 'TD'  # MO = Monthly resolution, TD = Typical Day (hourly resolution - takes much more time to run)
+>>>>>>> master
 nbr_tds = 12
 
 ## Define which results to save and/or plot
@@ -42,7 +46,11 @@ def main():
         diff = 1
         n_iter = 1
         diff_list = [0]
+<<<<<<< HEAD
         while(diff > 0.03 and n_iter<4): ###############
+=======
+        while(diff > 0.03 and n_iter < 2):
+>>>>>>> master
             EUD_previous = EUD_current
             n_iter += 1
             output_EnergyScope = run_EnergyScope()
