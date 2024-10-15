@@ -102,7 +102,7 @@
  ##  PARAMETERS  presented  in  Table  2.	 
  param  i_rate  :=  0.064;  #  part  [2.7.4] 
  param  re_share_primary  :=  0;  #  Minimum  RE  share  in  primary  consumption 
- param  gwp_limit  :=  37623;  #  gwp_limit  [ktCO2-eq./year]:  maximum  GWP  emissions 
+ param  gwp_limit  :=  38040;  #  gwp_limit  [ktCO2-eq./year]:  maximum  GWP  emissions 
  param  solar_area_rooftop  :=  529; 
  param  solar_area_ground  :=  3809; 
  param  solar_area_ground_high_irr  :=  70; 
@@ -462,7 +462,7 @@ DIESEL	Infinity	0.3148	0.02366
 BIOETHANOL	50000.0	0.0	0.08822
 BIODIESEL	50000.0	0.0	0.04731
 LFO	Infinity	0.3115	0.03007
-GAS	Infinity	0.2666	0.0254
+GAS	13000.0	0.2666	0.0254
 IMPORTED_GAS	0.0	0.2666	0.03903
 WOOD	24600.0	0.0118	0.00474
 WET_BIOMASS	29900.0	0.0118	0.00066

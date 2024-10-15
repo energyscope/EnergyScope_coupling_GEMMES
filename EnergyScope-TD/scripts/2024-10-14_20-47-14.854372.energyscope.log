@@ -1,0 +1,6 @@
+24/10/14 20:47:14 [INFO    ] (import_data): Importing data files from /home/pjacques/Desktop/PhD/EnergyScope_GEMMES_coupling/EnergyScope-TD/Data/TK 2035
+24/10/14 20:47:14 [INFO    ] (print_data): Printing ESTD_data.dat
+24/10/14 20:47:15 [INFO    ] (print_data): Printing ESTD_12TD.dat
+24/10/14 20:47:15 [INFO    ] (run_es): Running EnergyScope
+24/10/14 20:48:50 [INFO    ] (run_es): End of run
+24/10/14 20:48:51 [INFO    ] (read_outputs): Reading outputs from: /home/pjacques/Desktop/PhD/EnergyScope_GEMMES_coupling/EnergyScope-TD/case_studies/TK 2035 - CO2 constraint minus 60%/output

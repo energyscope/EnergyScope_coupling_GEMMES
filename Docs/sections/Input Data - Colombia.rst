@@ -9,7 +9,7 @@ Input Data - Colombia
 ..
 
 This section details the input data utilized in applying the LP modeling framework to the Colombia case study.
-The primary objective is to provide data for modelling a prospective Colombian energy system for the year 2035.
+The primary objective is to provide data for modelling a prospective Colombian energy system for the year 2036.
 Additionally, we provide the necessary data to reproduce the historical Colombian energy system for the year 2021,
 serving as a validation of EnergyScope's accuracy in modeling this intricate system.
 
@@ -95,14 +95,14 @@ Additionnaly, Colombia has a limited geothermal potential. In EnergyScope, the l
 Solar, wind, hydro and geothermal
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-:numref:`Table %s <tab:renewableTechPotentialIn2035>` gives the 2050 Colombian potential for solar, wind, hydro and geothermal energy. These data are put into perspective with the values used for the calibration to the year 2021.
+:numref:`Table %s <tab:renewableTechPotentialIn2036>` gives the 2050 Colombian potential for solar, wind, hydro and geothermal energy. These data are put into perspective with the values used for the calibration to the year 2021.
       
 .. container::
 
    .. csv-table:: Comparison of installed capacity of technologies for renewable electricity generation in 2021 with their maximum potentials. Abbreviations: maximum (max.), photovoltaic panel (PV), Concentrated Solar Power (CSP).
       :header: **Technology**, **2021**\  [5a]_ , **max. potential** , **Units**
       :widths: 15 15 15 15
-      :name: tab:renewableTechPotentialIn2035
+      :name: tab:renewableTechPotentialIn2036
    
       hydro dam , 8.14 [5b]_ , 21.2 [5c]_ , [GW]
       hydro river , 3.78 [5b]_ , 3.78 [5c]_ , [GW]
@@ -140,7 +140,7 @@ Solar, wind, hydro and geothermal
       No constraint on the number of GW installable. The real constraint is on the availability of woody biomass (see below).
         
 
-As described by eqs. :eq:`eq:solarAreaRooftopLimited` - :eq:`eq:solarAreaGroundHighIrrLimited`, the potential of solar technologies is constrained by the available areas for their deployment. The values for these available areas, as well as the other parameters present in eqs. :eq:`eq:solarAreaRooftopLimited` - :eq:`eq:solarAreaGroundHighIrrLimited`, are given in :numref:`Table %s <tab:solarArea>`. The values of maximum installed capacities indicated in :numref:`Table %s <tab:renewableTechPotentialIn2035>` are a simplified translation of these equations into [GW] constraints.
+As described by eqs. :eq:`eq:solarAreaRooftopLimited` - :eq:`eq:solarAreaGroundHighIrrLimited`, the potential of solar technologies is constrained by the available areas for their deployment. The values for these available areas, as well as the other parameters present in eqs. :eq:`eq:solarAreaRooftopLimited` - :eq:`eq:solarAreaGroundHighIrrLimited`, are given in :numref:`Table %s <tab:solarArea>`. The values of maximum installed capacities indicated in :numref:`Table %s <tab:renewableTechPotentialIn2036>` are a simplified translation of these equations into [GW] constraints.
 
 .. container::
 
@@ -166,7 +166,7 @@ As described by eqs. :eq:`eq:solarAreaRooftopLimited` - :eq:`eq:solarAreaGroundH
    .. [6c]
       Based on existing design configurations (c.f. Section 2.5 of :cite:`dupont_2020`)
       
-Note that the ground areas given in :numref:`Table %s <tab:renewableTechPotentialIn2035>`
+Note that the ground areas given in :numref:`Table %s <tab:renewableTechPotentialIn2036>`
 are not the total areas occupied by the solar power plants, but only the areas occupied 
 by the solar panels themselves. In utility plants, panels are oriented perpendicular 
 to the sunlight. As a consequence, a space is required to avoid shadow between rows of panels.
@@ -195,14 +195,14 @@ biomass* and not as *non-renewable waste*. *Non-renewable waste* accounts for co
 not landfill (composting, recycling) and paper cardboard. Finally, *biofuels* are splitted into *bioethanol* and
 *biodiesel*. These are assumed perfectly substitutable to fossil gasoline and diesel, respectively.
 
-:numref:`Table %s <tab:renewableResourcesPotentialIn2035>` gives the Colombian potential for biomass and non-renewable waste, together with their values used for the calibration to the year 2021.
+:numref:`Table %s <tab:renewableResourcesPotentialIn2036>` gives the Colombian potential for biomass and non-renewable waste, together with their values used for the calibration to the year 2021.
 
 .. container::
 
    .. csv-table:: Biomass and waste resources consumed in 2021 and their potential.
       :header: **Resources** , **2021** , **Max. potential** , **Units**
       :widths: 15 15 15 15
-      :name: tab:renewableResourcesPotentialIn2035
+      :name: tab:renewableResourcesPotentialIn2036
 
 		bioethanol , 7.2 [7a]_ , 50 [7b]_ , [TWh]
 		biodiesel , 2.5 [7a]_ , 50 [7b]_ , [TWh]
@@ -225,7 +225,7 @@ not landfill (composting, recycling) and paper cardboard. Finally, *biofuels* ar
    .. [7e] 
       According to :cite:`IDEAM2023`, Colombia annually produces around 1.5 million tons of non-renewable waste. We multiply this figure by an energy content of 13.7 MJ/kg (taken from :cite:`usEnergy_2019`) to obtain the total potential.
       
-The corresponding cost for year 2035 and GHG emissions are given in :numref:`Table %s <tab:costs_resources_biomass>`. Two metrics are proposed for GHG emissions:
+The corresponding cost for year 2036 and GHG emissions are given in :numref:`Table %s <tab:costs_resources_biomass>`. Two metrics are proposed for GHG emissions:
 one accounting for the impact associated with extraction, transportation and
 combustion (based on GWP100a-IPCC2013 :cite:`Moret2017PhDThesis`); the other accounting
 only for direct emissions related to combustion (based on :cite:t:`Quaschning2015`). The first metric
@@ -262,14 +262,14 @@ Fossil fuels
 A large share of fossil fuels used in Colombia is produced and refined domestically :cite:`IEA_2023`. They include coal and hydrocarbons (natural gas, gasoline, diesel, light fuel oil). However, Colombia is also importing an increasing amount of natural gas.
 
 
-The availability of all fossil fuel resources is set to a value high enough to allow unlimited use in the model, except for local natural gas. Its availability in 2035 is set to to 13 TWh, based on :cite:`wtw2023`.
+The availability of all fossil fuel resources is set to a value high enough to allow unlimited use in the model, except for local natural gas. Its availability in 2036 is set to to 13 TWh, based on :cite:`wtw2023`.
 
 :numref:`Table %s <tab:costs_resources_fossil>` therefore gives the costs and GHG emissions associated with both domestic and imported fossil fuels in Colombia. Imported coal is included,
 even though the model never selects it given the lower cost and unbounded potential of local coal.
 
 .. container::
 
-   .. csv-table:: Cost and GHG emissions of domestically produced and imported fossil fuels, in 2035. Abbreviations: Liquid Fuel Oil (LFO).
+   .. csv-table:: Cost and GHG emissions of domestically produced and imported fossil fuels, in 2036. Abbreviations: Liquid Fuel Oil (LFO).
       :header: **Resources** , **c**:sub:`op` [9a]_  , **gwp**:sub:`op` [9b]_ , **CO**:sub:`2direct` [9c]_
       :widths: 15 15 15 15
       :name: tab:costs_resources_fossil
@@ -324,7 +324,7 @@ The corresponding costs and GHG emissions are given in :numref:`Table %s <tab:co
 
 .. container::
 
-   .. csv-table:: Cost and GHG emissions associated to electricity imports and exports, in 2035. Abbreviations: Electricity (elec.).
+   .. csv-table:: Cost and GHG emissions associated to electricity imports and exports, in 2036. Abbreviations: Electricity (elec.).
       :header: **Resources** , **c**:sub:`op` , **gwp**:sub:`op` [11a]_ , **CO**:sub:`2direct`
       :widths: 15 15 15 15
       :name: tab:costs_elec_import_export
@@ -358,7 +358,7 @@ computed import cost. The corresponding values are indicated in :numref:`Table %
 
 .. container::
 
-   .. csv-table:: Cost and GHG emissions associated to electricity imports and exports, in 2035. Abbreviations: Electricity (elec.).
+   .. csv-table:: Cost and GHG emissions associated to electricity imports and exports, in 2036. Abbreviations: Electricity (elec.).
       :header: **Resources** , **c**:sub:`op` **(import)** , **c**:sub:`op` **(export)**
       :widths: 15 15 15
       :name: tab:costs_resources_efuels
@@ -402,7 +402,7 @@ Aggregated values for the calibration of the 2021 EUDs are given in :numref:`Tab
 		non-energy demand , 0,0,22423.0 ,0,[GWh] 
    
 The aim is to compute the evolution of these EUDs across years with GEMMES, which will then feed them to EnergyScope. However, as a first approximation,
-the 2035 EUDs can simply be computed by multiplying the values of :numref:`Table %s <tab:eud_2021>` by 1.4. To obtain the 2050 EUDs,
+the 2036 EUDs can simply be computed by multiplying the values of :numref:`Table %s <tab:eud_2021>` by 1.4. To obtain the 2050 EUDs,
 the values can instead be multiplied by 1.7. These multiplication factors are obtained from a projection for energy demand which was
 given to us by Departamento Nacional de Planeación (DNP), the Colombian National Planning Department.
 
@@ -511,16 +511,16 @@ Renewables
 
 :numref:`Table %s <tab:elec_prod_re>` gives the data for the renewable electricity generation technologies
 modelled in EnergyScope Colombia, together with their sources. The data for :math:`f_{max}` were already
-given in :numref:`Table %s <tab:renewableTechPotentialIn2035>` ("max. potential"). The :math:`f_{min}`
-values for renewable electricity technologies in 2035 are equal to their installed capacity in 2021,
-already given in :numref:`Table %s <tab:renewableTechPotentialIn2035>`. Regarding hydro dam however, the value for
-:math:`f_{min}` in 2035 is equal to the installed capacity in 2021, to which is added the capacity of the 
+given in :numref:`Table %s <tab:renewableTechPotentialIn2036>` ("max. potential"). The :math:`f_{min}`
+values for renewable electricity technologies in 2036 are equal to their installed capacity in 2021,
+already given in :numref:`Table %s <tab:renewableTechPotentialIn2036>`. Regarding hydro dam however, the value for
+:math:`f_{min}` in 2036 is equal to the installed capacity in 2021, to which is added the capacity of the 
 Hidroituango power plant currently under construction (2.4 GW). The maximum (:math:`f_{max,\%}`) and minimum
 (:math:`f_{min,\%}`) shares are imposed to 0 and 100% respectively, i.e. they are not constraining the model.
 
 .. container::
 
-   .. csv-table:: Renewable electricity production technologies in 2035. Abbreviations: concentrated solar power 
+   .. csv-table:: Renewable electricity production technologies in 2036. Abbreviations: concentrated solar power 
       with parabolic trough (CSP PT), concentrated solar power with solar tower (CSP ST).
       :header: **Technology**, **c**:sub:`inv`, **c**:sub:`maint`, **gwp**:sub:`constr` [14aa]_ , **lifetime**, **c**:sub:`p`
       :widths: 19 18 24 23 15 15
@@ -612,7 +612,7 @@ pvlib :cite:`pvlib` packages (to extract pvgis data :cite:`pvgis`). These time s
 by thermal GW of *Collector* installed. These time series are computed 
 for locations of (lat,lon)=(12,-72) and (lat,lon)=(12,-71.25). These locations were identified as the ones having the highest 
 CSP potential, based on the open-source database from :cite:`dupont_2020`. The mean of the two time series is then computed
-to give the yearly :math:`c_{p,t}` time series for Colombia in 2035.
+to give the yearly :math:`c_{p,t}` time series for Colombia in 2036.
 
 Finally, for hydro dam and hydro river, daily incoming water flow to hydro-electric facilities in Colombia was taken from the Sinergox XM 
 website :cite:`hydro_ts`. The daily data for years 2018 to 2022 were normalized and their average was computed to give a yearly profile
@@ -632,7 +632,7 @@ The installed capacity of each technology in 2021 is given as well.
 
 .. container::
 
-   .. csv-table:: Non-renewable electricity production technologies in 2035. Abbreviations: combined cycle gas turbine (CCGT), capacity (capa.).
+   .. csv-table:: Non-renewable electricity production technologies in 2036. Abbreviations: combined cycle gas turbine (CCGT), capacity (capa.).
       :header: **Technology**, **c**:sub:`inv`, **c**:sub:`maint`, **gwp**:sub:`constr` [15a]_ , **lifetime** [15b]_, **c**:sub:`p`, **efficiency**, :math:`CO_{2-direct}` [15c]_, installed capa. (2021) [15i]_
       :widths: 11 17 24 23 12 8 13 8 8
       :name: tab:elec_prod_nre
@@ -657,7 +657,7 @@ The installed capacity of each technology in 2021 is given as well.
    Data from :cite:`iea_-_international_energy_agency_iea_2014-1`   
    
 .. [15e]
-   Data from :cite:`bauer_new_2008`, 0.4-0.5 GW CCGT in 2035 (realistic optimistic scenario)	 
+   Data from :cite:`bauer_new_2008`, 0.4-0.5 GW CCGT in 2036 (realistic optimistic scenario)	 
 
 .. [15f]
    Use of Ammonia in CCGT is at its early stage. Mitsubishi is developping 
@@ -702,7 +702,7 @@ respectively, i.e. they are not constraining the model.
 
 .. container::
 
-   .. table:: Industrial heating and cogeneration technologies, in 2035. Abbreviations: Combined Heat and Power (CHP), electricity (Elec.), Natural Gas (NG).
+   .. table:: Industrial heating and cogeneration technologies, in 2036. Abbreviations: Combined Heat and Power (CHP), electricity (Elec.), Natural Gas (NG).
       :name: tbl:ind_cogen_boiler
    
       +--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+--------------+
@@ -870,7 +870,7 @@ respectively, i.e. they are not constraining the model.
 
 .. container::
 
-   .. table:: District heating technologies, in 2035. Abbreviations: biomass (bio.), CHP, digestion (dig.), hydrolysis (hydro.).
+   .. table:: District heating technologies, in 2036. Abbreviations: biomass (bio.), CHP, digestion (dig.), hydrolysis (hydro.).
       :name: tbl:dhn_cogen_boiler
 
       +------------+------------+------------+------------+------------+------------+------------+------------+------------+
@@ -1032,7 +1032,7 @@ respectively, i.e. they are not constraining the model.
 
 .. container::
 
-   .. table:: Decentralised heating and cogeneration technologies, in 2035. Abbreviations: Combined Heat and Power (CHP), electricity (Elec.), Fuel Cell (FC), Heat Pump (HP), Natural Gas (NG) and thermal (th.).
+   .. table:: Decentralised heating and cogeneration technologies, in 2036. Abbreviations: Combined Heat and Power (CHP), electricity (Elec.), Fuel Cell (FC), Heat Pump (HP), Natural Gas (NG) and thermal (th.).
       :name: tbl:dec_cogen_boiler
 
 
@@ -1274,7 +1274,7 @@ technology to potentially cover the entire demand. The maximum (:math:`f_{max,\%
 
 .. container::
 
-   .. csv-table:: Cooling technologies in 2035. Abbreviations: coefficient of performance (COP).
+   .. csv-table:: Cooling technologies in 2036. Abbreviations: coefficient of performance (COP).
       :header: **Technology**, **c**:sub:`inv` [19a]_, **c**:sub:`maint` [19a]_, **gwp**:sub:`constr`, **lifetime** [15b]_, **c**:sub:`p`, **COP**
       :widths: 11 17 24 23 12 8 13
       :name: tab:cooling_technos
@@ -1307,7 +1307,7 @@ All cost data are first expressed in € :sub:`2015`. They are converted in USD 
 
 .. container::
 
-   .. table:: Specific investment cost calculation based on vehicle investment data, in 2035. Abbreviations: average (av.), Fuel Cell (FC), Hybrid Electric Vehicle (HEV), Natural Gas (NG), Plug-in Hybrid Electric Vehicle (PHEV), public (pub.).
+   .. table:: Specific investment cost calculation based on vehicle investment data, in 2036. Abbreviations: average (av.), Fuel Cell (FC), Hybrid Electric Vehicle (HEV), Natural Gas (NG), Plug-in Hybrid Electric Vehicle (PHEV), public (pub.).
       :name: tbl:mob_specific_costs_calculation
 
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
@@ -1420,13 +1420,13 @@ For public transportation, data for Belgium were collected from various reports
 These data were adapted based on discussions with Belgian experts in the
 field. They are reported in :numref:`Table %s <tbl:mob_specific_costs_calculation>`.
 
-Surprisingly, in 2035, vehicles' costs are similar regardless of the
+Surprisingly, in 2036, vehicles' costs are similar regardless of the
 power-train.  :numref:`Figure %s <fig:car_cost_over_transition>` shows how
 the vehicle cost would vary over the transition, data from
 :cite:`national2013transitions`. Today, we verify a strong
 price difference between the different technologies; this difference
 should decrease along with the development of new technologies. The price
-difference between two technologies will become small as early as 2035
+difference between two technologies will become small as early as 2036
 (:math:`\leq`\ 10%). In their work, the
 :cite:t:`national2013transitions` estimates the cost of
 promising technologies in 2015 lower than the real market price. This is
@@ -1479,7 +1479,7 @@ This technology is added in the following tables.
 
 .. container::
 
-   .. table:: Passenger mobility financial information, in 2035 (based on data in :numref:`Table %s <tbl:mob_specific_costs_calculation>`). Abbreviations: Fuel Cell (FC), Hybrid Electric Vehicle (HEV), Natural Gas (NG), Plug-in Hybrid Electric Vehicle (PHEV), public (pub.).
+   .. table:: Passenger mobility financial information, in 2036 (based on data in :numref:`Table %s <tbl:mob_specific_costs_calculation>`). Abbreviations: Fuel Cell (FC), Hybrid Electric Vehicle (HEV), Natural Gas (NG), Plug-in Hybrid Electric Vehicle (PHEV), public (pub.).
       :name: tbl:mob_costs
 
       +-----------+----------+----------+----------+----------+----------+
@@ -1566,17 +1566,17 @@ This technology is added in the following tables.
 
 :numref:`Table %s <tbl:passenger_vehicles>` summarises
 the projected energy efficiencies for the different vehicles. For public
-vehicles in 2035, the energy efficiencies are calculated with a linear
+vehicles in 2036, the energy efficiencies are calculated with a linear
 interpolation between the 2010 and 2050 values presented in :numref:`Table %s <tbl:passenger_vehicles>` in
 Codina Gironès et al :cite:`codina_girones_strategic_2015`.
 For private vehicles, estimates of energy consumption of Belgian cars
 in 2030 are taken from :cite:`BureaufederalduPlan2012`.
 :numref:`Table %s <tbl:passenger_vehicles>` also gives the minimum and maximum shares
-of each vehicle type in 2035. The shares in 2021 are given as well.
+of each vehicle type in 2036. The shares in 2021 are given as well.
 
 .. container::
 
-   .. table:: Fuel and electricity consumption for passenger mobility technologies in 2035 :cite:`codina_girones_strategic_2015`, and minimum/maximum shares allowed in the model. Abbreviations: Fuel Cell (FC), Hybrid Electric Vehicle (HEV), Natural Gas (NG), Plug-in Hybrid Electric Vehicle (PHEV), public (pub.).
+   .. table:: Fuel and electricity consumption for passenger mobility technologies in 2036 :cite:`codina_girones_strategic_2015`, and minimum/maximum shares allowed in the model. Abbreviations: Fuel Cell (FC), Hybrid Electric Vehicle (HEV), Natural Gas (NG), Plug-in Hybrid Electric Vehicle (PHEV), public (pub.).
       :name: tbl:passenger_vehicles
 
       ===================== ============ =============== ============================ ============================ ======================================
@@ -1654,8 +1654,8 @@ Finally, the share of passenger mobility which can be supplied by public mobilit
 
 .. container::
 
-   .. csv-table:: Limiting shares for passenger mobility in 2021 and 2035.
-      :header: **Parameter**, **Value in 2021**, **Value in 2035**
+   .. csv-table:: Limiting shares for passenger mobility in 2021 and 2036.
+      :header: **Parameter**, **Value in 2021**, **Value in 2036**
       :widths: 20 20 20 
       :name: tab:passenger_mob_shares
 		 
@@ -1664,10 +1664,10 @@ Finally, the share of passenger mobility which can be supplied by public mobilit
 		 :math:`\%_{private_{motorc_{max}}}` [23b]_, 55%, 55%
 		 
 .. [23a]
-   We assume that the maximum share of public passenger mobility in 2035 is the value it had in 2021. This value is taken from :cite:`plazas_nino_2023`.
+   We assume that the maximum share of public passenger mobility in 2036 is the value it had in 2021. This value is taken from :cite:`plazas_nino_2023`.
    
 .. [23b]
-   We assume that the maximum share of motorcycles in 2035 is the value it had in 2021. This value is taken from :cite:`plazas_nino_2023`.  
+   We assume that the maximum share of motorcycles in 2036 is the value it had in 2021. This value is taken from :cite:`plazas_nino_2023`.  
 
 
 Freight
@@ -1680,7 +1680,7 @@ All cost data are first expressed in € :sub:`2015`. They are converted in USD 
 
 .. container::
 
-   .. table:: Specific investment cost for freight vehicles, in 2035. Trucks data are from a report of 2019 :cite:`Karlstrom_fuetruck_2019`. Abbreviations: electric (elec.), Fuel Cell (FC) and Natural Gas (NG).
+   .. table:: Specific investment cost for freight vehicles, in 2036. Trucks data are from a report of 2019 :cite:`Karlstrom_fuetruck_2019`. Abbreviations: electric (elec.), Fuel Cell (FC) and Natural Gas (NG).
       :name: tbl:mob_specific_costs_calculation_freight
    
       +-----------+-----------+-----------+-----------+-----------+-----------+-----------+
@@ -1770,7 +1770,7 @@ Based on this approach, two technologies have been added: methanol boats and met
 
 .. container::
 
-   .. table:: Freight financial information, in 2035. Abbreviations: electric (elec.), Fuel Cell (FC) and Natural Gas (NG).
+   .. table:: Freight financial information, in 2036. Abbreviations: electric (elec.), Fuel Cell (FC) and Natural Gas (NG).
       :name: tbl:mob_costs_fr
    
       +-------------+------------+-------------+-------------+-------------+
@@ -1813,13 +1813,13 @@ Based on this approach, two technologies have been added: methanol boats and met
 Trains and boats benefit from a very high tonnage capacity, which
 drastically reducees their specific investment cost (i.e. down to 4-5 times
 lower than for trucks). :numref:`Table %s <tbl:mob_costs_fr>` summarises the
-projected energy efficiencies for the different vehicles in 2035, except
+projected energy efficiencies for the different vehicles in 2036, except
 for the specific GHG emissions for technology construction (:math:`gwp_{constr}`)
 where no data was found.
 
 .. container::
 
-   .. table:: Fuel and electricity consumption for freight technologies, in 2035 :cite:`codina_girones_strategic_2015`. Abbreviations: electric (elec.), Fuel Cell (FC) and Natural Gas (NG).
+   .. table:: Fuel and electricity consumption for freight technologies, in 2036 :cite:`codina_girones_strategic_2015`. Abbreviations: electric (elec.), Fuel Cell (FC) and Natural Gas (NG).
       :name: tbl:freight_vehicles_efficiency
    
    
@@ -1847,7 +1847,7 @@ where no data was found.
    The efficiency is corrected with the ratio between NG bus and diesel
    bus.
 
-Trains are considered to be only electric. Their efficiency in 2035 is
+Trains are considered to be only electric. Their efficiency in 2036 is
 0.068 kWh/tkm :cite:`codina_girones_strategic_2015`. The
 efficiency for freight transport by diesel truck is 0.51 kWh/tkm based
 on the weighted average of the efficiencies for the vehicle mix
@@ -1858,17 +1858,17 @@ ratio between NG coaches and diesel coaches can be used for freight
 trucks are 0.59 and 0.44 kWh/tkm. Boats are considered to be diesel or
 gas powered. In 2015, the energy intensity ratio between diesel boats
 and diesel trucks was :math:`\approx`\ 20% [267]_. By assuming a
-similar ratio in 2035, we find an efficiency of 0.107 kWh/tkm and 0.123
+similar ratio in 2036, we find an efficiency of 0.107 kWh/tkm and 0.123
 kWh/tkm for diesel and NG boats, respectively.
 
 The share of freight which can be supplied by different modes are bounded by the values :math:`\%_{fr,X,min}` and :math:`\%_{fr,X,max}`. 
-These values are given in :numref:`Table %s <tab:freight_shares>` for 2021 and 2035. Moreover, based on energy consumption of transport 
+These values are given in :numref:`Table %s <tab:freight_shares>` for 2021 and 2036. Moreover, based on energy consumption of transport 
 given in :cite:`IEA_2023`, we impose that in 2021, 50% of truck transport was carried out by diesel trucks and 50% by gasoline trucks.
 
 .. container::
 
-   .. csv-table:: Limiting shares for freight in 2021 and 2035.
-      :header: **Parameter**, **Value in 2021**, **Value in 2035**
+   .. csv-table:: Limiting shares for freight in 2021 and 2036.
+      :header: **Parameter**, **Value in 2021**, **Value in 2036**
       :widths: 20 20 20
       :name: tab:freight_shares
 		 
@@ -1907,14 +1907,14 @@ Three main feedstocks have been chosen : ammonia, methanol and high-value chemic
 The non-energy EUD is usually expressed in TWh/y without specifying the split among the feedstocks, 
 such as in the IEA Extended Energy Balances :cite:`IEA_world_energy_balances`. Given the important
 petroleum refining activity in Colombia, we assume that all non-energy EUD in 2021 was HVC. We keep
-the same assumption for the year 2035.
+the same assumption for the year 2036.
 
 Similarly to electricity, two of the three feedstocks can be used for other end-use demands. As an example, ammonia can be used for electricity production or methanol for mobility.
 :numref:`Table %s <tab:hvc_prod>` summarises the technologies that produce HVC. :numref:`Table %s <tab:methanol_prod>` summarises the technologies that produce methanol; Regarding ammonia, only the Haber-Bosch process is proposed in :numref:`Table %s <tab:ammonia_prod>`. 
 
 .. container::
 
-   .. table:: Production of High-Value Chemicals (HVCs) from different feedstocks, in 2035. 
+   .. table:: Production of High-Value Chemicals (HVCs) from different feedstocks, in 2036. 
       :name: tab:hvc_prod
    
       +-------------+---------------+---------------+-------------+-------------+-------------+-------------+-------------+-------------+
@@ -1964,7 +1964,7 @@ Similarly to electricity, two of the three feedstocks can be used for other end-
 
 .. container::
 
-   .. table:: Production of methanol from different feedstocks, in 2035.
+   .. table:: Production of methanol from different feedstocks, in 2036.
       :name: tab:methanol_prod
    
       +-------------+---------------+---------------+-------------+-------------+-------------+-------------+-------------+-------------+
@@ -2006,7 +2006,7 @@ Similarly to electricity, two of the three feedstocks can be used for other end-
 
 .. container::
 
-   .. table:: Production of ammonia with the Haber Bosch process, in 2035. Data from :cite:t:`ikaheimo2018power`.
+   .. table:: Production of ammonia with the Haber Bosch process, in 2036. Data from :cite:t:`ikaheimo2018power`.
       :name: tab:ammonia_prod
    
       +-------------+---------------+---------------+-------------+-------------+-------------+-------------+-------------+-------------+
@@ -2076,12 +2076,12 @@ CCS systems for limiting the CO\ :math:`_2` emissions. There exist
 different technologies for electrolysis. In their work, the
 :cite:t:`DanishEnergyAgency2019a` reviews the PEM-EC, A-EC and
 SO-EC technologies. :numref:`Table %s <tbl:hydrogen_techs_danish>` summarises the key
-characteristics of these technologies in year 2035.
+characteristics of these technologies in year 2036.
    
 
 .. container::
 
-   .. table:: Characteristics of electrolyser technologies presented in :cite:`DanishEnergyAgency2019a`, in 2035. Efficiencies are represent as follow: Input (negative) and outputs (positive). Abbreviations: temperature (temp.), high temperature (h.t.), low temperature (l.t.), electricity (e), hydrogen (H\ :math:`_2` ).
+   .. table:: Characteristics of electrolyser technologies presented in :cite:`DanishEnergyAgency2019a`, in 2036. Efficiencies are represent as follow: Input (negative) and outputs (positive). Abbreviations: temperature (temp.), high temperature (h.t.), low temperature (l.t.), electricity (e), hydrogen (H\ :math:`_2` ).
       :name: tbl:hydrogen_techs_danish
 
 
@@ -2118,7 +2118,7 @@ data for the hydrogen production technologies, where €\ :sub:`2015` have been 
 
 .. container::
 
-   .. table:: Hydrogen production technologies, in 2035.
+   .. table:: Hydrogen production technologies, in 2036.
       :name: tbl:hydrogen
 
       +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
@@ -2212,7 +2212,7 @@ Finally, a last technology can produce methane from hydrogen and sequestrated CO
 
 .. container::
 
-   .. table:: Synthetic fuels (except H\ :math:`_2`) conversion technologies (from :cite:`DanishEnergyAgency2019a,Moret2017PhDThesis` or specified), in 2035.
+   .. table:: Synthetic fuels (except H\ :math:`_2`) conversion technologies (from :cite:`DanishEnergyAgency2019a,Moret2017PhDThesis` or specified), in 2036.
       :name: tbl:sng_pyro
    
       +-------------+---------------+---------------+-------------+-------------+-------------+-------------+-------------+-------------+
@@ -2323,7 +2323,7 @@ around 0.2 kWh of energy to sequestrate this amount
 
 .. container::
 
-   .. table:: Carbon capture (CC) technologies, in 2035. :math:`E_e` represents the electricity required to capture sequestrate CO\ :math:`_2`. :math:`\eta_{CO_2}` represents the amount of CO\ :math:`_2` sequestrated from the CO\ :math:`_2` source. Abbreviations: industrial (ind.), atmospheric (atm.).
+   .. table:: Carbon capture (CC) technologies, in 2036. :math:`E_e` represents the electricity required to capture sequestrate CO\ :math:`_2`. :math:`\eta_{CO_2}` represents the amount of CO\ :math:`_2` sequestrated from the CO\ :math:`_2` source. Abbreviations: industrial (ind.), atmospheric (atm.).
       :name: tbl:CC_techs
  
  
@@ -2372,7 +2372,7 @@ technical performances of each technology.
 .. container::
    
 
-   .. table:: Storage technologies characteristics in 2035: costs, emissions and lifetime. Abbreviations: batteries (batt.), Battery Electric Vehicule (BEV), centralised (cen.), decentralised (dec.), Lithium-ions (Li-on), Natural Gas (NG), Plug-in Hybrid Electric Vehicle (PHEV), Pumped Hydro Storage (PHS), seasonal (seas.), temperature (temp.) and thermal storage (TS).
+   .. table:: Storage technologies characteristics in 2036: costs, emissions and lifetime. Abbreviations: batteries (batt.), Battery Electric Vehicule (BEV), centralised (cen.), decentralised (dec.), Lithium-ions (Li-on), Natural Gas (NG), Plug-in Hybrid Electric Vehicle (PHEV), Pumped Hydro Storage (PHS), seasonal (seas.), temperature (temp.) and thermal storage (TS).
       :name: tab:stodatabasic
 
       +-----------+--------------+--------------+-----------+-----------+
@@ -2502,13 +2502,13 @@ is used for charging the system (compressing the gas) and the gas is
 used for heating up the gas during the discharge. These quantities
 slightly impact the charge and discharge efficiency of the system. The
 charge and discharge power are 2200 and 6600 [MW] respectively. As the
-technology is mature, we assume that the cost of the technology in 2035
+technology is mature, we assume that the cost of the technology in 2036
 will be similar to the one of the Lille Torup project.
 
 
 .. container::
 
-   .. table:: Storage technologies characteristics in 2035: efficiencies, energy to power ratios, losses and availabilities. Abbreviations: batteries (batt.), Battery Electric Vehicule (BEV), centralised (cen.), decentralised (dec.), Lithium-ions (Li-on), Natural Gas (NG), Plug-in Hybrid Electric Vehicle (PHEV), Pumped Hydro Storage (PHS), seasonal (seas.), temperature (temp.) and thermal storage (TS).
+   .. table:: Storage technologies characteristics in 2036: efficiencies, energy to power ratios, losses and availabilities. Abbreviations: batteries (batt.), Battery Electric Vehicule (BEV), centralised (cen.), decentralised (dec.), Lithium-ions (Li-on), Natural Gas (NG), Plug-in Hybrid Electric Vehicle (PHEV), Pumped Hydro Storage (PHS), seasonal (seas.), temperature (temp.) and thermal storage (TS).
       :name: tab:stodataadvanced
 
       +---------------+---------------+---------------+---------------+---------------+---------------+---------------+
@@ -2627,7 +2627,7 @@ included in the technology of *Hydro Dam*, a null cost and a null gwp are assume
 The values of :math:`f_{min/max}(Hydro~Dam)` and :math:`f_{min/max}(Dam~Storage)` are also linked.
 According to data received from Departamento Nacional de Planeación (DNP), the ratio between
 the two is of 
-:math:`2~240` [h]. The 2035 values of :math:`f_{min}(Hydro~Dam)=9.3` [GW] and :math:`f_{max}(Hydro~Dam)=51.2` [GW] 
+:math:`2~240` [h]. The 2036 values of :math:`f_{min}(Hydro~Dam)=9.3` [GW] and :math:`f_{max}(Hydro~Dam)=51.2` [GW] 
 therefore translate into :math:`f_{min}(Dam~Storage)=20~800` [GWh] and :math:`f_{max}(Dam~Storage)=114~400` [GWh].
 
 .. _App:Data:OtherParam:
@@ -2679,7 +2679,7 @@ transfer capacity (HVAC Line) with neighbouring countries are computed to be
 :math:`c_{maint} = 0.04~\text{€}_{2015}`/kW/km/year, based on :cite:`IEA_HVAC`,
 :cite:`brown_synergies_2018` and :cite:`prina_multi-objective_2020`. By multiplying these
 costs by 766 km (i.e. the distance between Panama City and Bogotá) and converting them into USD\ :sub:`2021`,
-we obtain for the technology HVAC in EnergyScope in 2035:
+we obtain for the technology HVAC in EnergyScope in 2036:
 :math:`c_{inv} = 2164~\text{M USD}_{2021}`/GW and 
 :math:`c_{maint} = 43.2~\text{M USD}_{2021}`/GW/year.
 We take the distance from capital city to capital city, and not the
@@ -2747,7 +2747,7 @@ emissions metrics are used: CO :sub:`2,direct` and gwp :sub:`op`. The first one 
 the direct emissions associated with the fuels' combustion, while the second one is the
 GWP100a-IPCC2013 metric: it covers emissions associated to extraction, transportation and combustion.
 The former is used to complete the calibration of EnergyScope to the 2021 Colombian energy
-system, whereas the second one determines the maximum GHG emissions allowed in 2035.
+system, whereas the second one determines the maximum GHG emissions allowed in 2036.
 
 
 Calibration of EnergyScope to the 2021 energy system
@@ -2798,7 +2798,7 @@ The sum of the values simulated with EnergyScope for fossil fuels (thus excludin
 :numref:`Table %s <tab:2021_CO2_check>` is 77.1 MtCO :sub:`2`-eq. The difference between the two is of 3% and is therefore acceptable.
 
 
-Setting a gwp limit for the year 2035
+Setting a gwp limit for the year 2036
 -------------------------------------
 
 The gwp :sub:`op` computed by EnergyScope for the 2021 Colombian energy system is of 94 MtCO :sub:`2`-eq. It is broken down by

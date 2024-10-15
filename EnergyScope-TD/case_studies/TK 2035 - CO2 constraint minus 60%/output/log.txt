@@ -1,0 +1,54 @@
+
+Presolve eliminates 959276 constraints and 618314 variables.
+"option presolve 10;" used, but "option presolve 5;" would suffice.
+Adjusted problem:
+326689 variables, all linear
+597381 constraints, all linear; 1872811 nonzeros
+	397916 equality constraints
+	199465 inequality constraints
+1 linear objective; 1 nonzero.
+
+presolve results:
+	variables omitted:	618314
+	constraints omitted:	959276
+	ranges relaxed:		44408
+	bounds improved:	615783
+	constraint_drop_tol breakpoints: 0, 0, 7020.737664622885
+	nba cycles:		4
+	bound row scans:	385426
+	row-scan updates:	49887
+Gurobi 11.0.3:   pre:dual = -1
+  alg:method = 2
+  bar:crossover = 0
+  pre:passes = 3
+  bar:convtol = 1e-06
+  pre:solve = -1
+Gurobi 11.0.3: optimal solution; objective 149149.328
+0 simplex iterations
+119 barrier iterations
+ 
+------------ WARNINGS ------------
+WARNING:  "Tolerance violations"
+  Type                         MaxAbs [Name]   MaxRel [Name]
+* variable bounds              4E-01           -             
+* algebraic con(s)             3E+01           3E-05         
+*: Using the solver's aux variable values.
+Documentation: mp.ampl.com/modeling-tools.html#automatic-solution-check.
+solve_result = solved
+
+solve_result_num = 0
+
+_solve_elapsed_time = 73.4726
+
+TotalCost 149149.3280067337
+Carbon_cost 0
+GWP_op 173859.0995000639
+carbon_price 0
+--------------SAVING COSTS -----------
+--------------SAVING RESOURCES -----------
+--------------SAVING GWP -----------
+--------------SAVING Losses -----------
+--------------SAVING ASSETS -----------
+--------------SAVING STORAGE -----------
+--------------SAVING LAYERS -----------
+--------- SAVING SANKEY --------

@@ -6,17 +6,13 @@ September 2024
 """
 
 ## Define which model you want to run: GEMMES, EnergyScope or the coupling of the two
-# mode = 'GEMMES_only'
+mode = 'GEMMES_only'
 # mode = 'EnergyScope_only'
-mode = 'GEMMES-EnergyScope'
+# mode = 'GEMMES-EnergyScope'
 
 ## Define the country studied and the time granularity of EnergyScope
 country = 'Colombia'                  # Choose between Colombia and Turkey
-<<<<<<< HEAD
 EnergyScope_granularity = 'MO'  # MO = Monthly resolution, TD = Typical Day (hourly resolution - takes much more time to run)
-=======
-EnergyScope_granularity = 'TD'  # MO = Monthly resolution, TD = Typical Day (hourly resolution - takes much more time to run)
->>>>>>> master
 nbr_tds = 12
 
 ## Define which results to save and/or plot
@@ -46,11 +42,7 @@ def main():
         diff = 1
         n_iter = 1
         diff_list = [0]
-<<<<<<< HEAD
         while(diff > 0.03 and n_iter<4): ###############
-=======
-        while(diff > 0.03 and n_iter < 2):
->>>>>>> master
             EUD_previous = EUD_current
             n_iter += 1
             output_EnergyScope = run_EnergyScope()
@@ -473,8 +465,8 @@ def post_process_EnergyScope_outputs(EnergyScope_output_file, ampl_0, variables_
     
     ## Compute a adjustment factor to fit the costs from EnergyScope to the real cost of the energy system given by DNP
     variables_GEMMES_2021 = variables_GEMMES.loc[(variables_GEMMES.index>=2021) & (variables_GEMMES.index<2022)].mean()
-    Real_energy_system_cost_2021 = 33323.773083 # billion 2021 COP, according to DNP
-    adjustment_factor = Real_energy_system_cost_2021 / ( variables_GEMMES_2021['p'] * Cost_breakdown_2021_for_comparison_with_real_cost ) # The adjustment factor also allows to transform the phase costs into yearly costs (division by 5 included in the factor)
+    Real_energy_system_cost_2021 = 33.323773083 # Trillion 2021 COP, according to DNP
+    adjustment_factor = Real_energy_system_cost_2021 / ( variables_GEMMES_2021['p'] * Cost_breakdown_2021_for_comparison_with_real_cost ) # The adjustment factor also allows to transform billion COP in trillion COP and to transform the phase costs into yearly costs (division by 5 included in the factor)
     
     
     ## Add to the resource costs of households, government and banks the bills that they pay for buying fuels and electricity to private firms
