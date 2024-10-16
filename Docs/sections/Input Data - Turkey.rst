@@ -8,7 +8,7 @@ Input Data - Turkey
    :format: latex
    
 This section details the input data utilized in applying the LP modeling framework to the case study of Turkey.
-The primary objective is to provide data for modelling a prospective Turkish energy system for the year 2035.
+The primary objective is to provide data for modelling a prospective Turkish energy system for the year 2034.
 Additionally, we provide the necessary data to reproduce the historical Turkish energy system for the year 2019,
 serving as a validation of EnergyScope's accuracy in modeling this intricate system.
 
@@ -39,14 +39,14 @@ little used in 2019. As highlighted by :cite:t:`IEA_TK_2021`,
 Solar, wind, hydro and geothermal
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-:numref:`Table %s <tab:renewableTechPotentialIn2035_TK>` gives the Turkish potential for solar, wind, hydro and geothermal energy. These data are put into perspective with the values used for the calibration to the year 2019.
+:numref:`Table %s <tab:renewableTechPotentialIn2034_TK>` gives the Turkish potential for solar, wind, hydro and geothermal energy. These data are put into perspective with the values used for the calibration to the year 2019.
       
 .. container::
 
    .. csv-table:: Comparison of installed capacity of technologies for renewable electricity generation in 2019 with their maximum potentials. Abbreviations: maximum (max.), photovoltaic panel (PV), District Heating Network (DHN), Concentrated Solar Power (CSP).
       :header: **Technology**, **2019**\ , **max. potential** , **Units**
       :widths: 15 15 15 15
-      :name: tab:renewableTechPotentialIn2035_TK
+      :name: tab:renewableTechPotentialIn2034_TK
    
       hydro dam , 15.7 [39a]_ , 19.9 [39c]_ , [GW]
       hydro river , 12.8 [39a]_ , 16.3 [39c]_ , [GW]
@@ -91,7 +91,7 @@ Solar, wind, hydro and geothermal
       Computed using the heat generation from decentralised solar thermal in 2019, given in :cite:`IEA_world_energy_balances_TK`, and the capacity factor of 20.8% whose determination is given in Subsection "Technologies - Heating and cogeneration"
       
 
-As described by eqs. :eq:`eq:solarAreaRooftopLimited` - :eq:`eq:solarAreaGroundHighIrrLimited`, the potential of solar technologies is constrained by the available areas for their deployment. The values for these available areas are given in :numref:`Table %s <tab:solarArea_TK>`. The values of maximum installed capacities indicated in :numref:`Table %s <tab:renewableTechPotentialIn2035_TK>` are a simplified translation of these equations into [GW] constraints.
+As described by eqs. :eq:`eq:solarAreaRooftopLimited` - :eq:`eq:solarAreaGroundHighIrrLimited`, the potential of solar technologies is constrained by the available areas for their deployment. The values for these available areas are given in :numref:`Table %s <tab:solarArea_TK>`. The values of maximum installed capacities indicated in :numref:`Table %s <tab:renewableTechPotentialIn2034_TK>` are a simplified translation of these equations into [GW] constraints.
 
 .. container::
 
@@ -107,7 +107,7 @@ As described by eqs. :eq:`eq:solarAreaRooftopLimited` - :eq:`eq:solarAreaGroundH
    .. [40a]
       Computed based on the open-source database from :cite:`dupont_2020`, available at https://github.com/EliseDup/WorldEROI.
       
-Note that the ground areas given in :numref:`Table %s <tab:renewableTechPotentialIn2035>`
+Note that the ground areas given in :numref:`Table %s <tab:renewableTechPotentialIn2034>`
 are not the total areas occupied by the solar power plants, but only the areas occupied 
 by the solar panels themselves. After taking into account the *ground cover ratio*, we can compute that
 the value given for :math:`solar_{area,ground}` corresponds to covering
@@ -117,14 +117,14 @@ used by rooftop PV).
 Biomass and non-renewable waste
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-:numref:`Table %s <tab:renewableResourcesPotentialIn2035_TK>` gives the Turkish potential for biomass and non-renewable waste, together with their values used for the calibration to the year 2019. Note that contrary to the case of Colombia, bioethanol and biodiesel are assumed to be imported from abroad. They are therefore not given in :numref:`Table %s <tab:renewableResourcesPotentialIn2035_TK>`, which gives only the local biomass potential.
+:numref:`Table %s <tab:renewableResourcesPotentialIn2034_TK>` gives the Turkish potential for biomass and non-renewable waste, together with their values used for the calibration to the year 2019. Note that contrary to the case of Colombia, bioethanol and biodiesel are assumed to be imported from abroad. They are therefore not given in :numref:`Table %s <tab:renewableResourcesPotentialIn2034_TK>`, which gives only the local biomass potential.
 
 .. container::
 
-   .. csv-table:: Biomass and waste resources consumed in 2021 and their potential.
+   .. csv-table:: Biomass and waste resources consumed in 2019 and their potential.
       :header: **Resources** , **2019** , **Max. potential** , **Units**
       :widths: 15 15 15 15
-      :name: tab:renewableResourcesPotentialIn2035_TK
+      :name: tab:renewableResourcesPotentialIn2034_TK
 
 		woody biomass , 40.0 [41a]_ , 215.0 [41b]_ , [TWh]
 		wet biomass , 0 , 250.0 [41c]_ , [TWh]
@@ -146,11 +146,11 @@ Biomass and non-renewable waste
       
 In order to compute the potentials for woody biomass and wet biomass, we take from :cite:`Biomass_Atlas_2017` the base potentials in 2030, defined by the authors as the sustainable (thus conservative) technical potential. The values expressed in kt dry mass were taken. Then, these kt dry mass were converted into energy units using a LHV of 18 [MJ/kg] for wet biomass and 19 [MJ/kg] for woody biomass. These values of LHV are the average values of the corresponding biomass types, extracted from :cite:`Phyllis2`.
 
-The corresponding costs for 2035 and GHG emissions are given in :numref:`Table %s <tab:costs_resources_biomass_TK>`.
+The corresponding costs for 2034 and GHG emissions are given in :numref:`Table %s <tab:costs_resources_biomass_TK>`.
 
 .. container::
 
-   .. csv-table:: Cost and GHG emissions of biomass and waste resources, in 2035.
+   .. csv-table:: Cost and GHG emissions of biomass and waste resources, in 2034.
       :header: **Resources** , **c**:sub:`op` , **gwp**:sub:`op` [42a]_ , **CO**:sub:`2direct` [42b]_
       :widths: 15 15 15 15
       :name: tab:costs_resources_biomass_TK
@@ -189,7 +189,7 @@ GHG emissions associated to domestic Turkish coal.
 
 .. container::
 
-   .. csv-table:: Cost and GHG emissions of domestically produced fossil fuels, in 2035.
+   .. csv-table:: Cost and GHG emissions of domestically produced fossil fuels, in 2034.
       :header: **Resources** , **c**:sub:`op` , **gwp**:sub:`op` [43a]_ , **CO**:sub:`2direct` [43b]_
       :widths: 15 15 15 15
       :name: tab:costs_local_fossil_TK
@@ -215,11 +215,11 @@ Imported resources
 ------------------
 
 Imported resources include coal, hydrocarbons (natural gas, gasoline, diesel, light fuel oil), bio-fuels and uranium. No constraint is set regarding their 
-availability. Their costs in 2035 and GHG emissions are given in :numref:`Table %s <tab:costs_imported_resources_TK>`.
+availability. Their costs in 2034 and GHG emissions are given in :numref:`Table %s <tab:costs_imported_resources_TK>`.
 
 .. container::
 
-   .. csv-table:: Cost and GHG emissions of imported resources, in 2035. Abbreviations: Liquid Fuel Oil (LFO).
+   .. csv-table:: Cost and GHG emissions of imported resources, in 2034. Abbreviations: Liquid Fuel Oil (LFO).
       :header: **Resources** , **c**:sub:`op` , **gwp**:sub:`op` [43a]_ , **CO**:sub:`2direct` [43b]_
       :widths: 15 15 15 15
       :name: tab:costs_imported_resources_TK
@@ -275,7 +275,7 @@ The costs and GHG emissions of electricity imports and exports are given in :num
 
 .. container::
 
-   .. csv-table:: Cost and GHG emissions associated to electricity imports and exports, in 2035. Abbreviations: Electricity (elec.).
+   .. csv-table:: Cost and GHG emissions associated to electricity imports and exports, in 2034. Abbreviations: Electricity (elec.).
       :header: **Resources** , **c**:sub:`op` , **gwp**:sub:`op` , **CO**:sub:`2direct`
       :widths: 15 15 15 15
       :name: tab:costs_elec_import_export_TK
@@ -320,7 +320,7 @@ Aggregated values for the calibration of the 2019 EUDs are given in :numref:`Tab
 		non-energy demand , 0,0,58996.0,2088.0,[GWh] 
    
 The aim is to compute the evolution of these EUDs across years with GEMMES, which will then feed them to EnergyScope. However, as a first approximation,
-the 2035 EUDs can simply be computed by multiplying the values of :numref:`Table %s <tab:eud_2021>` by 1.42. This factor is computed based on the projection
+the 2034 EUDs can simply be computed by multiplying the values of :numref:`Table %s <tab:eud_2021>` by 1.42. This factor is computed based on the projection
 of final energy consumption given in :cite:`TK_national_energy_plan`.
 
 .. _ssec:app1_electricity_end_uses_TK:
@@ -402,16 +402,16 @@ Renewables
 
 :numref:`Table %s <tab:elec_prod_re_TK>` gives the data for the renewable electricity generation technologies
 modelled in EnergyScope Turkey, together with their sources. The data for :math:`f_{max}` were already
-given in :numref:`Table %s <tab:renewableTechPotentialIn2035_TK>` ("max. potential"). The :math:`f_{min}`
-values for renewable electricity technologies in 2035 are equal to their installed capacity in 2019,
-already given in :numref:`Table %s <tab:renewableTechPotentialIn2035_TK>`. The maximum (:math:`f_{max,\%}`) and minimum
+given in :numref:`Table %s <tab:renewableTechPotentialIn2034_TK>` ("max. potential"). The :math:`f_{min}`
+values for renewable electricity technologies in 2034 are equal to their installed capacity in 2019,
+already given in :numref:`Table %s <tab:renewableTechPotentialIn2034_TK>`. The maximum (:math:`f_{max,\%}`) and minimum
 (:math:`f_{min,\%}`) shares are imposed to 0 and 100% respectively, i.e. they are not constraining the model.
 
 .. container::
 
-   .. csv-table:: Renewable electricity production technologies in 2035. Abbreviations: concentrated solar power 
+   .. csv-table:: Renewable electricity production technologies in 2034. Abbreviations: concentrated solar power 
       with parabolic trough (CSP PT), concentrated solar power with solar tower (CSP ST).
-      :header: **Technology**, **c**:sub:`inv`, **c**:sub:`maint`, **gwp**:sub:`constr` [47a]_ , **lifetime**, **c**:sub:`p` [2019], **c**:sub:`p` [2035]
+      :header: **Technology**, **c**:sub:`inv`, **c**:sub:`maint`, **gwp**:sub:`constr` [47a]_ , **lifetime**, **c**:sub:`p` [2019], **c**:sub:`p` [2034]
       :widths: 19 18 24 23 15 15 15
       :name: tab:elec_prod_re_TK
 		 
@@ -496,7 +496,7 @@ by thermal GW of *Collector* installed. These time series are computed for the 6
 as the ones having the highest CSP potential, based on the open-source database from :cite:`dupont_2020`. The weighted mean
 of these six time series is then computed, using the weights (0.05, 0.11, 0.3 , 0.13, 0.33, 0.09) which reflect the
 respective potentials of these different locations, according to :cite:`dupont_2020`. The obtained mean time series is the
-yearly :math:`c_{p,t}` time series for CSP in Turkey in 2035.
+yearly :math:`c_{p,t}` time series for CSP in Turkey in 2034.
 
 Finally, for hydro dam and hydro river, daily incoming water flow to hydro-electric facilities in Turkey was taken from the Turkish TSO website
 for the 365 days of the year. These data were normalized to give a yearly profile :math:`c_{p,t}`, taking the same value for each hour of a same
@@ -512,20 +512,20 @@ modelled in EnergyScope Turkey, together with their sources. The minimum install
 is zero, while the maximum installed capacity (:math:`f_{max}`) is set to a value high enough for each 
 technology to potentially cover the entire demand - except for nuclear energy. The maximum (:math:`f_{max,\%}`) and minimum
 (:math:`f_{min,\%}`) shares are imposed to 0 and 100% respectively, i.e. they are not constraining the model.
-The efficiencies of each technology in 2019 and 2035 are given as well.
+The efficiencies of each technology in 2019 and 2034 are given as well.
 
 The values of (:math:`f_{min}`) and (:math:`f_{max}`) of nuclear energy are set differently. Indeed, the choice to build new
 nuclear power plants is not simply based on a cost-benefit analysis. It results from political decisions, often closely linked to
-international relations. We set :math:`f_{min} = 4.8` [GW] and :math:`f_{max} = 7.2` [GW] for nuclear power in Turkey in 2035.
+international relations. We set :math:`f_{min} = 4.8` [GW] and :math:`f_{max} = 7.2` [GW] for nuclear power in Turkey in 2034.
 Indeed, the Akuyu power plant of capacity 4.8 [GW] should be operational by then :cite:`CCDR_TK`. The value of 7.2 [GW] corresponds
-to the capacity envisaged in Turkey's National Energy Plan for 2035 :cite:`TK_national_energy_plan`, although no plan to build a new
+to the capacity envisaged in Turkey's National Energy Plan for 2034 :cite:`TK_national_energy_plan`, although no plan to build a new
 nuclear central besides Akuyu has yet been announced. We leave it to the cost optimization of EnergyScope to decide the capacity 
 to be installed between those two bounds.
 
 .. container::
 
-   .. csv-table:: Non-renewable electricity production technologies in 2035. Abbreviations: combined cycle gas turbine (CCGT), capacity (capa.).
-      :header: **Technology**, **c**:sub:`inv`, **c**:sub:`maint`, **gwp**:sub:`constr` [48a]_ , **lifetime** [48b]_, **c**:sub:`p`, **efficiency** (2019), **efficiency** (2035), :math:`CO_{2-direct}` [48c]_
+   .. csv-table:: Non-renewable electricity production technologies in 2034. Abbreviations: combined cycle gas turbine (CCGT), capacity (capa.).
+      :header: **Technology**, **c**:sub:`inv`, **c**:sub:`maint`, **gwp**:sub:`constr` [48a]_ , **lifetime** [48b]_, **c**:sub:`p`, **efficiency** (2019), **efficiency** (2034), :math:`CO_{2-direct}` [48c]_
       :widths: 11 17 24 22 12 8 8 8 14
       :name: tab:elec_prod_nre_TK
 		 
@@ -640,11 +640,11 @@ Passenger mobility
 ~~~~~~~~~~~~~~~~~~
 
 :numref:`Table %s <tbl:passenger_vehicles_TK>` gives the minimum and maximum shares
-of each vehicle type in 2035. The shares in 2019 are also given.
+of each vehicle type in 2034. The shares in 2019 are also given.
 
 .. container::
 
-   .. table:: Fuel and electricity consumption for passenger mobility technologies in 2035 :cite:`codina_girones_strategic_2015`, and minimum/maximum shares allowed in the model. Abbreviations: Fuel Cell (FC), Hybrid Electric Vehicle (HEV), Natural Gas (NG), Plug-in Hybrid Electric Vehicle (PHEV), public (pub.).
+   .. table:: Fuel and electricity consumption for passenger mobility technologies in 2034 :cite:`codina_girones_strategic_2015`, and minimum/maximum shares allowed in the model. Abbreviations: Fuel Cell (FC), Hybrid Electric Vehicle (HEV), Natural Gas (NG), Plug-in Hybrid Electric Vehicle (PHEV), public (pub.).
       :name: tbl:passenger_vehicles_TK
 
       ================  ============================ ============================ ===============================
@@ -679,8 +679,8 @@ Finally, the share of passenger mobility which can be supplied by public mobilit
 
 .. container::
 
-   .. csv-table:: Limiting shares for passenger mobility in 2021 and 2035.
-      :header: **Parameter**, **Value in 2021**, **Value in 2035**
+   .. csv-table:: Limiting shares for passenger mobility in 2019 and 2034.
+      :header: **Parameter**, **Value in 2019**, **Value in 2034**
       :widths: 20 20 20 
       :name: tab:passenger_mob_shares_TK
 		 
@@ -699,12 +699,12 @@ Freight
 ~~~~~~~
 
 The share of freight which can be supplied by different modes are bounded by the values :math:`\%_{fr,X,min}` and :math:`\%_{fr,X,max}`. 
-These values are given in :numref:`Table %s <tab:freight_shares_TK>` for 2019 and 2035.
+These values are given in :numref:`Table %s <tab:freight_shares_TK>` for 2019 and 2034.
 
 .. container::
 
-   .. csv-table:: Limiting shares for freight in 2019 and 2035.
-      :header: **Parameter**, **Value in 2019**, **Value in 2035**
+   .. csv-table:: Limiting shares for freight in 2019 and 2034.
+      :header: **Parameter**, **Value in 2019**, **Value in 2034**
       :widths: 20 20 20
       :name: tab:freight_shares_TK
 		 
@@ -731,7 +731,7 @@ Non-energy demand
 
 Given the important
 petroleum refining activity in Turkey, we assume that all non-energy EUD in 2019 was HVC. We keep
-the same assumption for the year 2035.
+the same assumption for the year 2034.
 
 .. _sec:app1_storage_TK:
 
@@ -739,7 +739,7 @@ Storage
 -------
 
 The values of :math:`f_{min/max}(Hydro~Dam)` and :math:`f_{min/max}(Dam~Storage)` are linked.
-The ratio between the two is taken to be 450 [h]. The 2035 values of
+The ratio between the two is taken to be 450 [h]. The 2034 values of
 :math:`f_{min}(Hydro~Dam)=15.7` [GW] and :math:`f_{max}(Hydro~Dam)=19.9` [GW] therefore translate into 
 :math:`f_{min}(Dam~Storage)=7055` [GWh] and :math:`f_{max}(Dam~Storage)=8974` [GWh].
 
@@ -748,7 +748,7 @@ for these potential projects are taken from :cite:`PHS_TK` and summarised in :nu
 
 .. container::
 
-   .. csv-table:: Foreseen Pumped Hydro Storage (PHS) characteristics in 2035 in Turkey.
+   .. csv-table:: Foreseen Pumped Hydro Storage (PHS) characteristics in 2034 in Turkey.
       :header: **Technology**, **c**:sub:`inv`, **c**:sub:`maint`, **gwp**:sub:`constr`, :math:`\eta_{sto-in}`, :math:`\eta_{sto-out}`, **t**:sub:`sto-out`, **lifetime**, **f**:sub:`max`
       :widths: 15 15 15 25 10 10 10 10 10
       :name: tab:stodatabasic_TK
@@ -795,7 +795,7 @@ transfer capacity (HVAC Line) with neighbouring countries are computed to be
 :math:`c_{maint} = 0.04~\text{€}_{2015}`/kW/km/year, based on :cite:`IEA_HVAC`,
 :cite:`brown_synergies_2018` and :cite:`prina_multi-objective_2020`. By multiplying these
 costs by 853 km (i.e. the distance between sofia and Ankara),
-we obtain for the technology HVAC in EnergyScope in 2035:
+we obtain for the technology HVAC in EnergyScope in 2034:
 :math:`c_{inv} = 1706~\text{M€}_{2015}`/GW and 
 :math:`c_{maint} = 34.12~\text{M€}_{2015}`/GW/year.
 We take the distance from capital city to capital city, and not the
@@ -823,7 +823,7 @@ emissions metrics are used: CO :sub:`2,direct` and gwp :sub:`op`. The first one 
 the direct emissions associated with the fuels' combustion, while the second one is the
 GWP100a-IPCC2013 metric: it covers emissions associated to extraction, transportation and combustion.
 The former is used to complete the calibration of EnergyScope to the 2019 Turkish energy
-system, whereas the second one determines the maximum GHG emissions allowed in 2035.
+system, whereas the second one determines the maximum GHG emissions allowed in 2034.
 
 
 Calibration of EnergyScope to the 2019 energy system
@@ -871,7 +871,7 @@ The sum of the values simulated with EnergyScope for fossil fuels (excluding woo
 :numref:`Table %s <tab:2019_CO2_check>` is 362.1 MtCO :sub:`2`-eq. The difference between the two is of only 1% and is therefore acceptable.
 
 
-Setting a gwp limit for the year 2035
+Setting a gwp limit for the year 2034
 -------------------------------------
 
 The gwp :sub:`op` computed by EnergyScope for the 2019 Turkish energy system is of 435 MtCO :sub:`2`-eq. It is broken down by
