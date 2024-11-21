@@ -126,7 +126,7 @@ class AmplGraph:
         
         order_entry = ['ELECTRICITY','GASOLINE','DIESEL','LFO','IMPORTED_COAL', 'LOCAL_COAL',
                        'LOCAL_GAS','IMPORTED_GAS','WOOD','WET_BIOMASS', 'BIOETHANOL', 'BIODIESEL', 'WASTE',
-                       'RES_HYDRO','RES_SOLAR','RES_WIND',
+                       'RES_HYDRO','RES_GEO','RES_SOLAR','RES_WIND',
                        'AMMONIA_RE','METHANOL_RE','H2_RE']
         
         pio.renderers.default = 'browser'

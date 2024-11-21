@@ -337,6 +337,10 @@ subject to extra_grid:
 subject to extra_dhn:
 	F ["DHN"] = sum {j in TECHNOLOGIES diff STORAGE_TECH: layers_in_out [j,"HEAT_LOW_T_DHN"] > 0} (layers_in_out [j,"HEAT_LOW_T_DHN"] * F [j]);
 
+# [Eq. 22bis] Assigning a cost to the hydrogen network (transport and distribution, including terminals for export of e-fuels)
+subject to set_h2_infra:
+	F ["H2_INFRASTRUCTURE"] = F ["H2_ELECTROLYSIS"];
+
 ## Additional constraints
 #------------------------
 
@@ -489,13 +493,13 @@ subject to solar_area_rooftop_limited:
 # [Eq. 52] Limit surface area for land solar
 subject to solar_area_ground_limited:
 	(F["PV_UTILITY"])/power_density_pv
-		- (layers_in_out ["PT_POWER_BLOCK", "PT_HEAT"]*F["PT_COLLECTOR"]+layers_in_out ["ST_POWER_BLOCK", "ST_HEAT"]*F["ST_COLLECTOR"])/power_density_pv
+		- (F["PT_COLLECTOR"]/layers_in_out ["PT_POWER_BLOCK", "PT_HEAT"]+F["ST_COLLECTOR"]/layers_in_out ["ST_POWER_BLOCK", "ST_HEAT"])/power_density_pv
 <= solar_area_ground;
 
 # [Eq. 53] Limit high-irradiation land surface area for CSP plants
 subject to solar_area_ground_high_irr_limited:
-	-(layers_in_out ["PT_POWER_BLOCK", "PT_HEAT"]*F["PT_COLLECTOR"]
-		+layers_in_out ["ST_POWER_BLOCK", "ST_HEAT"]*F["ST_COLLECTOR"])/power_density_pv
+	-(F["PT_COLLECTOR"]/layers_in_out ["PT_POWER_BLOCK", "PT_HEAT"]
+		+F["ST_COLLECTOR"]/layers_in_out ["ST_POWER_BLOCK", "ST_HEAT"])/power_density_pv
 <= solar_area_ground_high_irr;
 
 

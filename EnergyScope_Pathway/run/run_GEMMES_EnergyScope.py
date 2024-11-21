@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-September 2024
+October 2024
 
 @authors: Pierre Jacques, Xavier Rixhon, Stanislas Augier
 """
@@ -11,14 +11,14 @@ September 2024
 mode = 'GEMMES-EnergyScope'
 
 ## Define the country studied and the time granularity of EnergyScope
-country = 'Colombia'                  # Choose between Colombia and Turkey
+country = 'Colombia'            # Choose between Colombia and Turkey
 EnergyScope_granularity = 'TD'  # MO = Monthly resolution, TD = Typical Day (hourly resolution - takes much more time to run)
 nbr_tds = 12
 
 ## Define which results to save and/or plot
 plot_EnergyScope = True  
 csv_EnergyScope  = True
-plot_GEMMES = False
+plot_GEMMES = True
 csv_GEMMES = True
 
 def main():
@@ -42,7 +42,7 @@ def main():
         diff = 1
         n_iter = 1
         diff_list = [0]
-        while(diff > 0.03 and n_iter < 2):
+        while(diff > 0.03 and n_iter<4): ###############
             EUD_previous = EUD_current
             n_iter += 1
             output_EnergyScope = run_EnergyScope()
@@ -234,7 +234,7 @@ def run_EnergyScope():
     # Distinguish between imported and locally-produced content for each technology. Imported content is subject to exchange rate fluctuations.
     c_inv_ampl = ampl.get_param('c_inv').to_list()
     c_inv_ampl = pd.DataFrame(c_inv_ampl, columns=['Year', 'Technologies', 'Value'])
-    # Read for reach technology, what fraction of it is locally produced in terms of added value
+    # Read for reach technology, what fraction of it is locally produced
     if country=='Colombia':
         Technos_local_fraction = pd.read_csv('Technos_information_CO.csv')
         Technos_local_fraction.drop(columns=['Lifetime','Included_in_real_cost_2021'], inplace=True)
@@ -256,7 +256,7 @@ def run_EnergyScope():
     en_yearly.reset_index(inplace=True)
     en_yearly.rename(columns={'index': 'Year'}, inplace=True)
     c_inv_ampl = pd.merge(c_inv_ampl, en_yearly, on='Year', how='left')
-    c_inv_ampl['Value'] *= en0 # Convert constant USD to constant k COP or cosntant TL
+    c_inv_ampl['Value'] *= en0 # Convert constant USD to constant k COP or constant TL
     c_inv_ampl['Value'] = ( c_inv_ampl['Value']*c_inv_ampl['Local'] + c_inv_ampl['Value']*c_inv_ampl['en']*(1-c_inv_ampl['Local']) ) # The imported fraction of goods is subject to exchange rate's fluctuations
     c_inv_ampl.drop(columns=['Local', 'en'], inplace=True)
     c_inv_ampl.set_index(['Year', 'Technologies'], inplace=True)
@@ -465,8 +465,8 @@ def post_process_EnergyScope_outputs(EnergyScope_output_file, ampl_0, variables_
     
     ## Compute a adjustment factor to fit the costs from EnergyScope to the real cost of the energy system given by DNP
     variables_GEMMES_2021 = variables_GEMMES.loc[(variables_GEMMES.index>=2021) & (variables_GEMMES.index<2022)].mean()
-    Real_energy_system_cost_2021 = 33.323773083 # billion 2021 COP, according to DNP
-    adjustment_factor = Real_energy_system_cost_2021 / ( variables_GEMMES_2021['p'] * Cost_breakdown_2021_for_comparison_with_real_cost ) # The adjustment factor also allows to transform the phase costs into yearly costs (division by 5 included in the factor)
+    Real_energy_system_cost_2021 = 33.323773083 # trillion 2021 COP, according to DNP
+    adjustment_factor = Real_energy_system_cost_2021 / ( variables_GEMMES_2021['p'] * Cost_breakdown_2021_for_comparison_with_real_cost ) # The adjustment factor also allows to transform billion COP in trillion COP and to transform the phase costs into yearly costs (division by 5 included in the factor)
     
     
     ## Add to the resource costs of households, government and banks the bills that they pay for buying fuels and electricity to private firms
@@ -891,13 +891,8 @@ import matplotlib.pyplot as plt
 ## Add the relevant paths to be able to access all necessary python codes
 curr_dir = Path(os.path.dirname(__file__))
 pymodPath = os.path.abspath(os.path.join(curr_dir.parent,'pylib'))
-
-# Add path to GEMMES codes
-GEMMES_path = os.path.abspath(os.path.join(Path(__file__).parents[3], 'ColombiaEnergyScope'))
-Cpp_path = os.path.join(GEMMES_path, 'SourceCode/cppCode')
 sys.path.insert(0, pymodPath)
-sys.path.insert(0, Cpp_path)
-sys.path.insert(0, Cpp_path + "/run")
+sys.path.insert(0, pymodPath + "/run")
 
 # Add path to EnergyScope codes
 ESMY_path = os.path.join(curr_dir.parent,'ESMY')
@@ -957,7 +952,7 @@ EnergyScope_case_study_path = os.path.join(EnergyScope_output_path,case_study)
 ## Options for ampl and gurobi (optimization within EnergyScope)
 gurobi_options = ['predual=-1',
                 'method = 2', # 2 is for barrier method
-                'crossover=0',
+                'crossover=0', # set to 1 if I want to exactly reach the node which is solution to the opti. problem
                 'prepasses = 3',
                 'barconvtol=1e-6',
                 'presolve=-1'] # Not a good idea to put it to 0 if the model is too big
