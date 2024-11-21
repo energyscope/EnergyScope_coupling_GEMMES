@@ -1,11 +1,11 @@
 Category;Subcategory;Technologies name;Technologies param;c_inv;c_maint;gwp_constr;lifetime;c_p;fmin_perc;fmax_perc;f_min;f_max;Comment
-;;Name (simplified);Name (in model and documents);"[Meuro/GW]
-[Meuro/GWh] 
-[Meuro/(Mkmpass/h)] 
-[Meuro/(Mtonkm/h)]";"[Meuro/GW]
-[Meuro/GWh] 
-[Meuro/(Mkmpass/h)] 
-[Meuro/(Mtonkm/h)]";"[ktonCO2_eq/GW]
+;;Name (simplified);Name (in model and documents);"[MUSD/GW]
+[MUSD/GWh] 
+[MUSD/(Mkmpass/h)] 
+[MUSD/(Mtonkm/h)]";"[MUSD/GW]
+[MUSD/GWh] 
+[MUSD/(Mkmpass/h)] 
+[MUSD/(Mtonkm/h)]";"[ktonCO2_eq/GW]
 [ktonCO2_eq/GWh]
 [ktonCO2_eq/(Mkmpass/h)]
 [ktonCO2_eq/(Mtonkm/h)]";[years];[];[];[];[GW];[GW];
