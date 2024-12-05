@@ -42,7 +42,7 @@ def main():
         diff = 1
         n_iter = 1
         diff_list = [0]
-        while(diff > 0.03 and n_iter<4): ###############
+        while(diff > 0.03 and n_iter<10): # We limit the maximum number of iterations to 10
             EUD_previous = EUD_current
             n_iter += 1
             output_EnergyScope = run_EnergyScope()
