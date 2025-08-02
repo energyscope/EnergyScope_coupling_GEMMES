@@ -352,7 +352,7 @@ for partially compensating for the planned decrease in fossil fuels' exports. Fo
 hydrogen, methane, ammonia and methanol. In the model's code, they are designated with the appendix 'RE' to distinguish them from 
 their fossil-based counterparts.
 
-The Belgian Hydrogen Import Coalition computed a projection of the import costs of e-fuels from international markets for the year 2035 :cite:`H2coalition2020shipping`. They indicate that 85% of the selling price would correspond to production cost, local transmission and local terminalling cost. The rest would correspond
+The Belgian Hydrogen Import Coalition computed a projection of the import costs of e-fuels from international markets for the year 2035 :cite:`H2coalition2020shipping`. They indicate that 85% of cost would correspond to production cost, local transmission and local terminalling. The rest would correspond
 to shipping and remote terminalling. Thus, the revenue of an e-fuel exporter like Colombia would be equal to 85% of the
 computed import cost. The corresponding values are indicated in :numref:`Table %s <tab:costs_resources_efuels>`.
 

@@ -64,6 +64,7 @@ def drawSankey(path="./",outputfile='TO_REPLACE',auto_open=True):
     flows = pd.read_csv(path / "input2sankey.csv")
     fig = genSankey(flows,cat_cols=['source','target'],value_cols='realValue',title='Energy',color_col='layerColor')
     fig.write_html(str(outputfile), auto_open=auto_open)
+    fig.write_image(str(path / 'python_generated_sankey.pdf'), width=1200, height=700)
     #fig.show()
 
 def genSankey(df,cat_cols=[],value_cols='',title='Sankey Diagram',color_col=[]):

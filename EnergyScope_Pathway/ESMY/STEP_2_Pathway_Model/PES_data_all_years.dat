@@ -138,9 +138,9 @@ param diff_2015_phase :=
 2040_2045 27.5																														
 2045_2050 32.5; 																														
 																														
-param	limit_LT_renovation	:=	0.33	;#25% of refurbishment per period (5years) 																										
-param	limit_pass_mob_changes	:=	0.5	;#25% of refurbishment per period (5years) 																										
-param	limit_freight_changes	:=	0.5	;#25% of refurbishment per period (5years) 																										
+param	limit_LT_renovation	:=	0.33	;#33% of refurbishment per period (5years) 																										
+param	limit_pass_mob_changes	:=	0.5	;#50% of replacement per period (5years) 																										
+param	limit_freight_changes	:=	0.5	;#50% of replacement per period (5years) 																										
 																														
 param c_grid_extra :=	518.5	;	# cost to reinforce the grid due to intermittent renewable energy penetration. See 2.2.2																											
 																														

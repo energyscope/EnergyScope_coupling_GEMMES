@@ -23,18 +23,18 @@ Gurobi 11.0.3:   pre:dual = -1
   pre:passes = 3
   bar:convtol = 1e-06
   pre:solve = -1
-Gurobi 11.0.3: optimal solution; objective 62069.55033
+Gurobi 11.0.3: optimal solution; objective 62074.57455
 0 simplex iterations
-66 barrier iterations
+67 barrier iterations
 solve_result = solved
 
 solve_result_num = 0
 
-_solve_elapsed_time = 39.0621
+_solve_elapsed_time = 50.3676
 
-TotalCost 62069.55032878319
+TotalCost 62074.5745452892
 Carbon_cost 0
-GWP_op 38039.99999990236
+GWP_op 38000.00000006019
 carbon_price 0
 --------------SAVING COSTS -----------
 --------------SAVING RESOURCES -----------

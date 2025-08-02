@@ -1,24 +1,24 @@
 # -*- coding: utf-8 -*-
 """
-September 2024
+October 2024
 
 @authors: Pierre Jacques, Xavier Rixhon, Stanislas Augier
 """
 
 ## Define which model you want to run: GEMMES, EnergyScope or the coupling of the two
-mode = 'GEMMES_only'
+# mode = 'GEMMES_only'
 # mode = 'EnergyScope_only'
-# mode = 'GEMMES-EnergyScope'
+mode = 'GEMMES-EnergyScope'
 
 ## Define the country studied and the time granularity of EnergyScope
-country = 'Colombia'                  # Choose between Colombia and Turkey
-EnergyScope_granularity = 'MO'  # MO = Monthly resolution, TD = Typical Day (hourly resolution - takes much more time to run)
+country = 'Colombia'            # Choose between Colombia and Turkey
+EnergyScope_granularity = 'TD'  # MO = Monthly resolution, TD = Typical Day (hourly resolution - takes much more time to run)
 nbr_tds = 12
 
 ## Define which results to save and/or plot
 plot_EnergyScope = True  
 csv_EnergyScope  = True
-plot_GEMMES = False
+plot_GEMMES = True
 csv_GEMMES = True
 
 def main():
@@ -42,7 +42,7 @@ def main():
         diff = 1
         n_iter = 1
         diff_list = [0]
-        while(diff > 0.03 and n_iter<4): ###############
+        while(diff > 0.03):
             EUD_previous = EUD_current
             n_iter += 1
             output_EnergyScope = run_EnergyScope()
@@ -234,7 +234,7 @@ def run_EnergyScope():
     # Distinguish between imported and locally-produced content for each technology. Imported content is subject to exchange rate fluctuations.
     c_inv_ampl = ampl.get_param('c_inv').to_list()
     c_inv_ampl = pd.DataFrame(c_inv_ampl, columns=['Year', 'Technologies', 'Value'])
-    # Read for reach technology, what fraction of it is locally produced in terms of added value
+    # Read for reach technology, what fraction of it is locally produced
     if country=='Colombia':
         Technos_local_fraction = pd.read_csv('Technos_information_CO.csv')
         Technos_local_fraction.drop(columns=['Lifetime','Included_in_real_cost_2021'], inplace=True)
@@ -256,7 +256,7 @@ def run_EnergyScope():
     en_yearly.reset_index(inplace=True)
     en_yearly.rename(columns={'index': 'Year'}, inplace=True)
     c_inv_ampl = pd.merge(c_inv_ampl, en_yearly, on='Year', how='left')
-    c_inv_ampl['Value'] *= en0 # Convert constant USD to constant k COP or cosntant TL
+    c_inv_ampl['Value'] *= en0 # Convert constant USD to constant k COP or constant TL
     c_inv_ampl['Value'] = ( c_inv_ampl['Value']*c_inv_ampl['Local'] + c_inv_ampl['Value']*c_inv_ampl['en']*(1-c_inv_ampl['Local']) ) # The imported fraction of goods is subject to exchange rate's fluctuations
     c_inv_ampl.drop(columns=['Local', 'en'], inplace=True)
     c_inv_ampl.set_index(['Year', 'Technologies'], inplace=True)
@@ -463,9 +463,9 @@ def post_process_EnergyScope_outputs(EnergyScope_output_file, ampl_0, variables_
     output_for_GEMMES.loc['2015_2020',['opex_F_M','opex_B_M','opex_G_M','opex_H_M']] = Cost_breakdown_non_annualised[['C_maint_M', 'C_op_M']].sum() * output_for_GEMMES.loc['2020_2025',['opex_F_M','opex_B_M','opex_G_M','opex_H_M']] / output_for_GEMMES.loc['2020_2025',['opex_F_M','opex_B_M','opex_G_M','opex_H_M']].sum() * 5
     Cost_breakdown_2021_for_comparison_with_real_cost = Cost_breakdown_2021_for_comparison_with_real_cost.sum() * 5 # Transform the yearly cost into a cost per phase
     
-    ## Compute a adjustment factor to fit the costs from EnergyScope to the real cost of the energy system given by DNP
+    ## Compute an adjustment factor to fit the costs from EnergyScope to the real cost of the energy system given by DNP
     variables_GEMMES_2021 = variables_GEMMES.loc[(variables_GEMMES.index>=2021) & (variables_GEMMES.index<2022)].mean()
-    Real_energy_system_cost_2021 = 33.323773083 # Trillion 2021 COP, according to DNP
+    Real_energy_system_cost_2021 = 33.323773083 # trillion 2021 COP, according to DNP
     adjustment_factor = Real_energy_system_cost_2021 / ( variables_GEMMES_2021['p'] * Cost_breakdown_2021_for_comparison_with_real_cost ) # The adjustment factor also allows to transform billion COP in trillion COP and to transform the phase costs into yearly costs (division by 5 included in the factor)
     
     
@@ -627,7 +627,7 @@ def post_process_EnergyScope_outputs(EnergyScope_output_file, ampl_0, variables_
     year_balance_carbon_tax_shift = year_balance_carbon_tax.copy()
     year_balance_carbon_tax_shift = year_balance_carbon_tax_shift.shift(1)
     year_balance_carbon_tax_shift.iloc[0,:] = year_balance_carbon_tax.iloc[0,:].values
-    year_balance_carbon_tax = (year_balance_carbon_tax + year_balance_carbon_tax_shift) / 2   
+    year_balance_carbon_tax = (year_balance_carbon_tax + year_balance_carbon_tax_shift) / 2 * 5 
     year_balance_carbon_tax = year_balance_carbon_tax.iloc[1:]
     
     
@@ -635,14 +635,14 @@ def post_process_EnergyScope_outputs(EnergyScope_output_file, ampl_0, variables_
     output_for_GEMMES *= adjustment_factor
     year_balance_carbon_tax *= adjustment_factor
     # Re-write all costs according to a subdivision appropriate for GEMMES' equations
-    output_for_GEMMES['ikefCO'] = (C_inv['Capa'] * C_inv['Local']    * C_inv['F']).groupby(level=[0]).sum()
-    output_for_GEMMES['ikefM']  = (C_inv['Capa'] * C_inv['Imported'] * C_inv['F']).groupby(level=[0]).sum()
-    output_for_GEMMES['ikebCO'] = (C_inv['Capa'] * C_inv['Local']    * C_inv['B']).groupby(level=[0]).sum()
-    output_for_GEMMES['ikebM']  = (C_inv['Capa'] * C_inv['Imported'] * C_inv['B']).groupby(level=[0]).sum()
-    output_for_GEMMES['ikegCO'] = (C_inv['Capa'] * C_inv['Local']    * C_inv['G']).groupby(level=[0]).sum()
-    output_for_GEMMES['ikegM']  = (C_inv['Capa'] * C_inv['Imported'] * C_inv['G']).groupby(level=[0]).sum()
-    output_for_GEMMES['ikehCO'] = (C_inv['Capa'] * C_inv['Local']    * C_inv['H']).groupby(level=[0]).sum()
-    output_for_GEMMES['ikehM']  = (C_inv['Capa'] * C_inv['Imported'] * C_inv['H']).groupby(level=[0]).sum()
+    output_for_GEMMES['ikefCO'] = output_for_GEMMES['capex_F_CO']
+    output_for_GEMMES['ikefM']  = output_for_GEMMES['capex_F_M'] 
+    output_for_GEMMES['ikebCO'] = output_for_GEMMES['capex_B_CO'] 
+    output_for_GEMMES['ikebM']  = output_for_GEMMES['capex_B_M']  
+    output_for_GEMMES['ikegCO'] = output_for_GEMMES['capex_G_CO'] 
+    output_for_GEMMES['ikegM']  = output_for_GEMMES['capex_G_M']  
+    output_for_GEMMES['ikehCO'] = output_for_GEMMES['capex_H_CO'] 
+    output_for_GEMMES['ikehM']  = output_for_GEMMES['capex_H_M']  
     output_for_GEMMES['pkefCO'] = output_for_GEMMES['capex_F_CO'] / output_for_GEMMES['ikefCO']
     output_for_GEMMES['pkefM']  = output_for_GEMMES['capex_F_M']  / output_for_GEMMES['ikefM'] / variables_GEMMES_2021['en']
     output_for_GEMMES['pkebCO'] = output_for_GEMMES['capex_B_CO'] / output_for_GEMMES['ikebCO']
@@ -659,28 +659,15 @@ def post_process_EnergyScope_outputs(EnergyScope_output_file, ampl_0, variables_
     output_for_GEMMES['sigmamkeb'] = output_for_GEMMES['ikebM'] / output_for_GEMMES['ikeb']
     output_for_GEMMES['sigmamkeg'] = output_for_GEMMES['ikegM'] / output_for_GEMMES['ikeg']
     output_for_GEMMES['sigmamkeh'] = output_for_GEMMES['ikehM'] / output_for_GEMMES['ikeh']
-    # Adjust the repartitions pke / ike so that the ike's have the same order of magnitude as ikf in GEMMES
-    output_for_GEMMES['pkefCO'] *= 254
-    output_for_GEMMES['pkefM']  *= 254
-    output_for_GEMMES['ikef']   /= 254
-    output_for_GEMMES['pkebCO'] *= 2.4
-    output_for_GEMMES['pkebM']  *= 2.4
-    output_for_GEMMES['ikeb']   /= 2.4
-    output_for_GEMMES['pkegCO'] *= 34.9
-    output_for_GEMMES['pkegM']  *= 34.9
-    output_for_GEMMES['ikeg']   /= 34.9
-    output_for_GEMMES['pkehCO'] *= 95.8
-    output_for_GEMMES['pkehM']  *= 95.8
-    output_for_GEMMES['ikeh']   /= 95.8
     output_for_GEMMES['icef'] = output_for_GEMMES['opex_F_CO'] + output_for_GEMMES['opex_F_M']
-    output_for_GEMMES['sigmamicef'] = output_for_GEMMES['opex_F_M'] / output_for_GEMMES['icef']
     output_for_GEMMES['iceb'] = output_for_GEMMES['opex_B_CO'] + output_for_GEMMES['opex_B_M']
-    output_for_GEMMES['sigmamiceb'] = output_for_GEMMES['opex_B_M'] / output_for_GEMMES['iceb']
     output_for_GEMMES['iceg'] = output_for_GEMMES['opex_G_CO'] + output_for_GEMMES['opex_G_M']
+    output_for_GEMMES['ceh']  = output_for_GEMMES['opex_H_CO'] + output_for_GEMMES['opex_H_M']
+    output_for_GEMMES['sigmamicef'] = output_for_GEMMES['opex_F_M'] / output_for_GEMMES['icef']
+    output_for_GEMMES['sigmamiceb'] = output_for_GEMMES['opex_B_M'] / output_for_GEMMES['iceb']
     output_for_GEMMES['sigmamiceg'] = output_for_GEMMES['opex_G_M'] / output_for_GEMMES['iceg']
-    output_for_GEMMES['ceh'] = output_for_GEMMES['opex_H_CO'] + output_for_GEMMES['opex_H_M']
-    output_for_GEMMES['sigmamceh'] = output_for_GEMMES['opex_H_M'] / output_for_GEMMES['ceh']
-    output_for_GEMMES['pieM'] = 1 / variables_GEMMES_2021['en']
+    output_for_GEMMES['sigmamceh']  = output_for_GEMMES['opex_H_M'] / output_for_GEMMES['ceh']  
+    output_for_GEMMES['pieM'] = 1 / variables_GEMMES_2021['en']  
     output_for_GEMMES['xef'] = output_for_GEMMES['exports_CO'] / variables_GEMMES_2021['en']
     output_for_GEMMES['CTf'] = 0
     output_for_GEMMES['CTb'] = 0
@@ -702,9 +689,6 @@ def post_process_EnergyScope_outputs(EnergyScope_output_file, ampl_0, variables_
     output_for_GEMMES['iota0'] = 0.04852755
     # output_for_GEMMES.loc[['2025_2030','2030_2035','2035_2040','2040_2045','2045_2050'],'iota0'] += 0.01 # shock on domestic interest rate
     output_for_GEMMES = output_for_GEMMES.round(3)
-    aggregated_costs = output_for_GEMMES.copy()
-    aggregated_costs = aggregated_costs[['capex_F_CO', 'capex_F_M', 'capex_B_CO', 'capex_B_M', 'capex_G_CO', 'capex_G_M', 'capex_H_CO', 'capex_H_M', 'opex_F_CO', 'opex_F_M', 'opex_B_CO','opex_B_M', 'opex_G_CO', 'opex_G_M', 'opex_H_CO', 'opex_H_M', 'exports_CO', 'CTf', 'CTb', 'CTg', 'CTh']]
-    # aggregated_costs.to_csv('Energy_system_costs_aggregated.csv') # This file is not used in the coupling with GEMMES. However, it provides easier to read information to analyse the costs of the energy system.
     output_for_GEMMES.drop(columns=['capex_F_CO', 'capex_F_M', 'ikefCO', 'ikefM'], inplace=True)
     output_for_GEMMES.drop(columns=['capex_B_CO', 'capex_B_M', 'ikebCO', 'ikebM'], inplace=True)
     output_for_GEMMES.drop(columns=['capex_G_CO', 'capex_G_M', 'ikegCO', 'ikegM'], inplace=True)
@@ -891,13 +875,8 @@ import matplotlib.pyplot as plt
 ## Add the relevant paths to be able to access all necessary python codes
 curr_dir = Path(os.path.dirname(__file__))
 pymodPath = os.path.abspath(os.path.join(curr_dir.parent,'pylib'))
-
-# Add path to GEMMES codes
-GEMMES_path = os.path.abspath(os.path.join(Path(__file__).parents[3], 'ColombiaEnergyScope'))
-Cpp_path = os.path.join(GEMMES_path, 'SourceCode/cppCode')
 sys.path.insert(0, pymodPath)
-sys.path.insert(0, Cpp_path)
-sys.path.insert(0, Cpp_path + "/run")
+sys.path.insert(0, pymodPath + "/run")
 
 # Add path to EnergyScope codes
 ESMY_path = os.path.join(curr_dir.parent,'ESMY')
@@ -957,7 +936,7 @@ EnergyScope_case_study_path = os.path.join(EnergyScope_output_path,case_study)
 ## Options for ampl and gurobi (optimization within EnergyScope)
 gurobi_options = ['predual=-1',
                 'method = 2', # 2 is for barrier method
-                'crossover=0',
+                'crossover=0', # set to 1 if I want to exactly reach the node which is solution to the opti. problem
                 'prepasses = 3',
                 'barconvtol=1e-6',
                 'presolve=-1'] # Not a good idea to put it to 0 if the model is too big

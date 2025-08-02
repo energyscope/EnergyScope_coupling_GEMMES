@@ -169,7 +169,7 @@ param gwp_cost {YEARS} >=0 default 0; #Cost related to the gwp emissions
 ##Additional parameter (not presented in the paper)
 param total_time := sum {t in PERIODS, h in HOUR_OF_PERIOD [t], td in TYPICAL_DAY_OF_PERIOD [t]} (t_op [h, td]); # [h]. added just to simplify equations
 
-# NEW : PARAM DEPEN?DENT:
+# NEW : PARAM DEPENDENT:
 param annualised_factor {p in PHASE} := if p="2015_2020" then 1/((1 + r_discount[p])^2.5) else annualised_factor[member(PHASE_NUMBER[p]-1,PHASE)] * 1/((1 +r_discount[member(PHASE_NUMBER[p]-1,PHASE)])^2.5) * 1/((1 + r_discount[p])^2.5); # Annualisation factor for each different technology
 
 #################################
