@@ -99,6 +99,6 @@ Running EnergyScope with AMPL and a python wrapper requires:
 (ii) to add AMPL to the PATH variable of your computer so that you can call AMPL from any location in your computer;
 (iii) to install the EnergyScope python package using pip.
 
-How to perform these three steps is explained in detail on the following page: https://sustainable-energy.notion.site/Install-Run-ESTD-a7f535db0a02421fa6a2b37e5af894e1
+How to perform these three steps is explained in detail on the following page: https://sustainable-energy.notion.site/Install-AMPL-Run-ESTD-for-students-simplified-0604e0167e9c443895cfd5176fcc83c2
 
 
